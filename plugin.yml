@@ -1,0 +1,11 @@
+name: SafeCreeper
+main: com.timvisee.SafeCreeper.SafeCreeper
+version: 1.1.2
+load: startup
+commands:
+  safecreeper:
+    description: Safe Creeper command
+    usage: /safecreeper <values>
+  sc:
+    description: Safe Creeper command
+    usage: /sc <values>
