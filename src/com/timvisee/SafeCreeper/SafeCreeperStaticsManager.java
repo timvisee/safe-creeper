@@ -29,7 +29,7 @@ public class SafeCreeperStaticsManager {
 	}
 	
 	public void addTNTExplosionNerfed() {
-		addCreeperExplosionNerfed(1);
+		addTNTExplosionNerfed(1);
 	}
 	
 	public void addTNTExplosionNerfed(int amount) {
@@ -46,7 +46,7 @@ public class SafeCreeperStaticsManager {
 	}
 	
 	public void addTNTDamageNerfed() {
-		addCreeperExplosionNerfed(1);
+		addTNTDamageNerfed(1);
 	}
 	
 	public void addTNTDamageNerfed(int amount) {

@@ -134,7 +134,7 @@ public class SafeCreeper extends JavaPlugin {
 	            public int getValue() {
 	            	return statics.getTNTDamageNerfed();
 	            }
-		    });		    
+		    });
 		    metrics.start();
 		} catch (IOException e) {
 		    // Failed to submit the stats :-(
