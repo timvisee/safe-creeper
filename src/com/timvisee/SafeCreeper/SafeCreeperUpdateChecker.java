@@ -1,4 +1,4 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -148,13 +148,9 @@ public class SafeCreeperPlayerListener implements Listener {
 	}
 	
 	public boolean hasBypassPermission(Player player, String controlName, String bypassName, boolean def) {
-		if(!plugin.usePermissions()) {
+		if(!plugin.getPermissionsManager().isEnabled())
 			return def;
-		}
-		if(!plugin.isPermissionsSystemEnabled()) {
-			return def;
-		}
-		if(plugin.hasPermission(player, "safecreeper.bypass." + controlName + "." + bypassName, def)) {
+		if(plugin.getPermissionsManager().hasPermission(player, "safecreeper.bypass." + controlName + "." + bypassName, def)) {
 			return true;
 		} else {
 			return false;

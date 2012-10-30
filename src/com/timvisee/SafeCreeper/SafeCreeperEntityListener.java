@@ -1,4 +1,4 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +33,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.entity.SheepRegrowWoolEvent;
 import org.bukkit.event.entity.SlimeSplitEvent;
 
+import org.bukkit.entity.Bat;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Chicken;
@@ -61,6 +62,9 @@ import org.bukkit.entity.Spider;
 import org.bukkit.entity.Squid;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Villager;
+import org.bukkit.entity.Witch;
+import org.bukkit.entity.Wither;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.material.MaterialData;
@@ -79,7 +83,21 @@ public class SafeCreeperEntityListener implements Listener {
 		SpawnReason reason = event.getSpawnReason();
 		World world = event.getLocation().getWorld();
 		
-		if(entityType == EntityType.BLAZE) {
+		if(entityType == EntityType.BAT) {
+			// Could a blaze spawn
+			if(reason == SpawnReason.CHUNK_GEN) {
+				if(!getConfigSettings(world, "BatControl", "Spawning.CanSpawnWithWorldGeneration", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.NATURAL) {
+				if(!getConfigSettings(world, "BatControl", "Spawning.CanSpawnNaturally", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER) {
+				if(!getConfigSettings(world, "BatControl", "Spawning.CanSpawnFromSpawner", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER_EGG) {
+				if(!getConfigSettings(world, "BatControl", "Spawning.CanSpawnFromSpawnerEgg", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else {
+				if(!getConfigSettings(world, "BatControl", "Spawning.CanSpawnFromOther", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+		
+		} else if(entityType == EntityType.BLAZE) {
 			// Could a blaze spawn
 			if(reason == SpawnReason.CHUNK_GEN) {
 				if(!getConfigSettings(world, "BlazeControl", "Spawning.CanSpawnWithWorldGeneration", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
@@ -386,6 +404,34 @@ public class SafeCreeperEntityListener implements Listener {
 				if(!getConfigSettings(world, "VillagerControl", "Spawning.CanSpawnFromOther", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
 			}
 			
+		} else if(entityType == EntityType.WITCH) {
+			// Could a ghast spawn
+			if(reason == SpawnReason.CHUNK_GEN) {
+				if(!getConfigSettings(world, "WitchControl", "Spawning.CanSpawnWithWorldGeneration", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.NATURAL) {
+				if(!getConfigSettings(world, "WitchControl", "Spawning.CanSpawnNaturally", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER) {
+				if(!getConfigSettings(world, "WitchControl", "Spawning.CanSpawnFromSpawner", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER_EGG) {
+				if(!getConfigSettings(world, "WitchControl", "Spawning.CanSpawnFromSpawnerEgg", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else {
+				if(!getConfigSettings(world, "WitchControl", "Spawning.CanSpawnFromOther", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			
+		} else if(entityType == EntityType.WITHER) {
+			// Could a ghast spawn
+			if(reason == SpawnReason.CHUNK_GEN) {
+				if(!getConfigSettings(world, "WitherControl", "Spawning.CanSpawnWithWorldGeneration", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.NATURAL) {
+				if(!getConfigSettings(world, "WitherControl", "Spawning.CanSpawnNaturally", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER) {
+				if(!getConfigSettings(world, "WitherControl", "Spawning.CanSpawnFromSpawner", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else if(reason == SpawnReason.SPAWNER_EGG) {
+				if(!getConfigSettings(world, "WitherControl", "Spawning.CanSpawnFromSpawnerEgg", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			} else {
+				if(!getConfigSettings(world, "WitherControl", "Spawning.CanSpawnFromOther", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			
 		} else if(entityType == EntityType.WOLF) {
 			// Could a wolf spawn
 			if(reason == SpawnReason.CHUNK_GEN) {
@@ -482,6 +528,15 @@ public class SafeCreeperEntityListener implements Listener {
 					// Could an enderdragon damage mobs
 					if(!getConfigSettings(world, "EnderDragonControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
 				}
+			} else if(damager instanceof Fireball) {
+				if(entity instanceof HumanEntity) {
+					// Could TNT damage players
+					if(!getConfigSettings(world, "FireballControl", "DamagePlayers", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+					
+				} else if(entity instanceof LivingEntity) {
+					// Could TNT damage mobs
+					if(!getConfigSettings(world, "FireballControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+				}
 			} else if(damager instanceof Ghast) {
 				if(entity instanceof HumanEntity) {
 					// Could TNT damage players
@@ -564,6 +619,33 @@ public class SafeCreeperEntityListener implements Listener {
 					
 				} else if(entity instanceof LivingEntity) {
 					if(!getConfigSettings(world, "TNTControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+				}
+			} else if(damager instanceof Witch) {
+				if(entity instanceof HumanEntity) {
+					// Could TNT damage players
+					if(!getConfigSettings(world, "WitchControl", "DamagePlayers", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+					
+				} else if(entity instanceof LivingEntity) {
+					// Could TNT damage mobs
+					if(!getConfigSettings(world, "WitchControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+				}
+			} else if(damager instanceof Wither) {
+				if(entity instanceof HumanEntity) {
+					// Could TNT damage players
+					if(!getConfigSettings(world, "WitherControl", "DamagePlayers", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+					
+				} else if(entity instanceof LivingEntity) {
+					// Could TNT damage mobs
+					if(!getConfigSettings(world, "WitherControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+				}
+			} else if(damager instanceof Wither) {
+				if(entity instanceof HumanEntity) {
+					// Could TNT damage players
+					if(!getConfigSettings(world, "WitherSkullControl", "DamagePlayers", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+					
+				} else if(entity instanceof LivingEntity) {
+					// Could TNT damage mobs
+					if(!getConfigSettings(world, "WitherSkullControl", "DamageMobs", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
 				}
 			} else if(damager instanceof Wolf) {
 				if(entity instanceof HumanEntity) {
@@ -723,6 +805,48 @@ public class SafeCreeperEntityListener implements Listener {
 				if(costumExplosionStrengthEnabled) {
 					plugin.disableOtherExplosions = true;
 					world.createExplosion(location, costumExplosionStrength);
+				}
+			}
+			
+		} else if(event.getEntity() instanceof Wither) {
+			// Could a creeper destroy the world
+			//event.setCancelled(getConfigSettings(world, "CreeperControl", "DestroyWorld", false, true, true, entity.getLocation().getBlockY()));
+			boolean b = getConfigSettings(world, "WitherControl", "DestroyWorld", true, true, true, entity.getLocation().getBlockY());
+			boolean costumExplosionStrengthEnabled = getConfigSettings(world, "WitherControl", "CostumExplosionStrength.Enabled", false, true, true, entity.getLocation().getBlockY());
+			int costumExplosionStrength = configGetInt(world.getName(), "WitherControl", "CostumExplosionStrength.ExplosionStrength", 3);
+			if(!costumExplosionStrengthEnabled) {
+				if(!b) {
+					event.setCancelled(true);
+					//plugin.getStaticsManager().addCreeperExplosionNerfed();
+				}
+			} else {
+				event.setCancelled(true);
+				//plugin.getStaticsManager().addCreeperExplosionNerfed();
+			}
+			if(!b) {
+				if(getConfigSettings(world, "WitherControl", "EnableExplosionSound", true, true, true, entity.getLocation().getBlockY())) {
+					createExplosionSound(world, location);
+				}
+				if(getConfigSettings(world, "WitherControl", "EnableExplosionSmoke", true, true, true, entity.getLocation().getBlockY())) {
+					world.playEffect(location, Effect.SMOKE, 3);
+				}
+			} else {
+				if(costumExplosionStrengthEnabled) {
+					plugin.disableOtherExplosions = true;
+					world.createExplosion(location, costumExplosionStrength);
+				}
+			}
+			
+		} else if(event.getEntity() instanceof WitherSkull) {
+			// Could a WitherSkull destroy the world
+			boolean b = !getConfigSettings(world, "WitherSkullControl", "DestroyWorld", true, true, true, entity.getLocation().getBlockY());
+			if(b) {
+				event.setCancelled(true);
+				if(getConfigSettings(world, "WitherSkullControl", "EnableExplosionSound", true, true, true, entity.getLocation().getBlockY())) {
+					createExplosionSound(world, location);
+				}
+				if(getConfigSettings(world, "WitherSkullControl", "EnableExplosionSmoke", true, true, true, entity.getLocation().getBlockY())) {
+					world.playEffect(location, Effect.SMOKE, 3);
 				}
 			}
 			
@@ -955,6 +1079,10 @@ public class SafeCreeperEntityListener implements Listener {
 			if(!getConfigSettings(world, "SkeletonControl", "CanLaunchProjectile", true, true, true, projectile.getLocation().getBlockY())) { event.setCancelled(true); }
 		} else if(shooter instanceof Snowman) {
 			if(!getConfigSettings(world, "SnowmanControl", "CanLaunchProjectile", true, true, true, projectile.getLocation().getBlockY())) { event.setCancelled(true); }
+		} else if(shooter instanceof Witch) {
+			if(!getConfigSettings(world, "WitchControl", "CanLaunchProjectile", true, true, true, projectile.getLocation().getBlockY())) { event.setCancelled(true); }
+		} else if(shooter instanceof Wither) {
+			if(!getConfigSettings(world, "WitherControl", "CanLaunchProjectile", true, true, true, projectile.getLocation().getBlockY())) { event.setCancelled(true); }
 		}
 	}
 	
@@ -1027,7 +1155,15 @@ public class SafeCreeperEntityListener implements Listener {
 		Entity target = event.getTarget();
 		World world = event.getEntity().getWorld();
 		
-		if(entity instanceof Blaze) {
+		if(entity instanceof Bat) {
+			if(target instanceof HumanEntity) {
+				if(!getConfigSettings(world, "BatControl", "CanTargetPlayer", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			if(target instanceof LivingEntity) {
+				if(!getConfigSettings(world, "BatControl", "CanTargetMob", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			
+		} else if(entity instanceof Blaze) {
 			if(target instanceof HumanEntity) {
 				if(!getConfigSettings(world, "BlazeControl", "CanTargetPlayer", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
 			}
@@ -1193,6 +1329,22 @@ public class SafeCreeperEntityListener implements Listener {
 			}
 			if(target instanceof LivingEntity) {
 				if(!getConfigSettings(world, "VillagerControl", "CanTargetMob", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			
+		} else if(entity instanceof Witch) {
+			if(target instanceof HumanEntity) {
+				if(!getConfigSettings(world, "WitchControl", "CanTargetPlayer", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			if(target instanceof LivingEntity) {
+				if(!getConfigSettings(world, "WitchControl", "CanTargetMob", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			
+		} else if(entity instanceof Wither) {
+			if(target instanceof HumanEntity) {
+				if(!getConfigSettings(world, "WitherControl", "CanTargetPlayer", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
+			}
+			if(target instanceof LivingEntity) {
+				if(!getConfigSettings(world, "WitherControl", "CanTargetMob", true, true, true, entity.getLocation().getBlockY())) { event.setCancelled(true); }
 			}
 			
 		} else if(entity instanceof Wolf) {

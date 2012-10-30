@@ -1,42 +1,28 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-import com.timvisee.SafeCreeper.Metrics.Graph;
+import com.timvisee.safecreeper.Metrics.Graph;
+import com.timvisee.safecreeper.permissionsmanager.PermissionsManager;
 
 public class SafeCreeper extends JavaPlugin {
 	public static final Logger log = Logger.getLogger("Minecraft");
@@ -45,6 +31,7 @@ public class SafeCreeper extends JavaPlugin {
 	private final SafeCreeperBlockListener blockListener = new SafeCreeperBlockListener(this);
 	private final SafeCreeperEntityListener entityListener = new SafeCreeperEntityListener(this);
 	private final SafeCreeperPlayerListener playerListener = new SafeCreeperPlayerListener(this);
+	private final SafeCreeperPaintingListener paintingListener = new SafeCreeperPaintingListener(this);
 	private final SafeCreeperWorldListener worldListener = new SafeCreeperWorldListener(this);
 	//private final SafeCreeperExplosionRepairCore explosionRepairCore = new SafeCreeperExplosionRepairCore(this);
 	
@@ -54,6 +41,10 @@ public class SafeCreeper extends JavaPlugin {
 	private FileConfiguration globalConfig;
 	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<String, FileConfiguration>();
 	
+
+	// Permissions manager
+	private PermissionsManager pm;
+	
 	// Update Checker
 	boolean isUpdateAvailable = false;
 	String newestVersion = "1.0";
@@ -62,19 +53,6 @@ public class SafeCreeper extends JavaPlugin {
 	
 	// variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
 	public boolean disableOtherExplosions = false;
-	
-	/*
-	 * 0 = none
-	 * 1 = PermissionsEx
-	 * 2 = PermissionsBukkit
-	 * 3 = bPermissions
-	 * 4 = Essentials Group Manager
-	 * 5 = Permissions
-	 */
-	private int permissionsSystem = 0;
-	private PermissionManager pexPermissions;
-	private PermissionHandler defaultPermsissions;
-	private GroupManager groupManagerPermissions;
 	
 	// Statics Manager
 	private SafeCreeperStaticsManager statics = new SafeCreeperStaticsManager();
@@ -95,12 +73,13 @@ public class SafeCreeper extends JavaPlugin {
 	    }
 		
 		// Setup permissions
-		setupPermissions();
+	    setupPermissionsManager();
 		
 		// Register event listeners
 		pm.registerEvents(this.blockListener, this);
 		pm.registerEvents(this.entityListener, this);
 		pm.registerEvents(this.playerListener, this);
+		pm.registerEvents(this.paintingListener, this);
 		pm.registerEvents(this.worldListener, this);
 		
 		// Load all config files
@@ -109,37 +88,11 @@ public class SafeCreeper extends JavaPlugin {
 		log.info("[SafeCreeper] Global config file loaded");
 		log.info("[SafeCreeper] " + String.valueOf(worldConfigs.size()) + " world config files loaded");
 		
-		// Metrics / MCStats.org
-		try {
-		    Metrics metrics = new Metrics(this);
-		    
-		    // Add graph for nerfed creepers
-		    // Construct a graph, which can be immediately used and considered as valid
-		    Graph graph = metrics.createGraph("Activities Nerfed by Safe Creeper");
-		    // Creeper explosions Nerfed
-		    graph.addPlotter(new Metrics.Plotter("Creeper Explosions") {
-	            @Override
-	            public int getValue() {
-	            	return statics.getCreeperExplosionsNerfed();
-	            }
-		    });
-		    graph.addPlotter(new Metrics.Plotter("TNT Explosions") {
-	            @Override
-	            public int getValue() {
-	            	return statics.getTNTExplosionsNerfed();
-	            }
-		    });
-		    graph.addPlotter(new Metrics.Plotter("TNT Damage") {
-	            @Override
-	            public int getValue() {
-	            	return statics.getTNTDamageNerfed();
-	            }
-		    });
-		    metrics.start();
-		} catch (IOException e) {
-		    // Failed to submit the stats :-(
-			e.printStackTrace();
-		}
+		// Setup Metrics
+		setupMetrics();
+		
+		// Check for updates
+		checkUpdates();
 		
 		// Plugin sucesfully enabled, show console message
 		PluginDescriptionFile pdfFile = getDescription();
@@ -210,178 +163,67 @@ public class SafeCreeper extends JavaPlugin {
 	    }
 	}
 	
-	private void setupPermissions() {
-		// Reset permissions
-		permissionsSystem = 0;
-		
-		if(!getConfig().getBoolean("usePermissions", true)) {
-			permissionsSystem = 0;
-			System.out.println("[SafeCreeper] Permissions usage disabled in config file!");
-			if(useBypassPermissions()) {
-				System.out.println("[SafeCreeper] Bypass permissions auto disabled!");
-			} else {
-				System.out.println("[SafeCreeper] Bypass permissions disabled!");
-			}
-			return;
-		}
-		
-		// Check PermissionsEx system
-		Plugin testPex = this.getServer().getPluginManager().getPlugin("PermissionsEx");
-		if(testPex != null) {
-			pexPermissions = PermissionsEx.getPermissionManager();
-			if(pexPermissions != null) {
-				permissionsSystem = 1;
-				
-				System.out.println("[SafeCreeper] Hooked into PermissionsEx!");
-				if(useBypassPermissions()) {
-					System.out.println("[SafeCreeper] Bypass permissions enabled!");
-				} else {
-					System.out.println("[SafeCreeper] Bypass permissions disabled!");
-				}
-				return;
-			}
-		}
-		
-		// Check PermissionsBukkit system
-		Plugin testBukkitPerms = this.getServer().getPluginManager().getPlugin("PermissionsBukkit");
-		if(testBukkitPerms != null) {
-			permissionsSystem = 2;
-			System.out.println("[SafeCreeper] Hooked into PermissionsBukkit!");
-			if(useBypassPermissions()) {
-				System.out.println("[SafeCreeper] Bypass permissions enabled!");
-			} else {
-				System.out.println("[SafeCreeper] Bypass permissions disabled!");
-			}
-			return;
-		}
-		
-		// Check bPermissions system
-		// Not available yet!
-		
-		// Check Essentials Group Manager system
-		final PluginManager pluginManager = getServer().getPluginManager();
-		final Plugin GMplugin = pluginManager.getPlugin("GroupManager");
-		if (GMplugin != null && GMplugin.isEnabled())
-		{
-			permissionsSystem = 4;
-			groupManagerPermissions = (GroupManager)GMplugin;
-            System.out.println("[SafeCreeper] Hooked into Essentials Group Manager!");
-			if(useBypassPermissions()) {
-				System.out.println("[SafeCreeper] Bypass permissions enabled!");
-			} else {
-				System.out.println("[SafeCreeper] Bypass permissions disabled!");
-			}
-            return;
-		}
-		
-		// Check Permissions system
-	    Plugin testPerms = this.getServer().getPluginManager().getPlugin("Permissions");
-	    if (this.defaultPermsissions == null) {
-	        if (testPerms != null) {
-	        	permissionsSystem = 5;
-	            this.defaultPermsissions = ((Permissions) testPerms).getHandler();
-	            System.out.println("[SafeCreeper] Hooked into Permissions!");
-	            return;
-	        }
-	    }
-	    
-	    // None of the permissions systems worked >:c.
-	    permissionsSystem = 0;
-	    System.out.println("[SafeCreeper] No Permissions system found! Permissions disabled!");
-		if(useBypassPermissions()) {
-			System.out.println("[SafeCreeper] Bypass permissions auto disabled!");
-		} else {
-			System.out.println("[SafeCreeper] Bypass permissions disabled!");
+	/**
+	 * Setup metrics
+	 */
+	public void setupMetrics() {
+		// Metrics / MCStats.org
+		try {
+		    Metrics metrics = new Metrics(this);
+		    
+		    // Add graph for nerfed creepers
+		    // Construct a graph, which can be immediately used and considered as valid
+		    Graph graph = metrics.createGraph("Activities Nerfed by Safe Creeper");
+		    // Creeper explosions Nerfed
+		    graph.addPlotter(new Metrics.Plotter("Creeper Explosions") {
+	            @Override
+	            public int getValue() {
+	            	return statics.getCreeperExplosionsNerfed();
+	            }
+		    });
+		    graph.addPlotter(new Metrics.Plotter("TNT Explosions") {
+	            @Override
+	            public int getValue() {
+	            	return statics.getTNTExplosionsNerfed();
+	            }
+		    });
+		    graph.addPlotter(new Metrics.Plotter("TNT Damage") {
+	            @Override
+	            public int getValue() {
+	            	return statics.getTNTDamageNerfed();
+	            }
+		    });
+		    // Used permissions systems
+		    Graph graph2 = metrics.createGraph("Permisison Plugin Usage");
+		    graph2.addPlotter(new Metrics.Plotter(getPermissionsManager().getUsedPermissionsSystemType().getName()) {
+	            @Override
+	            public int getValue() {
+	            	return 1;
+	            }
+		    });
+		    metrics.start();
+		} catch (IOException e) {
+		    // Failed to submit the stats :-(
+			e.printStackTrace();
 		}
 	}
 	
-	public boolean usePermissions() {
-		if(getConfig().getBoolean("usePermissions", true)) {
-			return true;
-		}
-		return false;
+	/**
+	 * Setup the permissions manager
+	 */
+	public void setupPermissionsManager() {
+		// Setup the permissions manager
+		this.pm = new PermissionsManager(this.getServer(), this);
+		this.pm.setup();
 	}
 	
-	public boolean useBypassPermissions() {
-		if(getConfig().getBoolean("useBypassPermissions", false)) {
-			return true;
-		}
-		return false;
+	/**
+	 * Get the permissions manager
+	 * @return permissions manager
+	 */
+	public PermissionsManager getPermissionsManager() {
+		return this.pm;
 	}
-	
-	public boolean isPermissionsSystemEnabled() {
-		if(permissionsSystem == 0) {
-			return false;
-		}
-		return true;
-	}
-	
-	public int getPermissionsSystem() {
-		return permissionsSystem;
-	}
-	
-	public boolean hasPermission(Player player, String permissionNode) {
-		return hasPermission(player, permissionNode, player.isOp());
-	}
-	
-	public boolean hasPermission(Player player, String permissionNode, boolean def) {
-		if(!usePermissions()) {
-			return def;
-		}
-		if(!isPermissionsSystemEnabled()) {
-			return def;
-		}
-		
-		// Using PermissionsEx
-		if(getPermissionsSystem() == 1) {
-			PermissionUser user  = PermissionsEx.getUser(player);
-			return user.has(permissionNode);
-		}
-		
-		// Using PermissionsBukkit
-		if(getPermissionsSystem() == 2) {
-			return player.hasPermission(permissionNode);
-		}
-		
-		// Using bPemissions
-		// Comming soon!
-		
-		// Using Essentials Group Manager
-		if(getPermissionsSystem() == 4) {
-			final AnjoPermissionsHandler handler = groupManagerPermissions.getWorldsHolder().getWorldPermissions(player);
-			if (handler == null)
-			{
-				return false;
-			}
-			return handler.has(player, permissionNode);
-		}
-		
-		// Using Permissions
-		if(getPermissionsSystem() == 5) {
-			return this.defaultPermsissions.has(player, permissionNode);
-		}
-
-		return def;
-	}
-	
-	/*private WorldGuardPlugin getWorldGuard() {
-        Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
-     
-        // WorldGuard may not be loaded
-        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
-            return null; // Maybe you want throw an exception instead
-        }
-        
-        return (WorldGuardPlugin) plugin;
-    }
-    
-    public boolean worldGuardEnabled() {
-    	if(getWorldGuard() == null) {
-    		return false;
-    	} else {
-    		return true;
-    	}
-    }*/
 	
     public boolean reloadAllConfigs() {
     	// Load all the needed config files
@@ -558,7 +400,7 @@ public class SafeCreeper extends JavaPlugin {
 					
 					// Check permissions
 					if(sender instanceof Player) {
-						if(!hasPermission((Player) sender, "safecreeper.command.config.set")) {
+						if(!getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.config.set")) {
 							sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 							return true;
 						}
@@ -656,7 +498,7 @@ public class SafeCreeper extends JavaPlugin {
 					
 					// Check permissions
 					if(sender instanceof Player) {
-						if(!hasPermission((Player) sender, "safecreeper.command.config.get")) {
+						if(!getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.config.get")) {
 							sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 							return true;
 						}
@@ -736,14 +578,14 @@ public class SafeCreeper extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "safecreeper.command.reload")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.reload")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
 				}
 				
 				// Setup permissions
-				setupPermissions();
+				setupPermissionsManager();
 				
 				// Load all the config files again
 				log.info("[SafeCreeper] Loading config files...");
@@ -770,14 +612,14 @@ public class SafeCreeper extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "safecreeper.command.reloadperms")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.reloadperms")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
 				}
 				
 				// Setup permissions
-				setupPermissions();
+				setupPermissionsManager();
 				
 				// Show a succes message
 				sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] " + ChatColor.GREEN + "Permissions reloaded!");
@@ -793,7 +635,7 @@ public class SafeCreeper extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "safecreeper.command.checkupdates")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.checkupdates")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -823,7 +665,6 @@ public class SafeCreeper extends JavaPlugin {
 						sender.sendMessage(ChatColor.GOLD + "path " + ChatColor.WHITE + ": The value path. Example: CreeperControl.Enabled");
 						sender.sendMessage(ChatColor.GOLD + "world " + ChatColor.WHITE + ": The world name");
 						sender.sendMessage(ChatColor.GOLD + "value " + ChatColor.WHITE + ": The new value. A boolean, integer or string.");
-						
 						return true;
 					}
 					
@@ -843,7 +684,6 @@ public class SafeCreeper extends JavaPlugin {
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");
-					
 					return true;
 				}
 			}

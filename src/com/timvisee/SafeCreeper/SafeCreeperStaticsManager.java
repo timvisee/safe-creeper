@@ -1,4 +1,4 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
 public class SafeCreeperStaticsManager {
 

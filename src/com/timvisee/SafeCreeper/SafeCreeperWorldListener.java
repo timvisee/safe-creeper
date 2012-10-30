@@ -1,4 +1,4 @@
-package com.timvisee.SafeCreeper;
+package com.timvisee.safecreeper;
 
 //import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
