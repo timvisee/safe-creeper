@@ -1,0 +1,593 @@
+package com.timvisee.safecreeper.update;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.timvisee.safecreeper.SafeCreeper;
+
+public class FileUpdater {
+	
+	/**
+	 * Update all Safe Creeper files if there's any need for that
+	 */
+	public void updateFiles() {
+		// Update main config file
+		updateConfig();
+		
+		// Update the global config file
+		updateGlobalConfig();
+		
+		// Update the world configs
+		updateAllWorldsConfig();
+	}
+	
+	/**
+	 * Check if a config file is up-to-date
+	 * @param f the config file
+	 * @return true if it's up-to-date
+	 */
+	public boolean isConfigUpToDate(File f) {
+		// Check if the file exists
+		if(!f.exists())
+			return false;
+		
+		// Load the shops file
+		YamlConfiguration c = new YamlConfiguration();
+		try {
+			c.load(f);
+		} catch (FileNotFoundException e) {
+			System.out.println("[SafeCreeper] Error while loading config file!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("[SafeCreeper] Error while loading config file!");
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			System.out.println("[SafeCreeper] Error while loading config file!");
+			e.printStackTrace();
+		}
+		
+		return isConfigUpToDate(c);
+	}
+	
+	/**
+	 * Check if the config is up-to-date
+	 * @param c the config to check
+	 * @return true if it's up-to-date
+	 */
+	public boolean isConfigUpToDate(Configuration c) {
+		String pluginVer = SafeCreeper.instance.getDescription().getVersion();
+		String configVer = c.getString("version", "0.1");
+		
+		// If the config files equals to the config version, return true
+		return (!isOlderVersion(pluginVer, configVer));
+	}
+	
+	public void updateConfig() {
+		// Get the global config file
+		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		
+		// Check if the file is up-to-date, if so, cancel the update progress
+		if(isConfigUpToDate(c))
+			return;
+		
+		System.out.println("[SafeCreeper] Updating the Safe Creeper config file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the current plugin and config versions
+		String pluginVer = SafeCreeper.instance.getDescription().getVersion();
+		String configVer = c.getString("version", "0.1");
+		
+		// Load the default global config file 
+		YamlConfiguration defc = new YamlConfiguration();
+		try {
+			defc.load(SafeCreeper.instance.getResource("config.yml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+		
+		// Make sure the default config file is loaded
+		if(defc == null)
+			return;
+		
+		// Backup the current file version, so it won't be lost if something goes wrong
+		backupConfig();
+		
+		// Create a new config file
+		FileConfiguration newc = new YamlConfiguration();
+		
+		// Loop through all the config file items to update the file
+		Set<String> keys = defc.getConfigurationSection("").getKeys(true);
+		for(String k : keys) {
+			
+			if(k.equalsIgnoreCase("version"))
+				continue;
+			
+			if(!defc.isSet(k)) {
+				newc.createSection(k);
+				
+			} else if(defc.isBoolean(k)) {
+				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
+				
+			} else if(defc.isDouble(k)) {
+				newc.set(k, c.getDouble(k, defc.getDouble(k)));
+				
+			} else if(defc.isInt(k)) {
+				newc.set(k, c.getInt(k, defc.getInt(k)));
+				
+			} else if(defc.isItemStack(k)) {
+				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
+				
+			} else if(defc.isList(k)) {
+				newc.set(k, c.getList(k, defc.getList(k)));
+				
+			} else if(defc.isLong(k)) {
+				newc.set(k, c.getLong(k, defc.getLong(k)));
+				
+			} else if(defc.isOfflinePlayer(k)) {
+				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
+				
+			} else if(defc.isString(k)) {
+				newc.set(k, c.getString(k, defc.getString(k)));
+				
+			} else if(defc.isVector(k)) {
+				newc.set(k, c.getVector(k, defc.getVector(k)));
+				
+			} else if(defc.isConfigurationSection(k)) {
+				newc.createSection(k);
+			}
+		}
+		
+		// Update the version number in the config file
+		newc.set("version", pluginVer);
+		
+		// Add some description to the config file
+		newc.options().header("Safe Creeper Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper");
+		
+		// Save the config file
+		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
+		try {
+			newc.save(configFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		
+		System.out.println("[SafeCreeper] Safe Creeper config file updated, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	/**
+	 * Update a config
+	 * @param c the config to update
+	 */
+	public void updateGlobalConfig() {
+		// Get the global config file
+		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		
+		// Check if the file is up-to-date, if so, cancel the update progress
+		if(isConfigUpToDate(c))
+			return;
+		
+		System.out.println("[SafeCreeper] Updating the global config file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the current plugin and config versions
+		String pluginVer = SafeCreeper.instance.getDescription().getVersion();
+		String configVer = c.getString("version", "0.1");
+		
+		// Load the default global config file 
+		YamlConfiguration defc = new YamlConfiguration();
+		try {
+			defc.load(SafeCreeper.instance.getResource("global.yml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+		}
+		
+		// Make sure the default config file is loaded
+		if(defc == null)
+			return;
+		
+		// Backup the current file version, so it won't be lost if something goes wrong
+		backupGlobalConfig();
+		
+		// Create a new config file
+		FileConfiguration newc = new YamlConfiguration();
+		
+		// Loop through all the config file items to update the file
+		Set<String> keys = defc.getConfigurationSection("").getKeys(true);
+		for(String k : keys) {
+			
+			if(isOlderVersion("1.3", configVer)) {
+				
+				// Update the old 'EnableBetweenLevels' system to the new 'Locations' system
+				if(k.endsWith(".Locations")) {
+					newc.createSection(k);
+					
+					String controlName = k.replace(".Locations", "");
+					
+					if(c.isSet(controlName + ".EnableBetweenLevels.Enabled") && c.isSet(controlName + ".EnableBetweenLevels.Levels")) {
+						if(c.getBoolean(controlName + ".EnableBetweenLevels.Enabled", false)) {
+							String levelsString = c.getString(controlName + ".EnableBetweenLevels.Levels", "0-256");
+							newc.set(controlName + ".Locations.Levels." + levelsString + ".Enabled", true);
+							continue;
+						}
+					}
+				}
+				
+				// Update the old FoodLock'er in the PlayerControl
+				if(k.equals("PlayerControl.FoodMeter.CanIncrease")) {
+					newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					continue;
+					
+				} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
+					newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					continue;
+				}
+			}
+			
+			
+			if(k.equalsIgnoreCase("version"))
+				continue;
+			
+			if(!defc.isSet(k)) {
+				newc.createSection(k);
+				
+			} else if(defc.isBoolean(k)) {
+				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
+				
+			} else if(defc.isDouble(k)) {
+				newc.set(k, c.getDouble(k, defc.getDouble(k)));
+				
+			} else if(defc.isInt(k)) {
+				newc.set(k, c.getInt(k, defc.getInt(k)));
+				
+			} else if(defc.isItemStack(k)) {
+				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
+				
+			} else if(defc.isList(k)) {
+				newc.set(k, c.getList(k, defc.getList(k)));
+				
+			} else if(defc.isLong(k)) {
+				newc.set(k, c.getLong(k, defc.getLong(k)));
+				
+			} else if(defc.isOfflinePlayer(k)) {
+				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
+				
+			} else if(defc.isString(k)) {
+				newc.set(k, c.getString(k, defc.getString(k)));
+				
+			} else if(defc.isVector(k)) {
+				newc.set(k, c.getVector(k, defc.getVector(k)));
+				
+			} else if(defc.isConfigurationSection(k)) {
+				newc.createSection(k);
+			}
+		}
+		
+		// Update the version number in the config file
+		newc.set("version", pluginVer);
+		
+		// Add some description to the config file
+		newc.options().header("Global Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper");
+		
+		// Save the config file
+		SafeCreeper.instance.getConfigManager().setGlobalConfig(newc);
+		SafeCreeper.instance.getConfigManager().saveGlobalConfig();
+
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		
+		System.out.println("[SafeCreeper] Global config file updated, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	public void updateAllWorldsConfig() {
+		List<String> configWorlds = SafeCreeper.instance.getConfigManager().listConfigWorlds();
+		for(String w : configWorlds)
+			updateWorldConfig(w);
+	}
+	
+	/**
+	 * Update a config
+	 * @param c the config to update
+	 */
+	public void updateWorldConfig(String w) {
+		// Get the global config file
+		FileConfiguration c = SafeCreeper.instance.getConfigManager().getWorldConfig(w);
+		FileConfiguration globalc = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		
+		// Check if the file is up-to-date, if so, cancel the update progress
+		if(isConfigUpToDate(c))
+			return;
+		
+		System.out.println("[SafeCreeper] Updating the world config '" + w + "' file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the current plugin and config versions
+		String pluginVer = SafeCreeper.instance.getDescription().getVersion();
+		String configVer = c.getString("version", "0.1");
+		
+		// Backup the current file version, so it won't be lost if something goes wrong
+		backupWorldConfig(w);
+		
+		// Create a new config file
+		FileConfiguration newc = new YamlConfiguration();
+		
+		// Loop through all the config file items to update the file
+		Set<String> keys = c.getConfigurationSection("").getKeys(true);
+		for(String k : keys) {
+			
+			if(isOlderVersion("1.3", configVer)) {
+				
+				// Update the old 'EnableBetweenLevels' system to the new 'Locations' system
+				if(k.endsWith(".EnableBetweenLevels")) {
+					
+					String controlName = k.replace(".EnableBetweenLevels", "");
+					
+					newc.createSection(controlName + ".Locations");
+					
+					if(c.getBoolean(controlName + ".EnableBetweenLevels.Enabled", false)) {
+						String levelsString = c.getString(controlName + ".EnableBetweenLevels.Levels", "0-256");
+						newc.set(controlName + ".Locations.Levels." + levelsString + ".Enabled", true);
+					}
+					continue;
+					
+				} else if(k.contains(".EnableBetweenLevels")) {
+					continue;
+				}
+				
+				// Update the old FoodLock'er in the PlayerControl
+				if(k.equals("PlayerControl.LockFoodmeter")) {
+					newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", true));
+					newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", true));
+					continue;
+				}
+			}
+			
+			
+			if(k.equalsIgnoreCase("version"))
+				continue;
+			
+			if(!globalc.isSet(k)) {
+				newc.createSection(k);
+				
+			} else if(globalc.isBoolean(k)) {
+				newc.set(k, c.getBoolean(k, globalc.getBoolean(k)));
+				
+			} else if(globalc.isDouble(k)) {
+				newc.set(k, c.getDouble(k, globalc.getDouble(k)));
+				
+			} else if(globalc.isInt(k)) {
+				newc.set(k, c.getInt(k, globalc.getInt(k)));
+				
+			} else if(globalc.isItemStack(k)) {
+				newc.set(k, c.getItemStack(k, globalc.getItemStack(k)));
+				
+			} else if(globalc.isList(k)) {
+				newc.set(k, c.getList(k, globalc.getList(k)));
+				
+			} else if(globalc.isLong(k)) {
+				newc.set(k, c.getLong(k, globalc.getLong(k)));
+				
+			} else if(globalc.isOfflinePlayer(k)) {
+				newc.set(k, c.getOfflinePlayer(k, globalc.getOfflinePlayer(k)));
+				
+			} else if(globalc.isString(k)) {
+				newc.set(k, c.getString(k, globalc.getString(k)));
+				
+			} else if(globalc.isVector(k)) {
+				newc.set(k, c.getVector(k, globalc.getVector(k)));
+				
+			} else if(globalc.isConfigurationSection(k)) {
+				newc.createSection(k);
+			}
+		}
+		
+		// Update the version number in the config file
+		newc.set("version", pluginVer);
+		
+		// Add some description to the config file
+		newc.options().header("World Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper");
+		
+		// Save the config file
+		SafeCreeper.instance.getConfigManager().setWorldConfig(w, newc);
+		SafeCreeper.instance.getConfigManager().saveWorldConfig(w);
+
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		
+		System.out.println("[SafeCreeper] World config '" + w + "' file updated, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	public void backupConfig() {
+		System.out.println("[SafeCreeper] Creating backup of Safe Creeper config file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the global config file
+		FileConfiguration c = SafeCreeper.instance.getConfig();
+		
+		// Get the current config version
+		String configVer = c.getString("version", "0.1");
+		
+		// Get the path to copy the file to
+		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
+		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "config.yml");
+		
+		// Make sure the parent dirs exists
+		((File) new File(backupFile.getParent())).mkdirs();
+		
+		// Copy the config file to it's backup location
+		copy(configFile, backupFile);
+		
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		System.out.println("[SafeCreeper] Safe Creeper config backup created, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	public void backupGlobalConfig() {
+		System.out.println("[SafeCreeper] Creating backup of global config file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the global config file
+		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		
+		// Get the current config version
+		String configVer = c.getString("version", "0.1");
+		
+		// Get the path to copy the file to
+		File globalConfigFile = SafeCreeper.instance.getConfigManager().getGlobalConfigFile();
+		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "global.yml");
+		
+		// Make sure the parent dirs exists
+		((File) new File(backupFile.getParent())).mkdirs();
+		
+		// Copy the config file to it's backup location
+		copy(globalConfigFile, backupFile);
+		
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		System.out.println("[SafeCreeper] Global config backup created, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	public void backupWorldConfig(String w) {
+		System.out.println("[SafeCreeper] Creating backup of world config '" + w + "' file...");
+		
+		long t = System.currentTimeMillis();
+		
+		// Get the world config file
+		FileConfiguration c = SafeCreeper.instance.getConfigManager().getWorldConfig(w);
+		
+		// Get the current config version
+		String configVer = c.getString("version", "0.1");
+		
+		// Get the path to copy the file to
+		File worldConfigFile = SafeCreeper.instance.getConfigManager().getWorldConfigFile(w);
+		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "worlds" + File.separator + w + ".yml");
+		
+		// Make sure the parent dirs exists
+		((File) new File(backupFile.getParent())).mkdirs();
+		
+		// Copy the config file to it's backup location
+		copy(worldConfigFile, backupFile);
+		
+		// Calculate the load duration
+		long duration = System.currentTimeMillis() - t;
+		System.out.println("[SafeCreeper] World config '" + w + "' backup created, took " + String.valueOf(duration) + " ms!");
+	}
+	
+	/**
+	 * Check if a version number is older than the current plugin version number
+	 * @param pluginVer the current plugin version
+	 * @param checkVer the version to check
+	 * @return true if the version number is older
+	 */
+	private boolean isOlderVersion(String pluginVer, String checkVer) {
+        String s1 = normalisedVersion(pluginVer);
+        String s2 = normalisedVersion(checkVer);
+        int cmp = s1.compareTo(s2);
+        return (cmp > 0);
+    }
+	
+	/**
+	 * Check if a version number is newer than the current plugin version number
+	 * @param pluginVer the current plugin version
+	 * @param checkVer the version to check
+	 * @return true if the version number is newer
+	 */
+	private boolean isNewerVersion(String pluginVer, String checkVer) {
+        String s1 = normalisedVersion(pluginVer);
+        String s2 = normalisedVersion(checkVer);
+        int cmp = s1.compareTo(s2);
+        return (cmp < 0);
+    }
+	
+	/**
+	 * Check if a version number is the same as the current plugin version number
+	 * @param pluginVer the current plugin version
+	 * @param checkVer the version to check
+	 * @return true if the version number is the same
+	 */
+	private boolean isSameVersion(String pluginVer, String checkVer) {
+        String s1 = normalisedVersion(pluginVer);
+        String s2 = normalisedVersion(checkVer);
+        int cmp = s1.compareTo(s2);
+        return (cmp == 0);
+    }
+
+	/**
+	 * Normalize a version number (String)
+	 * @param ver version number
+	 * @return normalized version number
+	 */
+	private String normalisedVersion(String ver) {
+        return normalisedVersion(ver, ".", 4);
+    }
+
+	/**
+	 * Normalize a version number (String)
+	 * @param ver version number
+	 * @param sep seperation character
+	 * @param maxWidth max width
+	 * @return normalized version number
+	 */
+	private String normalisedVersion(String ver, String sep, int maxWidth) {
+        String[] split = Pattern.compile(sep, Pattern.LITERAL).split(ver);
+        StringBuilder sb = new StringBuilder();
+        
+        for (String s : split)
+            sb.append(String.format("%" + maxWidth + 's', s));
+        
+        return sb.toString();
+    }
+
+	private void copy(File f1, File f2) {
+		InputStream in = null;
+		try {
+			in = new FileInputStream(f1);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		copy(in, f2);
+	}
+
+	private void copy(InputStream in, File file) {
+		// Make sure the input isn't null
+		if(in == null)
+			return;
+		
+	    try {
+	        OutputStream out = new FileOutputStream(file);
+	        byte[] buf = new byte[1024];
+	        int len;
+	        while((len=in.read(buf))>0){
+	            out.write(buf,0,len);
+	        }
+	        out.close();
+	        in.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+}
