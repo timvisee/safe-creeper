@@ -308,7 +308,6 @@ public class SafeCreeperEntityListener implements Listener {
 			return;
 		
 		Entity e = event.getEntity();
-		DamageCause lastDamageCause = e.getLastDamageCause().getCause();
 		Location l = e.getLocation();
 		World w = l.getWorld();
 		
@@ -320,20 +319,25 @@ public class SafeCreeperEntityListener implements Listener {
 		// Play the effects for the control
 		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Died", l);
 		
-		if(!lastDamageCause.equals(DamageCause.ENTITY_EXPLOSION)) {
-			if(e instanceof Creeper) {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "ExplodeOnDeath", false, true, l)) {
-					boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "CostumExplosionStrength.Enabled", false, true, l);
-					boolean destroyWorld = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "DestroyWorld", true, true, l);
-					int costumExplosionStrength = SafeCreeper.instance.getConfigManager().getOptionInt(w, "CreeperControl", "CostumExplosionStrength.ExplosionStrength", 3, true, l);
-					
-					if(!destroyWorld)
-						w.createExplosion(l, 0);
-					else
-						if(!costumExplosionStrengthEnabled)
-							w.createExplosion(l, 3);
+		// The last damage cause variable may not be null!
+		if(e.getLastDamageCause().getCause() != null) {
+			DamageCause lastDamageCause = e.getLastDamageCause().getCause();
+			
+			if(!lastDamageCause.equals(DamageCause.ENTITY_EXPLOSION)) {
+				if(e instanceof Creeper) {
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "ExplodeOnDeath", false, true, l)) {
+						boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "CostumExplosionStrength.Enabled", false, true, l);
+						boolean destroyWorld = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "DestroyWorld", true, true, l);
+						int costumExplosionStrength = SafeCreeper.instance.getConfigManager().getOptionInt(w, "CreeperControl", "CostumExplosionStrength.ExplosionStrength", 3, true, l);
+						
+						if(!destroyWorld)
+							w.createExplosion(l, 0);
 						else
-							w.createExplosion(l, costumExplosionStrength);
+							if(!costumExplosionStrengthEnabled)
+								w.createExplosion(l, 3);
+							else
+								w.createExplosion(l, costumExplosionStrength);
+					}
 				}
 			}
 		}

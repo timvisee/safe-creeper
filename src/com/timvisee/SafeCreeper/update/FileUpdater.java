@@ -236,11 +236,11 @@ public class FileUpdater {
 				
 				// Update the old FoodLock'er in the PlayerControl
 				if(k.equals("PlayerControl.FoodMeter.CanIncrease")) {
-					newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					newc.set("PlayerControl.FoodMeter.CanIncrease", !c.getBoolean("PlayerControl.LockFoodmeter", !defc.getBoolean(k)));
 					continue;
 					
 				} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
-					newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					newc.set("PlayerControl.FoodMeter.CanDecrease", !c.getBoolean("PlayerControl.LockFoodmeter", !defc.getBoolean(k)));
 					continue;
 				}
 			}
@@ -358,8 +358,8 @@ public class FileUpdater {
 				
 				// Update the old FoodLock'er in the PlayerControl
 				if(k.equals("PlayerControl.LockFoodmeter")) {
-					newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", true));
-					newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", true));
+					newc.set("PlayerControl.FoodMeter.CanIncrease", !c.getBoolean("PlayerControl.LockFoodmeter", false));
+					newc.set("PlayerControl.FoodMeter.CanDecrease", !c.getBoolean("PlayerControl.LockFoodmeter", false));
 					continue;
 				}
 			}

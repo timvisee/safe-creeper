@@ -1,0 +1,919 @@
+# This is the global settings for all the worlds, if a world have his own settings file it will overwrite these settings for the world.
+
+# Creepers (mob)
+CreeperControl:
+    Enabled: true
+    DestroyWorld: false
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    AlwaysPowered: false
+    ExplodeOnDeath: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    PoweredByLightning: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Bat (mob)
+BatControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 6
+        MaxHealth: 6
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Blazes (mob)
+BlazeControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Cave Spiders (mob)
+CaveSpiderControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 12
+        MaxHealth: 12
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Chickens (mob)
+ChickenControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 4
+        MaxHealth: 4
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Cows (mob)
+CowControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# EnderDragon (mob)
+EnderDragonControl:
+    Enabled: true
+    DestroyWorld: false
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 200
+        MaxHealth: 200
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Enderman (mob)
+EndermanControl:
+    Enabled: false
+    CanPlaceBlock: false
+    CanPickupBlock: false
+    # If an endermen wants to pickup a block, and he can't, don't break the block but the endermen get a clone of that block in his hands
+    CanCloneBlock: true
+    # If an endermen wants to place a block, and he can't, don't place anything but remove the holding block out of his hands
+    ClearHandsOnPlace: true
+    DropItemOnDeath: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 40
+        MaxHealth: 40
+    CanDrown: true
+    CanTeleport: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Ghasts (mob)
+GhastControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Giants (mob)
+GiantControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 100
+        MaxHealth: 100
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Iron Glolems (mob)
+IronGolemControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnForVillageDefence: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 100
+        MaxHealth: 100
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Magma Cubes (mob)
+MagmaCubeControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CanDrown: true
+    SplitIntoCostumAmount:
+        Enabled: false
+        SplitIntoMin: 2
+        SplitIntoMax: 4
+    CanSplit: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Mooshrooms (mob)
+MushroomCowControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Ocelots and cats (mob)
+OcelotControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanDrown: true
+    CanBeTamed: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Pigs (mob)
+PigControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    TurnIntoPigZombieOnLightning: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Zombie Pigmans (mob)
+PigZombieControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromLightning : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Player (player)
+PlayerControl:
+    Enabled: false
+    DamagePlayers: true
+    DamageMobs: true
+    CanSleep: true
+    CanCreateNetherPortal: true
+    CanCreateEndPortal: true
+    CanCreateOtherPortal: true
+    CanDrown: true
+    FoodMeter:
+        CanIncrease: true
+        CanDecrease: true
+    KeepXPOnDeath: true
+    DropXPOnDeath: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Sheeps (mob)
+SheepControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CanDrown: true
+    RegrowWool: true
+    CanEatGrass: true
+    CanBeDyed: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Silverfishes (mob)
+SilverfishControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Skeletons (mob)
+SkeletonControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnAsJockey : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Slimes (mob)
+SlimeControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CanDrown: true
+    CanSplit: true
+    SplitIntoCostumAmount:
+        Enabled: false
+        SplitIntoMin: 2
+        SplitIntoMax: 4
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Snow Glolems (mob)
+SnowmanControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 6
+        MaxHealth: 6
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Spiders (mob)
+SpiderControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Squids (mob)
+SquidControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Villagers (mob)
+VillagerControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Witch (mob)
+WitchControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 26
+        MaxHealth: 26
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Wither (mob)
+WitherControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 300
+        MaxHealth: 300
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Wolves (mob)
+WolfControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CanDrown: true
+    CanBeTamed: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Zombies (mob)
+ZombieControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    CanBreakDoor: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Other Mobs (unknown mobs, with no control)
+OtherMobControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnAsJockey: true
+        CanSpawnFromLightning: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromLightning: true
+        CanSpawnForVillageDefence: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Fireballs (projectile from Ghast)
+FireballControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Wither Skulls (projectile from Wither)
+WitherSkullControl:
+    Enabled: false
+    DestroyWorld: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# TNT blocks (block)
+TNTControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 4
+    TNTPriming:
+        CanBePrimedByFire: true
+        CanBePrimedByOther: true
+    PrimedTNTLimit:
+        Enabled: false
+        Radius: 32
+        MaxPrimedInRadius: 48
+        MaxPrimedInWorld: -1
+    CanPlaceTNT: true
+    CanBreakTNT: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Fire
+FireControl:
+    Enabled: false
+    EnableBlockFire: true
+    FireSpread: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Flint and Steel (player tool)
+FlintAndSteelControl:
+    Enabled: false
+    EnableFlintAndSteel: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Lightning (weather)
+LightningControl:
+    Enabled: false
+    IgniteBlocks: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Water (liquid)
+WaterControl:
+    Enabled: false
+    CanPlaceWater: true
+    WaterSpread: true
+    PlayerDrowinng: true
+    MobDowning: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Lava (liquid)
+LavaControl:
+    Enabled: false
+    LavaFire: true
+    CanPlaceLava: true
+    LavaSpread: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Other (unknown) explosions (explosion)
+OtherExplosions:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+version: '1.3.1'
