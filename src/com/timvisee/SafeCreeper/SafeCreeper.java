@@ -21,40 +21,47 @@ import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.MobArenaHandler;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.timvisee.safecreeper.Metrics.Graph;
+import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityManager;
+import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
+import com.timvisee.safecreeper.handler.TVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
-import com.timvisee.safecreeper.update.FileUpdater;
-import com.timvisee.safecreeper.update.UpdateChecker;
+import com.timvisee.safecreeper.util.SCFileUpdater;
+import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SafeCreeper extends JavaPlugin {
-	public static final Logger log = Logger.getLogger("Minecraft");
+	// Loggers
+	private SCLogger logger;
 	
 	// Safe Creeper static instance
 	public static SafeCreeper instance;
 	
 	// Listeners
-	private final SafeCreeperBlockListener blockListener = new SafeCreeperBlockListener();
-	private final SafeCreeperEntityListener entityListener = new SafeCreeperEntityListener();
-	private final SafeCreeperPlayerListener playerListener = new SafeCreeperPlayerListener();
-	private final SafeCreeperWorldListener worldListener = new SafeCreeperWorldListener();
+	private final SCBlockListener blockListener = new SCBlockListener();
+	private final SCEntityListener entityListener = new SCEntityListener();
+	private final SCPlayerListener playerListener = new SCPlayerListener();
+	private final SCWorldListener worldListener = new SCWorldListener();
+	private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
 	
 	// Config file and folder paths
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
 	// Managers and Handlers
+	private TVNLibHandler tvnlHandler;
 	private PermissionsManager pm;
-	private SafeCreeperConfigManager cm = null;
+	private SCConfigManager cm = null;
 	private SCLivingEntityManager lem;
+	private SCLivingEntityReviveManager lerm;
 	private MobArenaHandler maHandler;
 	private LikeabossManager labHandler;
-	private SafeCreeperStaticsManager statics = new SafeCreeperStaticsManager();
+	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
 	public boolean isUpdateAvailable = false;
-	public String newestVersion = "1.0";
+	public String newestVersion = "0.1";
 	
 	// Debug Mode
 	boolean debug = false;
@@ -69,6 +76,12 @@ public class SafeCreeper extends JavaPlugin {
 	
 	public void onEnable() {
 		long t = System.currentTimeMillis();
+		
+		// Setup the Safe Creeper logger
+		setupSCLogger();
+		
+		// Setup the API
+		setupApi();
 		
 		// Define the plugin manager
 		PluginManager pm = getServer().getPluginManager();
@@ -88,15 +101,27 @@ public class SafeCreeper extends JavaPlugin {
 	    setupConfigManager();
 		
 		// Update all existing config files if they aren't up-to-date
-		((FileUpdater) new FileUpdater()).updateFiles();
+		((SCFileUpdater) new SCFileUpdater()).updateFiles();
+		
+		// Setup TVNativeLib
+		setupTVNLibHandler();
+		
+		/*boolean autoDownloadTVNLib =getConfig().getBoolean("autoDownloadTVNLib", false);
+		if(autoDownloadTVNLib) {
+			getSCLogger().info("Downloading and installing TVNLib...");
+			TVNLibHandler.downloadTVNLib();
+			getSCLogger().info("TVNLib succesfully downloaded and installed!");
+			setupTVNLibHandler();
+		}*/
 		
 		// Setup managers and handlers
 	    setupPermissionsManager();
 	    setupLivingEntityManager();
+	    setupLivingEntityReviveManager();
 	    setupMobArenaHandler();
 	    setupPVPArena();
 	    setupFactions();
-	    setupLabHandler();
+	    setupLabManager();
 		setupMetrics();
 		
 		// Register event listeners
@@ -104,44 +129,47 @@ public class SafeCreeper extends JavaPlugin {
 		pm.registerEvents(this.entityListener, this);
 		pm.registerEvents(this.playerListener, this);
 		pm.registerEvents(this.worldListener, this);
+		pm.registerEvents(this.tvnlListener, this);
 		
 		// Check for updates
 		checkUpdates();
 		
-		// Test - Beginning of custom mob abilities!
-		/*getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+		/* // Test - Beginning of custom mob abilities!
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {
 					List<Player> onlinePlayers = Arrays.asList(getServer().getOnlinePlayers());
 					if(onlinePlayers.size() > 0) {
-						Player p = onlinePlayers.get(0);
-						for(LivingEntity e : p.getWorld().getLivingEntities()) {
-							if(e instanceof Creature) {
-								/*Creature c = (Creature) e;
-								c.setTarget(p);* /
-								
-								//c.launchProjectile();
-								
-								if(getLivingEntityManager().isSCLivingEntity(e)) {
-									SCLivingEntity scle = getLivingEntityManager().getLivingEntity(e);
+						for(Player p : onlinePlayers) {
+							//Player p = onlinePlayers.get(0);
+							for(LivingEntity e : p.getWorld().getLivingEntities()) {
+								if(e instanceof Creature) {
+									/*Creature c = (Creature) e;
+									c.setTarget(p);* /
 									
-									if(scle.getLivingEntity().getLocation().distance(p.getLocation()) > 15)
-										continue;
+									//c.launchProjectile();
 									
-									scle.shootProjectile(p);
+									if(getLivingEntityManager().isSCLivingEntity(e)) {
+										SCLivingEntity scle = getLivingEntityManager().getLivingEntity(e);
+										
+										if(scle.getLivingEntity().getLocation().distance(p.getLocation()) > 15)
+											continue;
+										
+										scle.shootProjectile(p);
+									}
 								}
 							}
 						}
 					}
 				}
 			}, 20, 20);*/
-				
+		
 		// Plugin sucesfuly enabled, show console message
 		PluginDescriptionFile pdfFile = getDescription();
 		
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
 		
-		log.info("[SafeCreeper] Safe Creeper v" + pdfFile.getVersion() + " enabled, took " + String.valueOf(duration) + " ms!");
+		getSCLogger().info("Safe Creeper v" + pdfFile.getVersion() + " enabled, took " + String.valueOf(duration) + " ms!");
 	}
 	
 	public void onDisable() {
@@ -149,24 +177,46 @@ public class SafeCreeper extends JavaPlugin {
 		if(getLivingEntityManager() != null)
 			getLivingEntityManager().save();
 		
-		// Cancel all running tasks
-		getServer().getScheduler().cancelTasks(this);
+		// Cancel all running Safe Creeper tasks
+		getSCLogger().info("Cancelling all Safe Creeper tasks...");
+		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
+		getSCLogger().info("All Safe Creeper tasks cancelled!");
 		
 		// Plugin disabled, show console message
-		log.info("[SafeCreeper] Safe Creeper Disabled");
+		getSCLogger().info("Safe Creeper Disabled");
 	}
     
-	public void debug(String text) {
-		if(this.debug) {
-			log.info("[SafeCreeper] [Debug] " + text);
-		}
+	public String getVersion() {
+		return getDescription().getVersion();
+	}
+	
+	public void setupApi() {
+		// Setup API
+		SafeCreeperApi.setPlugin(this);
+	}
+	
+	public void setupSCLogger() {
+		this.logger = new SCLogger(Logger.getLogger("Minecraft"));
+	}
+	
+	public SCLogger getSCLogger() {
+		return this.logger;
+	}
+	
+	public void setupTVNLibHandler() {
+		// Setup TVNLib Handler
+		this.tvnlHandler = new TVNLibHandler(this);
+	}
+	
+	public TVNLibHandler getTVNLibHandler() {
+		return this.tvnlHandler;
 	}
 	
 	public void setupConfigManager() {
-		this.cm = new SafeCreeperConfigManager(this, globalConfigFile, worldConfigsFolder);
+		this.cm = new SCConfigManager(this, globalConfigFile, worldConfigsFolder);
 	}
 	
-	public SafeCreeperConfigManager getConfigManager() {
+	public SCConfigManager getConfigManager() {
 		return this.cm;
 	}
 	
@@ -187,7 +237,7 @@ public class SafeCreeper extends JavaPlugin {
 		return this.pm;
 	}
 	
-	public SafeCreeperStaticsManager getStaticsManager() {
+	public SCStaticsManager getStaticsManager() {
 		return this.statics;
 	}
 
@@ -208,12 +258,12 @@ public class SafeCreeper extends JavaPlugin {
         Plugin maPlugin = (MobArena) getServer().getPluginManager().getPlugin("MobArena");
         
         if (maPlugin == null) {
-        	log.info("[SafeCreeper] Disabling MobArena usage, MobArena not found.");
+        	getSCLogger().info("Disabling MobArena usage, MobArena not found.");
             return;
         }
  
         maHandler = new MobArenaHandler();
-        log.info("[SafeCreeper] Hooked into MobArena!");
+        getSCLogger().info("Hooked into MobArena!");
     }
     
     public MobArenaHandler getMobArenaHandler() {
@@ -224,25 +274,25 @@ public class SafeCreeper extends JavaPlugin {
         Plugin paPlugin = (PVPArena) getServer().getPluginManager().getPlugin("pvparena");
         
         if (paPlugin == null) {
-        	log.info("[SafeCreeper] Disabling PVPArena usage, PVPArena not found.");
+        	getSCLogger().info("Disabling PVPArena usage, PVPArena not found.");
             return;
         }
  
-        log.info("[SafeCreeper] Hooked into PVPArena!");
+        getSCLogger().info("Hooked into PVPArena!");
     }
    
     public void setupFactions() {
         Plugin fPlugin = (Plugin) getServer().getPluginManager().getPlugin("Factions");
         
         if (fPlugin == null) {
-        	log.info("[SafeCreeper] Disabling Factions usage, Factions not found.");
+        	getSCLogger().info("Disabling Factions usage, Factions not found.");
             return;
         }
  
-        log.info("[SafeCreeper] Hooked into Factions!");
+        getSCLogger().info("Hooked into Factions!");
     }
     
-    public void setupLabHandler() {
+    public void setupLabManager() {
     	this.labHandler = new LikeabossManager();
     }
     
@@ -258,14 +308,22 @@ public class SafeCreeper extends JavaPlugin {
     public SCLivingEntityManager getLivingEntityManager() {
     	return this.lem;
     }
+    
+    public void setupLivingEntityReviveManager() {
+    	this.lerm = new SCLivingEntityReviveManager();
+    }
+    
+    public SCLivingEntityReviveManager getLivingEntityReviveManager() {
+    	return this.lerm;
+    }
 	
 	public boolean checkUpdates() {
-		UpdateChecker scuc = new UpdateChecker(this);
+		SCUpdateChecker scuc = new SCUpdateChecker(this);
 		isUpdateAvailable = scuc.checkUpdates();
 		newestVersion = scuc.getLastVersion();
 		
 		if(isUpdateAvailable) {
-			log.info("[SafeCreeper] New version available, version " + newestVersion + ".");
+			getSCLogger().info("New version available, version " + newestVersion + ".");
 		}
 		
 		return isUpdateAvailable;
@@ -273,20 +331,20 @@ public class SafeCreeper extends JavaPlugin {
 	
 	public void checkConigFilesExist() throws Exception {
 		if(!getDataFolder().exists()) {
-			log.info("[SafeCreeper] Creating new Safe Creeper folder");
+			getSCLogger().info("Creating new Safe Creeper folder");
 			getDataFolder().mkdirs();
 		}
 		File configFile = new File(getDataFolder(), "config.yml");
 		if(!configFile.exists()) {
-			log.info("[SafeCreeper] Generating new config file");
+			getSCLogger().info("Generating new config file");
 			copy(getResource("config.yml"), configFile);
 		}
 		if(!globalConfigFile.exists()) {
-			log.info("[SafeCreeper] Generating new global file");
+			getSCLogger().info("Generating new global file");
 			copy(getResource("global.yml"), globalConfigFile);
 		}
 		if(!worldConfigsFolder.exists()) {
-			log.info("[SafeCreeper] Generating new 'worlds' folder");
+			getSCLogger().info("Generating new 'worlds' folder");
 			worldConfigsFolder.mkdirs();
 			copy(getResource("worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
 			copy(getResource("worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));

@@ -16,6 +16,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Projectile;
+import org.bukkit.entity.TNTPrimed;
 
 import com.garbagemule.MobArena.framework.Arena;
 import com.massivecraft.factions.Board;
@@ -25,7 +27,7 @@ import com.timvisee.safecreeper.SafeCreeper;
 
 import net.slipcor.pvparena.api.*;
 
-public class SafeCreeperConfigManager {
+public class SCConfigManager {
 	
 	public static SafeCreeper p;
 
@@ -34,14 +36,14 @@ public class SafeCreeperConfigManager {
 	private FileConfiguration globalConfig;
 	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<String, FileConfiguration>();
 
-	public SafeCreeperConfigManager(SafeCreeper instance) {
+	public SCConfigManager(SafeCreeper instance) {
 		p = instance;
 		
 		// Instantly setup the manager after construction it
 		setup();
 	}
 	
-	public SafeCreeperConfigManager(SafeCreeper instance, File globalConfigFile, File worldConfigsFolder) {
+	public SCConfigManager(SafeCreeper instance, File globalConfigFile, File worldConfigsFolder) {
 		p = instance;
 		
 		this.globalConfigFile = globalConfigFile;
@@ -73,6 +75,15 @@ public class SafeCreeperConfigManager {
 	    return (FileConfiguration) YamlConfiguration.loadConfiguration(file);
 	}
     
+	/**
+	 * Reload all the configs
+	 */
+	public void reloadAllConfigs() {
+		// Reload all the configs
+		reloadGlobalConfig();
+		reloadWorldConfigs();
+	}
+	
 	/**
 	 * Reload the global config file
 	 * @return
@@ -167,7 +178,7 @@ public class SafeCreeperConfigManager {
      * Reload all world config files
      * @return true if succeed
      */
-    public boolean reloadWorldConfigs() {
+    public void reloadWorldConfigs() {
     	// Load all the world config files
     	// Clear the world config files variable first
     	long t = System.currentTimeMillis();
@@ -187,8 +198,6 @@ public class SafeCreeperConfigManager {
         
     	long duration = System.currentTimeMillis() - t;
     	System.out.println("[SafeCreeper] " + String.valueOf(this.worldConfigs.size()) + " world configs loaded, took " + duration + " ms!");
-
-        return true;
     }
     
     /**
@@ -1648,6 +1657,15 @@ public class SafeCreeperConfigManager {
      */
     private List<String> configGetKeys(String w, String node, List<String> def) {
 		if(worldConfigExist(w)) {
+			// Make sure the keys won't return null
+			try {
+				getWorldConfig(w).getConfigurationSection(node).getKeys(false);
+			} catch(NullPointerException ex) {
+				return new ArrayList<String>();
+			}
+			if(getWorldConfig(w).getConfigurationSection(node).getKeys(false) == null)
+				return new ArrayList<String>();
+			
 			// Get all the keys
 			List<String> keys = new ArrayList<String>(getWorldConfig(w).getConfigurationSection(node).getKeys(false));
 			
@@ -1668,20 +1686,36 @@ public class SafeCreeperConfigManager {
 	}
 	
     public String getControlName(Entity e) {
-    	if(e instanceof LivingEntity) {
+    	return getControlName(e, "OtherControl");
+    }
+    
+    public String getControlName(Entity e, String def) {
+    	if(e instanceof LivingEntity || e instanceof Projectile) {
     		switch(e.getType()) {
 	    	case IRON_GOLEM:
 	    		return "IronGolemControl";
+	    	case SNOWMAN:
+	    		return "SnowmanControl";
 	    	case OCELOT:
 	    		return "OcelotControl";
 	    	case PLAYER:
 	    		return "PlayerControl";
+	    	case FIREBALL:
+	    	case SMALL_FIREBALL:
+	    		return "FireballControl";
+	    	case WITHER_SKULL:
+	    		return "WitherSkullControl";
 	    	default:
 	    		return e.getType().getName().trim().replace(" ", "") + "Control";
 	    	}
     	}
+    	
+    	if(e instanceof TNTPrimed)
+    		return "TNTControl";
+    	
     	//return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
-    	return "OtherControl";
+    	// Return the default control name
+    	return def;
     }
 	
     public boolean isValidControl(String controlName) {

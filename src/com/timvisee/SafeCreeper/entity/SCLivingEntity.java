@@ -75,6 +75,7 @@ public class SCLivingEntity {
 		return shootProjectile(e.getLocation());
 	}
 	
+	@SuppressWarnings("unused")
 	public Projectile shootProjectile(Location target) {
 		// Test for custom mob abilities
 		
@@ -91,7 +92,7 @@ public class SCLivingEntity {
 		spawn.setY(spawn.getY()+3);
 		Vector v = tl.toVector().subtract(spawn.toVector()).normalize();
 		
-		int arrows = Math.round(1);
+		int arrows = Math.round(10);
 		
 		/*for (int i = 0; i < arrows; i++) {
 			SmallFireball sn = (SmallFireball) w.spawnEntity(spawn, EntityType.SMALL_FIREBALL);
@@ -127,7 +128,7 @@ public class SCLivingEntity {
 			sn.setVelocity(v);
 			sn.setShooter((LivingEntity) le);
 			return sn;
-		}
+		}*/
 		
 		/*v.add(new Vector(0, 0.05, 0));
 		
@@ -135,8 +136,8 @@ public class SCLivingEntity {
 			TNTPrimed sn = (TNTPrimed) w.spawnEntity(spawn, EntityType.PRIMED_TNT);
 			// 0f -> 12.0f for real acurracy
 			sn.setVelocity(v);
-			/*sn.setShooter((LivingEntity) le);*/
-			/*return sn;* /
+			/*sn.setShooter((LivingEntity) le);* /
+			//return sn;
 		}*/
 		
 		return null;

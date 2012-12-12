@@ -19,11 +19,11 @@ public class LikeabossManager {
 		Likeaboss lab = (Likeaboss) SafeCreeper.instance.getServer().getPluginManager().getPlugin("Likeaboss");
         
         if(lab == null) {
-        	SafeCreeper.instance.log.info("[SafeCreeper] Disabling Likeaboss usage, Likeaboss not found.");
+        	SafeCreeper.instance.getSCLogger().info("Disabling Likeaboss usage, Likeaboss not found.");
         	this.labEnabled = false;
             return;
         }
-        SafeCreeper.instance.log.info("[SafeCreeper] Hooked into Likeaboss!");
+        SafeCreeper.instance.getSCLogger().info("Hooked into Likeaboss!");
         this.labEnabled = true;
 	}
 	

@@ -1,6 +1,6 @@
 package com.timvisee.safecreeper.manager;
 
-public class SafeCreeperStaticsManager {
+public class SCStaticsManager {
 
 	private int creeperExplosionsNerfed = 0;
 	private int TNTExplosionsNerfed = 0;

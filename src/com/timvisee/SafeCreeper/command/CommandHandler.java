@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.update.FileUpdater;
+import com.timvisee.safecreeper.util.SCFileUpdater;
 
 public class CommandHandler {
 	
@@ -214,12 +214,11 @@ public class CommandHandler {
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.YELLOW + "Reloading SafeCreeper...");
 				
-				// Reload the global and the world config files
-				SafeCreeper.instance.getConfigManager().reloadGlobalConfig();
-				SafeCreeper.instance.getConfigManager().reloadWorldConfigs();
+				// Reload all the configs
+				SafeCreeper.instance.getConfigManager().reloadAllConfigs();
 				
 				// Update all config files if they're out-dated
-				((FileUpdater) new FileUpdater()).updateFiles();
+				((SCFileUpdater) new SCFileUpdater()).updateFiles();
 				
 				// Reload all the entity data
 				if(SafeCreeper.instance.getLivingEntityManager() != null) {
@@ -255,66 +254,19 @@ public class CommandHandler {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!SafeCreeper.instance.getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.checkupdates")) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				// Setup permissions
-				sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
-				if(SafeCreeper.instance.checkUpdates()) {
-					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] " + ChatColor.GREEN + "New version found! (v" + SafeCreeper.instance.newestVersion + ")");
-				} else {
-					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] No new version found!");
-				}
-				return true;
-			}
 			
-			if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
-				if(args.length == 2) {
-					
-					if(args[1].equals("config") || args[1].equals("c")) {
-						// View the help
-						sender.sendMessage(ChatColor.GREEN + "==========[ SAFE CREEPER HELP ]==========");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config get global <path> " + ChatColor.WHITE + ": Get global config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config get world <world> <path> " + ChatColor.WHITE + ": Get world config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config set global <path> <value> " + ChatColor.WHITE + ": Set global config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config set world <world> <path> <value> " + ChatColor.WHITE + ": Set world config value");
-						sender.sendMessage(" ");
-						sender.sendMessage(ChatColor.GOLD + "path " + ChatColor.WHITE + ": The value path. Example: CreeperControl.Enabled");
-						sender.sendMessage(ChatColor.GOLD + "world " + ChatColor.WHITE + ": The world name");
-						sender.sendMessage(ChatColor.GOLD + "value " + ChatColor.WHITE + ": The new value. A boolean, integer or string.");
-						return true;
-					}
-					
-				} else {
-					// Check wrong command values
-					if(args.length != 1) {
-						sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");
-						sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-						return true;
-					}
-					
-					// View the help
-					sender.sendMessage(ChatColor.GREEN + "==========[ SAFE CREEPER HELP ]==========");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> " + ChatColor.WHITE + ": View help");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> config " + ChatColor.WHITE + ": Config command help");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");
-					return true;
-				}
+			
+			if(args[0].equalsIgnoreCase("butcher") || args[0].equalsIgnoreCase("b")) {
+				// Run the butcher command trough the butcher command class
+				return CommandButcher.onCommand(sender, cmd, commandLabel, args);
+				
+			} else if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
+				// Run the check command trough the check command class
+				return CommandCheck.onCommand(sender, cmd, commandLabel, args);
+				
+			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
+				// Run the help command trough the help command class
+				return CommandHelp.onCommand(sender, cmd, commandLabel, args);
 			}
 			
 			sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");

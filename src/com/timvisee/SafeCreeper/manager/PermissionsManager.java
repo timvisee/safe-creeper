@@ -233,7 +233,8 @@ public class PermissionsManager {
 			return false;
 		}
 	}
-	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<String> getGroups(Player p) {
 		if(!isEnabled()) {
 			// No permissions system is used, return an empty list
@@ -281,6 +282,27 @@ public class PermissionsManager {
 		default:
 			// Something went wrong, return an empty list to prevent problems
 			return new ArrayList<String>();
+		}
+	}
+	
+	public enum PermissionsSystemType {
+		NONE("None"),
+		PERMISSIONS_EX("Permissions Ex"),
+		PERMISSIONS_BUKKIT("Permissions Bukkit"),
+		B_PERMISSIONS("bPermissions"),
+		ESSENTIALS_GROUP_MANAGER("Essentials Group Manager"),
+		Z_PERMISSIONS("zPermissions"),
+		VAULT("Vault"),
+		PERMISSIONS("Permissions");
+		
+		public String name;
+		
+		PermissionsSystemType(String name) {
+			this.name = name;
+		}
+		
+		public String getName() {
+			return this.name;
 		}
 	}
 }

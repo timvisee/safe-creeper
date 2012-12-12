@@ -7,15 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -108,7 +104,7 @@ public class SCLivingEntityManager {
 		if(scle.getHealth() <= 0)
 			event.setDamage(le.getMaxHealth());
 		
-		// Test / Debuging
+		// Test / Debuging (health messages)
 		// Show some health messages to the player
 		/*if(event instanceof EntityDamageByEntityEvent) {
 			EntityDamageByEntityEvent eventEntity = (EntityDamageByEntityEvent) event;
