@@ -12,8 +12,11 @@ enableUpdateCheckerOnStartup: true
 # Set if a message is send to players with permission when they join if there's an update available.
 sendMessageWhenUpdateAvailable: true
 
+# Settings for TVNLib
+autoDownloadTVNLib: false
+
 # This are the file/folder paths where files are saved
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.3.1'
+version: ''

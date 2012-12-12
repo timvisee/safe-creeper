@@ -9,6 +9,11 @@ CreeperControl:
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -17,10 +22,25 @@ CreeperControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: true
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
@@ -30,7 +50,7 @@ CreeperControl:
     DamageMobs: true
     PoweredByLightning: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -45,15 +65,25 @@ BatControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 6
         MaxHealth: 6
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -68,10 +98,20 @@ BlazeControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
@@ -79,7 +119,7 @@ BlazeControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -94,17 +134,27 @@ CaveSpiderControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 12
         MaxHealth: 12
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -120,15 +170,25 @@ ChickenControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 4
         MaxHealth: 4
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -143,15 +203,25 @@ CowControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -161,6 +231,14 @@ EnderDragonControl:
     DestroyWorld: false
     EnableExplosionSound: true
     EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 2
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -169,17 +247,27 @@ EnderDragonControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 200
         MaxHealth: 200
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -201,10 +289,20 @@ EndermanControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 40
         MaxHealth: 40
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTeleport: true
     CanTargetPlayer: true
@@ -212,7 +310,7 @@ EndermanControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -227,10 +325,20 @@ GhastControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
@@ -238,7 +346,7 @@ GhastControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -253,17 +361,27 @@ GiantControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 100
         MaxHealth: 100
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -280,17 +398,27 @@ IronGolemControl:
         CanSpawnFromSpawnerEgg: true
         CanSpawnForVillageDefence: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 100
         MaxHealth: 100
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -306,10 +434,25 @@ MagmaCubeControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     CanDrown: true
     SplitIntoCostumAmount:
         Enabled: false
@@ -321,7 +464,7 @@ MagmaCubeControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -336,15 +479,25 @@ MushroomCowControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -359,10 +512,20 @@ OcelotControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanBeTamed: true
     CanTargetPlayer: true
@@ -370,7 +533,7 @@ OcelotControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -385,16 +548,26 @@ PigControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     TurnIntoPigZombieOnLightning: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -410,17 +583,27 @@ PigZombieControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -440,7 +623,7 @@ PlayerControl:
     KeepXPOnDeath: true
     DropXPOnDeath: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -455,10 +638,20 @@ SheepControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     RegrowWool: true
     CanEatGrass: true
@@ -466,7 +659,7 @@ SheepControl:
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -481,17 +674,27 @@ SilverfishControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -507,10 +710,20 @@ SkeletonControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
@@ -518,7 +731,7 @@ SkeletonControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -534,10 +747,20 @@ SlimeControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanSplit: true
     SplitIntoCostumAmount:
@@ -549,7 +772,7 @@ SlimeControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -565,16 +788,26 @@ SnowmanControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 6
         MaxHealth: 6
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -589,17 +822,27 @@ SpiderControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -614,14 +857,24 @@ SquidControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -636,15 +889,26 @@ VillagerControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
+    CanTrade: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -659,10 +923,20 @@ WitchControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 26
         MaxHealth: 26
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
@@ -670,7 +944,7 @@ WitchControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -692,10 +966,20 @@ WitherControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 300
         MaxHealth: 300
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
@@ -718,10 +1002,20 @@ WolfControl:
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanBeTamed: true
     CanTargetPlayer: true
@@ -729,7 +1023,7 @@ WolfControl:
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -745,10 +1039,20 @@ ZombieControl:
         CanSpawnFromSpawnerEgg: true
         CanSpawnForVillageInvasion: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
@@ -756,7 +1060,7 @@ ZombieControl:
     DamageMobs: true
     CanBreakDoor: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -779,17 +1083,35 @@ OtherMobControl:
         CanSpawnForVillageDefence: true
         CanSpawnForVillageInvasion: true
         CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0.5
+        MaxDelay: 1.5
+        RememberTarget: true
     CanDrown: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
-        Enabled: true
+        Enabled: false
         Triggers: {}
     Locations: {}
 
@@ -801,6 +1123,9 @@ FireballControl:
     EnableExplosionSmoke: true
     DamagePlayers: true
     DamageMobs: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 1
     Effects:
         Enabled: true
         Triggers: {}
@@ -812,7 +1137,7 @@ WitherSkullControl:
     DestroyWorld: true
     CostumExplosionStrength:
         Enabled: false
-        ExplosionStrength: 3
+        ExplosionStrength: 1
     EnableExplosionSound: true
     EnableExplosionSmoke: true
     DamagePlayers: true
@@ -831,6 +1156,11 @@ TNTControl:
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 4
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     TNTPriming:
         CanBePrimedByFire: true
         CanBePrimedByOther: true
@@ -911,9 +1241,58 @@ OtherExplosions:
     DestroyWorld: true
     EnableExplosionSound: true
     EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     Effects:
         Enabled: true
         Triggers: {}
     Locations: {}
 
-version: '1.3.1'
+# Other, for unknown entities
+OtherControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnAsJockey: true
+        CanSpawnFromLightning: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromLightning: true
+        CanSpawnForVillageDefence: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+version: ''
