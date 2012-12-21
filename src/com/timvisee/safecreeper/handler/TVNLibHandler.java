@@ -2,24 +2,16 @@ package com.timvisee.safecreeper.handler;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
-
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.tvnlib.TVNLib;
@@ -31,8 +23,8 @@ public class TVNLibHandler {
 	public static TVNLibApi api;
 	private static final String TVNLIB_PLUGIN_NAME = "TVNLib";
 	
-	public TVNLibHandler(Plugin plugin) {
-		this.plugin = plugin;
+	public TVNLibHandler(Plugin instance) {
+		plugin = instance;
 		setup();
 	}
 	

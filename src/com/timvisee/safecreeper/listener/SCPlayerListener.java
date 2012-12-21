@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
@@ -28,7 +29,7 @@ public class SCPlayerListener implements Listener {
 		Player  p = event.getPlayer();
 		Location l = event.getRespawnLocation();
 		World w = l.getWorld();
-
+		
 		// Check if mobs are able to spawn
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(p);
 		if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
@@ -110,11 +111,23 @@ public class SCPlayerListener implements Listener {
 		Location l = p.getLocation();
 		
 		if(p.isOp())
-			if(SafeCreeper.instance.isUpdateAvailable)
-				p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] " + ChatColor.GREEN + "New version found! (v" + SafeCreeper.instance.newestVersion + ")");
+			if(SafeCreeper.instance.isUpdateAvailable) {
+				p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] " + ChatColor.GREEN + "New version available! (v" + SafeCreeper.instance.newestVersion + ")");
+				p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Download: " + ChatColor.BLUE + " " + ChatColor.UNDERLINE + "http://dev.bukkit.org/server-mods/safe-creeper/");
+			}
 		
 		// Play effects
 		SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "Join", l);
+	}
+	
+	@EventHandler
+	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+		Player p = event.getPlayer();
+		Location l = p.getLocation();
+		World w = l.getWorld();
+		
+		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanPickupItems", true, true, l))
+			event.setCancelled(true);
 	}
 	
 	public boolean hasBypassPermission(Player player, String controlName, String bypassName, boolean def) {

@@ -20,4 +20,4 @@ OtherExplosions:
     EnableExplosionSound: true
     EnableExplosionSmoke: true
 
-version: ''
+version: '1.3.4'

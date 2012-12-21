@@ -1678,6 +1678,11 @@ public class SCConfigManager {
 			return keys;
 		}
 			
+		if(getGlobalConfig().getConfigurationSection(node).getKeys(false) == null)
+			return def;
+		if(getGlobalConfig().getConfigurationSection(node).getKeys(false).size() == 0)
+			return def;
+		
 		// Get all the keys
 		List<String> keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
 		if(keys.size() == 0)

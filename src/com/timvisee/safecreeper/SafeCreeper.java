@@ -129,7 +129,10 @@ public class SafeCreeper extends JavaPlugin {
 		pm.registerEvents(this.entityListener, this);
 		pm.registerEvents(this.playerListener, this);
 		pm.registerEvents(this.worldListener, this);
-		pm.registerEvents(this.tvnlListener, this);
+		
+		// Register the TVNLibListener if the TVNLib listener plugin is installed
+		if(getTVNLibHandler().isEnabled())
+			pm.registerEvents(this.tvnlListener, this);
 		
 		// Check for updates
 		checkUpdates();

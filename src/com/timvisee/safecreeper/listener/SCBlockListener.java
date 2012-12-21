@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.listener;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -19,10 +20,11 @@ public class SCBlockListener implements Listener {
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
 		Block b = event.getBlock();
+		Material bt = b.getType();
 		Location l = b.getLocation();
 		World w = event.getBlock().getWorld();
 		
-		switch(b.getType()) {
+		switch(bt) {
 		case WATER:
 		case STATIONARY_WATER:
 			// Could a player place water
@@ -45,23 +47,29 @@ public class SCBlockListener implements Listener {
 				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "CanPlaceTNT", true, true, l))
 					event.setCancelled(true);
 			break;
+			
+		default:
+			break;
 		}
 	}
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event) {
 		Block b = event.getBlock();
+		Material bt = b.getType();
 		Location l = b.getLocation();
 		World w = event.getBlock().getWorld();
 		
-		switch(b.getType()) {
+		switch(bt) {
 		case TNT:
 			// Could a player break a TNT block
 			if(!hasBypassPermission(event.getPlayer(), "TNTControl", "CanBreakTNT", false))
 				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "CanBreakTNT", true, true, l))
 					event.setCancelled(true);
 			break;
+			
 		default:
+			break;
 		}
 	}
 
@@ -142,6 +150,9 @@ public class SCBlockListener implements Listener {
 			// This is lava, check if lava can spread
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "LavaSpread", true, true, l))
 				event.setCancelled(true);
+			break;
+		
+		default:
 			break;
 		}
 	}

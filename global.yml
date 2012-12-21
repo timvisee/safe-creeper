@@ -29,8 +29,11 @@ CreeperControl:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
-        Enabled: true
+        Enabled: false
         Chance: 25
         Radius: 0
         MinDelay: 0
@@ -44,6 +47,7 @@ CreeperControl:
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -72,14 +76,23 @@ BatControl:
         Enabled: false
         MinHealth: 6
         MaxHealth: 6
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -105,15 +118,24 @@ BlazeControl:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanLaunchProjectile: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -141,14 +163,23 @@ CaveSpiderControl:
         Enabled: false
         MinHealth: 12
         MaxHealth: 12
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -173,18 +204,38 @@ ChickenControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 4
         MaxHealth: 4
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -206,18 +257,38 @@ CowControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -254,14 +325,23 @@ EnderDragonControl:
         Enabled: false
         MinHealth: 200
         MaxHealth: 200
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -296,15 +376,24 @@ EndermanControl:
         Enabled: false
         MinHealth: 40
         MaxHealth: 40
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanTeleport: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -332,15 +421,24 @@ GhastControl:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanLaunchProjectile: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -368,14 +466,23 @@ GiantControl:
         Enabled: false
         MinHealth: 100
         MaxHealth: 100
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -405,14 +512,23 @@ IronGolemControl:
         Enabled: false
         MinHealth: 100
         MaxHealth: 100
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -441,13 +557,21 @@ MagmaCubeControl:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CustomExplosions:
         Enabled: false
         FlyingBlocks:
@@ -459,6 +583,7 @@ MagmaCubeControl:
         SplitIntoMin: 2
         SplitIntoMax: 4
     CanSplit: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -482,18 +607,38 @@ MushroomCowControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -515,19 +660,39 @@ OcelotControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanBeTamed: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -551,18 +716,38 @@ PigControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     TurnIntoPigZombieOnLightning: true
@@ -586,18 +771,33 @@ PigZombieControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -617,6 +817,7 @@ PlayerControl:
     CanCreateEndPortal: true
     CanCreateOtherPortal: true
     CanDrown: true
+    CanPickupItems: true
     FoodMeter:
         CanIncrease: true
         CanDecrease: true
@@ -641,21 +842,41 @@ SheepControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     RegrowWool: true
     CanEatGrass: true
     CanBeDyed: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -681,14 +902,23 @@ SilverfishControl:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -717,15 +947,24 @@ SkeletonControl:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanLaunchProjectile: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -754,19 +993,28 @@ SlimeControl:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanSplit: true
     SplitIntoCostumAmount:
         Enabled: false
         SplitIntoMin: 2
         SplitIntoMax: 4
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -795,14 +1043,23 @@ SnowmanControl:
         Enabled: false
         MinHealth: 6
         MaxHealth: 6
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanLaunchProjectile: true
     CanTargetPlayer: true
     CanTargetMob: true
@@ -829,14 +1086,23 @@ SpiderControl:
         Enabled: false
         MinHealth: 16
         MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -864,13 +1130,22 @@ SquidControl:
         Enabled: false
         MinHealth: 10
         MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -896,14 +1171,23 @@ VillagerControl:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     CanTrade: true
@@ -930,15 +1214,24 @@ WitchControl:
         Enabled: false
         MinHealth: 26
         MaxHealth: 26
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanLaunchProjectile: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -973,15 +1266,24 @@ WitherControl:
         Enabled: false
         MinHealth: 300
         MaxHealth: 300
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanLaunchProjectile: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1005,19 +1307,39 @@ WolfControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 8
         MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
     CanBeTamed: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1042,18 +1364,33 @@ ZombieControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1086,6 +1423,17 @@ OtherMobControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 3
@@ -1098,14 +1446,23 @@ OtherMobControl:
         Enabled: false
         MinHealth: 20
         MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     Reviving:
         Enabled: false
         Chance: 25
         Radius: 0
-        MinDelay: 0.5
+        MinDelay: 0
         MaxDelay: 1.5
         RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
     CanDrown: true
+    CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1140,6 +1497,7 @@ WitherSkullControl:
         ExplosionStrength: 1
     EnableExplosionSound: true
     EnableExplosionSmoke: true
+    CanPickupItems: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
@@ -1295,4 +1653,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: ''
+version: '1.3.4'
