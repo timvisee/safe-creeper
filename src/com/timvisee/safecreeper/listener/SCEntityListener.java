@@ -125,6 +125,7 @@ public class SCEntityListener implements Listener {
 				event.setCancelled(true);
 			break;
 			
+		case DEFAULT:
 		case NATURAL:
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnNaturally", true, true, l))
 				event.setCancelled(true);

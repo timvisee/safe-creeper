@@ -1699,17 +1699,26 @@ public class SCConfigManager {
     		switch(e.getType()) {
 	    	case IRON_GOLEM:
 	    		return "IronGolemControl";
+	    		
 	    	case SNOWMAN:
 	    		return "SnowmanControl";
+	    		
 	    	case OCELOT:
 	    		return "OcelotControl";
+	    		
 	    	case PLAYER:
 	    		return "PlayerControl";
+	    		
 	    	case FIREBALL:
 	    	case SMALL_FIREBALL:
 	    		return "FireballControl";
+	    		
+	    	case WITHER:
+	    		return "WitherControl";
+	    		
 	    	case WITHER_SKULL:
 	    		return "WitherSkullControl";
+	    		
 	    	default:
 	    		return e.getType().getName().trim().replace(" ", "") + "Control";
 	    	}
