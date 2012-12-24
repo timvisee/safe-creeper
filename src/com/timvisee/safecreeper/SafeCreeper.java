@@ -43,7 +43,7 @@ public class SafeCreeper extends JavaPlugin {
 	private final SCEntityListener entityListener = new SCEntityListener();
 	private final SCPlayerListener playerListener = new SCPlayerListener();
 	private final SCWorldListener worldListener = new SCWorldListener();
-	private final SCHaningBreakEvent hangingListener = new SCHaningBreakEvent();
+	private final SCHangingListener hangingListener = new SCHangingListener();
 	private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
 	
 	// Config file and folder paths
