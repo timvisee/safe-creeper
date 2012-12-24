@@ -119,39 +119,38 @@ public class SCFileUpdater {
 			if(k.equalsIgnoreCase("version"))
 				continue;
 			
-			if(!defc.isSet(k)) {
+			if(!defc.isSet(k))
 				newc.createSection(k);
 				
-			} else if(defc.isBoolean(k)) {
+			else if(defc.isBoolean(k))
 				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
 				
-			} else if(defc.isDouble(k)) {
+			else if(defc.isDouble(k))
 				newc.set(k, c.getDouble(k, defc.getDouble(k)));
-				
-			} else if(defc.isInt(k)) {
+			
+			else if(defc.isInt(k))
 				newc.set(k, c.getInt(k, defc.getInt(k)));
 				
-			} else if(defc.isItemStack(k)) {
+			else if(defc.isItemStack(k))
 				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
 				
-			} else if(defc.isList(k)) {
+			else if(defc.isList(k))
 				newc.set(k, c.getList(k, defc.getList(k)));
 				
-			} else if(defc.isLong(k)) {
+			else if(defc.isLong(k))
 				newc.set(k, c.getLong(k, defc.getLong(k)));
 				
-			} else if(defc.isOfflinePlayer(k)) {
+			else if(defc.isOfflinePlayer(k))
 				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
 				
-			} else if(defc.isString(k)) {
+			else if(defc.isString(k))
 				newc.set(k, c.getString(k, defc.getString(k)));
 				
-			} else if(defc.isVector(k)) {
+			else if(defc.isVector(k))
 				newc.set(k, c.getVector(k, defc.getVector(k)));
 				
-			} else if(defc.isConfigurationSection(k)) {
+			else if(defc.isConfigurationSection(k))
 				newc.createSection(k);
-			}
 		}
 		
 		// Update the version number in the config file
@@ -259,51 +258,76 @@ public class SCFileUpdater {
 			
 			// Update the old FoodLock'er in the PlayerControl
 			if(k.equals("PlayerControl.FoodMeter.CanIncrease")) {
-				newc.set("PlayerControl.FoodMeter.CanIncrease", !c.getBoolean("PlayerControl.LockFoodmeter", !defc.getBoolean(k)));
+				newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
 				continue;
 				
 			} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
-				newc.set("PlayerControl.FoodMeter.CanDecrease", !c.getBoolean("PlayerControl.LockFoodmeter", !defc.getBoolean(k)));
+				newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
 				continue;
 			}
 			
+			// Update the old 'KeepXPOnDeath' and 'DropXPOnDeath' from the PlayerControl
+			if(k.equals("PlayerControl.CustomDrops.XP.Enabled")) {
+				if(c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)) ||
+						c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k))) {
+					newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+					continue;
+				}
+				
+			} else if(k.equals("PlayerControl.CustomDrops.XP.KeepLevel")) {
+				newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
+				continue;
+				
+			} else if(k.equals("PlayerControl.CustomDrops.XP.KeepXPLevel")) {
+				newc.set("PlayerControl.CustomDrops.XP.KeepXPLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
+				continue;
+				
+			} else if(k.equals("PlayerControl.CustomDrops.XP.DropXP")) {
+				newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k)));
+				continue;
+			}
+			
+			// Update the old 'DropItemOnDeath' from the EndermanControl
+			if(k.equals("EndermanControl.CustomDrops.DropItemOnDeath")) {
+				newc.set("EndermanControl.CustomDrops.DropItemOnDeath", c.getBoolean("EndermanControl.DropItemOnDeath", defc.getBoolean(k)));
+				continue;
+			}
 			
 			if(k.equalsIgnoreCase("version"))
 				continue;
 			
-			if(!defc.isSet(k)) {
+			if(!defc.isSet(k))
 				newc.createSection(k);
 				
-			} else if(defc.isBoolean(k)) {
+			else if(defc.isBoolean(k))
 				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
 				
-			} else if(defc.isDouble(k)) {
+			else if(defc.isDouble(k))
 				newc.set(k, c.getDouble(k, defc.getDouble(k)));
 				
-			} else if(defc.isInt(k)) {
+			else if(defc.isInt(k))
 				newc.set(k, c.getInt(k, defc.getInt(k)));
 				
-			} else if(defc.isItemStack(k)) {
+			else if(defc.isItemStack(k))
 				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
 				
-			} else if(defc.isList(k)) {
+			else if(defc.isList(k))
 				newc.set(k, c.getList(k, defc.getList(k)));
 				
-			} else if(defc.isLong(k)) {
+			else if(defc.isLong(k))
 				newc.set(k, c.getLong(k, defc.getLong(k)));
 				
-			} else if(defc.isOfflinePlayer(k)) {
+			else if(defc.isOfflinePlayer(k))
 				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
 				
-			} else if(defc.isString(k)) {
+			else if(defc.isString(k))
 				newc.set(k, c.getString(k, defc.getString(k)));
 				
-			} else if(defc.isVector(k)) {
+			else if(defc.isVector(k))
 				newc.set(k, c.getVector(k, defc.getVector(k)));
 				
-			} else if(defc.isConfigurationSection(k)) {
+			else if(defc.isConfigurationSection(k))
 				newc.createSection(k);
-			}
 		}
 		
 		// Copy the effects list from the old files into the new one (They may not get lost!)
@@ -321,36 +345,35 @@ public class SCFileUpdater {
 
 				et = controlName + ".Effects.Triggers." + et; 
 				
-				if(c.isBoolean(et)) {
+				if(c.isBoolean(et))
 					newc.set(et, c.getBoolean(et, defc.getBoolean(et)));
 					
-				} else if(c.isDouble(et)) {
+				else if(c.isDouble(et))
 					newc.set(et, c.getDouble(et, defc.getDouble(et)));
 					
-				} else if(c.isInt(et)) {
+				else if(c.isInt(et))
 					newc.set(et, c.getInt(et, defc.getInt(et)));
 					
-				} else if(c.isItemStack(et)) {
+				else if(c.isItemStack(et))
 					newc.set(et, c.getItemStack(et, defc.getItemStack(et)));
 					
-				} else if(c.isList(et)) {
+				else if(c.isList(et))
 					newc.set(et, c.getList(et, defc.getList(et)));
 					
-				} else if(c.isLong(et)) {
+				else if(c.isLong(et))
 					newc.set(et, c.getLong(et, defc.getLong(et)));
 					
-				} else if(c.isOfflinePlayer(et)) {
+				else if(c.isOfflinePlayer(et))
 					newc.set(et, c.getOfflinePlayer(et, defc.getOfflinePlayer(et)));
 					
-				} else if(c.isString(et)) {
+				else if(c.isString(et))
 					newc.set(et, c.getString(et, defc.getString(et)));
 					
-				} else if(c.isVector(et)) {
+				else if(c.isVector(et))
 					newc.set(et, c.getVector(et, defc.getVector(et)));
 					
-				} else if(c.isConfigurationSection(et)) {
+				else if(c.isConfigurationSection(et))
 					newc.createSection(et);
-				}
 			}
 		}
 		
@@ -368,36 +391,35 @@ public class SCFileUpdater {
 
 				lc = controlName + ".Locations." + lc; 
 				
-				if(c.isBoolean(lc)) {
+				if(c.isBoolean(lc))
 					newc.set(lc, c.getBoolean(lc, defc.getBoolean(lc)));
 					
-				} else if(c.isDouble(lc)) {
+				else if(c.isDouble(lc))
 					newc.set(lc, c.getDouble(lc, defc.getDouble(lc)));
 					
-				} else if(c.isInt(lc)) {
+				else if(c.isInt(lc))
 					newc.set(lc, c.getInt(lc, defc.getInt(lc)));
 					
-				} else if(c.isItemStack(lc)) {
+				else if(c.isItemStack(lc))
 					newc.set(lc, c.getItemStack(lc, defc.getItemStack(lc)));
 					
-				} else if(c.isList(lc)) {
+				else if(c.isList(lc))
 					newc.set(lc, c.getList(lc, defc.getList(lc)));
 					
-				} else if(c.isLong(lc)) {
+				else if(c.isLong(lc))
 					newc.set(lc, c.getLong(lc, defc.getLong(lc)));
 					
-				} else if(c.isOfflinePlayer(lc)) {
+				else if(c.isOfflinePlayer(lc))
 					newc.set(lc, c.getOfflinePlayer(lc, defc.getOfflinePlayer(lc)));
 					
-				} else if(c.isString(lc)) {
+				else if(c.isString(lc))
 					newc.set(lc, c.getString(lc, defc.getString(lc)));
 					
-				} else if(c.isVector(lc)) {
+				else if(c.isVector(lc))
 					newc.set(lc, c.getVector(lc, defc.getVector(lc)));
 					
-				} else if(c.isConfigurationSection(lc)) {
+				else if(c.isConfigurationSection(lc))
 					newc.createSection(lc);
-				}
 			}
 		}
 		
@@ -481,43 +503,62 @@ public class SCFileUpdater {
 				}
 			}
 			
+			// Update the old 'KeepXPOnDeath' and 'DropXPOnDeath' from the PlayerControl
+			if(k.equals("PlayerControl.KeepXPOnDeath")) {
+				newc.set("PlayerControl.CustomDrops.Enabled", true);
+				newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+				newc.set("PlayerControl.CustomDrops.XP.KeepXP", c.getBoolean("PlayerControl.KeepXPOnDeath", globalc.getBoolean("PlayerControl.CustomDrops.XP.KeepXP")));
+				newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", globalc.getBoolean("PlayerControl.CustomDrops.XP.KeepLevel")));
+				continue;
+			} else if(k.equals("PlayerControl.DropXPOnDeath")) {
+				newc.set("PlayerControl.CustomDrops.Enabled", true);
+				newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+				newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", globalc.getBoolean("PlayerControl.CustomDrops.XP.DropXP")));
+				continue;
+			}
+			
+			// Update the old 'DropItemOnDeath' from the EndermanControl
+			if(k.equals("EndermanControl.DropItemOnDeath")) {
+				newc.set("PlayerControl.CustomDrops.Enabled", true);
+				newc.set("EndermanControl.CustomDrops.DropItemOnDeath", c.getBoolean("EndermanControl.DropItemOnDeath", globalc.getBoolean("EndermanControl.CustomDrops.DropItemOnDeath")));
+				continue;
+			}
 			
 			if(k.equalsIgnoreCase("version"))
 				continue;
 			
-			if(!globalc.isSet(k)) {
+			if(!globalc.isSet(k))
 				newc.createSection(k);
 				
-			} else if(globalc.isBoolean(k)) {
+			else if(globalc.isBoolean(k))
 				newc.set(k, c.getBoolean(k, globalc.getBoolean(k)));
 				
-			} else if(globalc.isDouble(k)) {
+			else if(globalc.isDouble(k))
 				newc.set(k, c.getDouble(k, globalc.getDouble(k)));
 				
-			} else if(globalc.isInt(k)) {
+			else if(globalc.isInt(k))
 				newc.set(k, c.getInt(k, globalc.getInt(k)));
 				
-			} else if(globalc.isItemStack(k)) {
+			else if(globalc.isItemStack(k))
 				newc.set(k, c.getItemStack(k, globalc.getItemStack(k)));
 				
-			} else if(globalc.isList(k)) {
+			else if(globalc.isList(k))
 				newc.set(k, c.getList(k, globalc.getList(k)));
 				
-			} else if(globalc.isLong(k)) {
+			else if(globalc.isLong(k))
 				newc.set(k, c.getLong(k, globalc.getLong(k)));
 				
-			} else if(globalc.isOfflinePlayer(k)) {
+			else if(globalc.isOfflinePlayer(k))
 				newc.set(k, c.getOfflinePlayer(k, globalc.getOfflinePlayer(k)));
 				
-			} else if(globalc.isString(k)) {
+			else if(globalc.isString(k))
 				newc.set(k, c.getString(k, globalc.getString(k)));
 				
-			} else if(globalc.isVector(k)) {
+			else if(globalc.isVector(k))
 				newc.set(k, c.getVector(k, globalc.getVector(k)));
 				
-			} else if(globalc.isConfigurationSection(k)) {
+			else if(globalc.isConfigurationSection(k))
 				newc.createSection(k);
-			}
 		}
 		
 		// Update the version number in the config file

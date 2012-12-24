@@ -1655,36 +1655,69 @@ public class SCConfigManager {
      * @param node the node to get the list from
      * @return the value
      */
-    private List<String> configGetKeys(String w, String node, List<String> def) {
+    @SuppressWarnings("unused")
+	private List<String> configGetKeys(String w, String node, List<String> def) {
 		if(worldConfigExist(w)) {
-			// Make sure the keys won't return null
-			try {
-				getWorldConfig(w).getConfigurationSection(node).getKeys(false);
-			} catch(NullPointerException ex) {
-				return new ArrayList<String>();
-			}
-			if(getWorldConfig(w).getConfigurationSection(node).getKeys(false) == null)
-				return new ArrayList<String>();
-			
-			// Get all the keys
-			List<String> keys = new ArrayList<String>(getWorldConfig(w).getConfigurationSection(node).getKeys(false));
-			
-			// If there was nothing in the world config files, get the ones from the global file
-			if(keys.size() == 0)
-				keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
-			
-			if(keys.size() == 0)
+			// Check if the world config file contains this node
+			if(!getWorldConfig(w).contains(node))
 				return def;
-			return keys;
-		}
 			
-		if(getGlobalConfig().getConfigurationSection(node).getKeys(false) == null)
-			return def;
-		if(getGlobalConfig().getConfigurationSection(node).getKeys(false).size() == 0)
+			if(!getWorldConfig(w).isConfigurationSection(node))
+				return def;
+			
+			// Get the keys list (the safe way)
+			List<String> keys = new ArrayList<String>();
+			try {
+				keys = new ArrayList<String>(getWorldConfig(w).getConfigurationSection(node).getKeys(false));
+			} catch(NullPointerException ex) {
+				return def;
+			}
+			
+			// Check if the global config file contains this node
+			if(!getGlobalConfig().contains(node))
+				return def;
+			
+			if(!getGlobalConfig().isConfigurationSection(node))
+				return def;
+			
+			// Get the keys list (the safe way)
+			List<String> keysGlobal = new ArrayList<String>();
+			try {
+				keysGlobal = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
+			} catch(NullPointerException ex) {
+				return def;
+			}
+			
+			// Return the values
+			if(keys == null) {
+				if(keysGlobal == null)
+					return def;
+				else
+					return keysGlobal;
+			} else {
+				if(keys.size() != 0)
+					return keys;
+				else
+					return keysGlobal;
+			}
+		}
+		
+		// Check if the config files contain this node
+		if(!getGlobalConfig().contains(node))
 			return def;
 		
-		// Get all the keys
-		List<String> keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
+		if(!getGlobalConfig().isConfigurationSection(node))
+			return def;
+		
+		// Get the key list (the safe way)
+		List<String> keys = new ArrayList<String>();
+		try {
+			keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
+		} catch(NullPointerException ex) {
+			return def;
+		}
+		
+		// Return the values
 		if(keys.size() == 0)
 			return def;
 		return keys;

@@ -32,6 +32,14 @@ CreeperControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -44,6 +52,9 @@ CreeperControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
@@ -79,6 +90,14 @@ BatControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -91,6 +110,9 @@ BatControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -121,6 +143,14 @@ BlazeControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -133,6 +163,9 @@ BlazeControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -166,6 +199,14 @@ CaveSpiderControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -178,6 +219,9 @@ CaveSpiderControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -222,6 +266,14 @@ ChickenControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -234,6 +286,9 @@ ChickenControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -275,6 +330,14 @@ CowControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -287,6 +350,9 @@ CowControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -328,6 +394,14 @@ EnderDragonControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -340,6 +414,9 @@ EnderDragonControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -360,7 +437,6 @@ EndermanControl:
     CanCloneBlock: true
     # If an endermen wants to place a block, and he can't, don't place anything but remove the holding block out of his hands
     ClearHandsOnPlace: true
-    DropItemOnDeath: false
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -379,6 +455,15 @@ EndermanControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        DropItemOnDeath: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -391,6 +476,9 @@ EndermanControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanTeleport: true
     CanPickupItems: true
@@ -424,6 +512,14 @@ GhastControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -436,6 +532,9 @@ GhastControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -469,6 +568,14 @@ GiantControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -481,6 +588,9 @@ GiantControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -515,6 +625,14 @@ IronGolemControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -527,6 +645,9 @@ IronGolemControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -560,6 +681,14 @@ MagmaCubeControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -572,6 +701,9 @@ MagmaCubeControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CustomExplosions:
         Enabled: false
         FlyingBlocks:
@@ -625,6 +757,14 @@ MushroomCowControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -637,6 +777,9 @@ MushroomCowControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -678,6 +821,14 @@ OcelotControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -690,6 +841,9 @@ OcelotControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: true
@@ -734,6 +888,14 @@ PigControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -746,6 +908,9 @@ PigControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -784,6 +949,14 @@ PigZombieControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -796,6 +969,9 @@ PigZombieControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -821,8 +997,16 @@ PlayerControl:
     FoodMeter:
         CanIncrease: true
         CanDecrease: true
-    KeepXPOnDeath: true
-    DropXPOnDeath: true
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            KeepLevel: false
+            KeepXP: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Effects:
         Enabled: false
         Triggers: {}
@@ -860,6 +1044,14 @@ SheepControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -872,6 +1064,9 @@ SheepControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     RegrowWool: true
     CanEatGrass: true
@@ -905,6 +1100,14 @@ SilverfishControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -917,6 +1120,9 @@ SilverfishControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -932,6 +1138,9 @@ SilverfishControl:
 SkeletonControl:
     Enabled: false
     Spawning:
+        SkeletonType:
+            Enabled: false
+            WitherSkeletonChance: 20
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
@@ -950,6 +1159,14 @@ SkeletonControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -962,6 +1179,9 @@ SkeletonControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -996,6 +1216,14 @@ SlimeControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1008,6 +1236,9 @@ SlimeControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanSplit: true
     SplitIntoCostumAmount:
@@ -1046,6 +1277,14 @@ SnowmanControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1058,6 +1297,9 @@ SnowmanControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanLaunchProjectile: true
@@ -1089,6 +1331,14 @@ SpiderControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1101,6 +1351,9 @@ SpiderControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -1133,6 +1386,14 @@ SquidControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1145,6 +1406,9 @@ SquidControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanPickupItems: true
     CanTargetPlayer: true
     CanTargetMob: true
@@ -1174,6 +1438,14 @@ VillagerControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1186,6 +1458,9 @@ VillagerControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -1217,6 +1492,14 @@ WitchControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1229,6 +1512,9 @@ WitchControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1269,6 +1555,14 @@ WitherControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1281,6 +1575,9 @@ WitherControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1325,6 +1622,14 @@ WolfControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1337,6 +1642,9 @@ WolfControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: true
@@ -1353,6 +1661,9 @@ WolfControl:
 ZombieControl:
     Enabled: false
     Spawning:
+        ZombieType:
+            Enabled: false
+            VillagerZombieChance: 20
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
@@ -1377,6 +1688,14 @@ ZombieControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1389,6 +1708,9 @@ ZombieControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -1449,6 +1771,14 @@ OtherMobControl:
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1461,6 +1791,9 @@ OtherMobControl:
             MaxDistance: 16
             BroadcastRevive: true
             BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -1653,4 +1986,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.3.5'
+version: '1.3.5.1'

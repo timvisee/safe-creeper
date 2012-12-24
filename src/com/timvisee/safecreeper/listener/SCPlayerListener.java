@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -25,8 +26,54 @@ import com.timvisee.safecreeper.entity.SCLivingEntity;
 public class SCPlayerListener implements Listener {
 	
 	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		Player p = event.getEntity();
+		Location l = p.getLocation();
+		World w = l.getWorld();
+		Random rand = new Random();
+		
+		// Handle the 'CustomDrops' feature
+		// Make sure the custom drops feature is enabled
+		if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.Enabled", false, true, l)) {
+			
+			// Should Safe Creeper overwrite the default drops
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.OverwriteDefaultDrops", false, true, l))
+				event.getDrops().clear();
+			
+			// Check if XP is enabled from the Custom Drops feature
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.Enabled", false, true, l)) {
+
+				// Should XP be dropped
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.DropXP", true, true, l))
+					event.setDroppedExp(0);
+				else {
+					
+					// Apply the drop chance
+					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.DropChance", 100, true, l);
+					if(((int) dropChance * 10) <= rand.nextInt(1000))
+						event.setDroppedExp(0);
+					
+					// Apply the drop multiplier
+					double xpMultiplier = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.Multiplier", 1, true, l);
+					if(xpMultiplier != 1 && xpMultiplier >= 0)
+						event.setDroppedExp((int) (event.getDroppedExp() * xpMultiplier));
+				}
+				
+				// Should XP be kept
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepXP", false, true, l))
+					event.setNewTotalExp(0);
+				else
+					event.setNewTotalExp(p.getTotalExperience());
+				
+				// Should XP levels be kept
+				event.setKeepLevel(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepLevel", false, true, l));
+			}
+		}
+	}
+	
+	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
-		Player  p = event.getPlayer();
+		Player p = event.getPlayer();
 		Location l = event.getRespawnLocation();
 		World w = l.getWorld();
 		

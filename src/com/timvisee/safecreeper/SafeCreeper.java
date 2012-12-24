@@ -43,6 +43,7 @@ public class SafeCreeper extends JavaPlugin {
 	private final SCEntityListener entityListener = new SCEntityListener();
 	private final SCPlayerListener playerListener = new SCPlayerListener();
 	private final SCWorldListener worldListener = new SCWorldListener();
+	private final SCHaningBreakEvent hangingListener = new SCHaningBreakEvent();
 	private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
 	
 	// Config file and folder paths
@@ -129,6 +130,7 @@ public class SafeCreeper extends JavaPlugin {
 		pm.registerEvents(this.entityListener, this);
 		pm.registerEvents(this.playerListener, this);
 		pm.registerEvents(this.worldListener, this);
+		pm.registerEvents(this.hangingListener, this);
 		
 		// Register the TVNLibListener if the TVNLib listener plugin is installed
 		if(getTVNLibHandler().isEnabled())
