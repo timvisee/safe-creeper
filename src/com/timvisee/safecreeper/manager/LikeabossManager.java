@@ -4,8 +4,8 @@ import org.bukkit.entity.Entity;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
-import cam.Likeaboss;
-import cam.entity.LabEntityManager;
+import com.mcdr.likeaboss.Likeaboss;
+import com.mcdr.likeaboss.entity.LabEntityManager;
 
 public class LikeabossManager {
 	
