@@ -4,8 +4,8 @@ import org.bukkit.entity.Entity;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
-import cam.Likeaboss;
-import cam.entity.LabEntityManager;
+import com.mcdr.likeaboss.LabAPI;
+import com.mcdr.likeaboss.Likeaboss;
 
 public class LikeabossManager {
 	
@@ -29,7 +29,7 @@ public class LikeabossManager {
 	
 	public boolean isBoss(Entity e) {
 		if(this.labEnabled)
-			return (LabEntityManager.getBoss(e) != null);
+			return (LabAPI.isBoss(e));
 		return false;
 	}
 }
