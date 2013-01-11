@@ -1753,6 +1753,9 @@ public class SCConfigManager {
 	    		return "WitherSkullControl";
 	    		
 	    	default:
+	    		if (e.getType()==null || e.getType().getName()==null) {
+	    			return "UnknownControl";
+	    		}
 	    		return e.getType().getName().trim().replace(" ", "") + "Control";
 	    	}
     	}
