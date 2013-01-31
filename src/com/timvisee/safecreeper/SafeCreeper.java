@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.io.OutputStream;
 
 import java.util.logging.Logger;
@@ -29,7 +30,7 @@ import com.timvisee.safecreeper.handler.TVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
 import com.timvisee.safecreeper.util.SCFileUpdater;
-import com.timvisee.safecreeper.util.SCUpdateChecker;
+import com.timvisee.safecreeper.util.UpdateChecker;
 
 public class SafeCreeper extends JavaPlugin {
 	// Loggers
@@ -61,8 +62,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
-	public boolean isUpdateAvailable = false;
-	public String newestVersion = "0.1";
+	private UpdateChecker uc = null;
 	
 	// Debug Mode
 	boolean debug = false;
@@ -77,12 +77,6 @@ public class SafeCreeper extends JavaPlugin {
 	
 	public void onEnable() {
 		long t = System.currentTimeMillis();
-		
-		// Setup the Safe Creeper logger
-		setupSCLogger();
-		
-		// Setup the API
-		setupApi();
 		
 		// Define the plugin manager
 		PluginManager pm = getServer().getPluginManager();
@@ -101,19 +95,80 @@ public class SafeCreeper extends JavaPlugin {
 		// Setup the config manager before all other managers, to make the file updater work
 	    setupConfigManager();
 		
+		// Initialize the update checker
+		setupUpdateChecker();
+		
+		// Check if any update exists
+		if(getConfig().getBoolean("updateChecker.enabled", true)) {
+			if(uc.isNewVersionAvailable()) {
+				final String newVer = uc.getNewestVersion();
+				System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
+				
+				// Auto install updates if enabled
+				if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
+					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
+						System.out.println("[SafeCreeper] The newest Safe Creeper version is not compatible with the current Bukkit version!");
+						System.out.println("[SafeCreeper] Please update to Bukkit " + uc.getRequiredBukkitVersion() + " or higher!");
+					} else {
+						// Check if already update installed
+						if(getUpdateChecker().isUpdateDownloaded())
+							System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
+						else {
+							// Download the update and show some status messages
+							System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
+							getUpdateChecker().downloadUpdate();
+							System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
+						}
+					}
+				} else {
+					// Auto installing updates not enabled, show a status message
+					System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
+				}
+			}
+		}
+		
+		// Scheduled update checker
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			public void run() {
+				if(getConfig().getBoolean("updateChecker.enabled", true)) {
+					getUpdateChecker().refreshUpdatesData();
+					if(uc.isNewVersionAvailable()) {
+						final String newVer = uc.getNewestVersion();
+						System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
+						
+						// Auto install updates if enabled
+						if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
+							if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
+								// Check if already update installed
+								if(getUpdateChecker().isUpdateDownloaded())
+									System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
+								else {
+									// Download the update and show some status messages
+									System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
+									getUpdateChecker().downloadUpdate();
+									System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
+								}
+							}
+						} else {
+							// Auto installing updates not enabled, show a status message
+							System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
+						}
+					}
+				}
+			}
+		}, 60 * 60 * 20, 60 * 60 * 20);
+		
+		// Setup the Safe Creeper logger
+		setupSCLogger();
+		
+		// Setup the API
+		setupApi();
+		
 		// Update all existing config files if they aren't up-to-date
 		((SCFileUpdater) new SCFileUpdater()).updateFiles();
 		
 		// Setup TVNativeLib
 		setupTVNLibHandler();
-		
-		/*boolean autoDownloadTVNLib =getConfig().getBoolean("autoDownloadTVNLib", false);
-		if(autoDownloadTVNLib) {
-			getSCLogger().info("Downloading and installing TVNLib...");
-			TVNLibHandler.downloadTVNLib();
-			getSCLogger().info("TVNLib succesfully downloaded and installed!");
-			setupTVNLibHandler();
-		}*/
 		
 		// Setup managers and handlers
 	    setupPermissionsManager();
@@ -135,9 +190,6 @@ public class SafeCreeper extends JavaPlugin {
 		// Register the TVNLibListener if the TVNLib listener plugin is installed
 		if(getTVNLibHandler().isEnabled())
 			pm.registerEvents(this.tvnlListener, this);
-		
-		// Check for updates
-		checkUpdates();
 		
 		/* // Test - Beginning of custom mob abilities!
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -187,6 +239,13 @@ public class SafeCreeper extends JavaPlugin {
 		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
 		getSCLogger().info("All Safe Creeper tasks cancelled!");
 		
+		// If any update was downloaded, install the update
+		if(getUpdateChecker().isUpdateDownloaded())
+			getUpdateChecker().installUpdate();
+		
+		// Remove all update files
+		getUpdateChecker().removeUpdateFiles();
+		
 		// Plugin disabled, show console message
 		getSCLogger().info("Safe Creeper Disabled");
 	}
@@ -198,6 +257,14 @@ public class SafeCreeper extends JavaPlugin {
 	public void setupApi() {
 		// Setup API
 		SafeCreeperApi.setPlugin(this);
+	}
+	
+	public void setupUpdateChecker() {
+		this.uc = new UpdateChecker();
+	}
+	
+	public UpdateChecker getUpdateChecker() {
+		return this.uc;
 	}
 	
 	public void setupSCLogger() {
@@ -322,18 +389,6 @@ public class SafeCreeper extends JavaPlugin {
     	return this.lerm;
     }
 	
-	public boolean checkUpdates() {
-		SCUpdateChecker scuc = new SCUpdateChecker(this);
-		isUpdateAvailable = scuc.checkUpdates();
-		newestVersion = scuc.getLastVersion();
-		
-		if(isUpdateAvailable) {
-			getSCLogger().info("New version available, version " + newestVersion + ".");
-		}
-		
-		return isUpdateAvailable;
-	}
-	
 	public void checkConigFilesExist() throws Exception {
 		if(!getDataFolder().exists()) {
 			getSCLogger().info("Creating new Safe Creeper folder");
@@ -342,21 +397,21 @@ public class SafeCreeper extends JavaPlugin {
 		File configFile = new File(getDataFolder(), "config.yml");
 		if(!configFile.exists()) {
 			getSCLogger().info("Generating new config file");
-			copy(getResource("config.yml"), configFile);
+			copyFile(getResource("config.yml"), configFile);
 		}
 		if(!globalConfigFile.exists()) {
 			getSCLogger().info("Generating new global file");
-			copy(getResource("global.yml"), globalConfigFile);
+			copyFile(getResource("global.yml"), globalConfigFile);
 		}
 		if(!worldConfigsFolder.exists()) {
 			getSCLogger().info("Generating new 'worlds' folder");
 			worldConfigsFolder.mkdirs();
-			copy(getResource("worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
-			copy(getResource("worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
+			copyFile(getResource("worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
+			copyFile(getResource("worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
 		}
 	}
 	
-	private void copy(InputStream in, File file) {
+	private void copyFile(InputStream in, File file) {
 	    try {
 	        OutputStream out = new FileOutputStream(file);
 	        byte[] buf = new byte[1024];
@@ -386,19 +441,25 @@ public class SafeCreeper extends JavaPlugin {
 		    graph.addPlotter(new Metrics.Plotter("Creeper Explosions") {
 	            @Override
 	            public int getValue() {
-	            	return statics.getCreeperExplosionsNerfed();
+	            	int i = statics.getCreeperExplosionsNerfed();
+	            	statics.setCreeperExplosionNerved(0);
+	            	return i;
 	            }
 		    });
 		    graph.addPlotter(new Metrics.Plotter("TNT Explosions") {
 	            @Override
 	            public int getValue() {
-	            	return statics.getTNTExplosionsNerfed();
+	            	int i = statics.getTNTExplosionsNerfed();
+	            	statics.setTNTExplosionNerved(0);
+	            	return i;
 	            }
 		    });
 		    graph.addPlotter(new Metrics.Plotter("TNT Damage") {
 	            @Override
 	            public int getValue() {
-	            	return statics.getTNTDamageNerfed();
+	            	int i = statics.getTNTDamageNerfed();
+	            	statics.setTNTDamageNerved(0);
+	            	return i;
 	            }
 		    });
 		    // Used permissions systems

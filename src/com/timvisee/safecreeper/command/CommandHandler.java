@@ -264,6 +264,10 @@ public class CommandHandler {
 				// Run the check command trough the check command class
 				return CommandCheck.onCommand(sender, cmd, commandLabel, args);
 				
+			} else if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
+				// Run the check command trough the check command class
+				return CommandInstallUpdate.onCommand(sender, cmd, commandLabel, args);
+				
 			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
 				// Run the help command trough the help command class
 				return CommandHelp.onCommand(sender, cmd, commandLabel, args);

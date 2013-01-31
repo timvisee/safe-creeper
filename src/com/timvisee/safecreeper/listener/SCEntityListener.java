@@ -8,7 +8,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.PortalType;
-import org.bukkit.SkullType;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -65,8 +65,8 @@ import org.bukkit.entity.WitherSkull;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.material.MaterialData;
-import org.bukkit.material.Skull;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -407,6 +407,15 @@ public class SCEntityListener implements Listener {
 			break;
 		}
 		
+		// Set if PigZombies should be (always) angry
+		if(e instanceof PigZombie) {
+			PigZombie pz = (PigZombie) e;
+			
+			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l))
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "AlwaysAngry", false, true, l))
+					pz.setAnger(2147483647);
+		}
+		
 		// Set if the entity can pickup items
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
@@ -438,8 +447,22 @@ public class SCEntityListener implements Listener {
 			
 			// Check if this feature is enabled
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.ZombieType.Enabled", false, true, l)) {
-				double villagerZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.ZombieType.VillagerZombieChance", 20, true, l);
+				double villagerZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.ZombieType.VillagerZombieChance", 10, true, l);
+				double giantZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.ZombieType.GiantZombieChance", 0, true, l);
+				
+				// Should the zombie be a villager?
 				zombie.setVillager(((int) villagerZombieChance * 10) > rand.nextInt(1000));
+				
+				// Should the zombie be a giant?
+				if(((int) giantZombieChance * 10) > rand.nextInt(1000)) {
+					// Save the location of the current zombie and remove the zombie from the world
+					Location giantLoc = zombie.getLocation();
+					zombie.remove();
+					
+					// Spawn the giant!
+					giantLoc.getWorld().spawnEntity(giantLoc, EntityType.GIANT);
+					return;
+				}
 			}
 		}
 		
@@ -719,9 +742,7 @@ public class SCEntityListener implements Listener {
 					}
 				}
 			}
-		} catch(NullPointerException ex) {
-			// The .getCause() function was probably null, ignore the error!
-		}
+		} catch(NullPointerException ex) { }
 		
 		// Handle the 'CustomDrops' feature
 		if(e instanceof LivingEntity) {
@@ -758,7 +779,8 @@ public class SCEntityListener implements Listener {
 				// Can this LivingEntity drop a skull
 				if(et == EntityType.CREEPER ||
 						et == EntityType.SKELETON ||
-						et == EntityType.ZOMBIE) {
+						et == EntityType.ZOMBIE ||
+						et == EntityType.PLAYER) {
 					
 					// Check if skulls should be dropped
 					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.Enabled", false, true, l)) {
@@ -778,34 +800,63 @@ public class SCEntityListener implements Listener {
 						// Check the chance
 						double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.Skull.Chance", 1, true, l);
 						if(((int) dropChance * 10) > rand.nextInt(1000)) {
-							SkullType skullType;
+							byte skullTypeData;
 							switch(et) {
 							case CREEPER:
-								skullType = SkullType.CREEPER;
+								skullTypeData = 4;
 								break;
 								
 							case SKELETON:
 								Skeleton skel = (Skeleton) le;
-								if(skel.getSkeletonType().equals(SkeletonType.WITHER))
-									skullType = SkullType.WITHER;
-								else
-									skullType = SkullType.SKELETON;
+								switch(skel.getSkeletonType()) {
+								case NORMAL:
+									skullTypeData = 0;
+									break;
+								
+								case WITHER:
+									skullTypeData = 1;
+									break;
+									
+								default:
+									skullTypeData = 0;
+								}
 								break;
 								
 							case ZOMBIE:
-								skullType = SkullType.ZOMBIE;
+								skullTypeData = 2;
 								break;
-								
+							
+							case PLAYER:
 							default:
-								skullType = SkullType.PLAYER;
+								skullTypeData = 3;
 								break;
-								
 							}
 							
+							// Get the drop amount
 							int dropAmount = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomDrops.Skull.Amount", 1, true, l);
-							ItemStack skullStack = new ItemStack(Material.SKULL_ITEM);
-							Skull skull = new Skull(Material.SKULL_ITEM);
-							skullStack = skull.toItemStack(dropAmount);
+							if(dropAmount < 0)
+								dropAmount = Math.max(dropAmount, 0);
+							
+							// Create the skull stack and set the type of the skull
+							ItemStack skullStack = new ItemStack(397, dropAmount, (short) skullTypeData);
+							
+							// Drop the players head if the died entity was a player
+							if(et.equals(EntityType.PLAYER)) {
+								// Should player heads be dropped
+								boolean playerHead = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.PlayerHead", true, true, l);
+								if(playerHead) {
+									// Get the player to drop the skull from
+									Player p = (Player) e;
+									
+									// Set the skulls owner (to the died player)
+								    SkullMeta meta = (SkullMeta) skullStack.getItemMeta();
+								    meta.setOwner(p.getName());
+								    skullStack.setItemMeta(meta);
+								}
+							}
+							
+							// Add the skull to the dropped items list
+							event.getDrops().add(skullStack);
 						}
 					}
 				}
@@ -1016,6 +1067,7 @@ public class SCEntityListener implements Listener {
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "EnableExplosionSound", true, true, l))
 				createExplosionSound(w, l);
 			
+			// TODO: Real explosion effects need to be added here!
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "EnableExplosionSmoke", true, true, l))
 				w.playEffect(l, Effect.SMOKE, 3);
 			
@@ -1028,22 +1080,25 @@ public class SCEntityListener implements Listener {
 			}
 		}
 		
-		// Custom Explosions - Falling Blocks
+		// Custom Explosions - Flying Blocks
 		boolean customExplosionsEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.Enabled", false, true, l);
 		if(customExplosionsEnabled) {
 			boolean flyingBlocksEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.FlyingBlocks.Enabled", false, true, l);
 			if(flyingBlocksEnabled) {
-				Random rand = new Random();
-				for(Block entry : event.blockList()) {
-					Location entryLoc = entry.getLocation();
-					int flyingBlockChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
-					if(flyingBlockChance > rand.nextInt(100)) {
-						Vector entryVec = entryLoc.toVector().subtract(l.toVector()).normalize();
-						entryVec.add(new Vector(0, 0.6, 0));
-						
-						FallingBlock fb = entry.getWorld().spawnFallingBlock(entryLoc.add(0, 0.6, 0), entry.getTypeId(), entry.getData());
-						fb.setVelocity(entryVec);
-						fb.setDropItem(false);
+				boolean destroyWorld = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.DestroyWorld", false, true, l);
+				if(destroyWorld) {
+					Random rand = new Random();
+					for(Block entry : event.blockList()) {
+						Location entryLoc = entry.getLocation();
+						int flyingBlockChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
+						if(flyingBlockChance > rand.nextInt(100)) {
+							Vector entryVec = entryLoc.toVector().subtract(l.toVector()).normalize();
+							entryVec.add(new Vector(0, 0.6, 0));
+							
+							FallingBlock fb = entry.getWorld().spawnFallingBlock(entryLoc.add(0, 0.6, 0), entry.getTypeId(), entry.getData());
+							fb.setVelocity(entryVec);
+							fb.setDropItem(false);
+						}
 					}
 				}
 			}
@@ -1119,12 +1174,21 @@ public class SCEntityListener implements Listener {
 			}
 		}
 		
+		// Are sheeps able to eat grass
 		if(e instanceof Sheep) {
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CanEatGrass", true, true, l)) {
 				event.setCancelled(true);
 			}
 			
+			// Play effects for sheeps eating grass
 			SafeCreeper.instance.getConfigManager().playControlEffects("SheepControl", "EatGrass", l);
+		}
+		
+		// Prevent withers from destroying blocks
+		if(e instanceof Wither) {
+			final boolean destroyBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WitherControl", "DestroyWorld", true, true, l);
+			if(!destroyBlocks)
+				event.setCancelled(true);
 		}
 	}
 	
@@ -1373,9 +1437,7 @@ public class SCEntityListener implements Listener {
 		if(loc == null || w == null)
 			return;
 		
-		// Create the explosion
-		SafeCreeper.instance.disableOtherExplosions = true;
-		w.createExplosion(loc, 0, false);
-		SafeCreeper.instance.disableOtherExplosions = false;
+		// Play the explosion sound
+		w.playSound(loc, Sound.EXPLODE, 1, 1);
 	}
 }

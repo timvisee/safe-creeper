@@ -35,11 +35,21 @@ public class TVNLibHandler {
         	return;
         }
         
-        // Is the plugin itself enabled
-        if(!TVNLibApi.isEnabled()) {
+        // The TVNLib plugin has to be enabled
+        try {
+        	if(!TVNLibApi.isEnabled()) {
+            	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
+            	return;
+        	}
+        } catch(Exception ex) {
+        	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
+        	return;
+        } catch(NoClassDefFoundError ex) {
         	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
         	return;
         }
+        
+        // Show a status message
         plugin.getLogger().info("[" + plugin.getName() + "] Hooked into TVNLib v" + TVNLibApi.getVersion() + "!");
 	}
 	
@@ -173,10 +183,16 @@ public class TVNLibHandler {
 	
 	public boolean isEnabled() {
 		Plugin plugin = SafeCreeper.instance.getServer().getPluginManager().getPlugin(TVNLIB_PLUGIN_NAME);
-        if (plugin == null && !(plugin instanceof TVNLib))
-        	return false;
-        else
-        	return TVNLibApi.isEnabled();
+		try {
+			if (plugin == null && !(plugin instanceof TVNLib))
+	        	return false;
+	        else
+	        	return TVNLibApi.isEnabled();
+		} catch(Exception ex) {
+			return false;
+		} catch(NoClassDefFoundError ex) {
+			return false;
+		}
 	}
 	
 	public boolean livingEntityTargetTo(LivingEntity livingEntity, double x, double y, double z) {
@@ -187,6 +203,7 @@ public class TVNLibHandler {
 		return TVNLibApi.livingEntityTargetTo(livingEntity, x, y, z, speed);
 	}
 	
+	@Deprecated
 	public void dressMonster(LivingEntity monster, Material head, Material chest, Material legs, Material boots, Material weapon) {
 		TVNLibApi.setMonsterEquipment(monster, head, chest, legs, boots, weapon);
 	}

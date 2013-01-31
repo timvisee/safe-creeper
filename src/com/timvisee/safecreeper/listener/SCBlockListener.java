@@ -4,7 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowman;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -12,6 +15,7 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.EntityBlockFormEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
@@ -73,6 +77,27 @@ public class SCBlockListener implements Listener {
 		}
 	}
 
+	@EventHandler
+	public void onEntityBlockForm(EntityBlockFormEvent event) {
+		World w = event.getBlock().getWorld();
+		Location l = event.getBlock().getLocation();
+		Entity e = event.getEntity();
+		BlockState newState = event.getNewState();
+		
+		// Get the current control name
+		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		
+		// Is the entity a snowman that can spawn snow layers
+		if(e instanceof Snowman) {
+			// The snowman tries to spawn snow
+			if(newState.getType().equals(Material.SNOW)) {
+				final boolean canCreateSnow = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanCreateSnow", true, true, l);
+				if(!canCreateSnow)
+					event.setCancelled(true);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void onBlockBurn(BlockBurnEvent event) {
 		Block b = event.getBlock();

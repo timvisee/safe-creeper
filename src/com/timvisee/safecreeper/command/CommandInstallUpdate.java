@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.util.UpdateChecker;
 
-public class CommandCheck {
+public class CommandInstallUpdate {
 	
-	public static boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+public static boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		
 		if(commandLabel.equalsIgnoreCase("safecreeper") || commandLabel.equalsIgnoreCase("sc")) {
 			if(args.length == 0) {
@@ -19,7 +19,7 @@ public class CommandCheck {
 				return true;
 			}
 		
-			if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
+			if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
 				// Check wrong command values
 				if(args.length != 1) {
 					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
@@ -28,7 +28,7 @@ public class CommandCheck {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!SafeCreeper.instance.getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.checkupdates")) {
+					if(!SafeCreeper.instance.getPermissionsManager().hasPermission((Player) sender, "safecreeper.command.installupdate")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -42,7 +42,7 @@ public class CommandCheck {
 				uc.refreshUpdatesData();
 				
 				if(!uc.isNewVersionAvailable()) {
-					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] No new version found!");
+					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] No new version available!");
 				} else {
 					
 					String newVer = uc.getNewestVersion();
@@ -54,11 +54,11 @@ public class CommandCheck {
 						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
 					} else {
 						if(uc.isUpdateDownloaded())
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version installed (v" + String.valueOf(newVer) + "). Server reload required!");
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version already installed (v" + String.valueOf(newVer) + "). Server reload required!");
 						else {
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version found: " + String.valueOf(newVer));
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Use " + ChatColor.GOLD + "/sc installupdate" +
-									ChatColor.YELLOW + " to automaticly install the new version!");
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Installing new version (v" + String.valueOf(newVer) + ")");
+							uc.installUpdate();
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Update installed, server reload required!");
 						}
 					}
 					return true;

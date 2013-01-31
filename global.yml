@@ -40,6 +40,10 @@ CreeperControl:
             DropXP: true
             DropChance: 100
             Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 1
+            Amount: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -58,7 +62,7 @@ CreeperControl:
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -114,7 +118,7 @@ BatControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -168,7 +172,7 @@ BlazeControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -223,7 +227,7 @@ CaveSpiderControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -290,7 +294,7 @@ ChickenControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -354,7 +358,7 @@ CowControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -418,7 +422,7 @@ EnderDragonControl:
         Enabled: false
         DespawnWhenFarAway: false
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -481,7 +485,7 @@ EndermanControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanTeleport: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -537,7 +541,7 @@ GhastControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -592,7 +596,7 @@ GiantControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -649,7 +653,7 @@ IronGolemControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -715,7 +719,7 @@ MagmaCubeControl:
         SplitIntoMin: 2
         SplitIntoMax: 4
     CanSplit: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -781,7 +785,7 @@ MushroomCowControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -846,7 +850,7 @@ OcelotControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanBeTamed: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -912,7 +916,7 @@ PigControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     TurnIntoPigZombieOnLightning: true
@@ -974,6 +978,7 @@ PigZombieControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanPickupItems: true
+    AlwaysAngry: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1007,6 +1012,11 @@ PlayerControl:
             DropXP: true
             DropChance: 100
             Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 20
+            Amount: 1
+            PlayerHead: true
     Effects:
         Enabled: false
         Triggers: {}
@@ -1071,7 +1081,7 @@ SheepControl:
     RegrowWool: true
     CanEatGrass: true
     CanBeDyed: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -1124,7 +1134,7 @@ SilverfishControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1167,6 +1177,10 @@ SkeletonControl:
             DropXP: true
             DropChance: 100
             Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 2.5
+            Amount: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1245,7 +1259,7 @@ SlimeControl:
         Enabled: false
         SplitIntoMin: 2
         SplitIntoMax: 4
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1255,7 +1269,7 @@ SlimeControl:
         Triggers: {}
     Locations: {}
 
-# Snow Glolems (mob)
+# Snow Golems (mob)
 SnowmanControl:
     Enabled: false
     Spawning:
@@ -1301,8 +1315,9 @@ SnowmanControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanLaunchProjectile: true
+    CanCreateSnow: true
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -1355,7 +1370,7 @@ SpiderControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1409,7 +1424,7 @@ SquidControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     Effects:
@@ -1462,7 +1477,7 @@ VillagerControl:
         Enabled: false
         DespawnWhenFarAway: false
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     CanTrade: true
@@ -1517,7 +1532,7 @@ WitchControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanLaunchProjectile: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1580,7 +1595,7 @@ WitherControl:
         DespawnWhenFarAway: false
     CanDrown: true
     CanLaunchProjectile: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1647,7 +1662,7 @@ WolfControl:
         DespawnWhenFarAway: true
     CanDrown: true
     CanBeTamed: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1663,7 +1678,8 @@ ZombieControl:
     Spawning:
         ZombieType:
             Enabled: false
-            VillagerZombieChance: 20
+            VillagerZombieChance: 10
+            GiantZombieChance: 0
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
@@ -1696,6 +1712,10 @@ ZombieControl:
             DropXP: true
             DropChance: 100
             Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 1
+            Amount: 1
     Reviving:
         Enabled: false
         Chance: 25
@@ -1795,7 +1815,7 @@ OtherMobControl:
         Enabled: false
         DespawnWhenFarAway: true
     CanDrown: true
-    CanPickupItems: true
+    CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
     DamagePlayers: true
@@ -1986,4 +2006,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.3.5.1'
+version: '1.3.6'

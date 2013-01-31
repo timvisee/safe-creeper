@@ -527,10 +527,7 @@ public class SCFileUpdater {
 			if(k.equalsIgnoreCase("version"))
 				continue;
 			
-			if(!globalc.isSet(k))
-				newc.createSection(k);
-				
-			else if(globalc.isBoolean(k))
+			if(globalc.isBoolean(k))
 				newc.set(k, c.getBoolean(k, globalc.getBoolean(k)));
 				
 			else if(globalc.isDouble(k))
@@ -557,8 +554,40 @@ public class SCFileUpdater {
 			else if(globalc.isVector(k))
 				newc.set(k, c.getVector(k, globalc.getVector(k)));
 				
-			else if(globalc.isConfigurationSection(k))
-				newc.createSection(k);
+			else {
+				if(!c.isSet(k))
+					newc.createSection(k);
+					
+				else if(c.isBoolean(k))
+					newc.set(k, c.getBoolean(k, globalc.getBoolean(k)));
+					
+				else if(c.isDouble(k))
+					newc.set(k, c.getDouble(k, globalc.getDouble(k)));
+					
+				else if(c.isInt(k))
+					newc.set(k, c.getInt(k, globalc.getInt(k)));
+					
+				else if(c.isItemStack(k))
+					newc.set(k, c.getItemStack(k, globalc.getItemStack(k)));
+					
+				else if(c.isList(k))
+					newc.set(k, c.getList(k, globalc.getList(k)));
+					
+				else if(c.isLong(k))
+					newc.set(k, c.getLong(k, globalc.getLong(k)));
+					
+				else if(c.isOfflinePlayer(k))
+					newc.set(k, c.getOfflinePlayer(k, globalc.getOfflinePlayer(k)));
+					
+				else if(c.isString(k))
+					newc.set(k, c.getString(k, globalc.getString(k)));
+					
+				else if(c.isVector(k))
+					newc.set(k, c.getVector(k, globalc.getVector(k)));
+					
+				else if(c.isConfigurationSection(k))
+					newc.createSection(k);
+			}
 		}
 		
 		// Update the version number in the config file

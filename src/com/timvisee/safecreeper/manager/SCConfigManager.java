@@ -1657,14 +1657,23 @@ public class SCConfigManager {
      */
     @SuppressWarnings("unused")
 	private List<String> configGetKeys(String w, String node, List<String> def) {
-		if(worldConfigExist(w)) {
-			// Check if the world config file contains this node
-			if(!getWorldConfig(w).contains(node))
-				return def;
-			
-			if(!getWorldConfig(w).isConfigurationSection(node))
-				return def;
-			
+    	boolean globalConfig = false;
+    	boolean worldConfig = false;
+    	
+    	// Check if this list exists in the global config file
+		if(getGlobalConfig().contains(node))
+			globalConfig = getGlobalConfig().isConfigurationSection(node);
+    	
+		// Check if the list exists in a world config file
+    	if(worldConfigExist(w))
+    		if(getWorldConfig(w).contains(node))
+    			worldConfig = getWorldConfig(w).isConfigurationSection(node);
+    	
+    	// The key list must exist in any world or the global file, if not return the default value
+    	if(!globalConfig && !worldConfig)
+    		return def;
+    	
+    	if(worldConfig) {
 			// Get the keys list (the safe way)
 			List<String> keys = new ArrayList<String>();
 			try {
@@ -1672,20 +1681,15 @@ public class SCConfigManager {
 			} catch(NullPointerException ex) {
 				return def;
 			}
-			
-			// Check if the global config file contains this node
-			if(!getGlobalConfig().contains(node))
-				return def;
-			
-			if(!getGlobalConfig().isConfigurationSection(node))
-				return def;
-			
-			// Get the keys list (the safe way)
+
 			List<String> keysGlobal = new ArrayList<String>();
-			try {
-				keysGlobal = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
-			} catch(NullPointerException ex) {
-				return def;
+			if(globalConfig) {
+				// Get the keys list (the safe way)
+				try {
+					keysGlobal = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
+				} catch(NullPointerException ex) {
+					return def;
+				}
 			}
 			
 			// Return the values
@@ -1694,33 +1698,18 @@ public class SCConfigManager {
 					return def;
 				else
 					return keysGlobal;
-			} else {
-				if(keys.size() != 0)
-					return keys;
-				else
-					return keysGlobal;
+			} else
+				return keys;
+		} else {
+			// Get the key list (the safe way)
+			List<String> keys = new ArrayList<String>();
+			try {
+				keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
+			} catch(NullPointerException ex) {
+				return def;
 			}
+			return keys;
 		}
-		
-		// Check if the config files contain this node
-		if(!getGlobalConfig().contains(node))
-			return def;
-		
-		if(!getGlobalConfig().isConfigurationSection(node))
-			return def;
-		
-		// Get the key list (the safe way)
-		List<String> keys = new ArrayList<String>();
-		try {
-			keys = new ArrayList<String>(getGlobalConfig().getConfigurationSection(node).getKeys(false));
-		} catch(NullPointerException ex) {
-			return def;
-		}
-		
-		// Return the values
-		if(keys.size() == 0)
-			return def;
-		return keys;
 	}
 	
     public String getControlName(Entity e) {
@@ -1753,9 +1742,8 @@ public class SCConfigManager {
 	    		return "WitherSkullControl";
 	    		
 	    	default:
-	    		if (e.getType()==null || e.getType().getName()==null) {
-	    			return "UnknownControl";
-	    		}
+	    	  	if (e.getType() == null || e.getType().getName() == null)
+	    	  		return "OtherControl";
 	    		return e.getType().getName().trim().replace(" ", "") + "Control";
 	    	}
     	}
@@ -1784,21 +1772,26 @@ public class SCConfigManager {
     public boolean isFactionAt(Location loc) {
     	Faction f = Board.getFactionAt(new FLocation(loc));
     	
+    	// If returned null, there's no faction found on this area
     	if(f == null)
     		return false;
     	
+    	// The faction area has to be 'normal'
     	return (f.isNormal());
     }
     
     public String getFactionAt(Location loc) {
     	Faction f = Board.getFactionAt(new FLocation(loc));
     	
+    	// If the faction area equals to null, theres not faction on this area
     	if(f == null)
     		return "";
     	
+    	// The faction area has to be 'normal'
     	if(!f.isNormal())
     		return "";
     	
+    	// Return the faction name
     	return f.getComparisonTag();
     }
     

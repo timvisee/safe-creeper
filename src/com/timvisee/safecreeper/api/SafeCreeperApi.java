@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.util.SCFileUpdater;
+import com.timvisee.safecreeper.util.UpdateChecker;
 
 public class SafeCreeperApi {
 	
@@ -162,13 +163,12 @@ public class SafeCreeperApi {
 	 */
 	public String checkUpdates() {
 		// Check for updates
-		boolean updateAvailable = SafeCreeper.instance.checkUpdates();
+		UpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
+		uc.refreshUpdatesData();
 		
-		if(!updateAvailable)
-			return "";
-			
-		else
-			return SafeCreeper.instance.newestVersion;
+		if(uc.isNewVersionAvailable())
+			return uc.getNewestVersion();
+		return "";
 	}
 	
 	/**
