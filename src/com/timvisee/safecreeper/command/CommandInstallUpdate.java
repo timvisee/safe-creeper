@@ -54,11 +54,11 @@ public static boolean onCommand(CommandSender sender, Command cmd, String comman
 						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
 					} else {
 						if(uc.isUpdateDownloaded())
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version already installed (v" + String.valueOf(newVer) + "). Server reload required!");
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
 						else {
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Installing new version (v" + String.valueOf(newVer) + ")");
-							uc.installUpdate();
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Update installed, server reload required!");
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
+							uc.downloadUpdate();
+							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
 						}
 					}
 					return true;
