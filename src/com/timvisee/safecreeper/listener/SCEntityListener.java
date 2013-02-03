@@ -48,6 +48,7 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.MushroomCow;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Pig;
@@ -57,6 +58,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Villager;
@@ -163,6 +165,25 @@ public class SCEntityListener implements Listener {
 		default:
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromOther", true, true, l))
 				event.setCancelled(true);
+		}
+		
+		// Slime and magma cube sizes
+		if(e instanceof Slime || e instanceof MagmaCube) {
+			Slime s = (Slime) e;
+			
+			boolean enabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CustomSize.Enabled", false, true, l);
+			if(enabled) {
+				// Calculate the default value
+				int minSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "Spawning.CustomSize.MinSize", 1, true, l);
+				int maxSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "Spawning.CustomSize.MaxSize", 4, true, l);
+				
+				minSize = Math.max(minSize, 1);
+				maxSize = Math.max(maxSize, minSize);
+				
+				final int size = minSize + rand.nextInt(maxSize - minSize);
+				
+				s.setSize(size);
+			}
 		}
 		
 		// Set if mobs should respawn when they're far away

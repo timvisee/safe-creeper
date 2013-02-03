@@ -98,6 +98,9 @@ public class SafeCreeper extends JavaPlugin {
 		// Initialize the update checker
 		setupUpdateChecker();
 		
+		// Remove all (old) update files
+		getUpdateChecker().removeUpdateFiles();
+		
 		// Check if any update exists
 		if(getConfig().getBoolean("updateChecker.enabled", true)) {
 			if(uc.isNewVersionAvailable()) {

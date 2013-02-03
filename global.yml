@@ -667,6 +667,10 @@ IronGolemControl:
 MagmaCubeControl:
     Enabled: false
     Spawning:
+        CustomSize:
+            Enabled: false
+            MinSize: 1
+            MaxSize: 4
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
@@ -1212,6 +1216,10 @@ SkeletonControl:
 SlimeControl:
     Enabled: false
     Spawning:
+        CustomSize:
+            Enabled: false
+            MinSize: 1
+            MaxSize: 4
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
@@ -2006,4 +2014,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.3.6'
+version: '1.3.6.2'

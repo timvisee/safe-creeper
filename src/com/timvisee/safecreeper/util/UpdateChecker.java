@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +30,7 @@ public class UpdateChecker {
 	// Constants
 	private final String APP_NAME = "SafeCreeper";
 	private final String CHECKER_URL = "http://updates.timvisee.com/check.php?app=1";
+	private final List<String> ALLOWED_DOWNLOAD_HOSTS = Arrays.asList(new String[]{"dev.bukkit.org", "bukkit.org"});
 	
 	private JSONObject updatesData = null;
 	
@@ -374,6 +377,12 @@ public class UpdateChecker {
 		return "";
 	}
 	
+	private static String getDomainName(String url) throws URISyntaxException {
+	    URI uri = new URI(url);
+	    String domain = uri.getHost();
+	    return domain.startsWith("www.") ? domain.substring(4) : domain;
+	}
+	
 	/**
 	 * Download the newest update available
 	 */
@@ -401,9 +410,20 @@ public class UpdateChecker {
 		
 		// Download the update
 		try {
+			
+			// Make sure the download is hosted on a allowed host (Required cause of Bukkit rules)
+			if(!ALLOWED_DOWNLOAD_HOSTS.contains(getDomainName(downloadUrl))) {
+				log.info("[" + APP_NAME + "] The host the update is hosted on is not allowed, can't download update!");
+				return;
+			}
+			
 			downloadFile(log, downloadUrl, updatedFilePath);
 			
 		} catch (IOException e) {
+			log.info("[" + APP_NAME + "] An error occured while downloading update!");
+			e.printStackTrace();
+			
+		} catch (URISyntaxException e) {
 			log.info("[" + APP_NAME + "] An error occured while downloading update!");
 			e.printStackTrace();
 		}
@@ -457,6 +477,9 @@ public class UpdateChecker {
 				
 				// Copy the update
 				copyFile(fileFromZip, pluginFile);
+				
+				// Close the zip file
+				updatedFileZip.close();
 				
 				// Calculate installation duration
 				long duration = System.currentTimeMillis() - t;

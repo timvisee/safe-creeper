@@ -1734,6 +1734,9 @@ public class SCConfigManager {
 	    	case FIREBALL:
 	    	case SMALL_FIREBALL:
 	    		return "FireballControl";
+	    	
+	    	case MAGMA_CUBE:
+	    		return "MagmaCubeControl";
 	    		
 	    	case WITHER:
 	    		return "WitherControl";

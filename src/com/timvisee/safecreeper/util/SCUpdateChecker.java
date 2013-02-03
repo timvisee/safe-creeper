@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
-
+@Deprecated
 public class SCUpdateChecker extends Thread {
 	public static SafeCreeper plugin;
 
