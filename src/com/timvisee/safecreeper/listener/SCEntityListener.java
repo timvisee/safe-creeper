@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,6 +42,7 @@ import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -437,6 +439,31 @@ public class SCEntityListener implements Listener {
 					pz.setAnger(2147483647);
 		}
 		
+		// Wolf spawning behaviors
+		if(e instanceof Wolf) {
+			Wolf wolf = (Wolf) e;
+			
+			// Make wolves spawn angry
+			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.SpawnAngry.Enabled", false, true, l)) {
+					double angryChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.SpawnAngry.AngryChance", 0, true, l);
+					
+					// Should the zombie be a villager?
+					wolf.setAngry(((int) angryChance * 10) > rand.nextInt(1000));
+				}
+			}
+			
+			// Make wolves spawn sitting
+			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.SpawnSitting.Enabled", false, true, l)) {
+					double sittingChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.SpawnSitting.SittingChance", 0, true, l);
+					
+					// Should the zombie be a villager?
+					wolf.setSitting(((int) sittingChance * 10) > rand.nextInt(1000));
+				}
+			}
+		}
+		
 		// Set if the entity can pickup items
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
@@ -484,6 +511,19 @@ public class SCEntityListener implements Listener {
 					giantLoc.getWorld().spawnEntity(giantLoc, EntityType.GIANT);
 					return;
 				}
+			}
+		}
+		
+		// Handle the 'PigZombieType' from the PigZombie Control
+		if(e instanceof PigZombie) {
+			PigZombie zombie = (PigZombie) e;
+			
+			// Check if this feature is enabled
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.PigZombieType.Enabled", false, true, l)) {
+				double villagerPigZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.PigZombieType.VillagerPigZombieChance", 0, true, l);
+				
+				// Should the PigZombie be a villager type?
+				zombie.setVillager(((int) villagerPigZombieChance * 10) > rand.nextInt(1000));
 			}
 		}
 		
@@ -1284,6 +1324,7 @@ public class SCEntityListener implements Listener {
 		Entity e = event.getEntity();
 		World w = e.getWorld();
 		Location l = e.getLocation();
+		Random rand = new Random();
 		
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
 		
@@ -1293,6 +1334,22 @@ public class SCEntityListener implements Listener {
 		// Play control effects
 		if(!event.isCancelled())
 			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Tamed", l);
+		
+		// Handle the collar colors for wolves
+		if(e instanceof Wolf) {
+			Wolf wolf = (Wolf) e;
+			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CollarColors.Enabled", false, true, l)) {
+					boolean randomCollarColor = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CollarColors.RandomColor", false, true, l);
+					
+					// Set the collar color of the wolf
+					if(randomCollarColor) {
+						DyeColor randDyeColor = DyeColor.getByDyeData((byte) rand.nextInt(16));
+						wolf.setCollarColor(randDyeColor);
+					}
+				}
+			}
+		}
 	}
 	
 	@EventHandler
