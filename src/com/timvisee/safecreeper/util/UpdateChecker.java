@@ -74,6 +74,8 @@ public class UpdateChecker {
 			// Updates data received, show status message
 			System.out.println("[" + APP_NAME + "] Updates data received!");
 			
+		} catch (NoSuchMethodError e) {
+			System.out.println("[" + APP_NAME + "] [ERROR] Error occured while checking for updates!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {

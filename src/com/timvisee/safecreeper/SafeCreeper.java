@@ -329,48 +329,127 @@ public class SafeCreeper extends JavaPlugin {
     	return (getWorldGuard() != null);
     }
    
+    /**
+     * Setup the MobArena hook
+     */
     public void setupMobArenaHandler() {
-        Plugin maPlugin = (MobArena) getServer().getPluginManager().getPlugin("MobArena");
-        
-        if (maPlugin == null) {
-        	getSCLogger().info("Disabling MobArena usage, MobArena not found.");
-            return;
-        }
- 
-        maHandler = new MobArenaHandler();
-        getSCLogger().info("Hooked into MobArena!");
+    	// MobArena has to be installed/enabled
+    	if(!getServer().getPluginManager().isPluginEnabled("MobArena")) {
+    		getSCLogger().info("Disabling MobArena usage, plugin not found.");
+    		return;
+    	}
+    	
+    	try {
+    		// Try to get the MobArenap plugin
+    		Plugin maPlugin = (MobArena) getServer().getPluginManager().getPlugin("MobArena");
+	        
+	        if (maPlugin == null) {
+	        	getSCLogger().info("Unable to hook into MobArena, plugin not found!");
+	            return;
+	        }
+	        
+	        // Hooked into MobArena, show a status message
+	        maHandler = new MobArenaHandler();
+	        getSCLogger().info("Hooked into MobArena!");
+	        
+    	} catch(NoClassDefFoundError ex) {
+    		// Unable to hook into MobArena, show warning/error message.
+    		getSCLogger().info("Error while hooking into MobArena!");
+    		return;
+    	} catch(Exception ex) {
+    		// Unable to hook into MobArena, show warning/error message.
+    		getSCLogger().info("Error while hooking into MobArena!");
+    		return;
+    	}
     }
     
+    /**
+     * Get the MobArena handler
+     * @return
+     */
     public MobArenaHandler getMobArenaHandler() {
     	return this.maHandler;
     }
    
+    /**
+     * Setup the PVPArena hook
+     */
     public void setupPVPArena() {
-        Plugin paPlugin = (PVPArena) getServer().getPluginManager().getPlugin("pvparena");
-        
-        if (paPlugin == null) {
-        	getSCLogger().info("Disabling PVPArena usage, PVPArena not found.");
-            return;
-        }
- 
-        getSCLogger().info("Hooked into PVPArena!");
+    	// PVP Arena has to be installed/enabled
+    	if(!getServer().getPluginManager().isPluginEnabled("pvparena")) {
+    		getSCLogger().info("Disabling PVPArena usage, plugin not found.");
+    		return;
+    	}
+    	
+    	try {
+    		// Try to get the PVPArena plugin
+    		Plugin paPlugin = (PVPArena) getServer().getPluginManager().getPlugin("pvparena");
+	        
+    		// The plugin variable may not be null
+	        if (paPlugin == null) {
+	        	getSCLogger().info("Unable to hook into PVPArena, plugin not found!");
+	            return;
+	        }
+	        
+	        // Hooked into PVPArena, show status message
+	        getSCLogger().info("Hooked into PVPArena!");
+	        
+    	} catch(NoClassDefFoundError ex) {
+    		// Unable to hook into PVPArena, show warning/error message.
+    		getSCLogger().info("Error while hooking into PVPArena!");
+    		return;
+    	} catch(Exception ex) {
+    		// Unable to hook into PVPArena, show warning/error message.
+    		getSCLogger().info("Error while hooking into PVPArena!");
+    		return;
+    	} 
     }
    
+    /**
+     * Setup the Factions hook
+     */
     public void setupFactions() {
-        Plugin fPlugin = (Plugin) getServer().getPluginManager().getPlugin("Factions");
-        
-        if (fPlugin == null) {
-        	getSCLogger().info("Disabling Factions usage, Factions not found.");
-            return;
-        }
- 
-        getSCLogger().info("Hooked into Factions!");
+    	// Factions has to be installed/enabled
+    	if(!getServer().getPluginManager().isPluginEnabled("Factions")) {
+    		getSCLogger().info("Disabling Factions usage, plugin not found.");
+    		return;
+    	}
+    	
+    	try {
+    		// Get the Factions plugin
+    		Plugin fPlugin = (Plugin) getServer().getPluginManager().getPlugin("Factions");
+	        
+    		// The factions plugin may not ben ull
+	        if (fPlugin == null) {
+	        	getSCLogger().info("Unable to hook into Factions, plugin not found!");
+	            return;
+	        }
+	        
+	        // Hooked into Factions, show status message
+	        getSCLogger().info("Hooked into Factions!");
+	        
+    	} catch(NoClassDefFoundError ex) {
+    		// Unable to hook into Factions, show warning/error message.
+    		getSCLogger().info("Error while hooking into Factions!");
+    		return;
+    	} catch(Exception ex) {
+    		// Unable to hook into Factions, show warning/error message.
+    		getSCLogger().info("Error while hooking into Factions!");
+    		return;
+    	}
     }
     
+    /**
+     * Setup the Likeaboss manager
+     */
     public void setupLabManager() {
     	this.labHandler = new LikeabossManager();
     }
     
+    /**
+     * Get the Likeaboss handler
+     * @return
+     */
     public LikeabossManager getLabHandler() {
     	return this.labHandler;
     }

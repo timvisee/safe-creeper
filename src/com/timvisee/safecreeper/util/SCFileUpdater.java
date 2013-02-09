@@ -218,6 +218,8 @@ public class SCFileUpdater {
 		Set<String> keys = defc.getConfigurationSection("").getKeys(true);
 		for(String k : keys) {
 			
+			String kOld = k;
+			
 			if(isOlderVersion("1.3", configVer)) {
 				
 				// Update the old 'EnableBetweenLevels' system to the new 'Locations' system
@@ -243,6 +245,15 @@ public class SCFileUpdater {
 				} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
 					newc.set("PlayerControl.FoodMeter.CanDecrease", !c.getBoolean("PlayerControl.LockFoodmeter", !defc.getBoolean(k)));
 					continue;
+				}
+			}
+			
+			// Splitted skeleton control into skeleton and wither skeleton control
+			if(isOlderVersion("1.3.6.5", configVer)) {
+				
+				// Update the old 'EnableBetweenLevels' system to the new 'Locations' system
+				if(k.startsWith("WitherSkeletonControl")) {
+					kOld = k.replaceFirst("WitherSkeletonControl", "SkeletonControl");
 				}
 			}
 			
@@ -300,31 +311,31 @@ public class SCFileUpdater {
 				newc.createSection(k);
 				
 			else if(defc.isBoolean(k))
-				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
+				newc.set(k, c.getBoolean(kOld, defc.getBoolean(k)));
 				
 			else if(defc.isDouble(k))
-				newc.set(k, c.getDouble(k, defc.getDouble(k)));
+				newc.set(k, c.getDouble(kOld, defc.getDouble(k)));
 				
 			else if(defc.isInt(k))
-				newc.set(k, c.getInt(k, defc.getInt(k)));
+				newc.set(k, c.getInt(kOld, defc.getInt(k)));
 				
 			else if(defc.isItemStack(k))
-				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
+				newc.set(k, c.getItemStack(kOld, defc.getItemStack(k)));
 				
 			else if(defc.isList(k))
-				newc.set(k, c.getList(k, defc.getList(k)));
+				newc.set(k, c.getList(kOld, defc.getList(k)));
 				
 			else if(defc.isLong(k))
-				newc.set(k, c.getLong(k, defc.getLong(k)));
+				newc.set(k, c.getLong(kOld, defc.getLong(k)));
 				
 			else if(defc.isOfflinePlayer(k))
-				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
+				newc.set(k, c.getOfflinePlayer(kOld, defc.getOfflinePlayer(k)));
 				
 			else if(defc.isString(k))
-				newc.set(k, c.getString(k, defc.getString(k)));
+				newc.set(k, c.getString(kOld, defc.getString(k)));
 				
 			else if(defc.isVector(k))
-				newc.set(k, c.getVector(k, defc.getVector(k)));
+				newc.set(k, c.getVector(kOld, defc.getVector(k)));
 				
 			else if(defc.isConfigurationSection(k))
 				newc.createSection(k);

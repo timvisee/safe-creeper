@@ -17,6 +17,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.TNTPrimed;
 
 import com.garbagemule.MobArena.framework.Arena;
@@ -1743,6 +1745,13 @@ public class SCConfigManager {
 	    		
 	    	case WITHER_SKULL:
 	    		return "WitherSkullControl";
+	    		
+	    	case SKELETON:
+	    		Skeleton skel = (Skeleton) e;
+	    		if(skel.getSkeletonType().equals(SkeletonType.WITHER))
+	    			return "WitherSkeletonControl";
+	    		else
+	    			return "SkeletonControl";
 	    		
 	    	default:
 	    	  	if (e.getType() == null || e.getType().getName() == null)

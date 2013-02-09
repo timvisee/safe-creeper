@@ -1616,6 +1616,67 @@ WitherControl:
         Triggers: {}
     Locations: {}
 
+# Wither Skeletons (mob)
+WitherSkeletonControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnAsJockey : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 2.5
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
 # Wolves (mob)
 WolfControl:
     Enabled: false
@@ -2026,4 +2087,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.3.6.4'
+version: '1.3.6.6'
