@@ -220,12 +220,6 @@ public class CommandHandler {
 				// Update all config files if they're out-dated
 				((SCFileUpdater) new SCFileUpdater()).updateFiles();
 				
-				// Reload all the entity data
-				if(SafeCreeper.instance.getLivingEntityManager() != null) {
-					SafeCreeper.instance.getLivingEntityManager().save();
-					SafeCreeper.instance.getLivingEntityManager().load();
-				}
-				
 		    	long duration = System.currentTimeMillis() - t;
 				sender.sendMessage(ChatColor.GREEN + "SafeCreeper has been reloaded, took " + String.valueOf(duration) + " ms!");
 				return true;

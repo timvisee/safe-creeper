@@ -64,22 +64,6 @@ public class SafeCreeperApi {
 	}
 	
 	/**
-	 * Save all entity data to an external file
-	 */
-	public void saveEntityData() {
-		if(SafeCreeper.instance.getLivingEntityManager() != null)
-			SafeCreeper.instance.getLivingEntityManager().save();
-	}
-	
-	/**
-	 * Load all entity data from an external file
-	 */
-	public void loadEntityData() {
-		if(SafeCreeper.instance.getLivingEntityManager() != null)
-			SafeCreeper.instance.getLivingEntityManager().load();
-	}
-	
-	/**
 	 * Update all outdated config files, this is an automated process, the files are automatically backuped once they're going to be updated
 	 */
 	public void updateConfigFiles() {

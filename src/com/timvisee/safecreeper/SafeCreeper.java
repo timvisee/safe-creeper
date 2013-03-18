@@ -24,7 +24,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.timvisee.safecreeper.Metrics.Graph;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
-import com.timvisee.safecreeper.entity.SCLivingEntityManager;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
 import com.timvisee.safecreeper.handler.TVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
@@ -55,7 +54,6 @@ public class SafeCreeper extends JavaPlugin {
 	private TVNLibHandler tvnlHandler;
 	private PermissionsManager pm;
 	private SCConfigManager cm = null;
-	private SCLivingEntityManager lem;
 	private SCLivingEntityReviveManager lerm;
 	private MobArenaHandler maHandler;
 	private LikeabossManager labHandler;
@@ -84,6 +82,9 @@ public class SafeCreeper extends JavaPlugin {
 		// Setup the file paths
 		globalConfigFile = new File(getConfig().getString("GlobalConfigFilePath", globalConfigFile.getPath()));
 		worldConfigsFolder = new File(getConfig().getString("WorldConfigsFolderPath", worldConfigsFolder.getPath()));
+
+		// Setup the Safe Creeper logger
+		setupSCLogger();
 		
 		// Check if all the config file exists
 		try {
@@ -161,9 +162,6 @@ public class SafeCreeper extends JavaPlugin {
 			}
 		}, 60 * 60 * 20, 60 * 60 * 20);
 		
-		// Setup the Safe Creeper logger
-		setupSCLogger();
-		
 		// Setup the API
 		setupApi();
 		
@@ -175,7 +173,6 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Setup managers and handlers
 	    setupPermissionsManager();
-	    setupLivingEntityManager();
 	    setupLivingEntityReviveManager();
 	    setupMobArenaHandler();
 	    setupPVPArena();
@@ -233,10 +230,6 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		// Save all entity data
-		if(getLivingEntityManager() != null)
-			getLivingEntityManager().save();
-		
 		// Cancel all running Safe Creeper tasks
 		getSCLogger().info("Cancelling all Safe Creeper tasks...");
 		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
@@ -454,15 +447,6 @@ public class SafeCreeper extends JavaPlugin {
     	return this.labHandler;
     }
     
-    public void setupLivingEntityManager() {
-    	this.lem = new SCLivingEntityManager();
-    	this.lem.load();
-    }
-    
-    public SCLivingEntityManager getLivingEntityManager() {
-    	return this.lem;
-    }
-    
     public void setupLivingEntityReviveManager() {
     	this.lerm = new SCLivingEntityReviveManager();
     }
@@ -479,17 +463,17 @@ public class SafeCreeper extends JavaPlugin {
 		File configFile = new File(getDataFolder(), "config.yml");
 		if(!configFile.exists()) {
 			getSCLogger().info("Generating new config file");
-			copyFile(getResource("config.yml"), configFile);
+			copyFile(getResource("res/config.yml"), configFile);
 		}
 		if(!globalConfigFile.exists()) {
 			getSCLogger().info("Generating new global file");
-			copyFile(getResource("global.yml"), globalConfigFile);
+			copyFile(getResource("res/global.yml"), globalConfigFile);
 		}
 		if(!worldConfigsFolder.exists()) {
 			getSCLogger().info("Generating new 'worlds' folder");
 			worldConfigsFolder.mkdirs();
-			copyFile(getResource("worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
-			copyFile(getResource("worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
+			copyFile(getResource("res/worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
+			copyFile(getResource("res/worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
 		}
 	}
 	
@@ -512,6 +496,11 @@ public class SafeCreeper extends JavaPlugin {
 	 * Setup metrics
 	 */
 	public void setupMetrics() {
+		if(!getConfig().getBoolean("statistics.enabled", true)) {
+			getSCLogger().info("MCStats.org Statistics disabled!");
+			return;
+		}
+		
 		// Metrics / MCStats.org
 		try {
 		    Metrics metrics = new Metrics(this);
@@ -552,7 +541,12 @@ public class SafeCreeper extends JavaPlugin {
 	            	return 1;
 	            }
 		    });
+		    
+		    // Start metrics
 		    metrics.start();
+		    
+		    // Show a status message
+		    getSCLogger().info("MCStats.org Statistics enabled.");
 		} catch (IOException e) {
 		    // Failed to submit the stats :-(
 			e.printStackTrace();

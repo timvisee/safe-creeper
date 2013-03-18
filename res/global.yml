@@ -1,0 +1,2094 @@
+# This is the global settings for all the worlds, if a world have his own settings file it will overwrite these settings for the world.
+
+# Creepers (mob)
+CreeperControl:
+    Enabled: true
+    DestroyWorld: false
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 1
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    AlwaysPowered: false
+    ExplodeOnDeath: false
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    PoweredByLightning: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Bat (mob)
+BatControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 6
+        MaxHealth: 6
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Blazes (mob)
+BlazeControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Cave Spiders (mob)
+CaveSpiderControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 12
+        MaxHealth: 12
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Chickens (mob)
+ChickenControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 4
+        MaxHealth: 4
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Cows (mob)
+CowControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# EnderDragon (mob)
+EnderDragonControl:
+    Enabled: true
+    DestroyWorld: false
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 2
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 200
+        MaxHealth: 200
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Enderman (mob)
+EndermanControl:
+    Enabled: false
+    CanPlaceBlock: false
+    CanPickupBlock: false
+    # If an endermen wants to pickup a block, and he can't, don't break the block but the endermen get a clone of that block in his hands
+    CanCloneBlock: true
+    # If an endermen wants to place a block, and he can't, don't place anything but remove the holding block out of his hands
+    ClearHandsOnPlace: true
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 40
+        MaxHealth: 40
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        DropItemOnDeath: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanTeleport: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Ghasts (mob)
+GhastControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Giants (mob)
+GiantControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 100
+        MaxHealth: 100
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Iron Glolems (mob)
+IronGolemControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnForVillageDefence: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 100
+        MaxHealth: 100
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Magma Cubes (mob)
+MagmaCubeControl:
+    Enabled: false
+    Spawning:
+        CustomSize:
+            Enabled: false
+            MinSize: 1
+            MaxSize: 4
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    CanDrown: true
+    SplitIntoCostumAmount:
+        Enabled: false
+        SplitIntoMin: 2
+        SplitIntoMax: 4
+    CanSplit: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Mooshrooms (mob)
+MushroomCowControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Ocelots and cats (mob)
+OcelotControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanBeTamed: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Pigs (mob)
+PigControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    TurnIntoPigZombieOnLightning: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Zombie Pigmans (mob)
+PigZombieControl:
+    Enabled: false
+    Spawning:
+        PigZombieType:
+            Enabled: false
+            VillagerPigZombieChance: 0
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromLightning : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: true
+    AlwaysAngry: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Player (player)
+PlayerControl:
+    Enabled: false
+    DamagePlayers: true
+    DamageMobs: true
+    CanSleep: true
+    CanCreateNetherPortal: true
+    CanCreateEndPortal: true
+    CanCreateOtherPortal: true
+    CanDrown: true
+    CanPickupItems: true
+    FoodMeter:
+        CanIncrease: true
+        CanDecrease: true
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            KeepLevel: false
+            KeepXP: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 20
+            Amount: 1
+            PlayerHead: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Sheeps (mob)
+SheepControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    RegrowWool: true
+    CanEatGrass: true
+    CanBeDyed: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Silverfishes (mob)
+SilverfishControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Skeletons (mob)
+SkeletonControl:
+    Enabled: false
+    Spawning:
+        SkeletonType:
+            Enabled: false
+            WitherSkeletonChance: 20
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnAsJockey : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 2.5
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Slimes (mob)
+SlimeControl:
+    Enabled: false
+    Spawning:
+        CustomSize:
+            Enabled: false
+            MinSize: 1
+            MaxSize: 4
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanSplit: true
+    SplitIntoCostumAmount:
+        Enabled: false
+        SplitIntoMin: 2
+        SplitIntoMax: 4
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Snow Golems (mob)
+SnowmanControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 6
+        MaxHealth: 6
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanLaunchProjectile: true
+    CanCreateSnow: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Spiders (mob)
+SpiderControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 16
+        MaxHealth: 16
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Squids (mob)
+SquidControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Villagers (mob)
+VillagerControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    CanTrade: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Witch (mob)
+WitchControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 26
+        MaxHealth: 26
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Wither (mob)
+WitherControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 300
+        MaxHealth: 300
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Wither Skeletons (mob)
+WitherSkeletonControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnAsJockey : true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 2.5
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanLaunchProjectile: true
+    CanPickupItems: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Wolves (mob)
+WolfControl:
+    Enabled: false
+    Spawning:
+        SpawnAngry:
+            Enabled: false
+            AngryChance: 0
+        SpawnSitting:
+            Enabled: false
+            SittingChance: 0
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 8
+        MaxHealth: 8
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    CollarColors:
+        Enabled: false
+        RandomColor: false
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanBeTamed: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Zombies (mob)
+ZombieControl:
+    Enabled: false
+    Spawning:
+        ZombieType:
+            Enabled: false
+            VillagerZombieChance: 10
+            GiantZombieChance: 0
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            Chance: 1
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    CanBreakDoor: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Other Mobs (unknown mobs, with no control)
+OtherMobControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnAsJockey: true
+        CanSpawnFromLightning: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromLightning: true
+        CanSpawnForVillageDefence: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
+# Fireballs (projectile from Ghast)
+FireballControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    DamagePlayers: true
+    DamageMobs: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 1
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Wither Skulls (projectile from Wither)
+WitherSkullControl:
+    Enabled: false
+    DestroyWorld: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 1
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CanPickupItems: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# TNT blocks (block)
+TNTControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 4
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    TNTPriming:
+        CanBePrimedByFire: true
+        CanBePrimedByOther: true
+    PrimedTNTLimit:
+        Enabled: false
+        Radius: 32
+        MaxPrimedInRadius: 48
+        MaxPrimedInWorld: -1
+    CanPlaceTNT: true
+    CanBreakTNT: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Fire
+FireControl:
+    Enabled: false
+    EnableBlockFire: true
+    FireSpread: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Flint and Steel (player tool)
+FlintAndSteelControl:
+    Enabled: false
+    EnableFlintAndSteel: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Lightning (weather)
+LightningControl:
+    Enabled: false
+    IgniteBlocks: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Water (liquid)
+WaterControl:
+    Enabled: false
+    CanPlaceWater: true
+    WaterSpread: true
+    PlayerDrowinng: true
+    MobDowning: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Lava (liquid)
+LavaControl:
+    Enabled: false
+    LavaFire: true
+    CanPlaceLava: true
+    LavaSpread: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Other (unknown) explosions (explosion)
+OtherExplosions:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Other, for unknown entities
+OtherControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWhenBuild: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromEgg: true
+        CanSpawnAsJockey: true
+        CanSpawnFromLightning: true
+        CanSpawnNaturally: true
+        CanSpawnFromSlimeSplit: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromLightning: true
+        CanSpawnForVillageDefence: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CanDrown: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+version: '1.3.6.9'

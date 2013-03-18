@@ -38,8 +38,9 @@ public class UpdateChecker {
 	 * Constructor
 	 */
 	public UpdateChecker() {
-		// Immediately refresh updates data
-		refreshUpdatesData();
+		// Immediately refresh updates data if the Update Checker has been enabled
+		if(SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true))
+			refreshUpdatesData();
 	}
 	
 	/**

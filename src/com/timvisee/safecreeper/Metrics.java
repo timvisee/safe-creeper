@@ -136,9 +136,8 @@ public class Metrics {
     private volatile int taskId = -1;
 
     public Metrics(final Plugin plugin) throws IOException {
-        if (plugin == null) {
+        if (plugin == null)
             throw new IllegalArgumentException("Plugin cannot be null");
-        }
 
         this.plugin = plugin;
 
@@ -399,17 +398,19 @@ public class Metrics {
 
         // Create the url
         URL url = new URL(BASE_URL + String.format(REPORT_URL, encode(plugin.getDescription().getName())));
-
+        
         // Connect to the website
         URLConnection connection;
-
+        
         // Mineshafter creates a socks proxy, so we can safely bypass it
         // It does not reroute POST requests so we need to go around it
-        if (isMineshafterPresent()) {
+        if (isMineshafterPresent())
             connection = url.openConnection(Proxy.NO_PROXY);
-        } else {
+        else
             connection = url.openConnection();
-        }
+        
+        // Set the connection timeout
+        connection.setConnectTimeout(2000);
 
         connection.setDoOutput(true);
 

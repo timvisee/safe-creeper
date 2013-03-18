@@ -42,7 +42,6 @@ import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
-import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -71,12 +70,13 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.LazyMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.entity.SCLivingEntity;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
 import com.timvisee.safecreeper.task.CreatureReviveTask;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
@@ -182,9 +182,17 @@ public class SCEntityListener implements Listener {
 				minSize = Math.max(minSize, 1);
 				maxSize = Math.max(maxSize, minSize);
 				
-				final int size = minSize + rand.nextInt(maxSize - minSize);
+				final int randSize = minSize + rand.nextInt(maxSize - minSize);
 				
-				s.setSize(size);
+				s.setSize(randSize);
+
+				// Save settings in metadata values
+				LazyMetadataValue metaMinSize = new FixedMetadataValue(SafeCreeper.instance, minSize);
+				LazyMetadataValue metaMaxSize = new FixedMetadataValue(SafeCreeper.instance, maxSize);
+				LazyMetadataValue metaRandSize = new FixedMetadataValue(SafeCreeper.instance, randSize);
+				s.setMetadata("safecreeper_slime_minsize", metaMinSize);
+				s.setMetadata("safecreeper_slime_maxsize", metaMaxSize);
+				s.setMetadata("safecreeper_slime_size", metaRandSize);
 			}
 		}
 		
@@ -602,16 +610,11 @@ public class SCEntityListener implements Listener {
 				if(customHealthEnabled) {
 					int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
 					int customHealthMax = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
-					int customHealth = 1;
+					int customHealth = rand.nextInt(Math.max(customHealthMax - customHealthMin, 1)) + customHealthMin;
 					
-					int diff = customHealthMax-customHealthMin;
-					
-					customHealth = rand.nextInt(Math.max(diff, 1)) + customHealthMin;
-					
-					// Create a SCLivingEntity from the living entity and set the health
-					SCLivingEntity scle = new SCLivingEntity(le);
-					scle.setHealth(customHealth);
-					SafeCreeper.instance.getLivingEntityManager().addLivingEntity(scle);
+					// Set the max health and the health of the living entity
+					le.setMaxHealth(customHealthMax);
+					le.setHealth(customHealth);
 				}
 			}
 		}
@@ -748,9 +751,6 @@ public class SCEntityListener implements Listener {
 			default:
 			}
 		}
-		
-		// Get the current control name
-		SafeCreeper.instance.getLivingEntityManager().onEntityDamage(event);
 		
 		// Get the control name
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
@@ -1019,9 +1019,6 @@ public class SCEntityListener implements Listener {
 				}
 			}
 		}
-		
-		// Handle the death event for the living entity manager
-		SafeCreeper.instance.getLivingEntityManager().onEntityDeath(event);
 	}
 	
 	@EventHandler

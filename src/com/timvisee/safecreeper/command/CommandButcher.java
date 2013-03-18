@@ -17,6 +17,9 @@ public static boolean onCommand(CommandSender sender, Command cmd, String comman
 		
 			if(args[0].equalsIgnoreCase("butcher") || args[0].equalsIgnoreCase("b")) {
 				
+				sender.sendMessage(ChatColor.DARK_RED + "This command is a work in progress and will be available soon!");
+				return true;
+				
 				/*int radius = -1;
 				
 				if(isFlagSet(args, "pli")) {

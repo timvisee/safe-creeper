@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.entity.SCLivingEntity;
 import com.timvisee.safecreeper.util.UpdateChecker;
 
 public class SCPlayerListener implements Listener {
@@ -77,30 +75,26 @@ public class SCPlayerListener implements Listener {
 		Player p = event.getPlayer();
 		Location l = event.getRespawnLocation();
 		World w = l.getWorld();
+		Random rand = new Random();
 		
 		// Check if mobs are able to spawn
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(p);
 		if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
 			controlName = "OtherMobControl";
 		
-		// Set the health of the mob if CustomHealth is enabled
-		LivingEntity le = (LivingEntity) p;
-		
 		boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 		if(customHealthEnabled) {
-			int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
-			int customHealthMax = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
-			int customHealth = 1;
+			int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", p.getMaxHealth(), true, l) - 1;
+			int customHealthMax = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MaxHealth", p.getMaxHealth(), true, l);
+			int customHealth =
+					rand.nextInt(Math.max(customHealthMax - customHealthMin, 1)) + customHealthMin;
 			
-			int diff = customHealthMax-customHealthMin;
-			
-			Random rand = new Random();
-			customHealth = rand.nextInt(Math.max(diff, 1)) + customHealthMin;
-			
-			// Create a SCLivingEntity from the living entity and set the health
-			SCLivingEntity scle = new SCLivingEntity(le);
-			scle.setHealth(customHealth);
-			SafeCreeper.instance.getLivingEntityManager().addLivingEntity(scle);
+			// Set the max health and the health of the player
+			p.setMaxHealth(customHealthMax);
+			p.setHealth(customHealth);
+		} else {
+			// Reset the max health of the player
+			p.setMaxHealth(20);
 		}
 	}
 	
