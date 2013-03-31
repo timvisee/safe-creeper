@@ -56,7 +56,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCConfigManager cm = null;
 	private SCLivingEntityReviveManager lerm;
 	private MobArenaHandler maHandler;
-	private CorruptionManager labHandler;
+	private CorruptionManager corHandler;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -177,7 +177,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupMobArenaHandler();
 	    setupPVPArena();
 	    setupFactions();
-	    setupLabManager();
+	    setupCorruptionManager();
 		setupMetrics();
 		
 		// Register event listeners
@@ -433,18 +433,18 @@ public class SafeCreeper extends JavaPlugin {
     }
     
     /**
-     * Setup the Likeaboss manager
+     * Setup the Corruption manager
      */
-    public void setupLabManager() {
-    	this.labHandler = new CorruptionManager();
+    public void setupCorruptionManager() {
+    	this.corHandler = new CorruptionManager();
     }
     
     /**
-     * Get the Likeaboss handler
-     * @return
+     * Get the Corruption handler
+     * @return Corruption manager
      */
-    public CorruptionManager getLabHandler() {
-    	return this.labHandler;
+    public CorruptionManager getCorruptionHandler() {
+    	return this.corHandler;
     }
     
     public void setupLivingEntityReviveManager() {

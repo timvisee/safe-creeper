@@ -98,7 +98,7 @@ public class SafeCreeperApi {
 				break;
 				
 			case LIKEABOSS_MANAGER:
-				SafeCreeper.instance.setupLabManager();
+				SafeCreeper.instance.setupCorruptionManager();
 				break;
 				
 			case PERMISSIONS_MANAGER:
