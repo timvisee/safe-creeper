@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.DyeColor;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.PortalType;
@@ -41,12 +40,9 @@ import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
@@ -60,11 +56,9 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Slime;
-import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wither;
-import org.bukkit.entity.WitherSkull;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
@@ -74,11 +68,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.LazyMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
 import com.timvisee.safecreeper.task.CreatureReviveTask;
+import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
 
 public class SCEntityListener implements Listener {
@@ -1067,15 +1061,57 @@ public class SCEntityListener implements Listener {
 					event.setCancelled(true);
 			}
 		}
+		
+		
+		
+		
+		/*
+		// TODO: Finish throwing
+		
+		// Throwing
+		//int maxEntityRadius = explosionSize;
+		int maxEntityRadius = 10;
+		double maxEntityRadiusSq = Math.sqrt(maxEntityRadius);
+		boolean throwPlayers = true;
+		boolean throwMobs = true;
+		List<Entity> entities = new ArrayList<Entity>();
+		for(Entity entry : w.getEntities()) {
+			Location entryLoc = entry.getLocation();
+			double distSq = Math.sqrt(Math.max(l.getX(), entryLoc.getX()) - Math.min(l.getX(), entryLoc.getX())) +
+					Math.sqrt(Math.max(l.getY(), entryLoc.getY()) - Math.min(l.getY(), entryLoc.getY()));
+			
+			if(distSq > maxEntityRadiusSq)
+				continue;
+			
+			
+			Vector entityVel = entryLoc.add(0, 0.5, 0).toVector().subtract(l.toVector()).normalize();
+			
+			//entityVel.add(new Vector(0, 0.1, 0));
+
+			/*entityVel.setX(entityVel.getX() * 5);
+			entityVel.setY(entityVel.getY() * 5);
+			entityVel.setZ(entityVel.getZ() * 5);* /
+			
+			entry.setVelocity(entry.getVelocity().add(entityVel));
+		}*/
 	}
 	
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
-		Entity e = event.getEntity();
-		World w = event.getLocation().getWorld();
 		Location l = event.getLocation();
 		
-		// Get the current control name
+		
+		
+		
+		this.createExplosion(l, new ExplosionSource(l), true, 3, true, true, 1, true, 80, true, true, true, true, false);
+		
+		event.setCancelled(true);
+		return;
+		
+		
+		
+		
+		/* // Get the current control name
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
 		
 		// Make sure the current control is enabled, if not, Safe Creeper should not take over the explosion
@@ -1084,6 +1120,7 @@ public class SCEntityListener implements Listener {
 		
 		// Set the default explosion size of the current explosion
 		int defExplosionSize = 3;
+		int explosionSize;
 		if(e instanceof SmallFireball)
 			defExplosionSize = 0;
 			
@@ -1102,6 +1139,7 @@ public class SCEntityListener implements Listener {
 		else if(e instanceof Wither)
 			defExplosionSize = 6;
 		
+		explosionSize = defExplosionSize;
 		
 		// Could the entity destroy the world?
 		boolean b = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "DestroyWorld", true, true, l);
@@ -1111,7 +1149,7 @@ public class SCEntityListener implements Listener {
 				b = false;
 		
 		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CostumExplosionStrength.Enabled", false, true, l);
-		defExplosionSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", defExplosionSize, true, l);
+		explosionSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, l);
 		if(!costumExplosionStrengthEnabled) {
 			if(!b) {
 				event.setCancelled(true);
@@ -1131,9 +1169,9 @@ public class SCEntityListener implements Listener {
 			
 		} else {
 			if(costumExplosionStrengthEnabled) {
-				if(defExplosionSize > 0) {
+				if(explosionSize > 0) {
 					SafeCreeper.instance.disableOtherExplosions = true;
-					w.createExplosion(l, defExplosionSize);
+					w.createExplosion(l, explosionSize);
 				}
 			}
 		}
@@ -1150,11 +1188,11 @@ public class SCEntityListener implements Listener {
 						Location entryLoc = entry.getLocation();
 						int flyingBlockChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
 						if(flyingBlockChance > rand.nextInt(100)) {
-							Vector entryVec = entryLoc.toVector().subtract(l.toVector()).normalize();
-							entryVec.add(new Vector(0, 0.6, 0));
+							Vector blockVel = entryLoc.toVector().subtract(l.toVector()).normalize();
+							blockVel.add(new Vector(0, 0.6, 0));
 							
 							FallingBlock fb = entry.getWorld().spawnFallingBlock(entryLoc.add(0, 0.6, 0), entry.getTypeId(), entry.getData());
-							fb.setVelocity(entryVec);
+							fb.setVelocity(blockVel);
 							fb.setDropItem(false);
 						}
 					}
@@ -1162,8 +1200,40 @@ public class SCEntityListener implements Listener {
 			}
 		}
 		
+		
+		
+		// TODO: Finish throwing
+		
+		// Throwing
+		//int maxEntityRadius = explosionSize;
+		int maxEntityRadius = 10;
+		double maxEntityRadiusSq = Math.sqrt(maxEntityRadius);
+		boolean throwPlayers = true;
+		boolean throwMobs = true;
+		List<Entity> entities = new ArrayList<Entity>();
+		for(Entity entry : w.getEntities()) {
+			Location entryLoc = entry.getLocation();
+			double distSq = Math.sqrt(Math.max(l.getX(), entryLoc.getX()) - Math.min(l.getX(), entryLoc.getX())) +
+					Math.sqrt(Math.max(l.getY(), entryLoc.getY()) - Math.min(l.getY(), entryLoc.getY()));
+			
+			if(distSq > maxEntityRadiusSq)
+				continue;
+			
+			
+			Vector entityVel = entryLoc.toVector().subtract(l.toVector()).normalize();
+			entityVel.add(new Vector(0, 0.6, 0));
+
+			/*entityVel.setX(entityVel.getX() * 5);
+			entityVel.setY(entityVel.getY() * 5);
+			entityVel.setZ(entityVel.getZ() * 5);* /
+			
+			entry.setVelocity(entry.getVelocity().add(entityVel));
+		}
+		
+		
+		
 		// Play control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Explode", l);
+		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Explode", l);*/
 	}
 	
 	@EventHandler
@@ -1514,5 +1584,25 @@ public class SCEntityListener implements Listener {
 		
 		// Play the explosion sound
 		w.playSound(loc, Sound.EXPLODE, 1, 1);
+	}
+	
+	
+	
+	
+	
+	
+	public void createExplosion(
+			Location loc, ExplosionSource source,
+			boolean destroyWorld, double explosionStrength,
+			boolean throwPlayers, boolean throwMobs,
+			double throwSpeedMultiplier, boolean flyingBlocks,
+			double flyingBlocksChance, boolean damagePlayers,
+			boolean damageMobs, boolean explosionSmoke,
+			boolean explosionSound, boolean explosionCreateFire) {
+		
+		World w = loc.getWorld();
+		
+		// Create the explosion
+		w.createExplosion(loc.getX(), loc.getY(), loc.getZ(), (float) explosionStrength, explosionCreateFire, false);
 	}
 }

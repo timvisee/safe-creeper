@@ -1,0 +1,15 @@
+name: SafeCreeper
+description: 'Get full control of creatures, players and almost everything!'
+main: com.timvisee.safecreeper.SafeCreeper
+version: 1.3.7
+load: startup
+author: timvisee
+website: http://timvisee.com/
+softdepend: [Vault, TVNLib] #hack to fix trove errors
+commands:
+  safecreeper:
+    description: Safe Creeper command
+    usage: /safecreeper <arguments>
+  sc:
+    description: Safe Creeper command
+    usage: /sc <arguments>

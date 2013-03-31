@@ -95,7 +95,7 @@ public class SCFileUpdater {
 		// Load the default global config file 
 		YamlConfiguration defc = new YamlConfiguration();
 		try {
-			defc.load(SafeCreeper.instance.getResource("config.yml"));
+			defc.load(SafeCreeper.instance.getResource("res/config.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InvalidConfigurationException e) {
@@ -197,7 +197,7 @@ public class SCFileUpdater {
 		// Load the default global config file 
 		YamlConfiguration defc = new YamlConfiguration();
 		try {
-			defc.load(SafeCreeper.instance.getResource("global.yml"));
+			defc.load(SafeCreeper.instance.getResource("res/global.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InvalidConfigurationException e) {

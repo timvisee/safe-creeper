@@ -11,6 +11,11 @@ CreeperControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -377,6 +382,11 @@ EnderDragonControl:
         ExplosionStrength: 2
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -1866,6 +1876,11 @@ OtherMobControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -1921,6 +1936,16 @@ FireballControl:
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 1
+    CostumExplosionStrength:
+        Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     Effects:
         Enabled: true
         Triggers: {}
@@ -1933,6 +1958,16 @@ WitherSkullControl:
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 1
+    CostumExplosionStrength:
+        Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
     EnableExplosionSound: true
     EnableExplosionSmoke: true
     CanPickupItems: true
@@ -1954,6 +1989,11 @@ TNTControl:
         ExplosionStrength: 4
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -2042,6 +2082,11 @@ OtherExplosions:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -2074,6 +2119,11 @@ OtherControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -2091,4 +2141,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.3.6.9'
+version: '1.3.7'

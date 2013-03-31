@@ -153,6 +153,8 @@ public class SCBlockListener implements Listener {
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "FireSpread", true, true, l))
 				event.setCancelled(true);
 			break;
+		
+		default:
 		}
 	}
 
