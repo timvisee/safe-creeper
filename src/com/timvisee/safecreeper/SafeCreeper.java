@@ -13,6 +13,8 @@ import net.slipcor.pvparena.PVPArena;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -132,36 +134,44 @@ public class SafeCreeper extends JavaPlugin {
 			}
 		}
 		
-		// Scheduled update checker
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				if(getConfig().getBoolean("updateChecker.enabled", true)) {
-					getUpdateChecker().refreshUpdatesData();
-					if(uc.isNewVersionAvailable()) {
-						final String newVer = uc.getNewestVersion();
-						System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
-						
-						// Auto install updates if enabled
-						if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
-							if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
-								// Check if already update installed
-								if(getUpdateChecker().isUpdateDownloaded())
-									System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
-								else {
-									// Download the update and show some status messages
-									System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
-									getUpdateChecker().downloadUpdate();
-									System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
+		// Schedule update checker task
+		FileConfiguration config = getConfig();
+		if(config.getBoolean("tasks.updateChecker.enabled", true)) {
+			int taskInterval = (int) Math.max(1, config.getDouble("tasks.updateChecker.interval", 3600) * 20);
+			
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				public void run() {
+					if(getConfig().getBoolean("updateChecker.enabled", true)) {
+						getUpdateChecker().refreshUpdatesData();
+						if(uc.isNewVersionAvailable()) {
+							final String newVer = uc.getNewestVersion();
+							System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
+							
+							// Auto install updates if enabled
+							if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
+								if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
+									// Check if already update installed
+									if(getUpdateChecker().isUpdateDownloaded())
+										System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
+									else {
+										// Download the update and show some status messages
+										System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
+										getUpdateChecker().downloadUpdate();
+										System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
+									}
 								}
+							} else {
+								// Auto installing updates not enabled, show a status message
+								System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
 							}
-						} else {
-							// Auto installing updates not enabled, show a status message
-							System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
 						}
 					}
 				}
-			}
-		}, 60 * 60 * 20, 60 * 60 * 20);
+			}, taskInterval, taskInterval);
+		} else {
+			// Show an warning in the console
+			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
+		}
 		
 		// Setup the API
 		setupApi();
@@ -225,21 +235,35 @@ public class SafeCreeper extends JavaPlugin {
 				}
 			}, 20, 20);*/
 		
-		// Task to repair blocks from the destruction repair manager
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				// Repair blocks
-				getDestructionRepairManager().repair();
-			}
-		}, 20*1, 20*1);
+		// Task to repair blocks from the destruction repair manager// Schedule update checker task
+		if(config.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
+			int taskInterval = (int) Math.max(1, config.getDouble("tasks.destructionRepairRepair.interval", 1) * 20);
+			
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				public void run() {
+					// Repair blocks
+					getDestructionRepairManager().repair();
+				}
+			}, taskInterval, taskInterval);
+		} else {
+			// Show an warning in the console
+			getSCLogger().info("Scheduled task 'destructionRepairRepair' disabled in the config file!");
+		}
 		
-		// Task to save the destructoin repair data
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				// Save the destruction repair data
-				getDestructionRepairManager().save();
-			}
-		}, 20*60*5, 20*60*5);
+		// Task to save the destruction repair data
+		if(config.getBoolean("tasks.destructionRepairSave.enabled", true)) {
+			int taskInterval = (int) Math.max(1, config.getDouble("tasks.destructionRepairSave.interval", 1) * 20);
+			
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				public void run() {
+					// Save the destruction repair data
+					getDestructionRepairManager().save();
+				}
+			}, taskInterval, taskInterval);
+		} else {
+			// Show an warning in the console
+			getSCLogger().info("Scheduled task 'destructionRepairSave' disabled in the config file!");
+		}
 		
 		// Plugin sucesfuly enabled, show console message
 		PluginDescriptionFile pdfFile = getDescription();

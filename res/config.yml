@@ -5,6 +5,18 @@ usePermissions: true
 # Set if bypass permissions are enabled. usePermissions has to be enabled.
 useBypassPermissions: false
 
+# Tasks settings
+tasks:
+    updateChecker:
+        enabled: true
+        interval: 3600
+    destructionRepairRepair:
+        enabled: true
+        interval: 1
+    destructionRepairSave:
+        enabled: true
+        interval: 300
+
 # Update checker
 updateChecker:
     enabled: true

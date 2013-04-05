@@ -62,6 +62,7 @@ public class DestructionRepairManager {
 				states.add(new SCContainerBlockState(b));
 			else if(b.getType().equals(Material.MOB_SPAWNER))
 				states.add(new SCSpawnerState(b));
+			// TODO: Fix beacon stuff!
 			/*else if(b.getType().equals(Material.BEACON))
 				states.add(new SCBeaconState(b));*/
 			else if(b.getType().equals(Material.JUKEBOX))
@@ -366,8 +367,13 @@ public class DestructionRepairManager {
 			i++;
 		}
 		
+		final String scVer = SafeCreeper.instance.getVersion();
+		
 		// Add the version code to the file
-		config.set("version", SafeCreeper.instance.getVersion());
+		config.set("version", scVer);
+		
+		// Add an information line to the top of the data file
+		config.options().header("Safe Creeper Destruction Repair Data - Automaticly saved by Safe Creeper v" + scVer + ". Do not modify this file!");
 		
 		// Convert the file to a FileConfiguration and safe the file
 		FileConfiguration fileConfig = config;
