@@ -19,6 +19,10 @@ CreeperControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -390,6 +394,10 @@ EnderDragonControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -451,6 +459,9 @@ EndermanControl:
     CanCloneBlock: true
     # If an endermen wants to place a block, and he can't, don't place anything but remove the holding block out of his hands
     ClearHandsOnPlace: true
+    DestructionRebuild:
+        Enabled: false
+        RebuildDelay: 60
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWithWorldGeneration: true
@@ -1576,6 +1587,10 @@ WitherControl:
     CostumExplosionStrength:
         Enabled: false
         ExplosionStrength: 3
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     Spawning:
         CanSpawnByBreeding: true
         CanSpawnWhenBuild: true
@@ -1884,6 +1899,10 @@ OtherMobControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     CustomHealth:
         Enabled: false
         MinHealth: 20
@@ -1946,6 +1965,10 @@ FireballControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     Effects:
         Enabled: true
         Triggers: {}
@@ -1968,6 +1991,10 @@ WitherSkullControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+        ExplosionRebuild:
+            Enabled: false
+            RebuildDelay: 60
+            RebuildBlockInterval: 1
     EnableExplosionSound: true
     EnableExplosionSmoke: true
     CanPickupItems: true
@@ -1997,6 +2024,10 @@ TNTControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     TNTPriming:
         CanBePrimedByFire: true
         CanBePrimedByOther: true
@@ -2018,6 +2049,9 @@ TNTControl:
 FireControl:
     Enabled: false
     EnableBlockFire: true
+    DestructionRebuild:
+        Enabled: false
+        RebuildDelay: 60
     FireSpread: true
     DamagePlayers: true
     DamageMobs: true
@@ -2090,6 +2124,10 @@ OtherExplosions:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     Effects:
         Enabled: true
         Triggers: {}
@@ -2127,6 +2165,10 @@ OtherControl:
         FlyingBlocks:
             Enabled: false
             Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
     CustomHealth:
         Enabled: false
         MinHealth: 20

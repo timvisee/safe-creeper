@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.DyeColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.PortalType;
@@ -40,9 +41,12 @@ import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
@@ -56,9 +60,11 @@ import org.bukkit.entity.Sheep;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Slime;
+import org.bukkit.entity.SmallFireball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wither;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
@@ -68,9 +74,11 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.LazyMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
+import com.timvisee.safecreeper.manager.DestructionRepairManager;
 import com.timvisee.safecreeper.task.CreatureReviveTask;
 import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
@@ -1098,20 +1106,16 @@ public class SCEntityListener implements Listener {
 	
 	@EventHandler
 	public void onEntityExplode(EntityExplodeEvent event) {
+		Entity e = event.getEntity();
 		Location l = event.getLocation();
+		World w = l.getWorld();
 		
-		
-		
-		
-		this.createExplosion(l, new ExplosionSource(l), true, 3, true, true, 1, true, 80, true, true, true, true, false);
+		/*this.createExplosion(l, new ExplosionSource(l), true, 3, true, true, 1, true, 80, true, true, true, true, false);
 		
 		event.setCancelled(true);
-		return;
+		return;*/
 		
-		
-		
-		
-		/* // Get the current control name
+		// Get the current control name
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
 		
 		// Make sure the current control is enabled, if not, Safe Creeper should not take over the explosion
@@ -1173,6 +1177,21 @@ public class SCEntityListener implements Listener {
 					SafeCreeper.instance.disableOtherExplosions = true;
 					w.createExplosion(l, explosionSize);
 				}
+			} else {
+				
+				boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
+				
+				if(rebuildBlocks) {
+					double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
+					double rebuildBlockInterval = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
+					
+					List<Block> blocks = event.blockList();
+					DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+					
+					drm.addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
+					
+					event.setYield(0f);
+				}
 			}
 		}
 		
@@ -1201,9 +1220,8 @@ public class SCEntityListener implements Listener {
 		}
 		
 		
-		
 		// TODO: Finish throwing
-		
+		/*
 		// Throwing
 		//int maxEntityRadius = explosionSize;
 		int maxEntityRadius = 10;
@@ -1228,12 +1246,12 @@ public class SCEntityListener implements Listener {
 			entityVel.setZ(entityVel.getZ() * 5);* /
 			
 			entry.setVelocity(entry.getVelocity().add(entityVel));
-		}
+		}*/
 		
 		
 		
 		// Play control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Explode", l);*/
+		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Explode", l);
 	}
 	
 	@EventHandler
@@ -1294,6 +1312,17 @@ public class SCEntityListener implements Listener {
 					}
 					
 					event.setCancelled(true);
+					
+				} else {
+					boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "ExplosionRebuild.Enabled", false, true, l);
+					
+					if(rebuildBlocks) {
+						double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+						
+						DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+						
+						drm.addBlock(from, rebuildDelay);
+					}
 				}
 				
 				// Play control effects

@@ -54,6 +54,7 @@ public class SafeCreeper extends JavaPlugin {
 	private TVNLibHandler tvnlHandler;
 	private PermissionsManager pm;
 	private SCConfigManager cm = null;
+	private DestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
 	private MobArenaHandler maHandler;
 	private CorruptionManager corHandler;
@@ -173,12 +174,16 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Setup managers and handlers
 	    setupPermissionsManager();
+	    setupDestructionRepairManager();
 	    setupLivingEntityReviveManager();
 	    setupMobArenaHandler();
 	    setupPVPArena();
 	    setupFactions();
 	    setupCorruptionManager();
 		setupMetrics();
+		
+		// Load destruction repair data
+		getDestructionRepairManager().load();
 		
 		// Register event listeners
 		pm.registerEvents(this.blockListener, this);
@@ -220,6 +225,22 @@ public class SafeCreeper extends JavaPlugin {
 				}
 			}, 20, 20);*/
 		
+		// Task to repair blocks from the destruction repair manager
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			public void run() {
+				// Repair blocks
+				getDestructionRepairManager().repair();
+			}
+		}, 20*1, 20*1);
+		
+		// Task to save the destructoin repair data
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			public void run() {
+				// Save the destruction repair data
+				getDestructionRepairManager().save();
+			}
+		}, 20*60*5, 20*60*5);
+		
 		// Plugin sucesfuly enabled, show console message
 		PluginDescriptionFile pdfFile = getDescription();
 		
@@ -230,6 +251,9 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	public void onDisable() {
+		// Save the destruction repair data
+		getDestructionRepairManager().save();
+		
 		// Cancel all running Safe Creeper tasks
 		getSCLogger().info("Cancelling all Safe Creeper tasks...");
 		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
@@ -303,6 +327,22 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public PermissionsManager getPermissionsManager() {
 		return this.pm;
+	}
+	
+	/**
+	 * Setup the destruction repair manager
+	 */
+	public void setupDestructionRepairManager() {
+		// Setup the  destruction repair manager
+		this.drm = new DestructionRepairManager();
+	}
+	
+	/**
+	 * Get the destruction repair manager
+	 * @return destruction repair manager
+	 */
+	public DestructionRepairManager getDestructionRepairManager() {
+		return this.drm;
 	}
 	
 	public SCStaticsManager getStaticsManager() {

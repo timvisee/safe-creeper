@@ -1,5 +1,7 @@
 package com.timvisee.safecreeper.listener;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,10 +16,13 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.EntityBlockFormEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.manager.DestructionRepairManager;
+import com.timvisee.safecreeper.util.SCAttachedBlock;
 
 public class SCBlockListener implements Listener {
 	
@@ -107,6 +112,18 @@ public class SCBlockListener implements Listener {
 		// Could fire burn/break blocks
 		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "EnableBlockFire", true, true, l))
 			event.setCancelled(true);
+		
+		else {
+			boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "DestructionRebuild.Enabled", false, true, l);
+			
+			if(rebuildBlocks) {
+				double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+				
+				DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+				
+				drm.addBlock(b, rebuildDelay);
+			}
+		}
 	}
 
 	@EventHandler
@@ -161,8 +178,11 @@ public class SCBlockListener implements Listener {
 	@EventHandler
 	public void onBlockFromTo(BlockFromToEvent event) {
 		Block b = event.getBlock();
+		Block toBlock = event.getToBlock();
 		Location l = b.getLocation();
 		World w = b.getWorld();
+		
+		DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 		
 		switch(b.getType()) {
 		case WATER:
@@ -182,7 +202,44 @@ public class SCBlockListener implements Listener {
 		default:
 			break;
 		}
+		
+		// If anything is moving into something that is going to be repaired, block the stream
+		if(drm.isDestroyed(toBlock))
+			event.setCancelled(true);
 	}
+	
+	@EventHandler
+	public void onPhysics(BlockPhysicsEvent event) {
+		Block b = event.getBlock();
+		
+		if(b == null)
+			return;
+		
+		if(SCAttachedBlock.isAttached(b)) {
+			DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+			
+			List<Block> bases = SCAttachedBlock.getBlockBase(b);
+			
+			for(Block base : bases) {
+				if(drm.isDestroyed(base)) {
+					
+					if(b.getType().equals(Material.TORCH))
+						drm.addBlock(base, 5);
+					else
+						event.setCancelled(true);
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean hasBypassPermission(Player player, String controlName, String bypassName, boolean def) {
 		if(!SafeCreeper.instance.getPermissionsManager().isEnabled())

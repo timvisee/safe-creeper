@@ -12,7 +12,7 @@ import com.timvisee.tvnlib.event.entity.TVNLibEntityReachedTargetEvent;
 public class SCTVNLibListener implements Listener {
 	
 	@EventHandler
-	public void onTVNativeLibEntityTargetReached(TVNLibEntityReachedTargetEvent event) {
+	public void onTVNLibEntityTargetReached(TVNLibEntityReachedTargetEvent event) {
 		Entity e = event.getLivingEntity();
 		
 		if(e instanceof LivingEntity) {
@@ -25,7 +25,7 @@ public class SCTVNLibListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onTVNativeLibEntityTargetReached(TVNLibEntityLostTargetEvent event) {
+	public void onTVNLibEntityTargetReached(TVNLibEntityLostTargetEvent event) {
 		Entity e = event.getLivingEntity();
 		
 		if(e instanceof LivingEntity) {
