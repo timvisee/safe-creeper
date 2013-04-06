@@ -2105,6 +2105,34 @@ LavaControl:
         Triggers: {}
     Locations: {}
 
+# Weather (environment)
+WeatherControl:
+    Enabled: false
+    CustomWeatherTypes:
+        Enabled: false
+        Clear:
+            Allowed: true
+        Rain:
+            Allowed: true
+        ThunderStorm:
+            Allowed: true
+    AlwaysRain: false
+    AlwaysThunderStorm: false
+    LightningInThunderStorm: true
+    CustomDurations:
+        Enabled: false
+        Weather:
+            Enabled: false
+            MinDuration: 720
+            MaxDuration: 1080
+        ThunderStorm:
+            Enabled: false
+            MinDuration: 240
+            MaxDuration: 360
+    Effects:
+        Enabled: true
+        Triggers: {}
+
 # Other (unknown) explosions (explosion)
 OtherExplosions:
     Enabled: false

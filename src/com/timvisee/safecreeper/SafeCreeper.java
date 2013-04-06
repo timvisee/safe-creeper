@@ -14,7 +14,6 @@ import net.slipcor.pvparena.PVPArena;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -34,19 +33,21 @@ import com.timvisee.safecreeper.util.SCFileUpdater;
 import com.timvisee.safecreeper.util.UpdateChecker;
 
 public class SafeCreeper extends JavaPlugin {
-	// Loggers
-	private SCLogger logger;
 	
 	// Safe Creeper static instance
 	public static SafeCreeper instance;
+	
+	// Loggers
+	private SCLogger logger;
 	
 	// Listeners
 	private final SCBlockListener blockListener = new SCBlockListener();
 	private final SCEntityListener entityListener = new SCEntityListener();
 	private final SCPlayerListener playerListener = new SCPlayerListener();
-	private final SCWorldListener worldListener = new SCWorldListener();
 	private final SCHangingListener hangingListener = new SCHangingListener();
 	private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
+	private final SCWeatherListener weatherListener = new SCWeatherListener();
+	private final SCWorldListener worldListener = new SCWorldListener();
 	
 	// Config file and folder paths
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
@@ -137,7 +138,7 @@ public class SafeCreeper extends JavaPlugin {
 		// Schedule update checker task
 		FileConfiguration config = getConfig();
 		if(config.getBoolean("tasks.updateChecker.enabled", true)) {
-			int taskInterval = (int) Math.max(1, config.getDouble("tasks.updateChecker.interval", 3600) * 20);
+			int taskInterval = (int) config.getDouble("tasks.updateChecker.interval", 3600) * 20;
 			
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {
@@ -198,9 +199,10 @@ public class SafeCreeper extends JavaPlugin {
 		// Register event listeners
 		pm.registerEvents(this.blockListener, this);
 		pm.registerEvents(this.entityListener, this);
-		pm.registerEvents(this.playerListener, this);
-		pm.registerEvents(this.worldListener, this);
 		pm.registerEvents(this.hangingListener, this);
+		pm.registerEvents(this.playerListener, this);
+		pm.registerEvents(this.weatherListener, this);
+		pm.registerEvents(this.worldListener, this);
 		
 		// Register the TVNLibListener if the TVNLib listener plugin is installed
 		if(getTVNLibHandler().isEnabled())
@@ -237,7 +239,7 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Task to repair blocks from the destruction repair manager// Schedule update checker task
 		if(config.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
-			int taskInterval = (int) Math.max(1, config.getDouble("tasks.destructionRepairRepair.interval", 1) * 20);
+			int taskInterval = (int) config.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
 			
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {
@@ -252,7 +254,7 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Task to save the destruction repair data
 		if(config.getBoolean("tasks.destructionRepairSave.enabled", true)) {
-			int taskInterval = (int) Math.max(1, config.getDouble("tasks.destructionRepairSave.interval", 1) * 20);
+			int taskInterval = (int) config.getDouble("tasks.destructionRepairSave.interval", 300) * 20;
 			
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {

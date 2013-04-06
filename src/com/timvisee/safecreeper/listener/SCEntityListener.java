@@ -13,6 +13,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -1104,7 +1105,7 @@ public class SCEntityListener implements Listener {
 		}*/
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onEntityExplode(EntityExplodeEvent event) {
 		Entity e = event.getEntity();
 		Location l = event.getLocation();
@@ -1179,18 +1180,20 @@ public class SCEntityListener implements Listener {
 				}
 			} else {
 				
-				boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
-				
-				if(rebuildBlocks) {
-					double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
-					double rebuildBlockInterval = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
+				if(!event.isCancelled()) {
+					boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
 					
-					List<Block> blocks = event.blockList();
-					DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
-					
-					drm.addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
-					
-					event.setYield(0f);
+					if(rebuildBlocks) {
+						double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
+						double rebuildBlockInterval = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
+						
+						List<Block> blocks = event.blockList();
+						DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+						
+						drm.addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
+						
+						event.setYield(0f);
+					}
 				}
 			}
 		}
