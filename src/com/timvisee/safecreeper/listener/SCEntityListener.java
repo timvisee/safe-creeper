@@ -854,9 +854,12 @@ public class SCEntityListener implements Listener {
 							Skeleton skel = (Skeleton) le;
 							if(skel.getSkeletonType().equals(SkeletonType.WITHER)) {
 								List<ItemStack> remove = new ArrayList<ItemStack>();
-								for(ItemStack entry : event.getDrops())
-									if(entry.getType().equals(Material.SKULL_ITEM))
+								for(ItemStack entry : event.getDrops()) {
+									if(entry.getType().equals(Material.SKULL_ITEM)) {
 										remove.add(entry);
+										break;
+									}
+								}
 								event.getDrops().removeAll(remove);
 							}
 						}
@@ -918,9 +921,18 @@ public class SCEntityListener implements Listener {
 								    skullStack.setItemMeta(meta);
 								}
 							}
+
+							// Should the items be added to the inventory or should they be droppped
+							final boolean addToInv = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.AddToInventory", true, true, l);
 							
-							// Add the skull to the dropped items list
-							event.getDrops().add(skullStack);
+							if(addToInv) {
+								// Add the skull to the dropped items list
+								event.getDrops().add(skullStack);
+							} else {
+								// Drop the skull on the place the player died
+								Location loc = e.getLocation();
+								loc.getWorld().dropItem(loc, skullStack);
+							}
 						}
 					}
 				}

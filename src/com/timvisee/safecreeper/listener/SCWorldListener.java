@@ -2,6 +2,7 @@ package com.timvisee.safecreeper.listener;
 
 import java.util.Random;
 
+import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,21 @@ public class SCWorldListener implements Listener {
 		Location l = w.getSpawnLocation();
 		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
 		Random rand = new Random();
+		
+		// Should the world keep it's spawn in it's memory
+		final boolean keepSpawnInMemory = cm.getOptionBoolean(w, "WorldControl", "KeepSpawnInMemory", w.getKeepSpawnInMemory(), true, l);
+		w.setKeepSpawnInMemory(keepSpawnInMemory);
+		
+		// Has the world a custom difficulty
+		if(cm.getOptionBoolean(w, "WorldControl", "CustomDifficulty.Enabled", false, true, l)) {
+			int diff = cm.getOptionInt(w, "WorldControl", "CustomDifficulty.WorldDifficulty", w.getDifficulty().getValue(), true, l);
+			
+			// Change the difficulty of the world
+			w.setDifficulty(Difficulty.getByValue(diff));
+		}
+		
+		// Set if PVP is enabled in this world
+		w.setPVP(cm.getOptionBoolean(w, "WorldControl", "PVP", w.getPVP(), true, l));
 		
 		// Check if it should always rain or thunder
 		boolean alwaysRain = cm.getOptionBoolean(w, "WeatherControl", "AlwaysRain", false, true, l);

@@ -51,6 +51,7 @@ CreeperControl:
             Multiplier: 1
         Skull:
             Enabled: false
+            AddToInventory: true
             Chance: 1
             Amount: 1
     Reviving:
@@ -1046,6 +1047,7 @@ PlayerControl:
             Multiplier: 1
         Skull:
             Enabled: false
+            AddToInventory: true
             Chance: 20
             Amount: 1
             PlayerHead: true
@@ -1211,6 +1213,7 @@ SkeletonControl:
             Multiplier: 1
         Skull:
             Enabled: false
+            AddToInventory: true
             Chance: 2.5
             Amount: 1
     Reviving:
@@ -1677,6 +1680,7 @@ WitherSkeletonControl:
             Multiplier: 1
         Skull:
             Enabled: false
+            AddToInventory: true
             Chance: 2.5
             Amount: 1
     Reviving:
@@ -1824,6 +1828,7 @@ ZombieControl:
             Multiplier: 1
         Skull:
             Enabled: false
+            AddToInventory: true
             Chance: 1
             Amount: 1
     Reviving:
@@ -2132,6 +2137,15 @@ WeatherControl:
     Effects:
         Enabled: true
         Triggers: {}
+
+# World (world)
+WorldControl:
+    Enabled: false
+    KeepSpawnInMemory: true
+    PVP: true
+    CustomDifficulty:
+        Enabled: false
+        WorldDifficulty: 2
 
 # Other (unknown) explosions (explosion)
 OtherExplosions:
