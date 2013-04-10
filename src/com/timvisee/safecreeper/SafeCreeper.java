@@ -64,6 +64,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCLivingEntityReviveManager lerm;
 	private MobArenaHandler maHandler;
 	private CorruptionManager corHandler;
+	private SCMobArenaManager mam;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -169,7 +170,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupPermissionsManager();
 	    setupDestructionRepairManager();
 	    setupLivingEntityReviveManager();
-	    setupMobArenaHandler();
+	    setupMobArenaManager();
 	    setupPVPArena();
 	    setupFactions();
 	    setupCorruptionManager();
@@ -413,45 +414,20 @@ public class SafeCreeper extends JavaPlugin {
     }
    
     /**
-     * Set up the MobArena hook
+     * Set up the Mob Arena Manager
      */
-    public void setupMobArenaHandler() {
-    	// MobArena has to be installed/enabled
-    	if(!getServer().getPluginManager().isPluginEnabled("MobArena")) {
-    		getSCLogger().info("Disabling MobArena usage, plugin not found.");
-    		return;
-    	}
-    	
-    	try {
-    		// Try to get the MobArenap plugin
-    		Plugin maPlugin = (MobArena) getServer().getPluginManager().getPlugin("MobArena");
-	        
-	        if (maPlugin == null) {
-	        	getSCLogger().info("Unable to hook into MobArena, plugin not found!");
-	            return;
-	        }
-	        
-	        // Hooked into MobArena, show a status message
-	        maHandler = new MobArenaHandler();
-	        getSCLogger().info("Hooked into MobArena!");
-	        
-    	} catch(NoClassDefFoundError ex) {
-    		// Unable to hook into MobArena, show warning/error message.
-    		getSCLogger().info("Error while hooking into MobArena!");
-    		return;
-    	} catch(Exception ex) {
-    		// Unable to hook into MobArena, show warning/error message.
-    		getSCLogger().info("Error while hooking into MobArena!");
-    		return;
-    	}
+    public void setupMobArenaManager() {
+    	// Set up the mob arena manager
+    	this.mam = new SCMobArenaManager(getLogger());
+    	this.mam.setup();
     }
     
     /**
-     * Get the MobArena handler
-     * @return
+     * Get the MobArena manager
+     * @return MobArena manager
      */
-    public MobArenaHandler getMobArenaHandler() {
-    	return this.maHandler;
+    public SCMobArenaManager getMobArenaManager() {
+    	return this.mam;
     }
    
     /**

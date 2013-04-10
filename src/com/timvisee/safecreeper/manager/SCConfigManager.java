@@ -367,11 +367,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -379,14 +379,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -562,11 +562,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -574,14 +574,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -757,11 +757,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -769,14 +769,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -952,11 +952,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -964,14 +964,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -1147,11 +1147,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -1159,14 +1159,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -1334,11 +1334,11 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
 						useCur = true;
@@ -1346,14 +1346,14 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaHandler() == null)
+						if(p.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!p.getMobArenaHandler().inRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
 							continue;
 						
-						Arena a = p.getMobArenaHandler().getArenaAtLocation(loc);
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
