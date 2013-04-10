@@ -35,9 +35,9 @@ public class SCMobArenaManager {
     	
     	try {
     		// Try to get the MobArenap plugin
-    		Plugin maPlugin = (MobArena) Bukkit.getPluginManager().getPlugin("MobArena");
+    		Plugin plugin = (MobArena) Bukkit.getPluginManager().getPlugin("MobArena");
 	        
-	        if (maPlugin == null) {
+	        if (plugin == null) {
 	        	this.log.info("Unable to hook into MobArena, plugin not found!");
 	            return;
 	        }
@@ -55,6 +55,22 @@ public class SCMobArenaManager {
     		this.log.info("Error while hooking into MobArena!");
     		return;
     	}
+	}
+	
+	/**
+	 * Get the logger instance
+	 * @return Logger instance
+	 */
+	public Logger getLogger() {
+		return this.log;
+	}
+	
+	/**
+	 * Set the logger instance
+	 * @param log Logger instance
+	 */
+	public void setLogger(Logger log) {
+		this.log = log;
 	}
 	
 	/**

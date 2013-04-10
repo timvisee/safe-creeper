@@ -62,9 +62,9 @@ public class SafeCreeper extends JavaPlugin {
 	private SCConfigManager cm = null;
 	private DestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
-	private MobArenaHandler maHandler;
 	private CorruptionManager corHandler;
 	private SCMobArenaManager mam;
+	private SCPVPArenaManager pam;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -171,7 +171,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupDestructionRepairManager();
 	    setupLivingEntityReviveManager();
 	    setupMobArenaManager();
-	    setupPVPArena();
+	    setupPVPArenaManager();
 	    setupFactions();
 	    setupCorruptionManager();
 		setupMetrics();
@@ -431,41 +431,24 @@ public class SafeCreeper extends JavaPlugin {
     }
    
     /**
-     * Setup the PVPArena hook
+     * Set up the PVP Arena manager
      */
-    public void setupPVPArena() {
-    	// PVP Arena has to be installed/enabled
-    	if(!getServer().getPluginManager().isPluginEnabled("pvparena")) {
-    		getSCLogger().info("Disabling PVPArena usage, plugin not found.");
-    		return;
-    	}
-    	
-    	try {
-    		// Try to get the PVPArena plugin
-    		Plugin paPlugin = (PVPArena) getServer().getPluginManager().getPlugin("pvparena");
-	        
-    		// The plugin variable may not be null
-	        if (paPlugin == null) {
-	        	getSCLogger().info("Unable to hook into PVPArena, plugin not found!");
-	            return;
-	        }
-	        
-	        // Hooked into PVPArena, show status message
-	        getSCLogger().info("Hooked into PVPArena!");
-	        
-    	} catch(NoClassDefFoundError ex) {
-    		// Unable to hook into PVPArena, show warning/error message.
-    		getSCLogger().info("Error while hooking into PVPArena!");
-    		return;
-    	} catch(Exception ex) {
-    		// Unable to hook into PVPArena, show warning/error message.
-    		getSCLogger().info("Error while hooking into PVPArena!");
-    		return;
-    	} 
+    public void setupPVPArenaManager() {
+    	// Set up the PVP Arena manager
+    	this.pam = new SCPVPArenaManager(getLogger());
+    	this.pam.setup();
+    }
+    
+    /**
+     * Get the PVP Arena manager instance
+     * @return PVP Arena manager instnace
+     */
+    public SCPVPArenaManager getPVPArenaManager() {
+    	return this.pam;
     }
    
     /**
-     * Setup the Factions hook
+     * Set up the Factions hook
      */
     public void setupFactions() {
     	// Factions has to be installed/enabled

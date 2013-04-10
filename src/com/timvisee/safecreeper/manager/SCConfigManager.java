@@ -27,8 +27,6 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import com.timvisee.safecreeper.SafeCreeper;
 
-import net.slipcor.pvparena.api.*;
-
 public class SCConfigManager {
 	
 	public static SafeCreeper p;
@@ -413,16 +411,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -608,16 +606,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -803,16 +801,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -998,16 +996,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1193,16 +1191,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1380,16 +1378,16 @@ public class SCConfigManager {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1770,15 +1768,6 @@ public class SCConfigManager {
 	
     public boolean isValidControl(String controlName) {
     	return getGlobalConfig().contains(controlName);
-    }
-    
-    public boolean isPVPArenaAt(Location loc) {
-    	String aName = PVPArenaAPI.getArenaNameByLocation(loc);
-    	return (!aName.equals(""));
-    }
-	
-    public String getPVPArenaAt(Location loc) {
-    	return PVPArenaAPI.getArenaNameByLocation(loc);
     }
     
     public boolean isFactionAt(Location loc) {
