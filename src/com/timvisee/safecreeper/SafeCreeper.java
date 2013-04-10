@@ -9,8 +9,6 @@ import java.io.OutputStream;
 
 import java.util.logging.Logger;
 
-import net.slipcor.pvparena.PVPArena;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,8 +17,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.garbagemule.MobArena.MobArena;
-import com.garbagemule.MobArena.MobArenaHandler;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.timvisee.safecreeper.Metrics.Graph;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
@@ -65,6 +61,7 @@ public class SafeCreeper extends JavaPlugin {
 	private CorruptionManager corHandler;
 	private SCMobArenaManager mam;
 	private SCPVPArenaManager pam;
+	private SCFactionsManager fm;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -172,7 +169,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupLivingEntityReviveManager();
 	    setupMobArenaManager();
 	    setupPVPArenaManager();
-	    setupFactions();
+	    setupFactionsManager();
 	    setupCorruptionManager();
 		setupMetrics();
 		
@@ -448,37 +445,19 @@ public class SafeCreeper extends JavaPlugin {
     }
    
     /**
-     * Set up the Factions hook
+     * Set up the Factions manager
      */
-    public void setupFactions() {
-    	// Factions has to be installed/enabled
-    	if(!getServer().getPluginManager().isPluginEnabled("Factions")) {
-    		getSCLogger().info("Disabling Factions usage, plugin not found.");
-    		return;
-    	}
-    	
-    	try {
-    		// Get the Factions plugin
-    		Plugin fPlugin = (Plugin) getServer().getPluginManager().getPlugin("Factions");
-	        
-    		// The factions plugin may not ben ull
-	        if (fPlugin == null) {
-	        	getSCLogger().info("Unable to hook into Factions, plugin not found!");
-	            return;
-	        }
-	        
-	        // Hooked into Factions, show status message
-	        getSCLogger().info("Hooked into Factions!");
-	        
-    	} catch(NoClassDefFoundError ex) {
-    		// Unable to hook into Factions, show warning/error message.
-    		getSCLogger().info("Error while hooking into Factions!");
-    		return;
-    	} catch(Exception ex) {
-    		// Unable to hook into Factions, show warning/error message.
-    		getSCLogger().info("Error while hooking into Factions!");
-    		return;
-    	}
+    public void setupFactionsManager() {
+    	this.fm = new SCFactionsManager(getLogger());
+    	this.fm.setup();
+    }
+    
+    /**
+     * Get the Factions manager
+     * @return Factions manager instance
+     */
+    public SCFactionsManager getFactionsManager() {
+    	return this.fm;
     }
     
     /**

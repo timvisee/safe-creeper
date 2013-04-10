@@ -22,9 +22,6 @@ import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.TNTPrimed;
 
 import com.garbagemule.MobArena.framework.Arena;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.Faction;
 import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCConfigManager {
@@ -448,16 +445,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -643,16 +640,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -838,16 +835,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1033,16 +1030,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1228,16 +1225,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1415,16 +1412,16 @@ public class SCConfigManager {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
 							continue;
 						
-						String fname = getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;
@@ -1768,32 +1765,6 @@ public class SCConfigManager {
 	
     public boolean isValidControl(String controlName) {
     	return getGlobalConfig().contains(controlName);
-    }
-    
-    public boolean isFactionAt(Location loc) {
-    	Faction f = Board.getFactionAt(new FLocation(loc));
-    	
-    	// If returned null, there's no faction found on this area
-    	if(f == null)
-    		return false;
-    	
-    	// The faction area has to be 'normal'
-    	return (f.isNormal());
-    }
-    
-    public String getFactionAt(Location loc) {
-    	Faction f = Board.getFactionAt(new FLocation(loc));
-    	
-    	// If the faction area equals to null, theres not faction on this area
-    	if(f == null)
-    		return "";
-    	
-    	// The faction area has to be 'normal'
-    	if(!f.isNormal())
-    		return "";
-    	
-    	// Return the faction name
-    	return f.getComparisonTag();
     }
     
     /**
