@@ -2,7 +2,6 @@ package com.timvisee.safecreeper;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.OutputStream;
@@ -18,7 +17,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.timvisee.safecreeper.Metrics.Graph;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
@@ -37,7 +35,7 @@ public class SafeCreeper extends JavaPlugin {
 	public static SafeCreeper instance;
 	
 	// Loggers
-	private SCLogger logger;
+	private SCLogger log;
 	
 	// Listeners
 	private final SCBlockListener blockListener = new SCBlockListener();
@@ -62,6 +60,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCMobArenaManager mam;
 	private SCPVPArenaManager pam;
 	private SCFactionsManager fm;
+	private SCMetricsManager mm;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -171,7 +170,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupPVPArenaManager();
 	    setupFactionsManager();
 	    setupCorruptionManager();
-		setupMetrics();
+		setupMetricsManager();
 		
 		// Load destruction repair data
 		getDestructionRepairManager().load();
@@ -306,7 +305,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the Safe Creeper logger
 	 */
 	public void setupSCLogger() {
-		this.logger = new SCLogger(Logger.getLogger("Minecraft"));
+		this.log = new SCLogger(Logger.getLogger("Minecraft"));
 	}
 	
 	/**
@@ -314,7 +313,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * @return Safe Creeper logger instance
 	 */
 	public SCLogger getSCLogger() {
-		return this.logger;
+		return this.log;
 	}
 	
 	/**
@@ -537,64 +536,19 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Set up metrics
+	 * Set up the metrics manager
 	 */
-	public void setupMetrics() {
-		if(!getConfig().getBoolean("statistics.enabled", true)) {
-			getSCLogger().info("MCStats.org Statistics disabled!");
-			return;
-		}
-		
-		// Metrics / MCStats.org
-		try {
-		    Metrics metrics = new Metrics(this);
-		    
-		    // Add graph for nerfed creepers
-		    // Construct a graph, which can be immediately used and considered as valid
-		    Graph graph = metrics.createGraph("Activities Nerfed by Safe Creeper");
-		    // Creeper explosions Nerfed
-		    graph.addPlotter(new Metrics.Plotter("Creeper Explosions") {
-	            @Override
-	            public int getValue() {
-	            	int i = statics.getCreeperExplosionsNerfed();
-	            	statics.setCreeperExplosionNerved(0);
-	            	return i;
-	            }
-		    });
-		    graph.addPlotter(new Metrics.Plotter("TNT Explosions") {
-	            @Override
-	            public int getValue() {
-	            	int i = statics.getTNTExplosionsNerfed();
-	            	statics.setTNTExplosionNerved(0);
-	            	return i;
-	            }
-		    });
-		    graph.addPlotter(new Metrics.Plotter("TNT Damage") {
-	            @Override
-	            public int getValue() {
-	            	int i = statics.getTNTDamageNerfed();
-	            	statics.setTNTDamageNerved(0);
-	            	return i;
-	            }
-		    });
-		    // Used permissions systems
-		    Graph graph2 = metrics.createGraph("Permisison Plugin Usage");
-		    graph2.addPlotter(new Metrics.Plotter(getPermissionsManager().getUsedPermissionsSystemType().getName()) {
-	            @Override
-	            public int getValue() {
-	            	return 1;
-	            }
-		    });
-		    
-		    // Start metrics
-		    metrics.start();
-		    
-		    // Show a status message
-		    getSCLogger().info("MCStats.org Statistics enabled.");
-		} catch (IOException e) {
-		    // Failed to submit the stats :-(
-			e.printStackTrace();
-		}
+	public void setupMetricsManager() {
+		this.mm = new SCMetricsManager(getConfig(), getLogger());
+		this.mm.setup();
+	}
+	
+	/**
+	 * Get the metrics manager
+	 * @return Metrics manager instance
+	 */
+	public SCMetricsManager getMetricsManager() {
+		return this.mm;
 	}
 
 	/**
