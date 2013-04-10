@@ -11,12 +11,10 @@ import java.util.logging.Logger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
@@ -60,6 +58,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCMobArenaManager mam;
 	private SCPVPArenaManager pam;
 	private SCFactionsManager fm;
+	private SCWorldGuardManager wgm;
 	private SCMetricsManager mm;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
@@ -169,6 +168,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setupMobArenaManager();
 	    setupPVPArenaManager();
 	    setupFactionsManager();
+	    setupWorldGuardManager();
 	    setupCorruptionManager();
 		setupMetricsManager();
 		
@@ -389,26 +389,21 @@ public class SafeCreeper extends JavaPlugin {
 	}
 
 	/**
+	 * Set up the World Guard manager
+	 */
+	public void setupWorldGuardManager() {
+		this.wgm = new SCWorldGuardManager(getSCLogger());
+		this.wgm.setup();
+	}
+	
+	/**
 	 * Get the World Guard plugin instance
 	 * @return
 	 */
-    protected WorldGuardPlugin getWorldGuard() {
-        Plugin wg = getServer().getPluginManager().getPlugin("WorldGuard");
- 
-        // WorldGuard may not be loaded
-        if (wg == null || !(wg instanceof WorldGuardPlugin))
-            return null;
-        return (WorldGuardPlugin) wg;
+    public SCWorldGuardManager getWorldGuardManager() {
+        return this.wgm;
     }
     
-    /**
-     * Check if World Guard is enabled on the server
-     * @return
-     */
-    public boolean worldGuardEnabled() {
-    	return (getWorldGuard() != null);
-    }
-   
     /**
      * Set up the Mob Arena Manager
      */
@@ -431,7 +426,7 @@ public class SafeCreeper extends JavaPlugin {
      */
     public void setupPVPArenaManager() {
     	// Set up the PVP Arena manager
-    	this.pam = new SCPVPArenaManager(getLogger());
+    	this.pam = new SCPVPArenaManager(getSCLogger());
     	this.pam.setup();
     }
     
@@ -447,7 +442,7 @@ public class SafeCreeper extends JavaPlugin {
      * Set up the Factions manager
      */
     public void setupFactionsManager() {
-    	this.fm = new SCFactionsManager(getLogger());
+    	this.fm = new SCFactionsManager(getSCLogger());
     	this.fm.setup();
     }
     
