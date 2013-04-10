@@ -58,9 +58,10 @@ public class CorruptionManager {
 	 * @return true if the entity is a Lab boss
 	 */
 	public boolean isBoss(Entity e) {
-		if(this.corEnabled)
-			return (CorruptionAPI.isBoss(e));
-		return false;
+		if(!this.corEnabled)
+			return false;
+		
+		return (CorruptionAPI.isBoss(e));
 	}
 	
 	/**

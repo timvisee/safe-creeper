@@ -75,11 +75,17 @@ public class SafeCreeper extends JavaPlugin {
 	// Variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
 	public boolean disableOtherExplosions = false;
 	
+	/**
+	 * Constructor
+	 */
 	public SafeCreeper() {
 		// Define the Safe Creeper static instance variable
 		instance = this;
 	}
 	
+	/**
+	 * On enable method, called when plugin is being enabled
+	 */
 	public void onEnable() {
 		long t = System.currentTimeMillis();
 		
@@ -244,6 +250,9 @@ public class SafeCreeper extends JavaPlugin {
 		getSCLogger().info("Safe Creeper v" + pdfFile.getVersion() + " enabled, took " + String.valueOf(duration) + " ms!");
 	}
 	
+	/**
+	 * On disable method, called when plugin is being disabled
+	 */
 	public void onDisable() {
 		// Save the destruction repair data
 		getDestructionRepairManager().save();
@@ -264,44 +273,79 @@ public class SafeCreeper extends JavaPlugin {
 		getSCLogger().info("Safe Creeper Disabled");
 	}
     
+	/**
+	 * Fetch the Safe Creeper version from the plugin.yml file
+	 * @return Fetch the Safe Creeper version from the plugin.yml file
+	 */
 	public String getVersion() {
 		return getDescription().getVersion();
 	}
 	
+	/**
+	 * Set up the Safe Creeper API layer
+	 */
 	public void setupApi() {
 		// Setup API
 		SafeCreeperApi.setPlugin(this);
 	}
 	
+	/**
+	 * Set up the update checker
+	 */
 	public void setupUpdateChecker() {
 		this.uc = new UpdateChecker();
 	}
 	
+	/**
+	 * Get the update checker instance
+	 * @return Update checker instance
+	 */
 	public UpdateChecker getUpdateChecker() {
 		return this.uc;
 	}
 	
+	/**
+	 * Set up the Safe Creeper logger
+	 */
 	public void setupSCLogger() {
 		this.logger = new SCLogger(Logger.getLogger("Minecraft"));
 	}
 	
+	/**
+	 * Get the Safe Creeper logger instance
+	 * @return Safe Creeper logger instance
+	 */
 	public SCLogger getSCLogger() {
 		return this.logger;
 	}
 	
+	/**
+	 * Set up the TVNLib handler
+	 */
 	public void setupTVNLibHandler() {
 		// Setup TVNLib Handler
 		this.tvnlHandler = new TVNLibHandler(this);
 	}
 	
+	/**
+	 * Get the TVNLib handler insatnce
+	 * @return TVNLib handler instance
+	 */
 	public TVNLibHandler getTVNLibHandler() {
 		return this.tvnlHandler;
 	}
 	
+	/**
+	 * Set up the config manager
+	 */
 	public void setupConfigManager() {
 		this.cm = new SCConfigManager(this, globalConfigFile, worldConfigsFolder);
 	}
 	
+	/**
+	 * Get the config manager instance
+	 * @return
+	 */
 	public SCConfigManager getConfigManager() {
 		return this.cm;
 	}
@@ -339,10 +383,18 @@ public class SafeCreeper extends JavaPlugin {
 		return this.drm;
 	}
 	
+	/**
+	 * Get the statics manager instnace
+	 * @return
+	 */
 	public SCStaticsManager getStaticsManager() {
 		return this.statics;
 	}
 
+	/**
+	 * Get the World Guard plugin instance
+	 * @return
+	 */
     protected WorldGuardPlugin getWorldGuard() {
         Plugin wg = getServer().getPluginManager().getPlugin("WorldGuard");
  
@@ -352,12 +404,16 @@ public class SafeCreeper extends JavaPlugin {
         return (WorldGuardPlugin) wg;
     }
     
+    /**
+     * Check if World Guard is enabled on the server
+     * @return
+     */
     public boolean worldGuardEnabled() {
     	return (getWorldGuard() != null);
     }
    
     /**
-     * Setup the MobArena hook
+     * Set up the MobArena hook
      */
     public void setupMobArenaHandler() {
     	// MobArena has to be installed/enabled
@@ -467,7 +523,7 @@ public class SafeCreeper extends JavaPlugin {
     }
     
     /**
-     * Setup the Corruption manager
+     * Set up the Corruption manager
      */
     public void setupCorruptionManager() {
     	this.corHandler = new CorruptionManager();
@@ -481,14 +537,25 @@ public class SafeCreeper extends JavaPlugin {
     	return this.corHandler;
     }
     
+    /**
+     * Set up the living 
+     */
     public void setupLivingEntityReviveManager() {
     	this.lerm = new SCLivingEntityReviveManager();
     }
     
+    /**
+     * Get the living entity revive manager instance
+     * @return Living entity revive manager instance
+     */
     public SCLivingEntityReviveManager getLivingEntityReviveManager() {
     	return this.lerm;
     }
 	
+    /**
+     * Check if the config file exists
+     * @throws Exception
+     */
 	public void checkConigFilesExist() throws Exception {
 		if(!getDataFolder().exists()) {
 			getSCLogger().info("Creating new Safe Creeper folder");
@@ -511,6 +578,11 @@ public class SafeCreeper extends JavaPlugin {
 		}
 	}
 	
+	/**
+	 * Copy a file
+	 * @param in Input stream (file)
+	 * @param file File to copy the file to
+	 */
 	private void copyFile(InputStream in, File file) {
 	    try {
 	        OutputStream out = new FileOutputStream(file);
@@ -527,7 +599,7 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Setup metrics
+	 * Set up metrics
 	 */
 	public void setupMetrics() {
 		if(!getConfig().getBoolean("statistics.enabled", true)) {
@@ -587,6 +659,9 @@ public class SafeCreeper extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * On command method, called when a command ran on the server
+	 */
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		// Run the command trough the command handler
 		CommandHandler ch = new CommandHandler();
