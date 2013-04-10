@@ -29,6 +29,9 @@ import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
 import com.timvisee.safecreeper.handler.TVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
+import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
+import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
+import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
 import com.timvisee.safecreeper.util.SCFileUpdater;
 import com.timvisee.safecreeper.util.UpdateChecker;
 
@@ -140,35 +143,8 @@ public class SafeCreeper extends JavaPlugin {
 		if(config.getBoolean("tasks.updateChecker.enabled", true)) {
 			int taskInterval = (int) config.getDouble("tasks.updateChecker.interval", 3600) * 20;
 			
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-				public void run() {
-					if(getConfig().getBoolean("updateChecker.enabled", true)) {
-						getUpdateChecker().refreshUpdatesData();
-						if(uc.isNewVersionAvailable()) {
-							final String newVer = uc.getNewestVersion();
-							System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
-							
-							// Auto install updates if enabled
-							if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
-								if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
-									// Check if already update installed
-									if(getUpdateChecker().isUpdateDownloaded())
-										System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
-									else {
-										// Download the update and show some status messages
-										System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
-										getUpdateChecker().downloadUpdate();
-										System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
-									}
-								}
-							} else {
-								// Auto installing updates not enabled, show a status message
-								System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
-							}
-						}
-					}
-				}
-			}, taskInterval, taskInterval);
+			// Schedule the update checker task
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdateChecker()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
@@ -241,12 +217,8 @@ public class SafeCreeper extends JavaPlugin {
 		if(config.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
 			int taskInterval = (int) config.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
 			
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-				public void run() {
-					// Repair blocks
-					getDestructionRepairManager().repair();
-				}
-			}, taskInterval, taskInterval);
+			// Schedule the task
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'destructionRepairRepair' disabled in the config file!");
@@ -256,12 +228,8 @@ public class SafeCreeper extends JavaPlugin {
 		if(config.getBoolean("tasks.destructionRepairSave.enabled", true)) {
 			int taskInterval = (int) config.getDouble("tasks.destructionRepairSave.interval", 300) * 20;
 			
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-				public void run() {
-					// Save the destruction repair data
-					getDestructionRepairManager().save();
-				}
-			}, taskInterval, taskInterval);
+			// Schedule the task
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairSaveDataTask(getDestructionRepairManager()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'destructionRepairSave' disabled in the config file!");

@@ -80,7 +80,7 @@ import org.bukkit.util.Vector;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
 import com.timvisee.safecreeper.manager.DestructionRepairManager;
-import com.timvisee.safecreeper.task.CreatureReviveTask;
+import com.timvisee.safecreeper.task.SCCreatureReviveTask;
 import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
 
@@ -981,7 +981,7 @@ public class SCEntityListener implements Listener {
 						// Reviving with tasks
 						
 						// Create the task
-						CreatureReviveTask task = new CreatureReviveTask(c, spawnLoc);
+						SCCreatureReviveTask task = new SCCreatureReviveTask(c, spawnLoc);
 						if(rememberTarget)
 							task.setTarget(c.getTarget());
 						
