@@ -22,6 +22,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.util.UpdateChecker;
@@ -249,6 +251,32 @@ public class SCPlayerListener implements Listener {
 		
 		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanPickupItems", true, true, l))
 			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onPlayerToggleSneak(PlayerToggleSneakEvent event) {
+		Player p = event.getPlayer();
+		Location l = p.getLocation();
+		World w = l.getWorld();
+		boolean sneaking = event.isSneaking();
+		
+		// Is the player allowed to sneak
+		if(!sneaking)
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanSneak", true, true, l))
+				event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onPlayerToggleSprint(PlayerToggleSprintEvent event) {
+		Player p = event.getPlayer();
+		Location l = p.getLocation();
+		World w = l.getWorld();
+		boolean sprinting = event.isSprinting();
+		
+		// Is the player allowed to sneak
+		if(!sprinting)
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanSprint", true, true, l))
+				event.setCancelled(true);
 	}
 	
 	public boolean hasBypassPermission(Player player, String controlName, String bypassName, boolean def) {

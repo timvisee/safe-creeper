@@ -1027,6 +1027,8 @@ PlayerControl:
     CanCreateOtherPortal: true
     CanDrown: true
     CanPickupItems: true
+    CanSprint: true
+    CanSneak: true
     FoodMeter:
         CanIncrease: true
         CanDecrease: true
