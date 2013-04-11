@@ -4,17 +4,21 @@ import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -124,13 +128,56 @@ public class SCPlayerListener implements Listener {
 		Location l = event.getBed().getLocation();
 		World w = p.getWorld();
 		
-		if(!hasBypassPermission(event.getPlayer(), "PlayerControl", "CanSleep", false))
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanSleep", true, true, l))
+		// Check if the player is allowed to sleep, if not, cancel the event
+		if(!hasBypassPermission(event.getPlayer(), "BedControl", "PlayerCanSleep", false))
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "BedControl", "PlayerCanSleep", true, true, l))
 				event.setCancelled(true);
 		
 		// Play the control effects
 		if(!event.isCancelled())
 			SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "Sleeping", l);
+	}
+	
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		Player p = event.getPlayer();
+		Block b = event.getClickedBlock();
+		
+		// Make sure the block instance is not null
+		if(b == null)
+			return;
+		
+		Location l = b.getLocation();
+		World w = l.getWorld();
+		Environment we = w.getEnvironment();
+		Action a = event.getAction();
+		
+		// Is the player interacting with a bed
+		if(b.getType().equals(Material.BED_BLOCK)) {
+			// Is the player trying to enter the bed
+			if(a.equals(Action.RIGHT_CLICK_BLOCK)) {
+				// Is the bed going to explode in this world environment
+				if(we.equals(Environment.NETHER) || we.equals(Environment.THE_END)) {
+					// Check if the bed's may explode
+					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "BedControl", "CanExplode", true, true, l)) {
+						// Cancel the bed interaction which causes the bed to explode
+						event.setCancelled(true);
+						
+						// Show a message to the player
+						switch(we) {
+						case NETHER:
+							p.sendMessage("You can't sleep in the Nether!");
+							break;
+						case THE_END:
+							p.sendMessage("You can't sleep in The End!");
+							break;
+						default:
+							p.sendMessage("You can't sleep right here!");
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@EventHandler

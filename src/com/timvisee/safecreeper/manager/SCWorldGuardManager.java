@@ -32,7 +32,7 @@ public class SCWorldGuardManager {
     	
 		Plugin wg = Bukkit.getPluginManager().getPlugin("WorldGuard");
 		 
-        // WorldGuard may not be loaded
+        // WorldGuard may not b'//e loaded
         if (wg == null || !(wg instanceof WorldGuardPlugin)) {
         	this.wg = null;
         	this.log.info("Unable to hook into WorldGuard, plugin not found!");

@@ -257,6 +257,14 @@ public class SCFileUpdater {
 				}
 			}
 			
+			// Moved the 'CanSleep' feature from the PlayerControl to the BedControl
+			if(isOlderVersion("1.3.7", configVer)) {
+				if(k.equals("BedControl.PlayerCanSleep")) {
+					newc.set("BedControl.PlayerCanSleep", c.getBoolean("PlayerControl.CanSleep", defc.getBoolean("BedControl.PlayerCanSleep")));
+					continue;
+				}
+			}
+			
 			// Don't remove the effects list from older files while converting to a new one
 			if(k.endsWith(".Effects.Triggers")) {
 				newc.createSection(k);
@@ -533,6 +541,14 @@ public class SCFileUpdater {
 				newc.set("PlayerControl.CustomDrops.Enabled", true);
 				newc.set("EndermanControl.CustomDrops.DropItemOnDeath", c.getBoolean("EndermanControl.DropItemOnDeath", globalc.getBoolean("EndermanControl.CustomDrops.DropItemOnDeath")));
 				continue;
+			}
+			
+			// Moved the 'CanSleep' feature from the PlayerControl to the BedControl
+			if(isOlderVersion("1.3.7", configVer)) {
+				if(k.equals("BedControl.PlayerCanSleep")) {
+					newc.set("BedControl.PlayerCanSleep", c.getBoolean("PlayerControl.CanSleep", globalc.getBoolean("BedControl.PlayerCanSleep")));
+					continue;
+				}
 			}
 			
 			if(k.equalsIgnoreCase("version"))

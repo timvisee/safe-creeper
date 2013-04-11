@@ -232,15 +232,6 @@ public class SCBlockListener implements Listener {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public boolean hasBypassPermission(Player player, String controlName, String bypassName, boolean def) {
 		if(!SafeCreeper.instance.getPermissionsManager().isEnabled())
 			return def;

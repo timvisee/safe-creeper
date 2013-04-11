@@ -1022,7 +1022,6 @@ PlayerControl:
     Enabled: false
     DamagePlayers: true
     DamageMobs: true
-    CanSleep: true
     CanCreateNetherPortal: true
     CanCreateEndPortal: true
     CanCreateOtherPortal: true
@@ -2105,6 +2104,16 @@ LavaControl:
     LavaSpread: true
     DamagePlayers: true
     DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# Bed (block)
+BedControl:
+    Enabled: false
+    PlayerCanSleep: true
+    CanExplode: true
     Effects:
         Enabled: true
         Triggers: {}

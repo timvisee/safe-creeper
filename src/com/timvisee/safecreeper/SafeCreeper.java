@@ -6,8 +6,6 @@ import java.io.InputStream;
 
 import java.io.OutputStream;
 
-import java.util.logging.Logger;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -305,7 +303,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the Safe Creeper logger
 	 */
 	public void setupSCLogger() {
-		this.log = new SCLogger(Logger.getLogger("Minecraft"));
+		this.log = new SCLogger(getLogger());
 	}
 	
 	/**
@@ -409,7 +407,7 @@ public class SafeCreeper extends JavaPlugin {
      */
     public void setupMobArenaManager() {
     	// Set up the mob arena manager
-    	this.mam = new SCMobArenaManager(getLogger());
+    	this.mam = new SCMobArenaManager(getSCLogger());
     	this.mam.setup();
     }
     
@@ -534,7 +532,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the metrics manager
 	 */
 	public void setupMetricsManager() {
-		this.mm = new SCMetricsManager(getConfig(), getLogger());
+		this.mm = new SCMetricsManager(getConfig(), getSCLogger());
 		this.mm.setup();
 	}
 	
