@@ -258,7 +258,7 @@ public class SCFileUpdater {
 			}
 			
 			// Moved the 'CanSleep' feature from the PlayerControl to the BedControl
-			if(isOlderVersion("1.3.7", configVer)) {
+			if(isOlderVersion("1.4", configVer)) {
 				if(k.equals("BedControl.PlayerCanSleep")) {
 					newc.set("BedControl.PlayerCanSleep", c.getBoolean("PlayerControl.CanSleep", defc.getBoolean("BedControl.PlayerCanSleep")));
 					continue;
@@ -544,7 +544,7 @@ public class SCFileUpdater {
 			}
 			
 			// Moved the 'CanSleep' feature from the PlayerControl to the BedControl
-			if(isOlderVersion("1.3.7", configVer)) {
+			if(isOlderVersion("1.4", configVer)) {
 				if(k.equals("BedControl.PlayerCanSleep")) {
 					newc.set("BedControl.PlayerCanSleep", c.getBoolean("PlayerControl.CanSleep", globalc.getBoolean("BedControl.PlayerCanSleep")));
 					continue;
