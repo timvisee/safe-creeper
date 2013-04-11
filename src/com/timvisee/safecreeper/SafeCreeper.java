@@ -253,9 +253,7 @@ public class SafeCreeper extends JavaPlugin {
 		getDestructionRepairManager().save();
 		
 		// Cancel all running Safe Creeper tasks
-		getSCLogger().info("Cancelling all Safe Creeper tasks...");
-		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
-		getSCLogger().info("All Safe Creeper tasks cancelled!");
+		stopTasks();
 		
 		// If any update was downloaded, install the update
 		if(getUpdateChecker().isUpdateDownloaded())
@@ -266,6 +264,15 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Plugin disabled, show console message
 		getSCLogger().info("Safe Creeper Disabled");
+	}
+	
+	/**
+	 * Stop all scheduled Safe Creeper tasks
+	 */
+	public void stopTasks() {
+		getSCLogger().info("Cancelling all Safe Creeper tasks...");
+		SafeCreeper.instance.getServer().getScheduler().cancelTasks(SafeCreeper.instance);
+		getSCLogger().info("All Safe Creeper tasks cancelled!");
 	}
     
 	/**

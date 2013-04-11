@@ -108,4 +108,12 @@ public class SCCreatureReviveTask  extends SCTask {
 	public void setTarget(LivingEntity target) {
 		this.target = target;
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper creature revive task";
+	}
 }

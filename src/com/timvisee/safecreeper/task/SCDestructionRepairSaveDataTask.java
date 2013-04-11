@@ -20,4 +20,12 @@ public class SCDestructionRepairSaveDataTask extends SCDestructionRepairTask {
 		// Save the destruction repair data
 		getDestructionRepairManager().save();
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper destruction repair save task";
+	}
 }

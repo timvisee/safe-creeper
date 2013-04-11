@@ -82,4 +82,12 @@ public class SCUpdateCheckerTask extends SCTask {
 			}
 		}
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper update checker task";
+	}
 }

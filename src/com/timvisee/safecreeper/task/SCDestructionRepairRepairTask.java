@@ -20,4 +20,12 @@ public class SCDestructionRepairRepairTask extends SCDestructionRepairTask {
 		// Repair blocks
 		getDestructionRepairManager().repair();
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper destruction repair repair task";
+	}
 }

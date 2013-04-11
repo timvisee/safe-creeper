@@ -11,4 +11,12 @@ public abstract class SCTask implements Runnable {
 	public SafeCreeper getSafeCreeper() {
 		return SafeCreeper.instance;
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper task";
+	}
 }

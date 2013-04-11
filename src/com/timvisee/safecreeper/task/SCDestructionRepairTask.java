@@ -29,4 +29,12 @@ public abstract class SCDestructionRepairTask extends SCTask {
 	public void setDestructionRepairManager(DestructionRepairManager drm) {
 		this.drm = drm;
 	}
+	
+	/**
+	 * Get the task name
+	 * @return Task name
+	 */
+	public String getTaskName() {
+		return "Safe Creeper destruction repair task";
+	}
 }
