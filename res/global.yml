@@ -2153,7 +2153,18 @@ WeatherControl:
 WorldControl:
     Enabled: false
     KeepSpawnInMemory: true
+    AutoSave: true
     PVP: true
+    CustomSpawning:
+        Enabled: false
+        AllowAnimals: true
+        AllowMonsters: true
+        AnimalSpawnLimit: 15
+        MonsterSpawnLimit: 70
+        AmbientSpawnLimit: 15
+        WaterAnimalSpawnLimit: 5
+        TicksPerAnimalSpawns: 400
+        TicksPerMonsterSpawns: 1
     CustomDifficulty:
         Enabled: false
         WorldDifficulty: 2

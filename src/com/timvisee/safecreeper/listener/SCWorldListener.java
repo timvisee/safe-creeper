@@ -21,20 +21,47 @@ public class SCWorldListener implements Listener {
 		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
 		Random rand = new Random();
 		
-		// Should the world keep it's spawn in it's memory
-		final boolean keepSpawnInMemory = cm.getOptionBoolean(w, "WorldControl", "KeepSpawnInMemory", w.getKeepSpawnInMemory(), true, l);
-		w.setKeepSpawnInMemory(keepSpawnInMemory);
-		
-		// Has the world a custom difficulty
-		if(cm.getOptionBoolean(w, "WorldControl", "CustomDifficulty.Enabled", false, true, l)) {
-			int diff = cm.getOptionInt(w, "WorldControl", "CustomDifficulty.WorldDifficulty", w.getDifficulty().getValue(), true, l);
+		// Check if the world control is enabled
+		if(cm.isControlEnabled(w.getName(), "WorldControl", false, l)) {
+			// Should the world keep it's spawn in it's memory
+			final boolean keepSpawnInMemory = cm.getOptionBoolean(w, "WorldControl", "KeepSpawnInMemory", w.getKeepSpawnInMemory(), true, l);
+			w.setKeepSpawnInMemory(keepSpawnInMemory);
 			
-			// Change the difficulty of the world
-			w.setDifficulty(Difficulty.getByValue(diff));
+			// Has the world a custom difficulty
+			if(cm.getOptionBoolean(w, "WorldControl", "CustomDifficulty.Enabled", false, true, l)) {
+				// Get the difficulty
+				int diff = cm.getOptionInt(w, "WorldControl", "CustomDifficulty.WorldDifficulty", w.getDifficulty().getValue(), true, l);
+				
+				// Change the difficulty of the world
+				w.setDifficulty(Difficulty.getByValue(diff));
+			}
+			
+			// Has the world a custom difficulty
+			if(cm.getOptionBoolean(w, "WorldControl", "CustomSpawning.Enabled", false, true, l)) {
+				// Get if animals and monsters are allowed to spawn
+				boolean allowAnimals = cm.getOptionBoolean(w, "WorldControl", "CustomSpawning.AllowAnimals", true, true, l);
+				boolean allowMonsters = cm.getOptionBoolean(w, "WorldControl", "CustomSpawning.AllowMonsters", true, true, l);
+				
+				// Set if animals and monsters are allowed to spawn
+				w.setSpawnFlags(allowAnimals, allowMonsters);
+				
+				// Set the custom spawn limits
+				w.setAnimalSpawnLimit(cm.getOptionInt(w, "WorldControl", "CustomSpawning.AnimalSpawnLimit", w.getAnimalSpawnLimit(), true, l));
+				w.setMonsterSpawnLimit(cm.getOptionInt(w, "WorldControl", "CustomSpawning.MonsterSpawnLimit", w.getMonsterSpawnLimit(), true, l));
+				w.setAmbientSpawnLimit(cm.getOptionInt(w, "WorldControl", "CustomSpawning.AmbientSpawnLimit", w.getAmbientSpawnLimit(), true, l));
+				w.setWaterAnimalSpawnLimit(cm.getOptionInt(w, "WorldControl", "CustomSpawning.WaterAnimalSpawnLimit", w.getWaterAnimalSpawnLimit(), true, l));
+				
+				// Set the ticks per animal and monster spawns
+				w.setTicksPerAnimalSpawns(cm.getOptionInt(w, "WorldControl", "CustomSpawning.TicksPerAnimalSpawns", (int) w.getTicksPerAnimalSpawns(), true, l));
+				w.setTicksPerMonsterSpawns(cm.getOptionInt(w, "WorldControl", "CustomSpawning.TicksPerMonsterSpawns", (int) w.getTicksPerMonsterSpawns(), true, l));
+			}
+			
+			// Set if the world should auto save
+			w.setAutoSave(cm.getOptionBoolean(w, "WorldControl", "AutoSave", w.isAutoSave(), true, l));
+			
+			// Set if PVP is enabled in this world
+			w.setPVP(cm.getOptionBoolean(w, "WorldControl", "PVP", w.getPVP(), true, l));
 		}
-		
-		// Set if PVP is enabled in this world
-		w.setPVP(cm.getOptionBoolean(w, "WorldControl", "PVP", w.getPVP(), true, l));
 		
 		// Check if it should always rain or thunder
 		boolean alwaysRain = cm.getOptionBoolean(w, "WeatherControl", "AlwaysRain", false, true, l);
