@@ -2168,6 +2168,16 @@ WorldControl:
     CustomDifficulty:
         Enabled: false
         WorldDifficulty: 2
+    CustomGameRules:
+        Enabled: false
+        Rules:
+            commandBlockOutput: 'true'
+            doFireTick: 'true'
+            doMobLoot: 'true'
+            doMobSpawning: 'true'
+            doTileDrops: 'true'
+            keepInventory: 'false'
+            mobGriefing: 'true'
 
 # Other (unknown) explosions (explosion)
 OtherExplosions:

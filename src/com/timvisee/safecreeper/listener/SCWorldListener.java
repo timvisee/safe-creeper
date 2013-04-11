@@ -1,5 +1,7 @@
 package com.timvisee.safecreeper.listener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Difficulty;
@@ -61,6 +63,32 @@ public class SCWorldListener implements Listener {
 			
 			// Set if PVP is enabled in this world
 			w.setPVP(cm.getOptionBoolean(w, "WorldControl", "PVP", w.getPVP(), true, l));
+			
+			// Check if custom game rules are enabled
+			if(cm.getOptionBoolean(w, "WorldControl", "CustomGameRules.Enabled", false, true, l)) {
+				// Get a list of custom game rules
+				List<String> keys = cm.getOptionKeysList(w, "WorldControl", "CustomGameRules.Rules", new ArrayList<String>(), true, l);
+				
+				// Apply all the game rules
+				for(String rule : keys) {
+					if(!w.isGameRule(rule)) {
+						System.out.println("Unknown game rule: '" + rule + "'");
+						continue;
+					}
+					
+					// Get the value to set the game rule to
+					String value = cm.getOptionString(w, "WorldControl", "CustomGameRules.Rules." + rule, w.getGameRuleValue(rule), true, l);
+					
+					// Make sure the value is valid
+					if(!value.equals("true") && !value.equals("false")) {
+						System.out.println("Unknown game rule value for '" + rule + "': '" + value + "'");
+						continue;
+					}
+					
+					// Set the game rule
+					w.setGameRuleValue(rule, value);
+				}
+			}
 		}
 		
 		// Check if it should always rain or thunder
