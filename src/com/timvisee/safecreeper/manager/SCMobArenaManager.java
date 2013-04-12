@@ -45,6 +45,7 @@ public class SCMobArenaManager {
 	        // Hooked into MobArena, show a status message
 	        this.ma = new MobArenaHandler();
 	        this.log.info("Hooked into MobArena!");
+	        return;
 	        
     	} catch(NoClassDefFoundError ex) {
     		// Unable to hook into MobArena, show warning/error message.
@@ -95,6 +96,10 @@ public class SCMobArenaManager {
 	 * @return True if the location is inside any arena
 	 */
 	public boolean isInRegion(Location loc) {
+		// Make sure the MobArena instance is not null
+		if(this.ma == null)
+			return false;
+		
 		return this.ma.inRegion(loc);
 	}
 	
@@ -104,6 +109,17 @@ public class SCMobArenaManager {
 	 * @return Arena
 	 */
 	public Arena getArenaAt(Location loc) {
+		// Make sure the Mob Arena is not null
+		if(this.ma == null)
+			return null;
+		
 		return this.ma.getArenaAtLocation(loc);
+	}
+	
+	/**
+	 * Check if Safe Creeper is hooked into Mob Arena
+	 */
+	public boolean isHooked() {
+		return (this.ma != null);
 	}
 }

@@ -43,6 +43,7 @@ public class SCPVPArenaManager {
 	        
 	        // Hooked into PVPArena, show status message
 	        this.log.info("Hooked into PVPArena!");
+	        return;
 	        
     	} catch(NoClassDefFoundError ex) {
     		// Unable to hook into PVPArena, show warning/error message.
@@ -82,7 +83,7 @@ public class SCPVPArenaManager {
     }
 	
 	/**
-	 * Get the PVP Arena on a locatoin
+	 * Get the PVP Arena on a location
 	 * @param loc Location to get the PVP Arena from
 	 * @return PVP Arena
 	 */
