@@ -113,8 +113,8 @@ public class SCSkullState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.SKULL;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.SKULL;
 	}
 	
 	/**

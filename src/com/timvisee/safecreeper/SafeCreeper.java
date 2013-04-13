@@ -16,14 +16,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
-import com.timvisee.safecreeper.handler.TVNLibHandler;
+import com.timvisee.safecreeper.handler.SCTVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
 import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
 import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
 import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
 import com.timvisee.safecreeper.util.SCFileUpdater;
-import com.timvisee.safecreeper.util.UpdateChecker;
+import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SafeCreeper extends JavaPlugin {
 	
@@ -47,12 +47,12 @@ public class SafeCreeper extends JavaPlugin {
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
 	// Managers and Handlers
-	private TVNLibHandler tvnlHandler;
-	private PermissionsManager pm;
+	private SCTVNLibHandler tvnlHandler;
+	private SCPermissionsManager pm;
 	private SCConfigManager cm = null;
-	private DestructionRepairManager drm;
+	private SCDestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
-	private CorruptionManager corHandler;
+	private SCCorruptionManager corHandler;
 	private SCMobArenaManager mam;
 	private SCPVPArenaManager pam;
 	private SCFactionsManager fm;
@@ -61,7 +61,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
-	private UpdateChecker uc = null;
+	private SCUpdateChecker uc = null;
 	
 	// Debug Mode
 	boolean debug = false;
@@ -295,14 +295,14 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the update checker
 	 */
 	public void setupUpdateChecker() {
-		this.uc = new UpdateChecker();
+		this.uc = new SCUpdateChecker();
 	}
 	
 	/**
 	 * Get the update checker instance
 	 * @return Update checker instance
 	 */
-	public UpdateChecker getUpdateChecker() {
+	public SCUpdateChecker getUpdateChecker() {
 		return this.uc;
 	}
 	
@@ -326,14 +326,14 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupTVNLibHandler() {
 		// Setup TVNLib Handler
-		this.tvnlHandler = new TVNLibHandler(this);
+		this.tvnlHandler = new SCTVNLibHandler(this);
 	}
 	
 	/**
 	 * Get the TVNLib handler insatnce
 	 * @return TVNLib handler instance
 	 */
-	public TVNLibHandler getTVNLibHandler() {
+	public SCTVNLibHandler getTVNLibHandler() {
 		return this.tvnlHandler;
 	}
 	
@@ -357,7 +357,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new PermissionsManager(this.getServer(), this);
+		this.pm = new SCPermissionsManager(this.getServer(), this);
 		this.pm.setup();
 	}
 	
@@ -365,7 +365,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the permissions manager
 	 * @return permissions manager
 	 */
-	public PermissionsManager getPermissionsManager() {
+	public SCPermissionsManager getPermissionsManager() {
 		return this.pm;
 	}
 	
@@ -374,14 +374,14 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupDestructionRepairManager() {
 		// Setup the  destruction repair manager
-		this.drm = new DestructionRepairManager();
+		this.drm = new SCDestructionRepairManager();
 	}
 	
 	/**
 	 * Get the destruction repair manager
 	 * @return destruction repair manager
 	 */
-	public DestructionRepairManager getDestructionRepairManager() {
+	public SCDestructionRepairManager getDestructionRepairManager() {
 		return this.drm;
 	}
 	
@@ -463,14 +463,14 @@ public class SafeCreeper extends JavaPlugin {
      * Set up the Corruption manager
      */
     public void setupCorruptionManager() {
-    	this.corHandler = new CorruptionManager();
+    	this.corHandler = new SCCorruptionManager();
     }
     
     /**
      * Get the Corruption handler
      * @return Corruption manager
      */
-    public CorruptionManager getCorruptionHandler() {
+    public SCCorruptionManager getCorruptionHandler() {
     	return this.corHandler;
     }
     

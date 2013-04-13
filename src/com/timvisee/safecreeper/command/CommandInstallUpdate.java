@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.util.UpdateChecker;
+import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class CommandInstallUpdate {
 	
@@ -38,7 +38,7 @@ public static boolean onCommand(CommandSender sender, Command cmd, String comman
 				sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
 				
 				// Get the update checker and refresh the updates data
-				UpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
+				SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
 				uc.refreshUpdatesData();
 				
 				if(!uc.isNewVersionAvailable()) {

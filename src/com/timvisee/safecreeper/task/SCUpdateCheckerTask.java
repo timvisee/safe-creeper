@@ -2,19 +2,19 @@ package com.timvisee.safecreeper.task;
 
 import org.bukkit.configuration.Configuration;
 
-import com.timvisee.safecreeper.util.UpdateChecker;
+import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SCUpdateCheckerTask extends SCTask {
 
 	Configuration config;
-	UpdateChecker uc;
+	SCUpdateChecker uc;
 	
 	/**
 	 * Constructor
 	 * @param config Config instance
 	 * @param uc Update checker instance
 	 */
-	public SCUpdateCheckerTask(Configuration config, UpdateChecker uc) {
+	public SCUpdateCheckerTask(Configuration config, SCUpdateChecker uc) {
 		this.config = config;
 		this.uc = uc;
 	}
@@ -39,7 +39,7 @@ public class SCUpdateCheckerTask extends SCTask {
 	 * Get the update checker instance
 	 * @return Update checker instance
 	 */
-	public UpdateChecker getUpdateChecker() {
+	public SCUpdateChecker getUpdateChecker() {
 		return this.uc;
 	}
 	
@@ -47,7 +47,7 @@ public class SCUpdateCheckerTask extends SCTask {
 	 * Set the update checker instance
 	 * @param uc Update checker instance
 	 */
-	public void setUpdateChecker(UpdateChecker uc) {
+	public void setUpdateChecker(SCUpdateChecker uc) {
 		this.uc = uc;
 	}
 	

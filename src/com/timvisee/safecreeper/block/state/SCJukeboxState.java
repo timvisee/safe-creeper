@@ -71,8 +71,8 @@ public class SCJukeboxState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.JUKEBOX;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.JUKEBOX;
 	}
 	
 	/**

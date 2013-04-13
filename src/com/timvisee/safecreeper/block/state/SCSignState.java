@@ -106,8 +106,8 @@ public class SCSignState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.SIGN;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.SIGN;
 	}
 	
 	/**

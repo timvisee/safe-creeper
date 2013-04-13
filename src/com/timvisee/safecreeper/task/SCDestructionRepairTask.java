@@ -1,16 +1,16 @@
 package com.timvisee.safecreeper.task;
 
-import com.timvisee.safecreeper.manager.DestructionRepairManager;
+import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
 
 public abstract class SCDestructionRepairTask extends SCTask {
 	
-	private DestructionRepairManager drm;
+	private SCDestructionRepairManager drm;
 	
 	/**
 	 * Constructor
 	 * @param drm
 	 */
-	public SCDestructionRepairTask(DestructionRepairManager drm) {
+	public SCDestructionRepairTask(SCDestructionRepairManager drm) {
 		this.drm = drm;
 	}
 	
@@ -18,7 +18,7 @@ public abstract class SCDestructionRepairTask extends SCTask {
 	 * Get the destruction repair manager
 	 * @return Destruction repair manager
 	 */
-	public DestructionRepairManager getDestructionRepairManager() {
+	public SCDestructionRepairManager getDestructionRepairManager() {
 		return this.drm;
 	}
 	
@@ -26,7 +26,7 @@ public abstract class SCDestructionRepairTask extends SCTask {
 	 * Set the destruction repair manager
 	 * @param drm Destruction repair manager
 	 */
-	public void setDestructionRepairManager(DestructionRepairManager drm) {
+	public void setDestructionRepairManager(SCDestructionRepairManager drm) {
 		this.drm = drm;
 	}
 	

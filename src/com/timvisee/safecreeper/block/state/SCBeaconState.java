@@ -92,8 +92,8 @@ public class SCBeaconState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.BEACON;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.BEACON;
 	}
 	
 	/**

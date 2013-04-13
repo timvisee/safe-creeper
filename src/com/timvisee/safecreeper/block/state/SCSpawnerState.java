@@ -90,8 +90,8 @@ public class SCSpawnerState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.SPAWNER;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.SPAWNER;
 	}
 	
 	/**

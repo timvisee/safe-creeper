@@ -34,14 +34,14 @@ import com.timvisee.safecreeper.block.state.SCSkullState;
 import com.timvisee.safecreeper.block.state.SCSpawnerState;
 import com.timvisee.safecreeper.util.SCAttachedBlock;
 
-public class DestructionRepairManager {
+public class SCDestructionRepairManager {
 	
 	private List<SCRepairableBlock> blocks = new ArrayList<SCRepairableBlock>();
 	
 	/**
 	 * Constructor
 	 */
-	public DestructionRepairManager() { }
+	public SCDestructionRepairManager() { }
 
 	/**
 	 * Add a list of blocks that should be repaired

@@ -17,13 +17,13 @@ import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.tvnlib.TVNLib;
 import com.timvisee.tvnlib.api.TVNLibApi;
 
-public class TVNLibHandler {
+public class SCTVNLibHandler {
 	
 	public static Plugin plugin;
 	public static TVNLibApi api;
 	private static final String TVNLIB_PLUGIN_NAME = "TVNLib";
 	
-	public TVNLibHandler(Plugin instance) {
+	public SCTVNLibHandler(Plugin instance) {
 		plugin = instance;
 		setup();
 	}

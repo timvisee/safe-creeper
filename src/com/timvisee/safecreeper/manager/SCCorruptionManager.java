@@ -6,14 +6,14 @@ import com.mcdr.corruption.Corruption;
 import com.mcdr.corruption.CorruptionAPI;
 import com.timvisee.safecreeper.SafeCreeper;
 
-public class CorruptionManager {
+public class SCCorruptionManager {
 	
 	private boolean corEnabled = false;
 	
 	/**
 	 * Constructor
 	 */
-	public CorruptionManager() {
+	public SCCorruptionManager() {
 		setup();
 	}
 	

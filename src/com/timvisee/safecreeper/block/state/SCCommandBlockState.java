@@ -91,8 +91,8 @@ public class SCCommandBlockState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.COMMAND_BLOCK;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.COMMAND_BLOCK;
 	}
 	
 	/**

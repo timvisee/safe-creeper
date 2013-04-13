@@ -170,8 +170,8 @@ public class SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.NORMAL;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.NORMAL;
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class SCBlockState {
 		String stateType = cfg.getString("stateType", "NORMAL");
 		
 		// Load the state
-		if(stateType.equals(BlockStateType.NORMAL.getName())) {
+		if(stateType.equals(SCBlockStateType.NORMAL.getName())) {
 			// Get the block location
 			ConfigurationSection locSect = cfg.getConfigurationSection("loc");
 			SCBlockLocation loc = SCBlockLocation.load(locSect);
@@ -238,30 +238,30 @@ public class SCBlockState {
 			
 			return new SCBlockState(loc, typeId, data);
 			
-		} else if(stateType.equals(BlockStateType.BEACON.getName())) {
+		} else if(stateType.equals(SCBlockStateType.BEACON.getName())) {
 			// TODO: Load beacon state
 			
-		} else if(stateType.equals(BlockStateType.COMMAND_BLOCK.getName())) {
+		} else if(stateType.equals(SCBlockStateType.COMMAND_BLOCK.getName())) {
 			// Get the command block state and return the instance
 			return SCCommandBlockState.load(cfg);
 			
-		} else if(stateType.equals(BlockStateType.CONTAINER_BLOCK.getName())) {
+		} else if(stateType.equals(SCBlockStateType.CONTAINER_BLOCK.getName())) {
 			// Get the container block state and return the instance
 			return SCContainerBlockState.load(cfg);
 			
-		} else if(stateType.equals(BlockStateType.JUKEBOX.getName())) {
+		} else if(stateType.equals(SCBlockStateType.JUKEBOX.getName())) {
 			// Get the jukebox state and return the instance
 			return SCJukeboxState.load(cfg);
 			
-		} else if(stateType.equals(BlockStateType.SIGN.getName())) {
+		} else if(stateType.equals(SCBlockStateType.SIGN.getName())) {
 			// Get the sign state and return the instance
 			return SCSignState.load(cfg);
 			
-		} else if(stateType.equals(BlockStateType.SKULL.getName())) {
+		} else if(stateType.equals(SCBlockStateType.SKULL.getName())) {
 			// Get the skull state and return the instance
 			return SCSkullState.load(cfg);
 			
-		} else if(stateType.equals(BlockStateType.SPAWNER.getName())) {
+		} else if(stateType.equals(SCBlockStateType.SPAWNER.getName())) {
 			// Get the skull state and return the instance
 			return SCSpawnerState.load(cfg);
 		}

@@ -27,7 +27,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 
-public class PermissionsManager {
+public class SCPermissionsManager {
 	
 	private PermissionsSystemType permsType = PermissionsSystemType.NONE;
 	private Server s;
@@ -53,7 +53,7 @@ public class PermissionsManager {
 	 * @param s server
 	 * @param logPrefix log prefix (plugin name)
 	 */
-	public PermissionsManager(Server s, Plugin p) {
+	public SCPermissionsManager(Server s, Plugin p) {
 		this.s = s;
 		this.p = p;
 	}

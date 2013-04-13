@@ -21,7 +21,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.EntityBlockFormEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.manager.DestructionRepairManager;
+import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
 import com.timvisee.safecreeper.util.SCAttachedBlock;
 
 public class SCBlockListener implements Listener {
@@ -119,7 +119,7 @@ public class SCBlockListener implements Listener {
 			if(rebuildBlocks) {
 				double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
 				
-				DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+				SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 				
 				drm.addBlock(b, rebuildDelay);
 			}
@@ -182,7 +182,7 @@ public class SCBlockListener implements Listener {
 		Location l = b.getLocation();
 		World w = b.getWorld();
 		
-		DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+		SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 		
 		switch(b.getType()) {
 		case WATER:
@@ -216,7 +216,7 @@ public class SCBlockListener implements Listener {
 			return;
 		
 		if(SCAttachedBlock.isAttached(b)) {
-			DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+			SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 			
 			List<Block> bases = SCAttachedBlock.getBlockBase(b);
 			

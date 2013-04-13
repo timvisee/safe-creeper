@@ -26,7 +26,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.util.UpdateChecker;
+import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SCPlayerListener implements Listener {
 	
@@ -205,7 +205,7 @@ public class SCPlayerListener implements Listener {
 		if(SafeCreeper.instance.getPermissionsManager().hasPermission(p, "safecreeper.notification.update", p.isOp()) &&
 				SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true)) {
 			
-			UpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
+			SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
 			
 			// Check if any update exists
 			if(uc.isNewVersionAvailable()) {

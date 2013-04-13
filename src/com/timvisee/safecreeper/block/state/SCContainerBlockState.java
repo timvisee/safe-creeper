@@ -121,8 +121,8 @@ public class SCContainerBlockState extends SCBlockState {
 	/**
 	 * Get the block state type
 	 */
-	public BlockStateType getStateType() {
-		return BlockStateType.CONTAINER_BLOCK;
+	public SCBlockStateType getStateType() {
+		return SCBlockStateType.CONTAINER_BLOCK;
 	}
 	
 	/**

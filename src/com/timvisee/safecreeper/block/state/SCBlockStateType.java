@@ -1,6 +1,6 @@
 package com.timvisee.safecreeper.block.state;
 
-public enum BlockStateType {
+public enum SCBlockStateType {
 	NORMAL("NORMAL"),
 	BEACON("BEACON"),
 	COMMAND_BLOCK("COMMAND_BLOCK"),
@@ -16,7 +16,7 @@ public enum BlockStateType {
 	 * Constructor
 	 * @param name State name
 	 */
-	BlockStateType(String name) {
+	SCBlockStateType(String name) {
 		this.name = name;
 	}
 	

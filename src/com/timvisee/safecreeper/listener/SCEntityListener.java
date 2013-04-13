@@ -79,7 +79,7 @@ import org.bukkit.util.Vector;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
-import com.timvisee.safecreeper.manager.DestructionRepairManager;
+import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
 import com.timvisee.safecreeper.task.SCCreatureReviveTask;
 import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
@@ -601,7 +601,6 @@ public class SCEntityListener implements Listener {
 		    	}
 			}
 		}
-			
 		
 		// Handle custom health of creatures
 		if(!event.isCancelled()) {
@@ -1200,7 +1199,7 @@ public class SCEntityListener implements Listener {
 						double rebuildBlockInterval = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
 						
 						List<Block> blocks = event.blockList();
-						DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+						SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 						
 						drm.addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
 						
@@ -1334,7 +1333,7 @@ public class SCEntityListener implements Listener {
 					if(rebuildBlocks) {
 						double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
 						
-						DestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+						SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 						
 						drm.addBlock(from, rebuildDelay);
 					}
