@@ -257,6 +257,46 @@ public class SCFileUpdater {
 				}
 			}
 			
+			if(isOlderVersion("1.3.6.9", configVer)) {
+
+				// Update the old 'KeepXPOnDeath' and 'DropXPOnDeath' from the PlayerControl
+				if(k.equals("PlayerControl.CustomDrops.XP.Enabled")) {
+					if(c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)) ||
+							c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k))) {
+						newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+						continue;
+					}
+					
+				} else if(k.equals("PlayerControl.CustomDrops.XP.KeepLevel")) {
+					newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
+					continue;
+					
+				} else if(k.equals("PlayerControl.CustomDrops.XP.KeepXPLevel")) {
+					newc.set("PlayerControl.CustomDrops.XP.KeepXPLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
+					continue;
+					
+				} else if(k.equals("PlayerControl.CustomDrops.XP.DropXP")) {
+					newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k)));
+					continue;
+				}
+				
+				// Update the old FoodLock'er in the PlayerControl
+				if(k.equals("PlayerControl.FoodMeter.CanIncrease")) {
+					newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					continue;
+					
+				} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
+					newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
+					continue;
+				}
+				
+				// Update the old 'DropItemOnDeath' from the EndermanControl
+				if(k.equals("EndermanControl.CustomDrops.DropItemOnDeath")) {
+					newc.set("EndermanControl.CustomDrops.DropItemOnDeath", c.getBoolean("EndermanControl.DropItemOnDeath", defc.getBoolean(k)));
+					continue;
+				}
+			}
+			
 			// Moved the 'CanSleep' feature from the PlayerControl to the BedControl
 			if(isOlderVersion("1.4", configVer)) {
 				if(k.equals("BedControl.PlayerCanSleep")) {
@@ -273,43 +313,6 @@ public class SCFileUpdater {
 			// Don't remove the locations list from older files while converting to a new one
 			if(k.endsWith(".Locations")) {
 				newc.createSection(k);
-			}
-			
-			// Update the old FoodLock'er in the PlayerControl
-			if(k.equals("PlayerControl.FoodMeter.CanIncrease")) {
-				newc.set("PlayerControl.FoodMeter.CanIncrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
-				continue;
-				
-			} else if(k.equals("PlayerControl.FoodMeter.CanDecrease")) {
-				newc.set("PlayerControl.FoodMeter.CanDecrease", c.getBoolean("PlayerControl.LockFoodmeter", defc.getBoolean(k)));
-				continue;
-			}
-			
-			// Update the old 'KeepXPOnDeath' and 'DropXPOnDeath' from the PlayerControl
-			if(k.equals("PlayerControl.CustomDrops.XP.Enabled")) {
-				if(c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)) ||
-						c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k))) {
-					newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
-					continue;
-				}
-				
-			} else if(k.equals("PlayerControl.CustomDrops.XP.KeepLevel")) {
-				newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
-				continue;
-				
-			} else if(k.equals("PlayerControl.CustomDrops.XP.KeepXPLevel")) {
-				newc.set("PlayerControl.CustomDrops.XP.KeepXPLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
-				continue;
-				
-			} else if(k.equals("PlayerControl.CustomDrops.XP.DropXP")) {
-				newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k)));
-				continue;
-			}
-			
-			// Update the old 'DropItemOnDeath' from the EndermanControl
-			if(k.equals("EndermanControl.CustomDrops.DropItemOnDeath")) {
-				newc.set("EndermanControl.CustomDrops.DropItemOnDeath", c.getBoolean("EndermanControl.DropItemOnDeath", defc.getBoolean(k)));
-				continue;
 			}
 			
 			if(k.equalsIgnoreCase("version"))
