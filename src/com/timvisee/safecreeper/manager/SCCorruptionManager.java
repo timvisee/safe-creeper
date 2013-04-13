@@ -4,6 +4,7 @@ import org.bukkit.entity.Entity;
 
 import com.mcdr.corruption.Corruption;
 import com.mcdr.corruption.CorruptionAPI;
+import com.mcdr.corruption.entity.Boss;
 import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCCorruptionManager {
@@ -58,7 +59,7 @@ public class SCCorruptionManager {
 	 * @return true if the entity is a Lab boss
 	 */
 	public boolean isBoss(Entity e) {
-		if(!this.corEnabled)
+		if(!isHooked())
 			return false;
 		
 		return (CorruptionAPI.isBoss(e));
@@ -70,5 +71,30 @@ public class SCCorruptionManager {
 	 */
 	public boolean isCorEnabled() {
 		return this.corEnabled;
+	}
+	
+	/**
+	 * Check if Safe Creeper is hooked into Corruption
+	 * @return Is hooked
+	 */
+	public boolean isHooked() {
+		return isCorEnabled();
+	}
+	
+	/**
+	 * Get a boss instance
+	 * @param e Entity to get the boss instance from
+	 * @return Boss instance or null
+	 */
+	public Boss getBoss(Entity e) {
+		// Make sure Safe Creeper is hooked into Corruption
+		if(!isHooked())
+			return null;
+		
+		// Make sure the entity is a boss
+		if(!isBoss(e))
+			return null;
+		
+		return CorruptionAPI.getBoss(e);
 	}
 }
