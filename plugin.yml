@@ -1,7 +1,7 @@
 name: SafeCreeper
 description: 'Get full control of creatures, players and almost everything!'
 main: com.timvisee.safecreeper.SafeCreeper
-version: 1.4.1
+version: 1.4.2
 load: startup
 author: timvisee
 website: http://timvisee.com/
