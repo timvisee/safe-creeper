@@ -6,6 +6,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
+import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCCreatureReviveTask  extends SCTask {
@@ -13,6 +14,7 @@ public class SCCreatureReviveTask  extends SCTask {
 	private Creature c;
 	private Location l;
 	private LivingEntity target;
+	private Arena mobArena = null;
 	
 	/**
 	 * Constructor
@@ -35,19 +37,19 @@ public class SCCreatureReviveTask  extends SCTask {
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(this.c);
 		
 		// Spawn the entity
-		Entity e = w.spawnEntity(this.l, this.c.getType());
+		Creature c = (Creature) w.spawnEntity(this.l, this.c.getType());
 		
 		// Set the looking direction of the entity
-		e.getLocation().setPitch(this.c.getLocation().getPitch());
+		c.getLocation().setPitch(this.c.getLocation().getPitch());
 		c.getLocation().setYaw(this.c.getLocation().getYaw());
 		
 		// Re-Target the previous target
-		if(this.target != null) {
-			if(e instanceof Creature) {
-				Creature c = (Creature) e;
-				c.setTarget(this.target);
-			}
-		}
+		if(this.target != null)
+			c.setTarget(this.target);
+		
+		// If the Living Entity was inside any Mob Arena add it to the arena again
+		if(isInMobArena())
+			SafeCreeper.instance.getMobArenaManager().addMonsterToArena(this.mobArena, c);
 		
 		// Play the control effects
 		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Revived", l);
@@ -107,6 +109,30 @@ public class SCCreatureReviveTask  extends SCTask {
 	 */
 	public void setTarget(LivingEntity target) {
 		this.target = target;
+	}
+	
+	/**
+	 * Check if the living entity is inside any mob arena
+	 * @return True if inside any arena
+	 */
+	public boolean isInMobArena() {
+		return (this.mobArena != null);
+	}
+	
+	/**
+	 * Get the mob arena the living entity is in
+	 * @return Mob arena or null
+	 */
+	public Arena getMobArena() {
+		return this.mobArena;
+	}
+	
+	/**
+	 * Set the mob arena the living entity is in
+	 * @param mobArena Mob arena
+	 */
+	public void setMobArena(Arena mobArena) {
+		this.mobArena = mobArena;
 	}
 	
 	/**

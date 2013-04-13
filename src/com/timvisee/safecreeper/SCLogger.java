@@ -2,30 +2,39 @@ package com.timvisee.safecreeper;
 
 import java.util.logging.Logger;
 
-public class SCLogger extends Logger {
+public class SCLogger {
 	
-	private final String prefix = "[SafeCreeper] ";
-	private final String errorPrefix = "[SafeCreeper] [ERROR] ";
-	private final String debugPrefix = "[SafeCreeper] [DEBUG] ";
+	private Logger log;
+	
+	private final String prefix = "";
+	private final String errorPrefix = "[ERROR] ";
+	private final String debugPrefix = "[DEBUG] ";
 	private boolean defShowPrefix = true;
 	private boolean defShowErrorPrefix = true;
 	private boolean defShowDebugPrefix = true;
 	
 	/**
 	 * Constructor
-	 * @param name Logger name
-	 * @param resourceBundleName Logger recourse bundle name
-	 */
-	public SCLogger(String name, String resourceBundleName) {
-		super(name, resourceBundleName);
-	}
-	
-	/**
-	 * Constructor
 	 * @param log Logger
 	 */
 	public SCLogger(Logger log) {
-		super(log.getName(), log.getResourceBundleName());
+		this.log = log;
+	}
+	
+	/**
+	 * Get the logger
+	 * @return
+	 */
+	public Logger getLogger() {
+		return this.log;
+	}
+	
+	/**
+	 * Set the logger
+	 * @param log Logger
+	 */
+	public void setLogger(Logger log) {
+		this.log = log;
 	}
 
 	/**
@@ -50,7 +59,7 @@ public class SCLogger extends Logger {
 		else
 			msg = text;
 		
-		super.info(msg);
+		log.info(msg);
 		return msg;
 	}
 	
@@ -76,7 +85,7 @@ public class SCLogger extends Logger {
 		else
 			msg = text;
 		
-		super.info(msg);
+		log.info(msg);
 		return msg;
 	}
 	
@@ -102,7 +111,7 @@ public class SCLogger extends Logger {
 		else
 			msg = text;
 		
-		super.info(msg);
+		log.info(msg);
 		return msg;
 	}
 	

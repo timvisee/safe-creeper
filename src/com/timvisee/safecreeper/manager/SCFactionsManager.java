@@ -1,7 +1,5 @@
 package com.timvisee.safecreeper.manager;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
@@ -9,16 +7,17 @@ import org.bukkit.plugin.Plugin;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
+import com.timvisee.safecreeper.SCLogger;
 
 public class SCFactionsManager {
 	
-	private Logger log;
+	private SCLogger log;
 	
 	/**
 	 * Constructor
-	 * @param log Logger
+	 * @param log SCLogger
 	 */
-	public SCFactionsManager(Logger log) {
+	public SCFactionsManager(SCLogger log) {
 		this.log = log;
 	}
 	
@@ -58,17 +57,17 @@ public class SCFactionsManager {
 	
 	/**
 	 * Get the logger instance
-	 * @return Logger instance
+	 * @return SCLogger instance
 	 */
-	public Logger getLogger() {
+	public SCLogger getSCLogger() {
 		return this.log;
 	}
 	
 	/**
 	 * Set the logger instance
-	 * @param log Logger instance
+	 * @param log SCLogger instance
 	 */
-	public void setLogger(Logger log) {
+	public void setSCLogger(SCLogger log) {
 		this.log = log;
 	}
 	

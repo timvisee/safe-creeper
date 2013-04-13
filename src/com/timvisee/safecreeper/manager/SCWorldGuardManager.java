@@ -1,22 +1,21 @@
 package com.timvisee.safecreeper.manager;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.timvisee.safecreeper.SCLogger;
 
 public class SCWorldGuardManager {
 	
-	private Logger log;
+	private SCLogger log;
 	private WorldGuardPlugin wg;
 	
 	/**
 	 * Contributor
-	 * @param log Logger
+	 * @param log SCLogger
 	 */
-	public SCWorldGuardManager(Logger log) {
+	public SCWorldGuardManager(SCLogger log) {
 		this.log = log;
 	}
 	
@@ -45,17 +44,17 @@ public class SCWorldGuardManager {
 	
 	/**
 	 * Get the logger instance
-	 * @return Logger instance
+	 * @return SCLogger instance
 	 */
-	public Logger getLogger() {
+	public SCLogger getSCLogger() {
 		return this.log;
 	}
 	
 	/**
 	 * Set the logger instance
-	 * @param log Logger instance
+	 * @param log SCLogger instance
 	 */
-	public void setLogger(Logger log) {
+	public void setSCLogger(SCLogger log) {
 		this.log = log;
 	}
 	

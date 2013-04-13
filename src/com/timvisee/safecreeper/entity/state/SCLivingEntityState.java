@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffect;
 
 public class SCLivingEntityState {
 	
-	private Collection<PotionEffect> activePotionEffects;
+	private Collection<PotionEffect> potionEffects;
 	private boolean canPickupItems;
 	private String customName;
 	private EntityEquipment equip;
@@ -33,8 +33,8 @@ public class SCLivingEntityState {
 	private boolean removeWhenFarAway;
 	private int ticksLived;
 	private EntityType type;
-	private boolean isCustomNameVisible;
-	private boolean isDead;
+	private boolean customNameVisible;
+	private boolean death;
 	
 	/**
 	 * Constructor
@@ -50,7 +50,7 @@ public class SCLivingEntityState {
 	 * @param le Living entit
 	 */
 	public void setState(LivingEntity le) {
-		this.activePotionEffects = le.getActivePotionEffects();
+		this.potionEffects = le.getActivePotionEffects();
 		this.canPickupItems = le.getCanPickupItems();
 		this.customName = le.getCustomName();
 		this.equip = le.getEquipment();
@@ -71,8 +71,8 @@ public class SCLivingEntityState {
 		this.removeWhenFarAway = le.getRemoveWhenFarAway();
 		this.ticksLived = le.getTicksLived();
 		this.type = le.getType();
-		this.isCustomNameVisible = le.isCustomNameVisible();
-		this.isDead = le.isDead();
+		this.customNameVisible = le.isCustomNameVisible();
+		this.death = le.isDead();
 	}
 	
 	public boolean applyState(LivingEntity le) {
@@ -82,14 +82,14 @@ public class SCLivingEntityState {
 		
 		// Apply the states
 		try {
-			le.addPotionEffects(this.activePotionEffects);
+			le.addPotionEffects(this.potionEffects);
 			le.setCanPickupItems(this.canPickupItems);
 			le.setCustomName(this.customName);
 			// TODO: Equipment
 			le.setFireTicks(this.fireTicks);
 			le.setMaxHealth(this.maxHealth);
 			le.setHealth(this.health);
-			le.setCustomNameVisible(this.isCustomNameVisible);
+			le.setCustomNameVisible(this.customNameVisible);
 			// TODO: Killer
 			// TODO: Is death!?
 			le.setLastDamage(this.lastDmg);
@@ -110,11 +110,11 @@ public class SCLivingEntityState {
 	}
 	
 	public Collection<PotionEffect> getActivePotionEffects() {
-		return this.activePotionEffects;
+		return this.potionEffects;
 	}
 	
-	public void setActivePotionEffects(Collection<PotionEffect> activePotionEffects) {
-		this.activePotionEffects = activePotionEffects;
+	public void setActivePotionEffects(Collection<PotionEffect> potionEffects) {
+		this.potionEffects = potionEffects;
 	}
 	
 	public boolean getCanPickupItems() {
@@ -270,18 +270,18 @@ public class SCLivingEntityState {
 	}
 	
 	public boolean isCustomNameVisible() {
-		return this.isCustomNameVisible;
+		return this.customNameVisible;
 	}
 	
 	public void setCustomNameVisible(boolean customNameVisible) {
-		this.isCustomNameVisible = customNameVisible;
+		this.customNameVisible = customNameVisible;
 	}
 	
 	public boolean isDead() {
-		return this.isDead;
+		return this.death;
 	}
 	
 	public void setDead(boolean dead) {
-		this.isDead = dead;
+		this.death = dead;
 	}
 }

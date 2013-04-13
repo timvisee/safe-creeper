@@ -9,55 +9,65 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.logging.Logger;
 
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.Plugin;
 
+import com.timvisee.safecreeper.SCLogger;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.tvnlib.TVNLib;
 import com.timvisee.tvnlib.api.TVNLibApi;
 
 public class SCTVNLibHandler {
 	
-	public static Plugin plugin;
+	private SCLogger log;
+	
 	public static TVNLibApi api;
 	private static final String TVNLIB_PLUGIN_NAME = "TVNLib";
 	
-	public SCTVNLibHandler(Plugin instance) {
-		plugin = instance;
-		setup();
+	public SCTVNLibHandler(SCLogger log) {
+		this.log = log;
 	}
 	
 	public void setup() {
-		Plugin TVNLibPlugin = plugin.getServer().getPluginManager().getPlugin(TVNLIB_PLUGIN_NAME);
+		Plugin TVNLibPlugin = Bukkit.getPluginManager().getPlugin(TVNLIB_PLUGIN_NAME);
+		
         if (TVNLibPlugin == null && !(TVNLibPlugin instanceof TVNLib)) {
-        	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNativeLib usage, TVNLib not found.");
+        	this.log.info("Disabling TVNativeLib usage, TVNLib not found.");
         	return;
         }
         
         // The TVNLib plugin has to be enabled
         try {
         	if(!TVNLibApi.isEnabled()) {
-            	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
+            	this.log.info("Disabling TVNLib usage, TVNLib not enabled!");
             	return;
         	}
         } catch(Exception ex) {
-        	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
+        	this.log.info("Disabling TVNLib usage, TVNLib not enabled!");
         	return;
         } catch(NoClassDefFoundError ex) {
-        	plugin.getLogger().info("[" + plugin.getName() + "] Disabling TVNLib usage, TVNLib not enabled!");
+        	this.log.info("Disabling TVNLib usage, TVNLib not enabled!");
         	return;
         }
         
         // Show a status message
-        plugin.getLogger().info("[" + plugin.getName() + "] Hooked into TVNLib v" + TVNLibApi.getVersion() + "!");
+        this.log.info("Hooked into TVNLib v" + TVNLibApi.getVersion() + "!");
 	}
 	
+	/**
+	 * Check if TVNLib is installed
+	 * @return
+	 */
 	public static boolean isTVNLibInstalled() {
         File TVNLibFile = new File("plugins/TVNLib.jar");
         return TVNLibFile.exists();
 	}
 	
+	/**
+	 * Check if TVNLib is loaded
+	 * @return
+	 */
 	public static boolean isTVNLibLoaded() {
 		Plugin plugin = SafeCreeper.instance.getServer().getPluginManager().getPlugin(TVNLIB_PLUGIN_NAME);
         if (plugin == null && !(plugin instanceof TVNLib))
@@ -100,7 +110,7 @@ public class SCTVNLibHandler {
 				pm.loadPlugin(TVNLibFile);
 				pm.enablePlugin(pm.getPlugin(TVNLIB_PLUGIN_NAME));
 			} catch (Exception exception) {
-				plugin.getServer().getLogger().info("[" + plugin.getName() + "] Failed to download TVNLib, please do it manually!");
+				plugin.getServer().getLogger().info("Failed to download TVNLib, please do it manually!");
 			}
 		}
 	}*/
@@ -151,7 +161,7 @@ public class SCTVNLibHandler {
 		
 		// Show a status message
 		final int size = url.openConnection().getContentLength();
-		log.info("[" + plugin.getName() + "] Downloading " + f.getName() + " (" + size / 1024 + "kb) ...");
+		log.info("Downloading " + f.getName() + " (" + size / 1024 + "kb) ...");
 		
 		// Download the file
 		final InputStream in = url.openStream();
@@ -168,7 +178,7 @@ public class SCTVNLibHandler {
 			
 			// Show downloading process
 			if ((int) ((System.currentTimeMillis() - start) / 500) > msgs) {
-				log.info("[" + plugin.getName() + "] Downloading: " + ((int) ((double) downloaded / (double) size * 100d) + "%"));
+				log.info("Downloading: " + ((int) ((double) downloaded / (double) size * 100d) + "%"));
 				msgs++;
 			}
 		}
@@ -178,7 +188,7 @@ public class SCTVNLibHandler {
 		out.close();
 		
 		// Show a status message
-		log.info("[" + plugin.getName() + "] " + f.getName() + " succesfully downloaded!");
+		log.info("" + f.getName() + " succesfully downloaded!");
 	}
 	
 	public boolean isEnabled() {
@@ -201,10 +211,5 @@ public class SCTVNLibHandler {
 	
 	public boolean livingEntityTargetTo(LivingEntity livingEntity, double x, double y, double z, float speed) {
 		return TVNLibApi.livingEntityTargetTo(livingEntity, x, y, z, speed);
-	}
-	
-	@Deprecated
-	public void dressMonster(LivingEntity monster, Material head, Material chest, Material legs, Material boots, Material weapon) {
-		TVNLibApi.setMonsterEquipment(monster, head, chest, legs, boots, weapon);
 	}
 }

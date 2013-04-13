@@ -77,9 +77,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
 import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
+import com.timvisee.safecreeper.manager.SCMobArenaManager;
 import com.timvisee.safecreeper.task.SCCreatureReviveTask;
 import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
@@ -199,7 +201,7 @@ public class SCEntityListener implements Listener {
 			}
 		}
 		
-		// Set if mobs should respawn when they're far away
+		// Set if mobs can respawn when they're far away
 		if(e instanceof LivingEntity) {
 			LivingEntity le = (LivingEntity) e;
 			
@@ -984,6 +986,15 @@ public class SCEntityListener implements Listener {
 						if(rememberTarget)
 							task.setTarget(c.getTarget());
 						
+						final SCMobArenaManager mam = SafeCreeper.instance.getMobArenaManager();
+						
+						// Check if the living entity (was) inside any mob arena
+						if(mam.isMonsterInArena(c)) {
+							Arena mobArena = mam.getArenaWithMonster(c);
+							
+							task.setMobArena(mobArena);
+						}
+						
 						// Creating the task delay
 						minDelay = Math.max(minDelay, 0);
 						maxDelay = Math.max(maxDelay, 0);
@@ -1027,7 +1038,7 @@ public class SCEntityListener implements Listener {
 						} else {
 							
 							// TVNLib is not installed or enabled, show a message in the console
-							SafeCreeper.instance.getSCLogger().error("TVNLib not installed or enabled, can't use reviver feature!");
+							SafeCreeper.instance.getLogger().info("TVNLib not installed or enabled, can't use reviver feature!");
 						}
 					}
 				}

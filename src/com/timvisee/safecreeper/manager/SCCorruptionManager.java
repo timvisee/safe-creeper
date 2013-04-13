@@ -26,7 +26,7 @@ public class SCCorruptionManager {
     	
     	// Corruption has to be installed/enabled
 		if(!SafeCreeper.instance.getServer().getPluginManager().isPluginEnabled("Corruption")) {
-			SafeCreeper.instance.getSCLogger().info("Disabling Corruption usage, plugin not found.");
+			SafeCreeper.instance.getLogger().info("Disabling Corruption usage, plugin not found.");
 			return;
 		}
 		
@@ -36,19 +36,19 @@ public class SCCorruptionManager {
 	        
 			// The Corruption  plugin may not be null
 	        if(cor == null) {
-	        	SafeCreeper.instance.getSCLogger().info("Disabling Corruption usage, Corruption not found.");
+	        	SafeCreeper.instance.getLogger().info("Disabling Corruption usage, Corruption not found.");
 	            return;
 	        }
 	        
 	        // Hooked into Corruption, show status message
-	        SafeCreeper.instance.getSCLogger().info("Hooked into Corruption!");
+	        SafeCreeper.instance.getLogger().info("Hooked into Corruption!");
 	        this.corEnabled = true;
 	        
 		} catch(NoClassDefFoundError ex) {
-			SafeCreeper.instance.getSCLogger().info("Unable to hook into Corruption, plugin not found.");
+			SafeCreeper.instance.getLogger().info("Unable to hook into Corruption, plugin not found.");
 			return;
 		} catch(Exception ex) {
-			SafeCreeper.instance.getSCLogger().info("Unable to hook into Corruption, plugin not found.");
+			SafeCreeper.instance.getLogger().info("Unable to hook into Corruption, plugin not found.");
 			return;
 		}
 	}

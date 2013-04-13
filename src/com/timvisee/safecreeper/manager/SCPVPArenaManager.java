@@ -1,7 +1,5 @@
 package com.timvisee.safecreeper.manager;
 
-import java.util.logging.Logger;
-
 import net.slipcor.pvparena.PVPArena;
 import net.slipcor.pvparena.api.PVPArenaAPI;
 
@@ -9,15 +7,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
+import com.timvisee.safecreeper.SCLogger;
+
 public class SCPVPArenaManager {
 	
-	private Logger log;
+	private SCLogger log;
 	
 	/**
 	 * Constructor
-	 * @param log Logger
+	 * @param log SCLogger
 	 */
-	public SCPVPArenaManager(Logger log) {
+	public SCPVPArenaManager(SCLogger log) {
 		this.log = log;
 	}
 	
@@ -58,17 +58,17 @@ public class SCPVPArenaManager {
 	
 	/**
 	 * Get the logger instance
-	 * @return Logger instance
+	 * @return SCLogger instance
 	 */
-	public Logger getLogger() {
+	public SCLogger getSCLogger() {
 		return this.log;
 	}
 	
 	/**
 	 * Set the logger instance
-	 * @param log Logger instance
+	 * @param log SCLogger instance
 	 */
-	public void setLogger(Logger log) {
+	public void setSCLogger(SCLogger log) {
 		this.log = log;
 	}
 	

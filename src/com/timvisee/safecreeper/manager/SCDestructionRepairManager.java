@@ -444,7 +444,7 @@ public class SCDestructionRepairManager {
 			// Make sure the section not null
 			if(blockSection == null) {
 				// Show an error message in the console
-				SafeCreeper.instance.getSCLogger().info("Unable to load block from destruction repair data!");
+				SafeCreeper.instance.getLogger().info("Unable to load block from destruction repair data!");
 				continue;
 			}
 			
@@ -454,7 +454,7 @@ public class SCDestructionRepairManager {
 			// Make sure the repairable block is not null
 			if(rb == null) {
 				// Show an error message in the console
-				SafeCreeper.instance.getSCLogger().info("Unable to load block from destruction repair data!");
+				SafeCreeper.instance.getLogger().info("Unable to load block from destruction repair data!");
 				continue;
 			}
 			

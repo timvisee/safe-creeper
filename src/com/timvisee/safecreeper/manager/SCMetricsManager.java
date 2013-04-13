@@ -1,24 +1,24 @@
 package com.timvisee.safecreeper.manager;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 import org.bukkit.configuration.Configuration;
 
 import com.timvisee.safecreeper.Metrics;
 import com.timvisee.safecreeper.Metrics.Graph;
+import com.timvisee.safecreeper.SCLogger;
 import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCMetricsManager {
 	
 	private Configuration config;
-	private Logger log;
+	private SCLogger log;
 	
 	/**
 	 * Constructor
-	 * @param log Logger
+	 * @param log SCLogger
 	 */
-	public SCMetricsManager(Configuration config, Logger log) {
+	public SCMetricsManager(Configuration config, SCLogger log) {
 		this.config = config;
 		this.log = log;
 	}
@@ -102,17 +102,17 @@ public class SCMetricsManager {
 	
 	/**
 	 * Get the logger instance
-	 * @return Logger instance
+	 * @return SCLogger instance
 	 */
-	public Logger getLogger() {
+	public SCLogger getSCLogger() {
 		return this.log;
 	}
 	
 	/**
 	 * Set the logger instance
-	 * @param log Logger instance
+	 * @param log SCLogger instance
 	 */
-	public void setLogger(Logger log) {
+	public void setSCLogger(SCLogger log) {
 		this.log = log;
 	}
 }

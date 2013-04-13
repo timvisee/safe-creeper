@@ -366,7 +366,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -378,7 +378,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
@@ -561,7 +561,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -573,7 +573,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
@@ -756,7 +756,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -768,7 +768,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
@@ -951,7 +951,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -963,7 +963,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
@@ -1146,7 +1146,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -1158,7 +1158,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
@@ -1333,7 +1333,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -1345,7 +1345,7 @@ public class SCConfigManager {
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInRegion(loc))
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
 							continue;
 						
 						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);

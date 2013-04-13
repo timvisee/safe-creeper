@@ -1,25 +1,25 @@
 package com.timvisee.safecreeper.manager;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.Plugin;
 
 import com.garbagemule.MobArena.MobArena;
 import com.garbagemule.MobArena.MobArenaHandler;
 import com.garbagemule.MobArena.framework.Arena;
+import com.timvisee.safecreeper.SCLogger;
 
 public class SCMobArenaManager {
 	
 	private MobArenaHandler ma;
-	private Logger log;
+	private SCLogger log;
 	
 	/**
 	 * Constructor
-	 * @param log Logger
+	 * @param log SCLogger
 	 */
-	public SCMobArenaManager(Logger log) {
+	public SCMobArenaManager(SCLogger log) {
 		this.log = log;
 	}
 	
@@ -60,17 +60,17 @@ public class SCMobArenaManager {
 	
 	/**
 	 * Get the logger instance
-	 * @return Logger instance
+	 * @return SCLogger instance
 	 */
-	public Logger getLogger() {
+	public SCLogger getSCLogger() {
 		return this.log;
 	}
 	
 	/**
 	 * Set the logger instance
-	 * @param log Logger instance
+	 * @param log SCLogger instance
 	 */
-	public void setLogger(Logger log) {
+	public void setSCLogger(SCLogger log) {
 		this.log = log;
 	}
 	
@@ -95,11 +95,12 @@ public class SCMobArenaManager {
 	 * @param loc The location to check
 	 * @return True if the location is inside any arena
 	 */
-	public boolean isInRegion(Location loc) {
+	public boolean isInArena(Location loc) {
 		// Make sure the MobArena instance is not null
 		if(this.ma == null)
 			return false;
 		
+		// Return if the location is inside any Mob Arena region
 		return this.ma.inRegion(loc);
 	}
 	
@@ -113,7 +114,12 @@ public class SCMobArenaManager {
 		if(this.ma == null)
 			return null;
 		
-		return this.ma.getArenaAtLocation(loc);
+		// Get the arena at a location
+		try {
+			return this.ma.getArenaAtLocation(loc);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 	
 	/**
@@ -121,5 +127,56 @@ public class SCMobArenaManager {
 	 */
 	public boolean isHooked() {
 		return (this.ma != null);
+	}
+	
+	/**
+	 * Is a living entity inside any mob arena
+	 * @param le The living entity to check
+	 * @return True if inside any arena
+	 */
+	public boolean isMonsterInArena(LivingEntity le) {
+		// Make sure the Mob Arena is not null
+		if(this.ma == null)
+			return false;
+		
+		// Return if this monster is in any arena
+		return this.ma.isMonsterInArena(le);
+	}
+	
+	/**
+	 * Get the Mob Arena a living entity is in
+	 * @param le Living entity to get the arena from
+	 * @return Mob Arena or null
+	 */
+	public Arena getArenaWithMonster(LivingEntity le) {
+		// Make sure the Mob Arena is not null
+		if(this.ma == null)
+			return null;
+				
+		// Return if this monster is in any arena
+		try {
+			return this.ma.getArenaWithMonster(le);
+		} catch(Exception e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * Get the arena at any location
+	 * @param loc Location to get the arena from
+	 * @return boolean False if failed
+	 */
+	public boolean addMonsterToArena(Arena arena, LivingEntity le) {
+		// Make sure the arena and the monster are not null
+		if(arena == null || le == null)
+			return false;
+		
+		// Add the monster to the arena
+		try {
+			arena.getMonsterManager().addMonster(le);
+			return true;
+		} catch(Exception e) {
+			return false;
+		}
 	}
 }

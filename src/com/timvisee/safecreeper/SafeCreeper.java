@@ -30,7 +30,7 @@ public class SafeCreeper extends JavaPlugin {
 	// Safe Creeper static instance
 	public static SafeCreeper instance;
 	
-	// Loggers
+	// Logger
 	private SCLogger log;
 	
 	// Listeners
@@ -326,7 +326,8 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupTVNLibHandler() {
 		// Setup TVNLib Handler
-		this.tvnlHandler = new SCTVNLibHandler(this);
+		this.tvnlHandler = new SCTVNLibHandler(getSCLogger());
+		this.tvnlHandler.setup();
 	}
 	
 	/**
