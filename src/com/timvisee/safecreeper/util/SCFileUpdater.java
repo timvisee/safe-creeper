@@ -159,6 +159,9 @@ public class SCFileUpdater {
 		// Add some description to the config file
 		newc.options().header("Safe Creeper Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
 		
+		// Set the intended spaces to 4
+		
+		
 		// Save the config file
 		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
 		try {

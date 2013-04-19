@@ -1,10 +1,15 @@
 package com.timvisee.safecreeper;
 
+import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 public class SCLogger {
 	
 	private Logger log;
+	
+	/*private boolean writeToFile = false;
+	private FileWriter writer;
+	private final String writerPrefix = "[SafeCreeper] ";*/
 	
 	private final String prefix = "";
 	private final String errorPrefix = "[ERROR] ";
@@ -37,6 +42,11 @@ public class SCLogger {
 		this.log = log;
 	}
 
+	private void write(String msg) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		
+	}
+	
 	/**
 	 * Info
 	 * @param text Text
@@ -60,6 +70,10 @@ public class SCLogger {
 			msg = text;
 		
 		log.info(msg);
+		
+		// Write the message to the Safe Creeper log
+		
+		
 		return msg;
 	}
 	

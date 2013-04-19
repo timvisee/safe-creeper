@@ -25,24 +25,26 @@ import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCConfigManager {
-	
-	public static SafeCreeper p;
 
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	private FileConfiguration globalConfig;
 	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<String, FileConfiguration>();
 
-	public SCConfigManager(SafeCreeper instance) {
-		p = instance;
-		
+	/**
+	 * Constructor
+	 */
+	public SCConfigManager() {
 		// Instantly setup the manager after construction it
 		setup();
 	}
 	
-	public SCConfigManager(SafeCreeper instance, File globalConfigFile, File worldConfigsFolder) {
-		p = instance;
-		
+	/**
+	 * Constructor
+	 * @param globalConfigFile Global config file path
+	 * @param worldConfigsFolder World configs folder
+	 */
+	public SCConfigManager(File globalConfigFile, File worldConfigsFolder) {
 		this.globalConfigFile = globalConfigFile;
 		this.worldConfigsFolder = worldConfigsFolder;
 		
@@ -362,7 +364,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -374,7 +376,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -557,7 +559,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -569,7 +571,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -752,7 +754,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -764,7 +766,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -947,7 +949,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -959,7 +961,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -1142,7 +1144,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -1154,7 +1156,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -1329,7 +1331,7 @@ public class SCConfigManager {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -1341,7 +1343,7 @@ public class SCConfigManager {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(p.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaManager() == null)
 							continue;
 						
 						// The location has to be in an arena
@@ -1766,15 +1768,6 @@ public class SCConfigManager {
     public boolean isValidControl(String controlName) {
     	return getGlobalConfig().contains(controlName);
     }
-    
-    /**
-     * Set the manager plugin instance
-     * @param p plugin instance
-     */
-	public void setPlugin(SafeCreeper instance) {
-		if(p != null)
-			p = instance;
-	}
 	
     /**
      * Try to parse a string to an integer, if it succeed return true

@@ -342,7 +342,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the config manager
 	 */
 	public void setupConfigManager() {
-		this.cm = new SCConfigManager(this, globalConfigFile, worldConfigsFolder);
+		this.cm = new SCConfigManager(globalConfigFile, worldConfigsFolder);
 	}
 	
 	/**
