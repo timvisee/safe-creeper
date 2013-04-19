@@ -12,5 +12,5 @@ Contributing
 2. Create a branch (`git checkout -b MY_BRANCH`)
 3. Commit your changes (`git commit -am "COMMIT_TITLE"`)
 4. Push to the branch (`git push origin MY_BRANCH`)
-5. Open a [Pull Request][1]
+5. Open a Pull Request.
 6. Enjoy a refreshing Diet Coke and wait
