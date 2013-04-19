@@ -23,6 +23,7 @@ import org.bukkit.entity.TNTPrimed;
 
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.util.SCUtils;
 
 public class SCConfigManager {
 
@@ -320,7 +321,7 @@ public class SCConfigManager {
 					else if(!entrySplitted.trim().contains("-")) {
 						
 						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
+						if(!SCUtils.isInt(entrySplitted)) {
 							System.out.println("[SafeCreeper] [ERROR] Value is not an integer: " + entrySplitted);
 							continue;
 						}
@@ -334,7 +335,7 @@ public class SCConfigManager {
 						List<String> values = Arrays.asList(entrySplitted.split("-"));
 						
 						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
+						if(!SCUtils.isInt(values.get(0)) || !SCUtils.isInt(values.get(1))) {
 							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
 							continue;
 						}
@@ -651,7 +652,7 @@ public class SCConfigManager {
 					else if(!entrySplitted.trim().contains("-")) {
 						
 						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
+						if(!SCUtils.isInt(entrySplitted)) {
 							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
 							continue;
 						}
@@ -665,7 +666,7 @@ public class SCConfigManager {
 						List<String> values = Arrays.asList(entrySplitted.split("-"));
 						
 						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
+						if(!SCUtils.isInt(values.get(0)) || !SCUtils.isInt(values.get(1))) {
 							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
 							continue;
 						}
@@ -1135,21 +1136,6 @@ public class SCConfigManager {
 	
     public boolean isValidControl(String controlName) {
     	return getGlobalConfig().contains(controlName);
-    }
-	
-    /**
-     * Try to parse a string to an integer, if it succeed return true
-     * @param s the string to parse to an int
-     * @return true if parsing the string to an int succeed
-     */
-    private boolean isInt(String s) {
-        try {
-			@SuppressWarnings("unused")
-			int i = Integer.parseInt(s);
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-        return true;
     }
 	
 	/**
