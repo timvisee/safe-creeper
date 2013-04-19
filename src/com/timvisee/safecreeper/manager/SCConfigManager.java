@@ -12,6 +12,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
@@ -276,6 +277,200 @@ public class SCConfigManager {
 		return false;
     }
     
+    /**
+     * Handle the locations node inside controls
+     * @param w World name
+     * @param loc Location
+     * @param locationsSection Path to the Locations section
+     * @param keyName Key name
+     * @return List of configuration section paths to apply
+     */
+    private List<String> handleLocations(String w, Location loc, String locationsSection, String keyName) {
+    	// Create a new array list to store all the configuration sections in
+    	List<String> out = new ArrayList<String>();
+    	
+    	// Make sure the world name is not null or empty
+    	if(w == null)
+    		return out;
+    	if(w.trim().equals(""))
+    		return out;
+    	
+    	// Make sure the locations section is not null
+    	if(locationsSection == null)
+    		return out;
+    	
+    	// Make sure the locations section is set
+    	if(locationsSection.trim().equals(""))
+    		return out;
+    	
+    	// Does the locations section contains the 'Levels' node
+		if(configNodeExists(w, locationsSection + ".Levels")) {
+			List<String> keysLevels = configGetKeys(w, locationsSection + ".Levels");
+			
+			// Levels
+			for(String entry : keysLevels) {
+				List<String> keysSplitted = Arrays.asList(entry.split(","));
+				
+				boolean useEntry = false;
+				
+				for(String entrySplitted : keysSplitted) {
+					
+					if(entrySplitted.trim().equals("*"))
+						useEntry = true;
+					
+					else if(!entrySplitted.trim().contains("-")) {
+						
+						// If the value isn't an integer, if itisn't show an error and continue in the for loop
+						if(!isInt(entrySplitted)) {
+							System.out.println("[SafeCreeper] [ERROR] Value is not an integer: " + entrySplitted);
+							continue;
+						}
+						
+						int level = Integer.parseInt(entrySplitted);
+						if(loc.getY() == level)
+							useEntry = true;
+						
+					} else {
+						
+						List<String> values = Arrays.asList(entrySplitted.split("-"));
+						
+						// If the value isn't an integer, if itisn't show an error and continue in the for loop
+						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
+							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
+							continue;
+						}
+						
+						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
+						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
+						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
+							useEntry = true;
+					}
+				}
+				
+				// Add the section to the output list if it should be used and if it does exist
+				if(useEntry)
+					if(configNodeExists(w, locationsSection + ".Levels." + entry + "." + keyName))
+						out.add(locationsSection + ".Levels." + entry + "." + keyName);
+			}
+		}
+		
+		// Check if MobArena is enabled, if so check if the control is enabled
+		if(configNodeExists(w, locationsSection + ".MobArena")) {
+			List<String> keysMobArena = configGetKeys(w, locationsSection + ".MobArena");
+			
+			// Mob Arena
+			for(String entry : keysMobArena) {
+				List<String> keysSplitted = Arrays.asList(entry.split(","));
+				
+				boolean useEntry = false;
+				
+				for(String entrySplitted : keysSplitted) {
+					
+					if(entrySplitted.trim().equals("*")) {
+						
+						// The location has to be in an arena
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+							continue;
+						
+						useEntry = true;
+					
+					} else {
+						
+						// The location has to be in an arena
+						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+							continue;
+						
+						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
+						
+						if(a.configName().equals(entrySplitted.trim()))
+							useEntry = true;
+					}
+				}
+				
+				// Add the section to the output list if it should be used and if it does exist
+				if(useEntry)
+					if(configNodeExists(w, locationsSection + ".MobArena." + entry + "." + keyName))
+						out.add(locationsSection + ".MobArena." + entry + "." + keyName);
+			}
+		}
+		
+		// Check if PVPArena is enabled, if so check if the control is enabled
+		if(configNodeExists(w, locationsSection + ".PVPArena")) {
+			List<String> keys = configGetKeys(w, locationsSection + ".PVPArena");
+			
+			// Mob Arena
+			for(String entry : keys) {
+				List<String> keysSplitted = Arrays.asList(entry.split(","));
+				
+				boolean useEntry = false;
+				
+				for(String entrySplitted : keysSplitted) {
+					
+					if(entrySplitted.trim().equals("*")) {
+						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+							useEntry = true;
+					
+					} else {
+						
+						// The location has to be in an arena
+						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+							continue;
+						
+						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
+						
+						if(arenaName.equals(entrySplitted.trim()))
+							useEntry = true;
+					}
+				}
+
+				// Add the section to the output list if it should be used and if it does exist
+				if(useEntry)
+					if(configNodeExists(w, locationsSection + ".PVPArena." + entry + "." + keyName))
+						out.add(locationsSection + ".PVPArena." + entry + "." + keyName);
+			}
+		}
+		
+		// Check if Factions are enabled, if so check if the control is enabled
+		if(configNodeExists(w, locationsSection + ".Factions")) {
+			List<String> keys = configGetKeys(w, locationsSection + ".Factions");
+			
+			// Mob Arena
+			for(String entry : keys) {
+				List<String> keysSplitted = Arrays.asList(entry.split(","));
+				
+				boolean useEntry = false;
+				
+				for(String entrySplitted : keysSplitted) {
+					
+					if(entrySplitted.trim().equals("*")) {
+						// There has to be a faction at the current location
+						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+							useEntry = true;
+					
+					} else {
+						
+						// The location has to be in an faction
+						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+							continue;
+						
+						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
+						
+						if(fname.equals(entrySplitted.trim()))
+							useEntry = true;
+					}
+				}
+
+				// Add the section to the output list if it should be used and if it does exist
+				if(useEntry)
+					if(configNodeExists(w, locationsSection + ".Factions." + entry + "." + keyName))
+						out.add(locationsSection + ".Factions." + entry + "." + keyName);
+			}
+		}
+		
+		// Return the generated list to output
+		return out;
+    }
+    
 	/**
 	 * Get an option from a config file
 	 * @param w the world
@@ -298,177 +493,11 @@ public class SCConfigManager {
 		// Get the default value
 		val = configGetBoolean(w.getName(), controlName + "." + keyName, def);
 		
-		// Check if levels are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Levels")) {
-			List<String> keysLevels = configGetKeys(w.getName(), controlName + ".Locations.Levels");
-			
-			// Levels
-			for(String entry : keysLevels) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*"))
-						useCur = true;
-					
-					else if(!entrySplitted.trim().contains("-")) {
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
-							System.out.println("[SafeCreeper] [ERROR] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int level = Integer.parseInt(entrySplitted);
-						if(loc.getY() == level)
-							useCur = true;
-						
-					} else {
-						
-						List<String> values = Arrays.asList(entrySplitted.split("-"));
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetBoolean(w.getName(), controlName + ".Locations.Levels." + entry + "." + keyName, val);
-			}
-		}
+		// Handle the locations node
+		String locationsSection = controlName + ".Locations";
+		for(String section : handleLocations(w.getName(), loc, locationsSection, keyName))
+			val = configGetBoolean(w.getName(), section, val);
 		
-		// Check if MobArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.MobArena")) {
-			List<String> keysMobArena = configGetKeys(w.getName(), controlName + ".Locations.MobArena");
-			
-			// Mob Arena
-			for(String entry : keysMobArena) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						useCur = true;
-					
-					} else {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
-						
-						if(a.configName().equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetBoolean(w.getName(), controlName + ".Locations.MobArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if PVPArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.PVPArena")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.PVPArena");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							continue;
-						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
-						
-						if(arenaName.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetBoolean(w.getName(), controlName + ".Locations.PVPArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if Factions are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Factions")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Factions");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							continue;
-						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
-						
-						if(fname.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetBoolean(w.getName(), controlName + ".Locations.Factions." + entry + "." + keyName, val);
-			}
-		}
 		return val;
 	}
     
@@ -494,176 +523,11 @@ public class SCConfigManager {
 		// Get the default value
 		val = configGetInt(w.getName(), controlName + "." + keyName, def);
 		
-		// Check if levels are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Levels")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Levels");
-			
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*"))
-						useCur = true;
-					
-					else if(!entrySplitted.trim().contains("-")) {
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int level = Integer.parseInt(entrySplitted);
-						if(loc.getY() == level)
-							useCur = true;
-						
-					} else {
-						
-						List<String> values = Arrays.asList(entrySplitted.split("-"));
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetInt(w.getName(), controlName + ".Locations.Levels." + entry + "." + keyName, val);
-			}
-		}
+		// Handle the locations node
+		String locationsSection = controlName + ".Locations";
+		for(String section : handleLocations(w.getName(), loc, locationsSection, keyName))
+			val = configGetInt(w.getName(), section, val);
 		
-		// Check if MobArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.MobArena")) {
-			List<String> keysMobArena = configGetKeys(w.getName(), controlName + ".Locations.MobArena");
-			
-			// Mob Arena
-			for(String entry : keysMobArena) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						useCur = true;
-					
-					} else {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
-						
-						if(a.configName().equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetInt(w.getName(), controlName + ".Locations.MobArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if PVPArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.PVPArena")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.PVPArena");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							continue;
-						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
-						
-						if(arenaName.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetInt(w.getName(), controlName + ".Locations.PVPArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if Factions are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Factions")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Factions");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							continue;
-						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
-						
-						if(fname.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetInt(w.getName(), controlName + ".Locations.Factions." + entry + "." + keyName, val);
-			}
-		}
 		return val;
 	}
     
@@ -689,176 +553,11 @@ public class SCConfigManager {
 		// Get the default value
 		val = configGetString(w.getName(), controlName + "." + keyName, def);
 		
-		// Check if levels are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Levels")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Levels");
-			
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*"))
-						useCur = true;
-					
-					else if(!entrySplitted.trim().contains("-")) {
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int level = Integer.parseInt(entrySplitted);
-						if(loc.getY() == level)
-							useCur = true;
-						
-					} else {
-						
-						List<String> values = Arrays.asList(entrySplitted.split("-"));
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetString(w.getName(), controlName + ".Locations.Levels." + entry + "." + keyName, val);
-			}
-		}
+		// Handle the locations node
+		String locationsSection = controlName + ".Locations";
+		for(String section : handleLocations(w.getName(), loc, locationsSection, keyName))
+			val = configGetString(w.getName(), section, val);
 		
-		// Check if MobArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.MobArena")) {
-			List<String> keysMobArena = configGetKeys(w.getName(), controlName + ".Locations.MobArena");
-			
-			// Mob Arena
-			for(String entry : keysMobArena) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						useCur = true;
-					
-					} else {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
-						
-						if(a.configName().equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetString(w.getName(), controlName + ".Locations.MobArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if PVPArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.PVPArena")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.PVPArena");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							continue;
-						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
-						
-						if(arenaName.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetString(w.getName(), controlName + ".Locations.PVPArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if Factions are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Factions")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Factions");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							continue;
-						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
-						
-						if(fname.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetString(w.getName(), controlName + ".Locations.Factions." + entry + "." + keyName, val);
-			}
-		}
 		return val;
 	}
     
@@ -884,176 +583,11 @@ public class SCConfigManager {
 		// Get the default value
 		val = configGetDouble(w.getName(), controlName + "." + keyName, def);
 		
-		// Check if levels are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Levels")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Levels");
-			
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*"))
-						useCur = true;
-					
-					else if(!entrySplitted.trim().contains("-")) {
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int level = Integer.parseInt(entrySplitted);
-						if(loc.getY() == level)
-							useCur = true;
-						
-					} else {
-						
-						List<String> values = Arrays.asList(entrySplitted.split("-"));
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetDouble(w.getName(), controlName + ".Locations.Levels." + entry + "." + keyName, val);
-			}
-		}
+		// Handle the locations node
+		String locationsSection = controlName + ".Locations";
+		for(String section : handleLocations(w.getName(), loc, locationsSection, keyName))
+			val = configGetDouble(w.getName(), section, val);
 		
-		// Check if MobArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.MobArena")) {
-			List<String> keysMobArena = configGetKeys(w.getName(), controlName + ".Locations.MobArena");
-			
-			// Mob Arena
-			for(String entry : keysMobArena) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						useCur = true;
-					
-					} else {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
-						
-						if(a.configName().equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetDouble(w.getName(), controlName + ".Locations.MobArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if PVPArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.PVPArena")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.PVPArena");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							continue;
-						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
-						
-						if(arenaName.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetDouble(w.getName(), controlName + ".Locations.PVPArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if Factions are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Factions")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Factions");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							continue;
-						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
-						
-						if(fname.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetDouble(w.getName(), controlName + ".Locations.Factions." + entry + "." + keyName, val);
-			}
-		}
 		return val;
 	}
     
@@ -1079,176 +613,11 @@ public class SCConfigManager {
 		// Get the default value
 		val = configGetKeys(w.getName(), controlName + "." + keyName, def);
 		
-		// Check if levels are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Levels")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Levels");
-			
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*"))
-						useCur = true;
-					
-					else if(!entrySplitted.trim().contains("-")) {
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(entrySplitted)) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int level = Integer.parseInt(entrySplitted);
-						if(loc.getY() == level)
-							useCur = true;
-						
-					} else {
-						
-						List<String> values = Arrays.asList(entrySplitted.split("-"));
-						
-						// If the value isn't an integer, if itisn't show an error and continue in the for loop
-						if(!isInt(values.get(0)) || !isInt(values.get(1))) {
-							System.out.println("[SafeCreeper] [Error] Value is not an integer: " + entrySplitted);
-							continue;
-						}
-						
-						int minLevel = Math.min(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						int maxLevel = Math.max(Integer.parseInt(values.get(0)), Integer.parseInt(values.get(1)));
-						if(loc.getY() >= minLevel && loc.getY() <= maxLevel)
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetKeys(w.getName(), controlName + ".Locations.Levels." + entry + "." + keyName, val);
-			}
-		}
+		// Handle the locations node
+		String locationsSection = controlName + ".Locations";
+		for(String section : handleLocations(w.getName(), loc, locationsSection, keyName))
+			val = configGetKeys(w.getName(), section, val);
 		
-		// Check if MobArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.MobArena")) {
-			List<String> keysMobArena = configGetKeys(w.getName(), controlName + ".Locations.MobArena");
-			
-			// Mob Arena
-			for(String entry : keysMobArena) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						useCur = true;
-					
-					} else {
-						
-						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
-							continue;
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
-							continue;
-						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
-						
-						if(a.configName().equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetKeys(w.getName(), controlName + ".Locations.MobArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if PVPArena is enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.PVPArena")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.PVPArena");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
-							continue;
-						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
-						
-						if(arenaName.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetKeys(w.getName(), controlName + ".Locations.PVPArena." + entry + "." + keyName, val);
-			}
-		}
-		
-		// Check if Factions are enabled, if so check if the control is enabled
-		if(configNodeExists(w.getName(), controlName + ".Locations.Factions")) {
-			List<String> keys = configGetKeys(w.getName(), controlName + ".Locations.Factions");
-			
-			// Mob Arena
-			for(String entry : keys) {
-				List<String> keysSplitted = Arrays.asList(entry.split(","));
-				
-				boolean useCur = false;
-				
-				for(String entrySplitted : keysSplitted) {
-					
-					if(entrySplitted.trim().equals("*")) {
-						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							useCur = true;
-					
-					} else {
-						
-						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
-							continue;
-						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
-						
-						if(fname.equals(entrySplitted.trim()))
-							useCur = true;
-					}
-				}
-				
-				// If the current key should be used, get the value. Make sure the default value is the current value
-				// so the value won't be reset if the node wasn't found
-				if(useCur)
-					val = configGetKeys(w.getName(), controlName + ".Locations.Factions." + entry + "." + keyName, val);
-			}
-		}
 		return val;
 	}
     
