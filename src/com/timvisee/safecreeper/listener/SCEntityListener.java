@@ -1051,9 +1051,18 @@ public class SCEntityListener implements Listener {
 		Entity e = event.getEntity();
 		Location l = e.getLocation();
 		World w = l.getWorld();		
+
+		// Get the current control name
+		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
 		
-		if(e instanceof TNTPrimed) {
+		switch(e.getType()) {
+		case MINECART_TNT:
+			// Check if the TNT could be primed
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimed", true, true, l))
+				event.setCancelled(true);
+			break;
 			
+		case PRIMED_TNT:
 			// PrimedTNTLimit
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "PrimedTNTLimit.Enabled", false, true, l)) {
 				// The PrimedTNTLimit feature is enabled
@@ -1084,18 +1093,25 @@ public class SCEntityListener implements Listener {
 			}
 			
 			// Check if the TNT could be primed
-			if(event.getFire()) {
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "TNTPriming.CanBePrimedByFire", true, true, l))
+			if(event.getFire())
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
 					event.setCancelled(true);
-			} else {
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "TNTPriming.CanBePrimedByOther", true, true, l))
+			
+			else
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
 					event.setCancelled(true);
-			}
+			break;
+			
+		default:
+			// Check if the explosive could be primed
+			if(event.getFire())
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
+					event.setCancelled(true);
+			
+			else
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
+					event.setCancelled(true);
 		}
-		
-		
-		
-		
 		/*
 		// TODO: Finish throwing
 		

@@ -15,6 +15,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Skeleton;
@@ -1126,12 +1127,18 @@ public class SCConfigManager {
 	    	}
     	}
     	
-    	if(e instanceof TNTPrimed)
+    	switch(e.getType()) {
+    	case PRIMED_TNT:
     		return "TNTControl";
-    	
-    	//return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
-    	// Return the default control name
-    	return def;
+    		
+    	case MINECART_TNT:
+    		return "TNTMinecartControl";
+    		
+    	default:
+    		//return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
+        	// Return the default control name
+        	return def;
+    	}
     }
 	
     public boolean isValidControl(String controlName) {

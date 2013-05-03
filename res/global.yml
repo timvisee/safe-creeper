@@ -82,6 +82,7 @@ CreeperControl:
         Enabled: false
         Triggers: {}
     Locations: {}
+    States: {}
 
 # Bat (mob)
 BatControl:
@@ -2044,6 +2045,38 @@ TNTControl:
         MaxPrimedInWorld: -1
     CanPlaceTNT: true
     CanBreakTNT: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: true
+        Triggers: {}
+    Locations: {}
+
+# TNT minecart blocks (minecart)
+TNTMinecartControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 4
+    CustomExplosions:
+        Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
+    TNTPriming:
+        CanBePrimed: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
