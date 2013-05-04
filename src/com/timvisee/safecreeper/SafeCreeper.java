@@ -83,15 +83,18 @@ public class SafeCreeper extends JavaPlugin {
 	public void onEnable() {
 		long t = System.currentTimeMillis();
 		
-		// Define the plugin manager
+		// Get Bukkit's plugin manager
 		PluginManager pm = getServer().getPluginManager();
 		
-		// Setup the file paths
+		// Set up the file paths
 		globalConfigFile = new File(getConfig().getString("GlobalConfigFilePath", globalConfigFile.getPath()));
 		worldConfigsFolder = new File(getConfig().getString("WorldConfigsFolderPath", worldConfigsFolder.getPath()));
 
-		// Setup the Safe Creeper logger
+		// Set up the Safe Creeper logger
 		setUpSCLogger();
+		
+		// Set up the API manager
+		setUpApiManager();
 		
 		// Check if all the config file exists
 		try {
@@ -153,8 +156,7 @@ public class SafeCreeper extends JavaPlugin {
 		// Update all existing config files if they aren't up-to-date
 		((SCFileUpdater) new SCFileUpdater()).updateFiles();
 		
-		// Set up managers and handlers
-		setUpApiManager();
+		// Set up remaining managers
 		setUpTVNLibManager();
 	    setUpPermissionsManager();
 	    setUpDestructionRepairManager();

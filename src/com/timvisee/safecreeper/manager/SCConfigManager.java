@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -22,12 +23,15 @@ import org.bukkit.entity.Skeleton.SkeletonType;
 
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.event.config.SCGlobalConfigLoadEvent;
+import com.timvisee.safecreeper.event.config.SCWorldConfigLoadEvent;
+import com.timvisee.safecreeper.event.config.SCWorldConfigsLoadEvent;
 import com.timvisee.safecreeper.util.SCUtils;
 
 public class SCConfigManager {
 
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
-	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
+	private File worldConfigsDir = new File("plugins/SafeCreeper/worlds");
 	private FileConfiguration globalConfig;
 	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<String, FileConfiguration>();
 
@@ -46,7 +50,7 @@ public class SCConfigManager {
 	 */
 	public SCConfigManager(File globalConfigFile, File worldConfigsFolder) {
 		this.globalConfigFile = globalConfigFile;
-		this.worldConfigsFolder = worldConfigsFolder;
+		this.worldConfigsDir = worldConfigsFolder;
 		
 		// Instantly setup the manager after construction it
 		setup();
@@ -88,10 +92,26 @@ public class SCConfigManager {
 	 * @return
 	 */
     public void reloadGlobalConfig() {
+    	// Store the time the file started to load
     	long t = System.currentTimeMillis();
+    	
+    	// Call the config load event
+    	SCGlobalConfigLoadEvent event = new SCGlobalConfigLoadEvent(this.globalConfigFile);
+    	Bukkit.getPluginManager().callEvent(event);
+    	
+    	// Get the file path to the global config file to load
+    	File configFile = event.getConfigFile();
+    	if(configFile == null)
+    		configFile = this.globalConfigFile;
+    	
+    	// Load the config file
     	System.out.println("[SafeCreeper] Loading global config...");
-    	this.globalConfig = getConfigFromPath(globalConfigFile.getAbsoluteFile());
+    	this.globalConfig = getConfigFromPath(configFile);
+    	
+    	// Calculate the loading duration
     	long duration = System.currentTimeMillis() - t;
+    	
+    	// Show a status message
     	System.out.println("[SafeCreeper] Global config loaded, took " + duration + " ms!");
     }
     
@@ -125,7 +145,7 @@ public class SCConfigManager {
      * @return The global config file
      */
     public File getWorldConfigFile(String w) {
-    	return new File(this.worldConfigsFolder, w + ".yml");
+    	return new File(this.worldConfigsDir, w + ".yml");
     }
     
     /**
@@ -140,7 +160,7 @@ public class SCConfigManager {
 		
     	try {
     		if(this.worldConfigs.containsKey(w)) {
-    			File worldFile = new File(worldConfigsFolder, w + ".yml");
+    			File worldFile = new File(worldConfigsDir, w + ".yml");
     			
         		if(!worldFile.exists())
         			worldFile.createNewFile();
@@ -163,7 +183,7 @@ public class SCConfigManager {
     }
     
     public List<String> listConfigWorlds() {
-    	File dir = this.worldConfigsFolder;
+    	File dir = this.worldConfigsDir;
     	List<File> worldFiles = Arrays.asList(dir.listFiles());
     	List<String> worlds = new ArrayList<String>();
     	
@@ -178,25 +198,64 @@ public class SCConfigManager {
      * @return true if succeed
      */
     public void reloadWorldConfigs() {
-    	// Load all the world config files
-    	// Clear the world config files variable first
+    	// Store the time the file started to load
     	long t = System.currentTimeMillis();
+    	
+    	// Show a status message
+    	SafeCreeper.instance.getSCLogger().info("Loading world configs...");
+
+    	// Call the configs load event
+    	SCWorldConfigsLoadEvent configsLoadEvent = new SCWorldConfigsLoadEvent(this.worldConfigsDir);
+    	Bukkit.getPluginManager().callEvent(configsLoadEvent);
+    	
+    	// Check if the event was cancelled
+    	if(configsLoadEvent.isCancelled()) {
+    		SafeCreeper.instance.getSCLogger().info("Loading cancelled!");
+    		return;
+    	}
+    	
+    	// Get the world configs directory
+    	File worldConfigsDir = configsLoadEvent.getWorldConfigsDirectory();
+    	if(worldConfigsDir == null)
+    		worldConfigsDir = this.worldConfigsDir;
+    	
+    	// Clear the current list of world configs
     	worldConfigs.clear();
 
-    	System.out.println("[SafeCreeper] Loading world configs...");
-    	
-    	File dir = this.worldConfigsFolder;
-
-    	List<File> worldConfigFolderFiles = Arrays.asList(dir.listFiles());
+    	// List the files inside the world configs directory
+    	List<File> worldConfigFolderFiles = Arrays.asList(worldConfigsDir.listFiles());
         
+    	// Check each file and load the config if it's a world config file
         for(File item : worldConfigFolderFiles) {
     		if(getFileExtention(item.getAbsolutePath()).equals("yml") || getFileExtention(item.getAbsolutePath()).equals("yaml")) {
-    			worldConfigs.put(getFileName(item.getAbsolutePath()), getConfigFromPath(item));
+    			// Get the name of the world of the current entry
+    			String worldName = getFileName(item.getAbsolutePath());
+    			
+    			// Call the world config load event
+    	    	SCWorldConfigLoadEvent configLoadEvent = new SCWorldConfigLoadEvent(worldName, item);
+    	    	Bukkit.getPluginManager().callEvent(configLoadEvent);
+    	    	
+    	    	// Chekc if the event was cancelled
+    	    	if(configLoadEvent.isCancelled()) {
+    	    		SafeCreeper.instance.getSCLogger().info("Loading cancelled for the world '" + worldName + "'!");
+    	    		return;
+    	    	}
+    	    	
+    	    	// Get the file path of the world
+    	    	File configPath = configLoadEvent.getWorldConfigFile();
+    	    	if(configPath == null)
+    	    		configPath = item;
+    			
+    			// Load the world config file
+    			worldConfigs.put(worldName, getConfigFromPath(item));
     		}
     	}
         
+        // Calculate the loading duration
     	long duration = System.currentTimeMillis() - t;
-    	System.out.println("[SafeCreeper] " + String.valueOf(this.worldConfigs.size()) + " world configs loaded, took " + duration + " ms!");
+    	
+    	// Show a status message
+    	SafeCreeper.instance.getSCLogger().info(String.valueOf(this.worldConfigs.size()) + " world configs loaded, took " + duration + " ms!");
     }
     
     /**
