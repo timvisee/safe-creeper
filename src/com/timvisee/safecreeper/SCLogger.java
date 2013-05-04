@@ -1,6 +1,6 @@
 package com.timvisee.safecreeper;
 
-import java.text.SimpleDateFormat;
+//import java.text.SimpleDateFormat;
 import java.util.logging.Logger;
 
 public class SCLogger {
@@ -42,10 +42,9 @@ public class SCLogger {
 		this.log = log;
 	}
 
-	private void write(String msg) {
+	/*private void write(String msg) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		
-	}
+	}*/
 	
 	/**
 	 * Info

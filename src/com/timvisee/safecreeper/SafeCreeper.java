@@ -13,7 +13,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
 import com.timvisee.safecreeper.listener.*;
@@ -46,13 +45,14 @@ public class SafeCreeper extends JavaPlugin {
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
-	// Managers and Handlers
+	// Managers
+	private SCApiManager apiManager;
 	private SCTVNLibManager tvnlManager;
 	private SCPermissionsManager pm;
 	private SCConfigManager cm = null;
 	private SCDestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
-	private SCCorruptionManager corHandler;
+	private SCCorruptionManager corManager;
 	private SCMobArenaManager mam;
 	private SCPVPArenaManager pam;
 	private SCFactionsManager fm;
@@ -91,7 +91,7 @@ public class SafeCreeper extends JavaPlugin {
 		worldConfigsFolder = new File(getConfig().getString("WorldConfigsFolderPath", worldConfigsFolder.getPath()));
 
 		// Setup the Safe Creeper logger
-		setupSCLogger();
+		setUpSCLogger();
 		
 		// Check if all the config file exists
 		try {
@@ -101,10 +101,10 @@ public class SafeCreeper extends JavaPlugin {
 	    }
 		
 		// Setup the config manager before all other managers, to make the file updater work
-	    setupConfigManager();
+	    setUpConfigManager();
 		
 		// Initialize the update checker
-		setupUpdateChecker();
+		setUppUpdateChecker();
 		
 		// Remove all (old) update files
 		getUpdateChecker().removeUpdateFiles();
@@ -150,25 +150,21 @@ public class SafeCreeper extends JavaPlugin {
 			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
 		}
 		
-		// Setup the API
-		setupApi();
-		
 		// Update all existing config files if they aren't up-to-date
 		((SCFileUpdater) new SCFileUpdater()).updateFiles();
 		
-		// Setup TVNativeLib
-		setupTVNLibManager();
-		
-		// Setup managers and handlers
-	    setupPermissionsManager();
-	    setupDestructionRepairManager();
-	    setupLivingEntityReviveManager();
-	    setupMobArenaManager();
-	    setupPVPArenaManager();
-	    setupFactionsManager();
-	    setupWorldGuardManager();
-	    setupCorruptionManager();
-		setupMetricsManager();
+		// Set up managers and handlers
+		setUpApiManager();
+		setUpTVNLibManager();
+	    setUpPermissionsManager();
+	    setUpDestructionRepairManager();
+	    setUpLivingEntityReviveManager();
+	    setUpMobArenaManager();
+	    setUpPVPArenaManager();
+	    setUpFactionsManager();
+	    setUpWorldGuardManager();
+	    setUpCorruptionManager();
+		setUpMetricsManager();
 		
 		// Load destruction repair data
 		getDestructionRepairManager().load();
@@ -243,6 +239,7 @@ public class SafeCreeper extends JavaPlugin {
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
 		
+		// Show a status message
 		getSCLogger().info("Safe Creeper v" + pdfFile.getVersion() + " enabled, took " + String.valueOf(duration) + " ms!");
 	}
 	
@@ -255,6 +252,12 @@ public class SafeCreeper extends JavaPlugin {
 		
 		// Cancel all running Safe Creeper tasks
 		stopTasks();
+		
+		// Unhook all plugins hooked into Safe Creeper and remove/unregister their sessions
+		if(getApiManager().getApiSessionsCount() > 0) {
+			getSCLogger().info("Unhooking all hooked plugins...");
+			getApiManager().unregisterAllApiSessions();
+		}
 		
 		// If any update was downloaded, install the update
 		if(getUpdateChecker().isUpdateDownloaded())
@@ -285,17 +288,9 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Set up the Safe Creeper API layer
-	 */
-	public void setupApi() {
-		// Setup API
-		SafeCreeperApi.setPlugin(this);
-	}
-	
-	/**
 	 * Set up the update checker
 	 */
-	public void setupUpdateChecker() {
+	public void setUppUpdateChecker() {
 		this.uc = new SCUpdateChecker();
 	}
 	
@@ -310,7 +305,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the Safe Creeper logger
 	 */
-	public void setupSCLogger() {
+	public void setUpSCLogger() {
 		this.log = new SCLogger(getLogger());
 	}
 	
@@ -331,9 +326,27 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
+	 * Set up the API Manager
+	 */
+	public void setUpApiManager() {
+		this.apiManager = new SCApiManager();
+		
+		// Show a status message
+		getSCLogger().info("API started!");
+	}
+	
+	/**
+	 * Get the API Manager instance
+	 * @return API Manager instance
+	 */
+	public SCApiManager getApiManager() {
+		return this.apiManager;
+	}
+	
+	/**
 	 * Set up the TVNLib manager
 	 */
-	public void setupTVNLibManager() {
+	public void setUpTVNLibManager() {
 		// Setup TVNLib Manager
 		this.tvnlManager = new SCTVNLibManager(getSCLogger());
 		this.tvnlManager.setUp();
@@ -350,7 +363,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the config manager
 	 */
-	public void setupConfigManager() {
+	public void setUpConfigManager() {
 		this.cm = new SCConfigManager(globalConfigFile, worldConfigsFolder);
 	}
 	
@@ -365,7 +378,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Setup the permissions manager
 	 */
-	public void setupPermissionsManager() {
+	public void setUpPermissionsManager() {
 		// Setup the permissions manager
 		this.pm = new SCPermissionsManager(this.getServer(), this, getSCLogger());
 		this.pm.setup();
@@ -382,7 +395,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Setup the destruction repair manager
 	 */
-	public void setupDestructionRepairManager() {
+	public void setUpDestructionRepairManager() {
 		// Setup the  destruction repair manager
 		this.drm = new SCDestructionRepairManager();
 	}
@@ -406,7 +419,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the World Guard manager
 	 */
-	public void setupWorldGuardManager() {
+	public void setUpWorldGuardManager() {
 		this.wgm = new SCWorldGuardManager(getSCLogger());
 		this.wgm.setUp();
 	}
@@ -422,7 +435,7 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Set up the Mob Arena Manager
      */
-    public void setupMobArenaManager() {
+    public void setUpMobArenaManager() {
     	// Set up the mob arena manager
     	this.mam = new SCMobArenaManager(getSCLogger());
     	this.mam.setUp();
@@ -439,7 +452,7 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Set up the PVP Arena manager
      */
-    public void setupPVPArenaManager() {
+    public void setUpPVPArenaManager() {
     	// Set up the PVP Arena manager
     	this.pam = new SCPVPArenaManager(getSCLogger());
     	this.pam.setUp();
@@ -456,7 +469,7 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Set up the Factions manager
      */
-    public void setupFactionsManager() {
+    public void setUpFactionsManager() {
     	this.fm = new SCFactionsManager(getSCLogger());
     	this.fm.setUp();
     }
@@ -472,23 +485,23 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Set up the Corruption manager
      */
-    public void setupCorruptionManager() {
-    	this.corHandler = new SCCorruptionManager(getSCLogger());
-    	this.corHandler.setUp();
+    public void setUpCorruptionManager() {
+    	this.corManager = new SCCorruptionManager(getSCLogger());
+    	this.corManager.setUp();
     }
     
     /**
      * Get the Corruption handler
      * @return Corruption manager
      */
-    public SCCorruptionManager getCorruptionHandler() {
-    	return this.corHandler;
+    public SCCorruptionManager getCorruptionManager() {
+    	return this.corManager;
     }
     
     /**
      * Set up the living 
      */
-    public void setupLivingEntityReviveManager() {
+    public void setUpLivingEntityReviveManager() {
     	this.lerm = new SCLivingEntityReviveManager();
     }
     
@@ -549,7 +562,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the metrics manager
 	 */
-	public void setupMetricsManager() {
+	public void setUpMetricsManager() {
 		this.mm = new SCMetricsManager(getConfig(), getSCLogger());
 		this.mm.setup();
 	}

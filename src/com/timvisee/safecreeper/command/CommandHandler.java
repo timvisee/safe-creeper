@@ -193,7 +193,7 @@ public class CommandHandler {
 				}
 				
 				// Setup permissions
-				SafeCreeper.instance.setupPermissionsManager();
+				SafeCreeper.instance.setUpPermissionsManager();
 				
 				// Load all the config files again
 		    	long t = System.currentTimeMillis();
@@ -227,7 +227,7 @@ public class CommandHandler {
 				}
 				
 				// Setup permissions
-				SafeCreeper.instance.setupPermissionsManager();
+				SafeCreeper.instance.setUpPermissionsManager();
 				
 				// Show a succes message
 				sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] " + ChatColor.GREEN + "Permissions reloaded!");

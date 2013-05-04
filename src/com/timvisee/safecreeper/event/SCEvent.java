@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
-public class SCEvent extends Event {
+public abstract class SCEvent extends Event {
 
 	private static final HandlerList handlers = new HandlerList();
 	

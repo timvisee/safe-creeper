@@ -1,6 +1,6 @@
 package com.timvisee.safecreeper.event;
 
-public class SCCancelableEvent extends SCEvent {
+public abstract class SCCancelableEvent extends SCEvent {
 
 	private boolean isCancelled = false;
 

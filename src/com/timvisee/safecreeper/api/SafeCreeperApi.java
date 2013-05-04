@@ -1,181 +1,140 @@
 package com.timvisee.safecreeper.api;
 
+import java.util.logging.Logger;
+
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.util.SCFileUpdater;
-import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SafeCreeperApi {
 	
-	private static SafeCreeper plugin;
+	public static String PLUGIN_NAME = "SafeCreeper";
+	
+	private SafeCreeper sc;
+	private Plugin p;
 	
 	/**
-	* Hook into Safe Creeper
-	* @return SC instance
+	 * Constructor
+	 */
+	public SafeCreeperApi(Plugin p) {
+		// Store the plugin instance
+		this.p = p;
+		
+		// Try to hook into SafeCreeper
+		hook();
+	}
+	
+	/**
+	* Hook Safe Creeper
+	* @return True if succeed
 	*/
-	public static SafeCreeper hookSafeCreeper() {
-		Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("SafeCreeper");
-		if (plugin == null && !(plugin instanceof SafeCreeper))
-			return null;
-		return (SafeCreeper) plugin;
+	public boolean hook() {
+		Logger log = Logger.getLogger("Minecraft");
+		
+		try {
+    		// Unhook SafeCreeper first
+			if(isHooked())
+				unhook();
+			
+			// Try to get the SafeCreeper plugin instance
+			Plugin p = Bukkit.getServer().getPluginManager().getPlugin(PLUGIN_NAME);
+			if(p == null && !(p instanceof SafeCreeper)) {
+				if(this.p != null)
+					log.info("[" + this.p.getName() + "] Can't hook into Safe Creeper, plugin not found!");
+					
+				return false;
+			}
+
+			// Show a status message
+			if(this.p != null)
+				log.info("[" + this.p.getName() + "] Hooked into Safe Creeper!");
+    		
+			// Set the SafeCreeper plugin instance
+			this.sc = (SafeCreeper) p;
+			this.sc.getApiManager().registerApiSession(this);
+			return true;
+	        
+    	} catch(NoClassDefFoundError ex) {
+    		// Unable to hook into MobArena, show warning/error message.
+			if(this.p != null)
+				log.info("[" + this.p.getName() + "] Error while hooking into Safe Creeper!");
+    		return false;
+    	} catch(Exception ex) {
+    		// Unable to hook into MobArena, show warning/error message.
+			if(this.p != null)
+				log.info("[" + this.p.getName() + "] Error while hooking into Safe Creeper!");
+    		return false;
+    	}
     }
 	
 	/**
-	 * Get the control name from an entity
-	 * @param e the entity
-	 * @return the control name
+	 * Check if the plugin is hooked into SafeCreeper
+	 * @return True if hooked
 	 */
-	public String getControlName(Entity e) {
-		return SafeCreeper.instance.getConfigManager().getControlName(e);
+	public boolean isHooked() {
+		return (this.sc != null);
 	}
 	
 	/**
-	 * Get the control name from an entity
-	 * @param e the entity
-	 * @param def the default control name
-	 * @return the control name
+	 * Unhook Safe Creeper
 	 */
-	public String getControlName(Entity e, String def) {
-		return SafeCreeper.instance.getConfigManager().getControlName(e, def);
-	}
-	
-	/**
-	 * Reload all the config files
-	 */
-	public void reloadAllConfigs() {
-		SafeCreeper.instance.getConfigManager().reloadAllConfigs();
-	}
-	
-	/**
-	 * Reload the global config file
-	 */
-	public void reloadGlobalConfig() {
-		SafeCreeper.instance.getConfigManager().reloadGlobalConfig();
-	}
-	
-	/**
-	 * Reload all the world config files
-	 */
-	public void reloadWorldConfigs() {
-		SafeCreeper.instance.getConfigManager().reloadWorldConfigs();
-	}
-	
-	/**
-	 * Update all outdated config files, this is an automated process, the files are automatically backuped once they're going to be updated
-	 */
-	public void updateConfigFiles() {
-		((SCFileUpdater) new SCFileUpdater()).updateFiles();
-	}
-	
-	/**
-	 * Reload the permissions core, this will re-hook in all the permissions systems
-	 */
-	public void reloadPermissions() {
-		// Reload the permissions core
-		SafeCreeper.instance.setupPermissionsManager();
-	}
-
-	public enum SafeCreeperManagerType {
-		CONFIG_MANAGER,
-		LIKEABOSS_MANAGER,
-		PERMISSIONS_MANAGER,
-		STATICS_MANAGER;
-	}
-	
-	/**
-	 * Re-Setup a manager in Safe Creeper
-	 * @param managerType the manager type
-	 * @return true if succeed
-	 */
-	public boolean setupManager(SafeCreeperManagerType managerType) {
-		try {
-			switch (managerType) {
-			case CONFIG_MANAGER:
-				SafeCreeper.instance.setupConfigManager();
-				break;
-				
-			case LIKEABOSS_MANAGER:
-				SafeCreeper.instance.setupCorruptionManager();
-				break;
-				
-			case PERMISSIONS_MANAGER:
-				SafeCreeper.instance.setupPermissionsManager();
-				break;
-				
-			case STATICS_MANAGER:
-				SafeCreeper.instance.setupConfigManager();
-				break;
-			}
-		} catch(Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
+	public void unhook() {
+		Logger log = Logger.getLogger("Minecraft");
 		
-		return true;
-	}
-	
-	public enum SafeCreeperHandlerType {
-		TVNLibHandler;
-	}
-	
-	/**
-	 * Re-Setup a handler in Safe Creeper
-	 * @param handlerType the handler type
-	 * @return true if succeed
-	 */
-	public boolean setupHandler(SafeCreeperHandlerType handlerType) {
-		try {
-			switch(handlerType) {
-			case TVNLibHandler:
-				SafeCreeper.instance.setupTVNLibManager();
-				break;
-			}
-		} catch(Exception ex) {
-			ex.printStackTrace();
-			return false;
-		}
+		// Unhook Safe Creeper
+		this.sc = null;
 		
-		return true;
+		// Show a status message
+		if(this.p != null)
+			log.info("[" + this.p.getName() + "] Unhooked Safe Creeper!");
 	}
 	
 	/**
-	 * Check for updates
-	 * @return empty string when no update was found, returns version number in string when new version is found
+	 * Get the Safe Creeper plugin instance
+	 * @return Safe Creeper plugin instance, null if not hooked into Safe Creeper
 	 */
-	public String checkUpdates() {
-		// Check for updates
-		SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
-		uc.refreshUpdatesData();
-		
-		if(uc.isNewVersionAvailable())
-			return uc.getNewestVersion();
-		return "";
+	public SafeCreeper getSC() {
+		return getSafeCreeper();
 	}
 	
 	/**
-	 * Get the current Safe Creeper version running
-	 * @return the current Safe Creeper version
+	 * Get the Safe Creeper plugin instance
+	 * @return Safe Creeper plugin instance, null if not hooked into Safe Creeper
+	 */
+	public SafeCreeper getSafeCreeper() {
+		return this.sc;
+	}
+	
+	/**
+	 * Set the Safe Creeper plugin instance
+	 * @param p Safe Creeper plugin instance
+	 */
+	public void getSC(SafeCreeper p) {
+		setSafeCreeper(p);
+	}
+	
+	/**
+	 * Set the Safe Creeper plugin instance
+	 * @param p Safe Creeper plugin instance
+	 */
+	public void setSafeCreeper(SafeCreeper p) {
+		this.sc = p;
+	}
+	
+	/**
+	 * Get the plugin instance that hooked into Safe Creeper and uses this API layer
+	 * @return Plugin instance
+	 */
+	public Plugin getPlugin() {
+		return this.p;
+	}
+	
+	/**
+	 * Get the running Safe Creeper version
+	 * @return Safe Creeper version number, empty string if not hooked into Safe Creeper
 	 */
 	public String getVersion() {
-		return SafeCreeperApi.plugin.getVersion();
-	}
-	
-	/**
-	* Set the SC plugin
-	* @param plugin the SC plugin
-	*/
-	public static void setPlugin(SafeCreeper plugin) {
-		SafeCreeperApi.plugin = plugin;
-	}
-	
-	/**
-	* Get the SC plugin
-	* @return the SC plugin
-	*/
-	public static SafeCreeper getPlugin() {
-		return plugin;
+		return this.sc.getVersion();
 	}
 }

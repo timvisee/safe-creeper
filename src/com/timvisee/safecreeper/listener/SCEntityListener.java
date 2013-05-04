@@ -609,7 +609,7 @@ public class SCEntityListener implements Listener {
 			LivingEntity le = (LivingEntity) e;
 			
 			// Make sure the entity isn't a LAB boss!
-			if(!SafeCreeper.instance.getCorruptionHandler().isBoss(le)) {
+			if(!SafeCreeper.instance.getCorruptionManager().isBoss(le)) {
 				boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 				if(customHealthEnabled) {
 					int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
