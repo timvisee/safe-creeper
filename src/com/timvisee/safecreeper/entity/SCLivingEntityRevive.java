@@ -58,7 +58,7 @@ public class SCLivingEntityRevive {
 	
 	public void moveReviver() {
 		// Move the reviver to it's destination
-		SafeCreeper.instance.getTVNLibHandler().livingEntityTargetTo(reviver, this.l.getX(), this.l.getY(), this.l.getZ());
+		SafeCreeper.instance.getTVNLibManager().livingEntityTargetTo(reviver, this.l.getX(), this.l.getY(), this.l.getZ());
 	}
 	
 	public void revive() {

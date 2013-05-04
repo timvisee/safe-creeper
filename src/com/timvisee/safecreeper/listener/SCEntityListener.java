@@ -1006,7 +1006,7 @@ public class SCEntityListener implements Listener {
 						
 					} else {
 						
-						if(SafeCreeper.instance.getTVNLibHandler().isEnabled()) {
+						if(SafeCreeper.instance.getTVNLibManager().isEnabled()) {
 							// Reviving with revivers
 							double reviverRevivingMaxDistance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Reviver.MaxDistance", 16, true, l);
 							
@@ -1112,9 +1112,9 @@ public class SCEntityListener implements Listener {
 				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
 					event.setCancelled(true);
 		}
-		/*
-		// TODO: Finish throwing
 		
+		// TODO: Finish throwing
+		/*
 		// Throwing
 		//int maxEntityRadius = explosionSize;
 		int maxEntityRadius = 10;

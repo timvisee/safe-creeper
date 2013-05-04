@@ -6,9 +6,10 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.timvisee.safecreeper.SCLogger;
 
-public class SCWorldGuardManager {
+public class SCWorldGuardManager extends SCPluginManager {
 	
-	private SCLogger log;
+	private static String PLUGIN_NAME = "WorldGuard";
+	
 	private WorldGuardPlugin wg;
 	
 	/**
@@ -16,46 +17,57 @@ public class SCWorldGuardManager {
 	 * @param log SCLogger
 	 */
 	public SCWorldGuardManager(SCLogger log) {
-		this.log = log;
+		super(PLUGIN_NAME, log);
 	}
 	
 	/**
-	 * Set up the World Guard hook
+	 * Try to hook WorldGuard
 	 */
-	public void setup() {
+	public void hook() {
 		// WorldGuard has to be installed and enabled
-    	if(!Bukkit.getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
-    		this.log.info("Disabling WorldGUard usage, plugin not found.");
+    	if(!Bukkit.getServer().getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
+    		this.log.info("Disabling WorldGuard usage, plugin not found.");
     		return;
     	}
     	
-		Plugin wg = Bukkit.getPluginManager().getPlugin("WorldGuard");
-		 
-        // WorldGuard may not b'//e loaded
-        if (wg == null || !(wg instanceof WorldGuardPlugin)) {
-        	this.wg = null;
-        	this.log.info("Unable to hook into WorldGuard, plugin not found!");
-        	return;
-        }
-        
-        this.wg = (WorldGuardPlugin) wg;
-        this.log.info("Hooked into WorldGuard!");
+        try {
+    		Plugin wg = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
+			 
+	        // WorldGuard may not b'//e loaded
+	        if (wg == null || !(wg instanceof WorldGuardPlugin)) {
+	        	this.wg = null;
+	        	this.log.info("Unable to hook into WorldGuard, plugin not found!");
+	        	return;
+	        }
+	        
+	        this.wg = (WorldGuardPlugin) wg;
+	        this.log.info("Hooked into WorldGuard!");
+	        return;
+	        
+    	} catch(NoClassDefFoundError ex) {
+    		// Unable to hook into PVPArena, show warning/error message.
+    		this.log.info("Error while hooking into WorldGuard!");
+    		return;
+    	} catch(Exception ex) {
+    		// Unable to hook into PVPArena, show warning/error message.
+    		this.log.info("Error while hooking into WorldGuard!");
+    		return;
+    	} 
 	}
 	
 	/**
-	 * Get the logger instance
-	 * @return SCLogger instance
+	 * Check if Safe Creeper is hooked into WorldGuard
 	 */
-	public SCLogger getSCLogger() {
-		return this.log;
+	public boolean isHooked() {
+		return (this.wg != null);
 	}
 	
 	/**
-	 * Set the logger instance
-	 * @param log SCLogger instance
+	 * Unhook WorldGuard
 	 */
-	public void setSCLogger(SCLogger log) {
-		this.log = log;
+	public void unhook() {
+        this.wg = null;
+        this.log.info("Unhooked WorldGuard!");
 	}
 	
 	/**
@@ -72,13 +84,5 @@ public class SCWorldGuardManager {
 	 */
 	public void setWorldGuard(WorldGuardPlugin wg) {
 		this.wg = wg;
-	}
-	
-	/**
-	 * Check if the manager is hooked into World Guard
-	 * @return True if hooked into World Guard
-	 */
-	public boolean isHooked() {
-		return (this.wg != null);
 	}
 }

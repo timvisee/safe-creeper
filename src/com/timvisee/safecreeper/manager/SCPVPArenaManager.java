@@ -9,37 +9,43 @@ import org.bukkit.plugin.Plugin;
 
 import com.timvisee.safecreeper.SCLogger;
 
-public class SCPVPArenaManager {
+public class SCPVPArenaManager extends SCPluginManager {
 	
-	private SCLogger log;
+	private static String PLUGIN_NAME = "pvparena";
+	
+	private boolean pvparenaEnabled = false;
 	
 	/**
 	 * Constructor
 	 * @param log SCLogger
 	 */
 	public SCPVPArenaManager(SCLogger log) {
-		this.log = log;
+		super(PLUGIN_NAME, log);
 	}
 	
 	/**
-	 * Set up the PVP Arena manager
+	 * Try to hook PVPArena
 	 */
-	public void setup() {
+	public void hook() {
+		pvparenaEnabled = false;
+		
 		// PVP Arena has to be installed/enabled
-    	if(!Bukkit.getPluginManager().isPluginEnabled("pvparena")) {
+    	if(!Bukkit.getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
     		this.log.info("Disabling PVPArena usage, plugin not found.");
     		return;
     	}
     	
     	try {
     		// Try to get the PVPArena plugin
-    		Plugin paPlugin = (PVPArena) Bukkit.getPluginManager().getPlugin("pvparena");
+    		Plugin paPlugin = (PVPArena) Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 	        
     		// The plugin variable may not be null
 	        if (paPlugin == null) {
 	        	this.log.info("Unable to hook into PVPArena, plugin not found!");
 	            return;
 	        }
+	        
+	        pvparenaEnabled = true;
 	        
 	        // Hooked into PVPArena, show status message
 	        this.log.info("Hooked into PVPArena!");
@@ -57,19 +63,18 @@ public class SCPVPArenaManager {
 	}
 	
 	/**
-	 * Get the logger instance
-	 * @return SCLogger instance
+	 * Check if Safe Creeper is hooked into PVPArena
 	 */
-	public SCLogger getSCLogger() {
-		return this.log;
+	public boolean isHooked() {
+		return this.pvparenaEnabled;
 	}
 	
 	/**
-	 * Set the logger instance
-	 * @param log SCLogger instance
+	 * Unhook PVPArena
 	 */
-	public void setSCLogger(SCLogger log) {
-		this.log = log;
+	public void unhook() {
+        this.pvparenaEnabled = false;
+        this.log.info("Unhooked PVPArena!");
 	}
 	
 	/**

@@ -12,6 +12,8 @@ import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -23,15 +25,19 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.timvisee.safecreeper.SCLogger;
 
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 
 public class SCPermissionsManager {
 	
-	private PermissionsSystemType permsType = PermissionsSystemType.NONE;
 	private Server s;
 	private Plugin p;
+	private SCLogger log;
+	
+	// Current permissions system that is used
+	private PermissionsSystemType permsType = PermissionsSystemType.NONE;
 	
 	// Permissions Ex
 	private PermissionManager pexPerms;
@@ -53,9 +59,10 @@ public class SCPermissionsManager {
 	 * @param s server
 	 * @param logPrefix log prefix (plugin name)
 	 */
-	public SCPermissionsManager(Server s, Plugin p) {
+	public SCPermissionsManager(Server s, Plugin p, SCLogger log) {
 		this.s = s;
 		this.p = p;
+		this.log = log;
 	}
 	
 	/**
@@ -164,6 +171,71 @@ public class SCPermissionsManager {
 	    
 	    return PermissionsSystemType.NONE;
     }
+	
+	/**
+	 * Break the hook with WorldGuard
+	 */
+	public void unhook() {
+        // Break the WorldGuard hook
+        this.permsType = PermissionsSystemType.NONE;
+        
+        if(!permsType.equals(PermissionsSystemType.NONE))
+        	this.log.info("Unhooked from " + this.permsType.getName() + "!");
+        else
+        	this.log.info("Unhooked from Permissions!");
+	}
+	
+	/**
+	 * Method called when a plugin is being enabled
+	 * @param e Event instance
+	 */
+	public void onPluginEnable(PluginEnableEvent e) {
+		Plugin p = e.getPlugin();
+		String pn = p.getName();
+		
+		// Is the WorldGuard plugin enabled
+		if(pn.equals("PermissionsEx") || pn.equals("PermissionsBukkit") ||
+				pn.equals("bPermissions") || pn.equals("GroupManager") ||
+				pn.equals("zPermissions") || pn.equals("Vault") ||
+				pn.equals("Permissions")) {
+			this.log.info(pn + " plugin enabled, updating hooks!");
+			setup();
+		}
+	}
+	
+	/**
+	 * Method called when a plugin is being disabled
+	 * @param e Event instance
+	 */
+	public void onPluginDisable(PluginDisableEvent e) {
+		Plugin p = e.getPlugin();
+		String pn = p.getName();
+		
+		// Is the WorldGuard plugin disabled
+		if(pn.equals("PermissionsEx") || pn.equals("PermissionsBukkit") ||
+				pn.equals("bPermissions") || pn.equals("GroupManager") ||
+				pn.equals("zPermissions") || pn.equals("Vault") ||
+				pn.equals("Permissions")) {
+			this.log.info(pn + " plugin disabled, updating hooks!");
+			setup();
+		}
+	}
+
+	/**
+	 * Get the logger instance
+	 * @return SCLogger instance
+	 */
+	public SCLogger getSCLogger() {
+		return this.log;
+	}
+	
+	/**
+	 * Set the logger instance
+	 * @param log SCLogger instance
+	 */
+	public void setSCLogger(SCLogger log) {
+		this.log = log;
+	}
 	
 	/**
 	 * Check if the player has permission. If no permissions system is used, the player has to be OP

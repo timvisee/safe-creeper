@@ -5,36 +5,40 @@ import org.bukkit.entity.Entity;
 import com.mcdr.corruption.Corruption;
 import com.mcdr.corruption.CorruptionAPI;
 import com.mcdr.corruption.entity.Boss;
+import com.timvisee.safecreeper.SCLogger;
 import com.timvisee.safecreeper.SafeCreeper;
 
-public class SCCorruptionManager {
+public class SCCorruptionManager extends SCPluginManager {
+	
+	private static String PLUGIN_NAME = "Corruption";
 	
 	private boolean corEnabled = false;
 	
 	/**
 	 * Constructor
+	 * @param log SCLogger
 	 */
-	public SCCorruptionManager() {
-		setup();
+	public SCCorruptionManager(SCLogger log) {
+		super(PLUGIN_NAME, log);
 	}
 	
 	/**
-	 * Setup the Corruption manager, hook into Corruption
+	 * Try to hook into Corruption
 	 */
-	public void setup() {
+	public void hook() {
     	this.corEnabled = false;
     	
     	// Corruption has to be installed/enabled
-		if(!SafeCreeper.instance.getServer().getPluginManager().isPluginEnabled("Corruption")) {
+		if(!SafeCreeper.instance.getServer().getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
 			SafeCreeper.instance.getLogger().info("Disabling Corruption usage, plugin not found.");
 			return;
 		}
 		
 		try {
 			// Get the Corruption plugin
-			Corruption cor = (Corruption) SafeCreeper.instance.getServer().getPluginManager().getPlugin("Corruption");
+			Corruption cor = (Corruption) SafeCreeper.instance.getServer().getPluginManager().getPlugin(PLUGIN_NAME);
 	        
-			// The Corruption  plugin may not be null
+			// The Corruption plugin may not be null
 	        if(cor == null) {
 	        	SafeCreeper.instance.getLogger().info("Disabling Corruption usage, Corruption not found.");
 	            return;
@@ -51,6 +55,21 @@ public class SCCorruptionManager {
 			SafeCreeper.instance.getLogger().info("Unable to hook into Corruption, plugin not found.");
 			return;
 		}
+	}
+	
+	/**
+	 * Is Safe Creeper hooked into Corruption
+	 */
+	public boolean isHooked() {
+		return this.corEnabled;
+	}
+	
+	/**
+	 * Unhook Corruption
+	 */
+	public void unhook() {
+        this.corEnabled = false;
+        this.log.info("Unhooked Corruption!");
 	}
 	
 	/**
@@ -71,14 +90,6 @@ public class SCCorruptionManager {
 	 */
 	public boolean isCorEnabled() {
 		return this.corEnabled;
-	}
-	
-	/**
-	 * Check if Safe Creeper is hooked into Corruption
-	 * @return Is hooked
-	 */
-	public boolean isHooked() {
-		return isCorEnabled();
 	}
 	
 	/**

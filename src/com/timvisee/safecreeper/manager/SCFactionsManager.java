@@ -9,37 +9,43 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import com.timvisee.safecreeper.SCLogger;
 
-public class SCFactionsManager {
+public class SCFactionsManager extends SCPluginManager {
 	
-	private SCLogger log;
+	private static String PLUGIN_NAME = "Factions";
+	
+	private boolean factionsEnabled = false;
 	
 	/**
 	 * Constructor
 	 * @param log SCLogger
 	 */
 	public SCFactionsManager(SCLogger log) {
-		this.log = log;
+		super(PLUGIN_NAME, log);
 	}
 	
 	/**
-	 * Set up the Factions hook
+	 * Try to hook into the Factions plugin
 	 */
-	public void setup() {
+	public void hook() {
+		this.factionsEnabled = false;
+		
 		// Factions has to be installed/enabled
-    	if(!Bukkit.getPluginManager().isPluginEnabled("Factions")) {
+    	if(!Bukkit.getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
     		this.log.info("Disabling Factions usage, plugin not found.");
     		return;
     	}
     	
     	try {
     		// Get the Factions plugin
-    		Plugin fPlugin = (Plugin) Bukkit.getPluginManager().getPlugin("Factions");
+    		Plugin plugin = (Plugin) Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 	        
     		// The factions plugin may not ben ull
-	        if (fPlugin == null) {
+	        if (plugin == null) {
 	        	this.log.info("Unable to hook into Factions, plugin not found!");
 	            return;
 	        }
+	        
+	        this.factionsEnabled = true;
 	        
 	        // Hooked into Factions, show status message
 	        this.log.info("Hooked into Factions!");
@@ -56,19 +62,18 @@ public class SCFactionsManager {
 	}
 	
 	/**
-	 * Get the logger instance
-	 * @return SCLogger instance
+	 * Check if Safe Creeper is hooked into Factions
 	 */
-	public SCLogger getSCLogger() {
-		return this.log;
+	public boolean isHooked() {
+		return this.factionsEnabled;
 	}
 	
 	/**
-	 * Set the logger instance
-	 * @param log SCLogger instance
+	 * Unhook Factions
 	 */
-	public void setSCLogger(SCLogger log) {
-		this.log = log;
+	public void unhook() {
+        this.factionsEnabled = false;
+        this.log.info("Unhooked Factions!");
 	}
 	
 	/**

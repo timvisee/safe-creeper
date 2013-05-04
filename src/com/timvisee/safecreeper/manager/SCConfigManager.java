@@ -15,12 +15,10 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
-import org.bukkit.entity.TNTPrimed;
 
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;

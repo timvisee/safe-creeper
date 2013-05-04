@@ -16,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
-import com.timvisee.safecreeper.handler.SCTVNLibHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
 import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
@@ -37,6 +36,7 @@ public class SafeCreeper extends JavaPlugin {
 	private final SCBlockListener blockListener = new SCBlockListener();
 	private final SCEntityListener entityListener = new SCEntityListener();
 	private final SCPlayerListener playerListener = new SCPlayerListener();
+	private final SCPluginListener pluginListener = new SCPluginListener();
 	private final SCHangingListener hangingListener = new SCHangingListener();
 	private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
 	private final SCWeatherListener weatherListener = new SCWeatherListener();
@@ -47,7 +47,7 @@ public class SafeCreeper extends JavaPlugin {
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
 	// Managers and Handlers
-	private SCTVNLibHandler tvnlHandler;
+	private SCTVNLibManager tvnlManager;
 	private SCPermissionsManager pm;
 	private SCConfigManager cm = null;
 	private SCDestructionRepairManager drm;
@@ -157,7 +157,7 @@ public class SafeCreeper extends JavaPlugin {
 		((SCFileUpdater) new SCFileUpdater()).updateFiles();
 		
 		// Setup TVNativeLib
-		setupTVNLibHandler();
+		setupTVNLibManager();
 		
 		// Setup managers and handlers
 	    setupPermissionsManager();
@@ -178,11 +178,12 @@ public class SafeCreeper extends JavaPlugin {
 		pm.registerEvents(this.entityListener, this);
 		pm.registerEvents(this.hangingListener, this);
 		pm.registerEvents(this.playerListener, this);
+		pm.registerEvents(this.pluginListener, this);
 		pm.registerEvents(this.weatherListener, this);
 		pm.registerEvents(this.worldListener, this);
 		
 		// Register the TVNLibListener if the TVNLib listener plugin is installed
-		if(getTVNLibHandler().isEnabled())
+		if(getTVNLibManager().isEnabled())
 			pm.registerEvents(this.tvnlListener, this);
 		
 		/* // Test - Beginning of custom mob abilities!
@@ -322,20 +323,28 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Set up the TVNLib handler
+	 * Get the plugin listener
+	 * @return SCPluginListener instance
 	 */
-	public void setupTVNLibHandler() {
-		// Setup TVNLib Handler
-		this.tvnlHandler = new SCTVNLibHandler(getSCLogger());
-		this.tvnlHandler.setup();
+	public SCPluginListener getPluginListener() {
+		return this.pluginListener;
 	}
 	
 	/**
-	 * Get the TVNLib handler insatnce
-	 * @return TVNLib handler instance
+	 * Set up the TVNLib manager
 	 */
-	public SCTVNLibHandler getTVNLibHandler() {
-		return this.tvnlHandler;
+	public void setupTVNLibManager() {
+		// Setup TVNLib Manager
+		this.tvnlManager = new SCTVNLibManager(getSCLogger());
+		this.tvnlManager.setUp();
+	}
+	
+	/**
+	 * Get the TVNLib manager instance
+	 * @return TVNLib manager instance
+	 */
+	public SCTVNLibManager getTVNLibManager() {
+		return this.tvnlManager;
 	}
 	
 	/**
@@ -358,7 +367,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new SCPermissionsManager(this.getServer(), this);
+		this.pm = new SCPermissionsManager(this.getServer(), this, getSCLogger());
 		this.pm.setup();
 	}
 	
@@ -399,7 +408,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setupWorldGuardManager() {
 		this.wgm = new SCWorldGuardManager(getSCLogger());
-		this.wgm.setup();
+		this.wgm.setUp();
 	}
 	
 	/**
@@ -416,7 +425,7 @@ public class SafeCreeper extends JavaPlugin {
     public void setupMobArenaManager() {
     	// Set up the mob arena manager
     	this.mam = new SCMobArenaManager(getSCLogger());
-    	this.mam.setup();
+    	this.mam.setUp();
     }
     
     /**
@@ -433,7 +442,7 @@ public class SafeCreeper extends JavaPlugin {
     public void setupPVPArenaManager() {
     	// Set up the PVP Arena manager
     	this.pam = new SCPVPArenaManager(getSCLogger());
-    	this.pam.setup();
+    	this.pam.setUp();
     }
     
     /**
@@ -449,7 +458,7 @@ public class SafeCreeper extends JavaPlugin {
      */
     public void setupFactionsManager() {
     	this.fm = new SCFactionsManager(getSCLogger());
-    	this.fm.setup();
+    	this.fm.setUp();
     }
     
     /**
@@ -464,7 +473,8 @@ public class SafeCreeper extends JavaPlugin {
      * Set up the Corruption manager
      */
     public void setupCorruptionManager() {
-    	this.corHandler = new SCCorruptionManager();
+    	this.corHandler = new SCCorruptionManager(getSCLogger());
+    	this.corHandler.setUp();
     }
     
     /**

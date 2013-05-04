@@ -130,7 +130,7 @@ public class SafeCreeperApi {
 		try {
 			switch(handlerType) {
 			case TVNLibHandler:
-				SafeCreeper.instance.setupTVNLibHandler();
+				SafeCreeper.instance.setupTVNLibManager();
 				break;
 			}
 		} catch(Exception ex) {

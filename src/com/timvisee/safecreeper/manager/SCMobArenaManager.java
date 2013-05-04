@@ -10,32 +10,33 @@ import com.garbagemule.MobArena.MobArenaHandler;
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SCLogger;
 
-public class SCMobArenaManager {
+public class SCMobArenaManager extends SCPluginManager {
+	
+	private static String PLUGIN_NAME = "MobArena";
 	
 	private MobArenaHandler ma;
-	private SCLogger log;
 	
 	/**
 	 * Constructor
 	 * @param log SCLogger
 	 */
 	public SCMobArenaManager(SCLogger log) {
-		this.log = log;
+		super(PLUGIN_NAME, log);
 	}
 	
 	/**
-	 * Set up the hook between Safe Creeper and MobArena
+	 * Try to hook into Safe Creeper
 	 */
-	public void setup() {
+	public void hook() {
 		// MobArena has to be installed/enabled
-    	if(!Bukkit.getServer().getPluginManager().isPluginEnabled("MobArena")) {
+    	if(!Bukkit.getServer().getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
     		this.log.info("Disabling MobArena usage, plugin not found.");
     		return;
     	}
     	
     	try {
     		// Try to get the MobArenap plugin
-    		Plugin plugin = (MobArena) Bukkit.getPluginManager().getPlugin("MobArena");
+    		Plugin plugin = (MobArena) Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 	        
 	        if (plugin == null) {
 	        	this.log.info("Unable to hook into MobArena, plugin not found!");
@@ -59,19 +60,19 @@ public class SCMobArenaManager {
 	}
 	
 	/**
-	 * Get the logger instance
-	 * @return SCLogger instance
+	 * Check if Safe Creeper is hooked into MobArena
 	 */
-	public SCLogger getSCLogger() {
-		return this.log;
+	public boolean isHooked() {
+		return (this.ma != null);
 	}
 	
 	/**
-	 * Set the logger instance
-	 * @param log SCLogger instance
+	 * Unhook MobArena
 	 */
-	public void setSCLogger(SCLogger log) {
-		this.log = log;
+	public void unhook() {
+        // Unhook MobArena
+        this.ma = null;
+        this.log.info("Unhooked MobArena!");
 	}
 	
 	/**
@@ -123,21 +124,21 @@ public class SCMobArenaManager {
 	}
 	
 	/**
-	 * Check if Safe Creeper is hooked into Mob Arena
-	 */
-	public boolean isHooked() {
-		return (this.ma != null);
-	}
-	
-	/**
 	 * Is a living entity inside any mob arena
 	 * @param le The living entity to check
 	 * @return True if inside any arena
 	 */
 	public boolean isMonsterInArena(LivingEntity le) {
+		Bukkit.broadcastMessage("checking...");
+		
 		// Make sure the Mob Arena is not null
 		if(this.ma == null)
 			return false;
+		
+		if(this.ma.isMonsterInArena(le))
+			Bukkit.broadcastMessage("TRUE!");
+		else
+			Bukkit.broadcastMessage("FALSE!");
 		
 		// Return if this monster is in any arena
 		return this.ma.isMonsterInArena(le);
