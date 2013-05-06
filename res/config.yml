@@ -1,29 +1,23 @@
 # Config file
-# Set if the permissions system is enabled
-usePermissions: true
-
-# Set if bypass permissions are enabled. usePermissions has to be enabled.
-useBypassPermissions: false
-
 # Permissions settings
 permissions:
 	usePermissions: true
 	enableBypassPermissions: true
 	permissionsSystems:
 		PermissionsEx:
-			Enabled: true
-		PermissionsBukkit:"
-			Enabled: true
+			enabled: true
+		PermissionsBukkit:
+			enabled: true
 		bPermissions:
-			Enabled: true
+			enabled: true
 		EssentialsGroupManager:
-			Enabled: true
+			enabled: true
 		zPermissions:
-			Enabled: true
+			enabled: true
 		Vault:
-			Enabled: true
+			enabled: true
 		Permissions:
-			Enabled: true
+			enabled: true
 
 # Tasks settings
 tasks:

@@ -26,6 +26,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import com.timvisee.safecreeper.SCLogger;
+import com.timvisee.safecreeper.SafeCreeper;
 
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
@@ -92,78 +93,127 @@ public class SCPermissionsManager {
 		// Reset used permissions system type
 		permsType = PermissionsSystemType.NONE;
 		
-		// Check if PermissionsEx is available
-		Plugin pex = pm.getPlugin("PermissionsEx");
-		if(pex != null) {
-			pexPerms = PermissionsEx.getPermissionManager();
-			if(pexPerms != null) {
-				permsType = PermissionsSystemType.PERMISSIONS_EX;
-				
-				System.out.println("[" + p.getName() + "] Hooked into PermissionsEx!");
+		// PermissionsEx
+		// Check if PermissionsEx is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.PermissionsEx.enabled", true)) {
+			// Check if PermissionsEx is available
+			Plugin pex = pm.getPlugin("PermissionsEx");
+			if(pex != null) {
+				pexPerms = PermissionsEx.getPermissionManager();
+				if(pexPerms != null) {
+					permsType = PermissionsSystemType.PERMISSIONS_EX;
+					
+					System.out.println("[" + p.getName() + "] Hooked into PermissionsEx!");
+					return permsType;
+				}
+			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for PermissionsEx, disabled in config file!");
+		}
+			
+		// PermissionsBukkit
+		// Check if PermissionsBukkit is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.PermissionsBukkit.enabled", true)) {
+			// Check if PermissionsBukkit is available
+			Plugin bukkitPerms = pm.getPlugin("PermissionsBukkit");
+			if(bukkitPerms != null) {
+				permsType = PermissionsSystemType.PERMISSIONS_BUKKIT;
+				System.out.println("[" + p.getName() + "] Hooked into PermissionsBukkit!");
 				return permsType;
 			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for PermissionsBukkit, disabled in config file!");
 		}
 		
-		// Check if PermissionsBukkit is available
-		Plugin bukkitPerms = pm.getPlugin("PermissionsBukkit");
-		if(bukkitPerms != null) {
-			permsType = PermissionsSystemType.PERMISSIONS_BUKKIT;
-			System.out.println("[" + p.getName() + "] Hooked into PermissionsBukkit!");
-			return permsType;
-		}
-		
-		// Check if bPermissions is available
-		Plugin testBPermissions = pm.getPlugin("bPermissions");
-		if(testBPermissions != null) {
-			permsType = PermissionsSystemType.B_PERMISSIONS;
-			System.out.println("[" + p.getName() + "] Hooked into bPermissions!");
-			return permsType;
-		}
-		
-		// Check if Essentials Group Manager is available
-		final Plugin GMplugin = pm.getPlugin("GroupManager");
-		if (GMplugin != null && GMplugin.isEnabled()) {
-			permsType = PermissionsSystemType.ESSENTIALS_GROUP_MANAGER;
-			groupManagerPerms = (GroupManager)GMplugin;
-            System.out.println("[" + p.getName() + "] Hooked into Essentials Group Manager!");
-            return permsType;
-		}
-		
-		// Check if zPermissions is available
-		Plugin testzPermissions = pm.getPlugin("zPermissions");
-		if(testzPermissions != null){
-			zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
-			if(zPermissionsService != null){
-				permsType = PermissionsSystemType.Z_PERMISSIONS;
-				System.out.println("[" + p.getName() + "] Hooked into zPermissions!");
+		// bPermissions
+		// Check if bPermissions is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.bPermissions.enabled", true)) {
+			// Check if bPermissions is available
+			Plugin testBPermissions = pm.getPlugin("bPermissions");
+			if(testBPermissions != null) {
+				permsType = PermissionsSystemType.B_PERMISSIONS;
+				System.out.println("[" + p.getName() + "] Hooked into bPermissions!");
 				return permsType;
 			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for bPermissions, disabled in config file!");
 		}
 		
-		// VAULT PERMISSIONS
-		final Plugin vaultPlugin = pm.getPlugin("Vault");
-		if (vaultPlugin != null && vaultPlugin.isEnabled()) {
-			RegisteredServiceProvider<Permission> permissionProvider = this.s.getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-	        if (permissionProvider != null) {
-	            vaultPerms = permissionProvider.getProvider();
-	            if(vaultPerms.isEnabled()) {
-	            	permsType = PermissionsSystemType.VAULT;
-	            	System.out.println("[" + p.getName() + "] Hooked into Vault Permissions!");
-	    		    return permsType;
-	            } else {
-	            	System.out.println("[" + p.getName() + "] Not using Vault Permissions, Vault Permissions is disabled!");
-	            }
-	        }
+		// Essentials Group Manager
+		// Check if Essentials Group Manager is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.EssentialsGroupManager.enabled", true)) {
+			// Check if Essentials Group Manager is available
+			final Plugin GMplugin = pm.getPlugin("GroupManager");
+			if (GMplugin != null && GMplugin.isEnabled()) {
+				permsType = PermissionsSystemType.ESSENTIALS_GROUP_MANAGER;
+				groupManagerPerms = (GroupManager)GMplugin;
+	            System.out.println("[" + p.getName() + "] Hooked into Essentials Group Manager!");
+	            return permsType;
+			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for Essentials Group Manager, disabled in config file!");
+		}
+
+		// zPermissions
+		// Check if zPermissions is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.zPermissions.enabled", true)) {
+			// Check if zPermissions is available
+			Plugin testzPermissions = pm.getPlugin("zPermissions");
+			if(testzPermissions != null){
+				zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
+				if(zPermissionsService != null){
+					permsType = PermissionsSystemType.Z_PERMISSIONS;
+					System.out.println("[" + p.getName() + "] Hooked into zPermissions!");
+					return permsType;
+				}
+			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for zPermissions, disabled in config file!");
+		}
+		
+		// Vault
+		// Check if Vault is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.Vault.enabled", true)) {
+			// Check if Vault is available
+			final Plugin vaultPlugin = pm.getPlugin("Vault");
+			if (vaultPlugin != null && vaultPlugin.isEnabled()) {
+				RegisteredServiceProvider<Permission> permissionProvider = this.s.getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+		        if (permissionProvider != null) {
+		            vaultPerms = permissionProvider.getProvider();
+		            if(vaultPerms.isEnabled()) {
+		            	permsType = PermissionsSystemType.VAULT;
+		            	System.out.println("[" + p.getName() + "] Hooked into Vault Permissions!");
+		    		    return permsType;
+		            } else {
+		            	System.out.println("[" + p.getName() + "] Not using Vault Permissions, Vault Permissions is disabled!");
+		            }
+		        }
+			}
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for Vault, disabled in config file!");
 		}
         
-		// Check if Permissions is available
-	    Plugin testPerms = pm.getPlugin("Permissions");
-        if (testPerms != null) {
-        	permsType = PermissionsSystemType.PERMISSIONS;
-            this.defaultPerms = ((Permissions) testPerms).getHandler();
-            System.out.println("[" + p.getName() + "] Hooked into Permissions!");
-            return PermissionsSystemType.PERMISSIONS;
-        }
+		// Permissions
+		// Check if Vault is allowed to be used
+		if(SafeCreeper.instance.getConfig().getBoolean("permissions.permissionsSystems.Permissions.enabled", true)) {
+			// Check if Permissions is available
+		    Plugin testPerms = pm.getPlugin("Permissions");
+	        if (testPerms != null) {
+	        	permsType = PermissionsSystemType.PERMISSIONS;
+	            this.defaultPerms = ((Permissions) testPerms).getHandler();
+	            System.out.println("[" + p.getName() + "] Hooked into Permissions!");
+	            return PermissionsSystemType.PERMISSIONS;
+	        }
+		} else {
+			// Show a warning message
+			System.out.println("[" + p.getName() + "] Not checking for Permissions, disabled in config file!");
+		}
 	    
 	    // No recognized permissions system found
 	    permsType = PermissionsSystemType.NONE;
