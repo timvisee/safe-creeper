@@ -1143,58 +1143,67 @@ public class SCConfigManager {
     }
     
     public String getControlName(Entity e, String def) {
-    	if(e instanceof LivingEntity || e instanceof Projectile) {
-    		switch(e.getType()) {
-	    	case IRON_GOLEM:
-	    		return "IronGolemControl";
-	    		
-	    	case SNOWMAN:
-	    		return "SnowmanControl";
-	    		
-	    	case OCELOT:
-	    		return "OcelotControl";
-	    		
-	    	case PLAYER:
-	    		return "PlayerControl";
-	    		
-	    	case FIREBALL:
-	    	case SMALL_FIREBALL:
-	    		return "FireballControl";
-	    	
-	    	case MAGMA_CUBE:
-	    		return "MagmaCubeControl";
-	    		
-	    	case WITHER:
-	    		return "WitherControl";
-	    		
-	    	case WITHER_SKULL:
-	    		return "WitherSkullControl";
-	    		
-	    	case SKELETON:
-	    		Skeleton skel = (Skeleton) e;
-	    		if(skel.getSkeletonType().equals(SkeletonType.WITHER))
-	    			return "WitherSkeletonControl";
-	    		else
-	    			return "SkeletonControl";
-	    		
-	    	default:
-	    	  	if (e.getType() == null || e.getType().getName() == null)
-	    	  		return "OtherControl";
-	    		return e.getType().getName().trim().replace(" ", "") + "Control";
-	    	}
-    	}
+    	// Make sure the entity param is not null
+    	if(e == null)
+    		return def;
     	
-    	switch(e.getType()) {
-    	case PRIMED_TNT:
-    		return "TNTControl";
+    	// Make sure the entity type is not null
+    	if(e.getType() == null)
+    		return def;
+    	
+    	// Try to find out the control name according to the entity type
+    	try {
+    		switch(e.getType()) {
+        	case FIREBALL:
+        	case SMALL_FIREBALL:
+        		return "FireballControl";
+        		
+        	case IRON_GOLEM:
+        		return "IronGolemControl";
+        		
+        	case MAGMA_CUBE:
+        		return "MagmaCubeControl";
+        		
+        	case MINECART_TNT:
+        		return "TNTMinecartControl";
+        		
+        	case OCELOT:
+        		return "OcelotControl";
+        		
+        	case PLAYER:
+        		return "PlayerControl";
+        		
+        	case PRIMED_TNT:
+        		return "TNTControl";
+        		
+        	case SNOWMAN:
+        		return "SnowmanControl";
+        		
+        	case SKELETON:
+        		Skeleton skel = (Skeleton) e;
+        		if(skel.getSkeletonType().equals(SkeletonType.WITHER))
+        			return "WitherSkeletonControl";
+        		else
+        			return "SkeletonControl";
+        		
+        	case WITHER:
+        		return "WitherControl";
+        		
+        	case WITHER_SKULL:
+        		return "WitherSkullControl";
+        		
+        	default:
+        		// Make sure the name of the entity doesn't return null, if it does, return the default value
+        	  	if (e.getType().getName() == null)
+        	  		return def;
+        	  	
+    	    	//return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
+    	    	return e.getType().getName().trim().replace(" ", "") + "Control";
+        	}
     		
-    	case MINECART_TNT:
-    		return "TNTMinecartControl";
-    		
-    	default:
-    		//return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
-        	// Return the default control name
-        	return def;
+    	} catch(NullPointerException ex) {
+    		// Error while retrieving control name, return the default value
+    		return def;
     	}
     }
 	
