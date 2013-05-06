@@ -5,6 +5,26 @@ usePermissions: true
 # Set if bypass permissions are enabled. usePermissions has to be enabled.
 useBypassPermissions: false
 
+# Permissions settings
+permissions:
+	usePermissions: true
+	enableBypassPermissions: true
+	permissionsSystems:
+		PermissionsEx:
+			Enabled: true
+		PermissionsBukkit:"
+			Enabled: true
+		bPermissions:
+			Enabled: true
+		EssentialsGroupManager:
+			Enabled: true
+		zPermissions:
+			Enabled: true
+		Vault:
+			Enabled: true
+		Permissions:
+			Enabled: true
+
 # Tasks settings
 tasks:
     updateChecker:

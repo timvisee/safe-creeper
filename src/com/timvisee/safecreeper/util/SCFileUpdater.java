@@ -116,10 +116,24 @@ public class SCFileUpdater {
 		Set<String> keys = defc.getConfigurationSection("").getKeys(true);
 		for(String k : keys) {
 			
+			// Make sure the current node is not the version node
 			if(k.equalsIgnoreCase("version"))
 				continue;
 			
-			if(!defc.isSet(k))
+			// Update some moved config values correctly
+			if(isOlderVersion("1.5", configVer)) {
+				
+				if(k.equalsIgnoreCase("usePermissions"))
+					newc.set("permissions.usePermissions", c.getBoolean(k, defc.getBoolean(k)));
+				
+				if(k.equalsIgnoreCase("useBypassPermissions"))
+					newc.set("permissions.enableBypassPermissions", c.getBoolean(k, defc.getBoolean(k)));
+			}
+			
+			if(newc.isSet(k)) // Make sure the value is not already set
+				continue;
+				
+			else if(!defc.isSet(k))
 				newc.createSection(k);
 				
 			else if(defc.isBoolean(k))
@@ -159,8 +173,7 @@ public class SCFileUpdater {
 		// Add some description to the config file
 		newc.options().header("Safe Creeper Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
 		
-		// Set the intended spaces to 4
-		
+		// TODO: Set the intended spaces to 4
 		
 		// Save the config file
 		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
@@ -173,6 +186,7 @@ public class SCFileUpdater {
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
 		
+		// Show a status message
 		System.out.println("[SafeCreeper] Safe Creeper config file updated, took " + String.valueOf(duration) + " ms!");
 	}
 	
@@ -189,8 +203,10 @@ public class SCFileUpdater {
 		if(isConfigUpToDate(c))
 			return;
 		
+		// Show a status message
 		System.out.println("[SafeCreeper] Updating the global config file...");
 		
+		// Store the current time
 		long t = System.currentTimeMillis();
 		
 		// Get the current plugin and config versions
@@ -318,7 +334,10 @@ public class SCFileUpdater {
 				newc.createSection(k);
 			}
 			
-			if(k.equalsIgnoreCase("version"))
+			if(newc.isSet(k)) // Make sure the value is not already set
+				continue;
+				
+			else if(k.equalsIgnoreCase("version"))
 				continue;
 			
 			if(!defc.isSet(k))
@@ -557,7 +576,10 @@ public class SCFileUpdater {
 				}
 			}
 			
-			if(k.equalsIgnoreCase("version"))
+			if(newc.isSet(k)) // Make sure the value is not already set
+				continue;
+				
+			else if(k.equalsIgnoreCase("version"))
 				continue;
 			
 			if(globalc.isBoolean(k))
@@ -588,7 +610,11 @@ public class SCFileUpdater {
 				newc.set(k, c.getVector(k, globalc.getVector(k)));
 				
 			else {
-				if(!c.isSet(k))
+				
+				if(newc.isSet(k)) // Make sure the value is not already set
+					continue;
+					
+				else if(!c.isSet(k))
 					newc.createSection(k);
 					
 				else if(c.isBoolean(k))
