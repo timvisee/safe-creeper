@@ -64,6 +64,14 @@ public class SCMetricsManager {
 	            	return i;
 	            }
 		    });
+		    graph.addPlotter(new Metrics.Plotter("Destruction Repair - Rebuild Blocks") {
+	            @Override
+	            public int getValue() {
+	            	int i = SafeCreeper.instance.getStaticsManager().getBlocksRebuild();
+	            	SafeCreeper.instance.getStaticsManager().setBlocksRebuild(0);
+	            	return i;
+	            }
+		    });
 		    // Used permissions systems
 		    Graph graph2 = metrics.createGraph("Permisison Plugin Usage");
 		    graph2.addPlotter(new Metrics.Plotter(SafeCreeper.instance.getPermissionsManager().getUsedPermissionsSystemType().getName()) {

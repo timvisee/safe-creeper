@@ -58,7 +58,7 @@ public class SCUpdateChecker {
 	 */
 	public void refreshUpdatesData() {
 		// Show a status message
-		System.out.println("[" + APP_NAME + "] Retrieving updates data...");
+		System.out.println("[" + APP_NAME + "] Checking for updates...");
 		
 		// Retrieve the updates data
 		try {

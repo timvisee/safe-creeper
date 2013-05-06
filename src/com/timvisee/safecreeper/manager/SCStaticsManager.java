@@ -5,6 +5,8 @@ public class SCStaticsManager {
 	private int creeperExplosionsNerfed = 0;
 	private int TNTExplosionsNerfed = 0;
 	private int TNTDamageNerfed = 0;
+	
+	private int blocksRebuild = 0;
 
 	public int getCreeperExplosionsNerfed() {
 		return this.creeperExplosionsNerfed;
@@ -55,5 +57,22 @@ public class SCStaticsManager {
 	
 	public void setTNTDamageNerved(int amount) {
 		this.TNTDamageNerfed = amount;
+	}
+	
+	/* Blocks rebuild */
+	public int getBlocksRebuild() {
+		return this.blocksRebuild;
+	}
+	
+	public void addBlockRebuild() {
+		addBlocksRebuild(1);
+	}
+	
+	public void addBlocksRebuild(int amount) {
+		this.blocksRebuild += amount;
+	}
+	
+	public void setBlocksRebuild(int amount) {
+		this.blocksRebuild = amount;
 	}
 }

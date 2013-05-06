@@ -81,6 +81,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * On enable method, called when plugin is being enabled
 	 */
 	public void onEnable() {
+		// Store the time Safe Creeper is starting on so the starting duration can be calculated
 		long t = System.currentTimeMillis();
 		
 		// Get Bukkit's plugin manager
@@ -107,7 +108,7 @@ public class SafeCreeper extends JavaPlugin {
 	    setUpConfigManager();
 		
 		// Initialize the update checker
-		setUppUpdateChecker();
+		setUpUpdateChecker();
 		
 		// Remove all (old) update files
 		getUpdateChecker().removeUpdateFiles();
@@ -292,7 +293,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the update checker
 	 */
-	public void setUppUpdateChecker() {
+	public void setUpUpdateChecker() {
 		this.uc = new SCUpdateChecker();
 	}
 	
