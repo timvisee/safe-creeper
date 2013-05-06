@@ -27,9 +27,6 @@ updateChecker:
 statistics:
     enabled: true
 
-# Set if a message is send to players with permission when they join if there's an update available.
-sendMessageWhenUpdateAvailable: true
-
 # Settings for TVNLib
 autoDownloadTVNLib: false
 

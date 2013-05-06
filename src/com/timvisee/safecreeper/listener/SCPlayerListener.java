@@ -203,7 +203,8 @@ public class SCPlayerListener implements Listener {
 		
 		// Make sure the player has permission to see update notifications
 		if(SafeCreeper.instance.getPermissionsManager().hasPermission(p, "safecreeper.notification.update", p.isOp()) &&
-				SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true)) {
+				SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true) &&
+				SafeCreeper.instance.getConfig().getBoolean("updateChecker.notifyForUpdatesInGame", true)) {
 			
 			SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
 			
