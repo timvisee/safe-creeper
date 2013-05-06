@@ -331,10 +331,17 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the API Manager
 	 */
 	public void setUpApiManager() {
-		this.apiManager = new SCApiManager();
+		// Construct the API Manager
+		this.apiManager = new SCApiManager(false);
 		
 		// Show a status message
-		getSCLogger().info("API started!");
+		getSCLogger().info("Safe Creeper API started!");
+		
+		// Enable the API if it should be enabled
+		if(getConfig().getBoolean("api.enabled", true))
+			this.apiManager.setEnabled(true);
+		else
+			getSCLogger().info("Not enabling Safe Creeper API, disabled in config file!");
 	}
 	
 	/**

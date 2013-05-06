@@ -9,7 +9,7 @@ import com.timvisee.safecreeper.SafeCreeper;
 
 public class SafeCreeperApi {
 	
-	public static String PLUGIN_NAME = "SafeCreeper";
+	public static String SC_PLUGIN_NAME = "SafeCreeper";
 	
 	private SafeCreeper sc;
 	private Plugin p;
@@ -33,12 +33,12 @@ public class SafeCreeperApi {
 		Logger log = Logger.getLogger("Minecraft");
 		
 		try {
-    		// Unhook SafeCreeper first
+    		// Unhook SafeCreeper first if already hooked
 			if(isHooked())
 				unhook();
 			
 			// Try to get the SafeCreeper plugin instance
-			Plugin p = Bukkit.getServer().getPluginManager().getPlugin(PLUGIN_NAME);
+			Plugin p = Bukkit.getServer().getPluginManager().getPlugin(SC_PLUGIN_NAME);
 			if(p == null && !(p instanceof SafeCreeper)) {
 				if(this.p != null)
 					log.info("[" + this.p.getName() + "] Can't hook into Safe Creeper, plugin not found!");
@@ -52,7 +52,18 @@ public class SafeCreeperApi {
     		
 			// Set the SafeCreeper plugin instance
 			this.sc = (SafeCreeper) p;
+			
+			// Make sure the Safe Creeper API is enabled
+			if(!this.sc.getApiManager().isEnabled()) {
+				log.info("[" + this.p.getName() + "] Can't hook into Safe Creeper, API not enabled!");
+				this.sc = null;
+				return false;
+			}
+			
+			// Register the current API session in Safe Creeper
 			this.sc.getApiManager().registerApiSession(this);
+			
+			// Hook succeed, return true
 			return true;
 	        
     	} catch(NoClassDefFoundError ex) {

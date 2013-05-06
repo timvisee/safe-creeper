@@ -31,6 +31,10 @@ tasks:
         enabled: true
         interval: 300
 
+# Safe Creeper API settings
+api:
+	enabled: true
+
 # Update checker
 updateChecker:
     enabled: true
@@ -48,4 +52,4 @@ autoDownloadTVNLib: false
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.4.2'
+version: '1.5'

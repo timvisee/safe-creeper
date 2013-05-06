@@ -7,6 +7,8 @@ import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.api.SafeCreeperApi;
 
 public class SCApiManager {
+
+	boolean apiEnabled = false;
 	
 	List<SafeCreeperApi> apiSessions = new ArrayList<SafeCreeperApi>();
 	
@@ -14,6 +16,14 @@ public class SCApiManager {
 	 * Constructor
 	 */
 	public SCApiManager() { }
+	
+	/**
+	 * Constructor
+	 * @param enableApi True to enable the Safe Creeper API
+	 */
+	public SCApiManager(boolean enableApi) {
+		setEnabled(apiEnabled);
+	}
 	
 	/**
 	 * Register an API session
@@ -91,5 +101,35 @@ public class SCApiManager {
 			
 			i--;
 		}
+	}
+	
+	/**
+	 * Set if the Safe Creeper API is enabled or not
+	 * @param enabled True to enable the Safe Creeper API
+	 */
+	public void setEnabled(boolean enabled) {
+		// Make sure the value is different than before
+		if(this.apiEnabled != enabled) {
+			// Enable or disable the API
+			this.apiEnabled = enabled;
+			
+			// Show a status message
+			if(enabled)
+				SafeCreeper.instance.getSCLogger().info("Safe Creeper API enabled!");
+			else
+				SafeCreeper.instance.getSCLogger().info("Safe Creeper API disabled!");
+			
+			// Unregister all api sessions if the API was disabled
+			if(!enabled)
+				unregisterAllApiSessions();
+		}
+	}
+	
+	/**
+	 * Check if the Safe Creeper API is enabled
+	 * @return True if the API is enabled
+	 */
+	public boolean isEnabled() {
+		return this.apiEnabled;
 	}
 }
