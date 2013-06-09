@@ -1141,16 +1141,23 @@ public class SCConfigManager {
     }
     
     public String getControlName(Entity e, String def) {
-    	// Make sure the entity param is not null
-    	if(e == null)
-    		return def;
-    	
-    	// Make sure the entity type is not null
-    	if(e.getType() == null)
-    		return def;
+	    	
     	
     	// Try to find out the control name according to the entity type
     	try {
+    		// Make sure the entity param is not null
+	    	if(e == null)
+	    		return def;
+	    	
+	    	// Make sure the entity type is not null
+	    	if(e.getType() == null)
+	    		return def;
+	    	
+	    	// Make sure the default value is not null
+	    	if(def == null)
+	    		def = "OtherControl";
+	    	
+	    	// Return the correct control name
     		switch(e.getType()) {
         	case FIREBALL:
         	case SMALL_FIREBALL:
@@ -1199,7 +1206,7 @@ public class SCConfigManager {
     	    	return e.getType().getName().trim().replace(" ", "") + "Control";
         	}
     		
-    	} catch(NullPointerException ex) {
+    	} catch(Exception ex) {
     		// Error while retrieving control name, return the default value
     		return def;
     	}
