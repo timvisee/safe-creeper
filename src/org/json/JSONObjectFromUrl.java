@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
@@ -34,28 +35,32 @@ public class JSONObjectFromUrl {
 	}
 	
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
-		// Get the input stream
-	    URL urlObj = new URL(url);
-	    URLConnection con = urlObj.openConnection();
-	    con.setConnectTimeout(2000);
-	    con.setReadTimeout(2000);
-	    InputStream is = null;
-	    
-	    try {
-	    	is = con.getInputStream();
-	    } catch(UnknownHostException ex) {
-	    	System.out.println("[SafeCreeper] [ERROR] Can't connect to Safe Creeper server!");
-	    	return new JSONObject("{\"error\":\"Can't connect to Safe Creeper server!\"}");
-	    }
-	    
-	    // Parse and return the JSON as JSONObject
-	    try {
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-		    String jsonText = readAll(rd);
-		    JSONObject json = new JSONObject(jsonText);
-		    return json;
-	    } finally {
-	    	is.close();
-	    }
+		try {
+			// Get the input stream
+		    URL urlObj = new URL(url);
+		    URLConnection con = urlObj.openConnection();
+		    con.setConnectTimeout(3 * 1000);
+		    con.setReadTimeout(3 * 1000);
+		    InputStream is = null;
+		    
+		    try {
+		    	is = con.getInputStream();
+		    } catch(UnknownHostException ex) {
+		    	System.out.println("[SafeCreeper] [ERROR] Can't connect to Safe Creeper server!");
+		    	return new JSONObject("{\"error\":\"Can't connect to Safe Creeper server!\"}");
+		    }
+		    
+		    // Parse and return the JSON as JSONObject
+		    try {
+			    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+			    String jsonText = readAll(rd);
+			    JSONObject json = new JSONObject(jsonText);
+			    return json;
+		    } finally {
+		    	is.close();
+		    }
+		} catch(SocketTimeoutException ex) {
+			return null;
+		}
 	}
 }

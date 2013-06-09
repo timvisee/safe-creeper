@@ -60,13 +60,19 @@ public class SCUpdateChecker {
 		// Show a status message
 		System.out.println("[" + APP_NAME + "] Checking for updates...");
 		
-		// Retrieve the updates data
 		try {
-			updatesData = JSONObjectFromUrl.readJsonFromUrl(CHECKER_URL);
+			// Recieve the updates data
+			this.updatesData = JSONObjectFromUrl.readJsonFromUrl(CHECKER_URL);
+			
+			// Make sure the updates data is not null (cause of any error)
+			if(this.updatesData == null) {
+				System.out.println("[" + APP_NAME + "] Failed checking for updates!");
+				return;
+			}
 			
 			// Return an error if any error occurred
-			if(updatesData.isSet("error")) {
-				String errMsg = updatesData.getString("error");
+			if(this.updatesData.isSet("error")) {
+				String errMsg = this.updatesData.getString("error");
 				System.out.println("[" + APP_NAME + "] Error occured while receiving updates data!");
 				System.out.println("[" + APP_NAME + "] [ERROR] " + errMsg);
 				return;
