@@ -1488,19 +1488,32 @@ public class SCEntityListener implements Listener {
 	
 	@EventHandler
 	public void onProjectileLaunch(ProjectileLaunchEvent event) {
+		// Make sure the event param is not null
+		//   (happends with some Bukkit versions when a projectile was shoot out of a dispencer)
+		if(event == null)
+			return;
+		
+		// Make sure the projectile instance is not null
+		if(event.getEntity() == null)
+			return;
+		
+		// Get the projectile instance and get it's location, shooter, etc..
 		Projectile p = event.getEntity();
 		Location l = p.getLocation();
 		LivingEntity s = p.getShooter();
 		World w = p.getWorld();
 		
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(s, "OtherMobControl");
-		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
-			event.setCancelled(true);
-		
-		// Play control effects
-		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "LaunchedProjectile", l);
+		if(s != null) {
+			// Get the controll name for the projectile shooter
+			String controlName = SafeCreeper.instance.getConfigManager().getControlName(s, "OtherMobControl");
+			
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
+				event.setCancelled(true);
+			
+			// Play control effects
+			if(!event.isCancelled())
+				SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "LaunchedProjectile", l);
+		}
 	}
 	
 	@EventHandler
