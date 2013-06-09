@@ -961,9 +961,7 @@ public class SCEntityListener implements Listener {
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
 			
-			boolean revivingEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l);
-			
-			if(revivingEnabled) {
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l)) {
 				
 				double chance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Chance", 25, true, l);
 				double radius = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Radius", 0, true, l);
@@ -991,7 +989,6 @@ public class SCEntityListener implements Listener {
 						// Check if the living entity (was) inside any mob arena
 						if(mam.isMonsterInArena(c)) {
 							Arena mobArena = mam.getArenaWithMonster(c);
-							
 							task.setMobArena(mobArena);
 						}
 						

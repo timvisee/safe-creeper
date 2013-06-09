@@ -102,7 +102,11 @@ public class SCMobArenaManager extends SCPluginManager {
 			return false;
 		
 		// Return if the location is inside any Mob Arena region
-		return this.ma.inRegion(loc);
+		try {
+			return this.ma.inRegion(loc);
+		} catch(Exception ex) {
+			return false;
+		}
 	}
 	
 	/**
@@ -129,19 +133,25 @@ public class SCMobArenaManager extends SCPluginManager {
 	 * @return True if inside any arena
 	 */
 	public boolean isMonsterInArena(LivingEntity le) {
-		Bukkit.broadcastMessage("checking...");
+		//Bukkit.broadcastMessage("checking...");
 		
 		// Make sure the Mob Arena is not null
 		if(this.ma == null)
 			return false;
 		
+		/*
 		if(this.ma.isMonsterInArena(le))
 			Bukkit.broadcastMessage("TRUE!");
 		else
 			Bukkit.broadcastMessage("FALSE!");
+		*/
 		
 		// Return if this monster is in any arena
-		return this.ma.isMonsterInArena(le);
+		try {
+			return this.ma.isMonsterInArena(le);
+		} catch(Exception ex) {
+			return false;
+		}
 	}
 	
 	/**
