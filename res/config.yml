@@ -1,23 +1,23 @@
 # Config file
 # Permissions settings
 permissions:
-	usePermissions: true
-	enableBypassPermissions: true
-	permissionsSystems:
-		PermissionsEx:
-			enabled: true
-		PermissionsBukkit:
-			enabled: true
-		bPermissions:
-			enabled: true
-		EssentialsGroupManager:
-			enabled: true
-		zPermissions:
-			enabled: true
-		Vault:
-			enabled: true
-		Permissions:
-			enabled: true
+    usePermissions: true
+    enableBypassPermissions: true
+    permissionsSystems:
+        PermissionsEx:
+            enabled: true
+        PermissionsBukkit:
+            enabled: true
+        bPermissions:
+            enabled: true
+        EssentialsGroupManager:
+            enabled: true
+        zPermissions:
+            enabled: true
+        Vault:
+            enabled: true
+        Permissions:
+            enabled: true
 
 # Tasks settings
 tasks:
@@ -33,7 +33,7 @@ tasks:
 
 # Safe Creeper API settings
 api:
-	enabled: true
+    enabled: true
 
 # Update checker
 updateChecker:
@@ -52,4 +52,4 @@ autoDownloadTVNLib: false
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.5'
+version: '1.5.0.1'
