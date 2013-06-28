@@ -377,6 +377,37 @@ CowControl:
         Triggers: {}
     Locations: {}
 
+# Ender Crystal (entity)
+EnderCrystalControl:
+    Enabled: false
+    DestroyWorld: true
+    EnableExplosionSound: true
+    EnableExplosionSmoke: true
+    CostumExplosionStrength:
+        Enabled: false
+        ExplosionStrength: 3
+    CustomExplosions:
+        Enabled: false
+        Throw:
+            Enabled: false
+            ThrowPlayers: true
+            ThrowMobs: true
+            ThrowSpeedMultiplier: 1
+        FlyingBlocks:
+            Enabled: false
+            Chance: 80
+    ExplosionRebuild:
+        Enabled: false
+        RebuildDelay: 60
+        RebuildBlockInterval: 1
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+    States: {}
+
 # EnderDragon (mob)
 EnderDragonControl:
     Enabled: true
@@ -2290,4 +2321,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.5.0.1'
+version: '1.5.1'

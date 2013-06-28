@@ -217,231 +217,233 @@ public class SCEntityListener implements Listener {
 				le.setRemoveWhenFarAway(despawnWhenFarAway);
 			}
 		}
-		
+
 		// Spawn creatures as baby and/or with custom age
-		switch(et) {
-		case CHICKEN:
-			Chicken chicken = (Chicken) e;
+		if(et != null) {
+			switch(et) {
+			case CHICKEN:
+				Chicken chicken = (Chicken) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						chicken.setAge(age);
+						chicken.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								chicken.setBaby();
+							else
+								chicken.setAdult();
+					}
+				}
+				break;
+				
+			case COW:
+				Cow cow = (Cow) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						cow.setAge(age);
+						cow.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								cow.setBaby();
+							else
+								cow.setAdult();
+					}
+				}
+				break;
 			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					chicken.setAge(age);
-					chicken.setAgeLock(lockAge);
+			case MUSHROOM_COW:
+				MushroomCow mc = (MushroomCow) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						mc.setAge(age);
+						mc.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								mc.setBaby();
+							else
+								mc.setAdult();
+					}
 				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							chicken.setBaby();
-						else
-							chicken.setAdult();
+				break;
+				
+			case OCELOT:
+				Ocelot o = (Ocelot) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						o.setAge(age);
+						o.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								o.setBaby();
+							else
+								o.setAdult();
+					}
 				}
+				break;
+				
+			case PIG:
+				Pig p = (Pig) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						p.setAge(age);
+						p.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								p.setBaby();
+							else
+								p.setAdult();
+					}
+				}
+				break;
+			
+			case VILLAGER:
+				Villager v = (Villager) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						v.setAge(age);
+						v.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								v.setBaby();
+							else
+								v.setAdult();
+					}
+				}
+				break;
+			
+			case WOLF:
+				Wolf wolf = (Wolf) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the age thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
+						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						wolf.setAge(age);
+						wolf.setAgeLock(lockAge);
+					}
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
+								wolf.setBaby();
+							else
+								wolf.setAdult();
+					}
+				}
+				break;
+				
+			case ZOMBIE:
+				Zombie z = (Zombie) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							z.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
+					}
+				}
+				break;
+				
+			case PIG_ZOMBIE:
+				PigZombie pz = (PigZombie) e;
+				
+				// Check if the custom age control is enabled
+				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+					// Check if the baby thing is enabled
+					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+						if(spawnAsBaby)
+							pz.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
+					}
+				}
+				break;
+				
+			default:
 			}
-			break;
-			
-		case COW:
-			Cow cow = (Cow) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					cow.setAge(age);
-					cow.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							cow.setBaby();
-						else
-							cow.setAdult();
-				}
-			}
-			break;
-		
-		case MUSHROOM_COW:
-			MushroomCow mc = (MushroomCow) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					mc.setAge(age);
-					mc.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							mc.setBaby();
-						else
-							mc.setAdult();
-				}
-			}
-			break;
-			
-		case OCELOT:
-			Ocelot o = (Ocelot) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					o.setAge(age);
-					o.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							o.setBaby();
-						else
-							o.setAdult();
-				}
-			}
-			break;
-			
-		case PIG:
-			Pig p = (Pig) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					p.setAge(age);
-					p.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							p.setBaby();
-						else
-							p.setAdult();
-				}
-			}
-			break;
-		
-		case VILLAGER:
-			Villager v = (Villager) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					v.setAge(age);
-					v.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							v.setBaby();
-						else
-							v.setAdult();
-				}
-			}
-			break;
-		
-		case WOLF:
-			Wolf wolf = (Wolf) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the age thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-					int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-					int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
-					int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-					boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
-					wolf.setAge(age);
-					wolf.setAgeLock(lockAge);
-				}
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
-							wolf.setBaby();
-						else
-							wolf.setAdult();
-				}
-			}
-			break;
-			
-		case ZOMBIE:
-			Zombie z = (Zombie) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						z.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
-				}
-			}
-			break;
-			
-		case PIG_ZOMBIE:
-			PigZombie pz = (PigZombie) e;
-			
-			// Check if the custom age control is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
-				// Check if the baby thing is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-					boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-					double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
-					if(spawnAsBaby)
-						pz.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
-				}
-			}
-			break;
-			
-		default:
-			break;
 		}
+			
 		
 		// Set if PigZombies should be (always) angry
 		if(e instanceof PigZombie) {
@@ -650,10 +652,9 @@ public class SCEntityListener implements Listener {
 		DamageCause dc = event.getCause();
 		
 		// If the entity is a living entity, it may not have negative or zero health
-		if(e instanceof LivingEntity) {
+		if(e instanceof LivingEntity)
 			if(((LivingEntity) e).getHealth() <= 0)
 				return;
-		}
 		
 		switch(dc) {
 		case DROWNING:
@@ -1145,11 +1146,6 @@ public class SCEntityListener implements Listener {
 		Entity e = event.getEntity();
 		Location l = event.getLocation();
 		World w = l.getWorld();
-		
-		/*this.createExplosion(l, new ExplosionSource(l), true, 3, true, true, 1, true, 80, true, true, true, true, false);
-		
-		event.setCancelled(true);
-		return;*/
 		
 		// Get the current control name
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
@@ -1657,6 +1653,9 @@ public class SCEntityListener implements Listener {
 			SafeCreeper.instance.getConfigManager().playControlEffects("CreeperControl", "Charged", l);
 	}
 	
+	
+	
+	
 	public void createExplosionSound(World w, Location loc) {
 		// Make sure the parameters are not null
 		if(loc == null || w == null)
@@ -1665,11 +1664,6 @@ public class SCEntityListener implements Listener {
 		// Play the explosion sound
 		w.playSound(loc, Sound.EXPLODE, 1, 1);
 	}
-	
-	
-	
-	
-	
 	
 	public void createExplosion(
 			Location loc, ExplosionSource source,

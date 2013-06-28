@@ -1196,6 +1196,9 @@ public class SCConfigManager {
         		
         	case WITHER_SKULL:
         		return "WitherSkullControl";
+        	
+        	case ENDER_CRYSTAL:
+        		return "EnderCrystalControl";
         		
         	default:
         		// Make sure the name of the entity doesn't return null, if it does, return the default value

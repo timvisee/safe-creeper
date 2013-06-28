@@ -2,6 +2,7 @@ package com.timvisee.safecreeper.listener;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,11 +15,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.EntityBlockFormEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
@@ -206,6 +209,30 @@ public class SCBlockListener implements Listener {
 		// If anything is moving into something that is going to be repaired, block the stream
 		if(drm.isDestroyed(toBlock))
 			event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onBlockDispense(BlockDispenseEvent event) {
+		Block b = event.getBlock();
+		ItemStack item = event.getItem();
+		Location l = b.getLocation();
+		World w = b.getWorld();
+		
+		switch(item.getType()) {
+		case WATER_BUCKET:
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
+				event.setCancelled(true);
+			break;
+			
+		case LAVA_BUCKET:
+			// This is lava, check if lava can spread
+			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
+				event.setCancelled(true);
+			break;
+		
+		default:
+			break;
+		}
 	}
 	
 	@EventHandler

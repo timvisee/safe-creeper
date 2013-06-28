@@ -52,4 +52,4 @@ autoDownloadTVNLib: false
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.5.0.1'
+version: '1.5.1'
