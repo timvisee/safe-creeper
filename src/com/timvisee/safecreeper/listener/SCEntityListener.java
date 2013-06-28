@@ -765,6 +765,105 @@ public class SCEntityListener implements Listener {
 			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Damaged", l);
 	}
 
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onEntityDeathLow(EntityDeathEvent event) {
+		// Prevent event errors!
+		if(event.getEntity() == null)
+			return;
+		
+		Entity e = event.getEntity();
+		Location l = e.getLocation();
+		World w = l.getWorld();
+		Random rand = new Random();
+		
+		// Get the current control name
+		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		
+		// Creature Reviving
+		if(e instanceof Creature) {
+			Creature c = (Creature) e;
+			
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l)) {
+				double chance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Chance", 25, true, l);
+				double radius = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Radius", 0, true, l);
+				double minDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MinDelay", 0, true, l);
+				double maxDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MaxDelay", 1.5, true, l);
+				boolean rememberTarget = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.RememberTarget", true, true, l);
+				boolean reviverRevivingEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Reviver.Enabled", false, true, l);
+				
+				if(((int) chance * 10) > rand.nextInt(1000)) {
+					
+					// Generate the spawn location
+					Location spawnLoc = l.clone();
+					spawnLoc.add(rand.nextDouble() * (radius * 2) - radius, 0, rand.nextDouble() * (radius * 2) - radius);
+					
+					if(!reviverRevivingEnabled) {
+						// Reviving with tasks
+						
+						// Create the task
+						SCCreatureReviveTask task = new SCCreatureReviveTask(c, spawnLoc);
+						if(rememberTarget)
+							task.setTarget(c.getTarget());
+						
+						final SCMobArenaManager mam = SafeCreeper.instance.getMobArenaManager();
+						
+						// Check if the living entity (was) inside any mob arena
+						if(mam.isMonsterInArena(c)) {
+							Arena mobArena = mam.getArenaWithMonster(c);
+							task.setMobArena(mobArena);
+						}
+						
+						// Creating the task delay
+						minDelay = Math.max(minDelay, 0);
+						maxDelay = Math.max(maxDelay, 0);
+						double delayDiff = Math.max(minDelay, maxDelay) - Math.min(minDelay, maxDelay);
+						double delay = Math.min(minDelay, maxDelay) + (rand.nextDouble() * delayDiff);
+						
+						// Schedule the created task
+						SafeCreeper.instance.getServer().getScheduler().scheduleSyncDelayedTask(SafeCreeper.instance, task, ((int) delay * 20));
+						
+					} else {
+						
+						if(SafeCreeper.instance.getTVNLibManager().isEnabled()) {
+							// Reviving with revivers
+							double reviverRevivingMaxDistance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Reviver.MaxDistance", 16, true, l);
+							
+							List<Entity> ee = c.getNearbyEntities(reviverRevivingMaxDistance, reviverRevivingMaxDistance, reviverRevivingMaxDistance);
+							Creature nearest = null;
+							double distance = -1;
+							for(Entity entry : ee) {
+								if(entry == null)
+									continue;
+								
+								if(entry instanceof Creature) {
+									Creature entryc = (Creature) entry;
+									double dist = entry.getLocation().distance(e.getLocation());
+									if(distance == -1 || distance > dist) {
+										if(!SafeCreeper.instance.getLivingEntityReviveManager().isReviver(entryc)) {
+											nearest = entryc;
+										}
+									}
+								}					
+							}
+							
+							if(nearest != null) {
+								// An entity is found around the died creature, make a reviver from him.
+								Creature reviver = nearest;
+								SCLivingEntityRevive revive = new SCLivingEntityRevive(c, spawnLoc, reviver);
+								SafeCreeper.instance.getLivingEntityReviveManager().addLivingEntiy(revive);
+							}
+							
+						} else {
+							
+							// TVNLib is not installed or enabled, show a message in the console
+							SafeCreeper.instance.getLogger().info("TVNLib not installed or enabled, can't use reviver feature!");
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		// Prevent event errors!
@@ -952,91 +1051,6 @@ public class SCEntityListener implements Listener {
 							
 							// Remove the item from the enderman (to make it more realistic)
 							enderman.setCarriedMaterial(new MaterialData(Material.AIR));
-						}
-					}
-				}
-			}
-		}
-		
-		// Creature Reviving
-		if(e instanceof Creature) {
-			Creature c = (Creature) e;
-			
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l)) {
-				
-				double chance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Chance", 25, true, l);
-				double radius = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Radius", 0, true, l);
-				double minDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MinDelay", 0, true, l);
-				double maxDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MaxDelay", 1.5, true, l);
-				boolean rememberTarget = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.RememberTarget", true, true, l);
-				boolean reviverRevivingEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Reviver.Enabled", false, true, l);
-				
-				if(((int) chance * 10) > rand.nextInt(1000)) {
-					
-					// Generate the spawn location
-					Location spawnLoc = l.clone();
-					spawnLoc.add(rand.nextDouble() * (radius * 2) - radius, 0, rand.nextDouble() * (radius * 2) - radius);
-					
-					if(!reviverRevivingEnabled) {
-						// Reviving with tasks
-						
-						// Create the task
-						SCCreatureReviveTask task = new SCCreatureReviveTask(c, spawnLoc);
-						if(rememberTarget)
-							task.setTarget(c.getTarget());
-						
-						final SCMobArenaManager mam = SafeCreeper.instance.getMobArenaManager();
-						
-						// Check if the living entity (was) inside any mob arena
-						if(mam.isMonsterInArena(c)) {
-							Arena mobArena = mam.getArenaWithMonster(c);
-							task.setMobArena(mobArena);
-						}
-						
-						// Creating the task delay
-						minDelay = Math.max(minDelay, 0);
-						maxDelay = Math.max(maxDelay, 0);
-						double delayDiff = Math.max(minDelay, maxDelay) - Math.min(minDelay, maxDelay);
-						double delay = Math.min(minDelay, maxDelay) + (rand.nextDouble() * delayDiff);
-						
-						// Schedule the created task
-						SafeCreeper.instance.getServer().getScheduler().scheduleSyncDelayedTask(SafeCreeper.instance, task, ((int) delay * 20));
-						
-					} else {
-						
-						if(SafeCreeper.instance.getTVNLibManager().isEnabled()) {
-							// Reviving with revivers
-							double reviverRevivingMaxDistance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Reviver.MaxDistance", 16, true, l);
-							
-							List<Entity> ee = c.getNearbyEntities(reviverRevivingMaxDistance, reviverRevivingMaxDistance, reviverRevivingMaxDistance);
-							Creature nearest = null;
-							double distance = -1;
-							for(Entity entry : ee) {
-								if(entry == null)
-									continue;
-								
-								if(entry instanceof Creature) {
-									Creature entryc = (Creature) entry;
-									double dist = entry.getLocation().distance(e.getLocation());
-									if(distance == -1 || distance > dist) {
-										if(!SafeCreeper.instance.getLivingEntityReviveManager().isReviver(entryc)) {
-											nearest = entryc;
-										}
-									}
-								}					
-							}
-							
-							if(nearest != null) {
-								// An entity is found around the died creature, make a reviver from him.
-								Creature reviver = nearest;
-								SCLivingEntityRevive revive = new SCLivingEntityRevive(c, spawnLoc, reviver);
-								SafeCreeper.instance.getLivingEntityReviveManager().addLivingEntiy(revive);
-							}
-							
-						} else {
-							
-							// TVNLib is not installed or enabled, show a message in the console
-							SafeCreeper.instance.getLogger().info("TVNLib not installed or enabled, can't use reviver feature!");
 						}
 					}
 				}
