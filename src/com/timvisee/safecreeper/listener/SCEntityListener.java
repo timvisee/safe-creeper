@@ -756,20 +756,7 @@ public class SCEntityListener implements Listener {
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		// Custom drops
 		if(e instanceof Sheep) {
 			Sheep s = (Sheep) e;
 			EntityType et = EntityType.SHEEP;
@@ -781,151 +768,31 @@ public class SCEntityListener implements Listener {
 				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.Enabled", false, true, l)) {
 					
 					// Apply the drop chance
-					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.XP.DropChance", 100, true, l);
+					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "SheepControl", "CustomDrops.DropWoolOnHit.DropChance", 100, true, l);
 					if(((int) dropChance * 10) <= rand.nextInt(1000)) {
+						// Get some preferences
+						int minWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MinWool", 1, true, l);
+						int maxWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MaxWool", 1, true, l);
+						boolean randColor = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.RandomColor", false, true, l);
 						
+						// Get the wool count to drop
+						int woolCount = Math.max(Math.min(minWool, maxWool) + rand.nextInt(Math.max(minWool, maxWool) - Math.min(minWool, maxWool)), 0);
 						
-					}
-					
-					// Apply the drop multiplier
-					double xpMultiplier = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.XP.Multiplier", 1, true, l);
-					if(xpMultiplier != 1 && xpMultiplier >= 0)
-						event.setDroppedExp((int) (event.getDroppedExp() * xpMultiplier));
-				}
-				
-				// Can this LivingEntity drop a skull
-				if(et == EntityType.CREEPER ||
-						et == EntityType.SKELETON ||
-						et == EntityType.ZOMBIE ||
-						et == EntityType.PLAYER) {
-					
-					// Check if skulls should be dropped
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.Enabled", false, true, l)) {
+						// Create the wool stack to drop
+						ItemStack woolStack = new ItemStack(Material.WOOL, woolCount);
 						
-						// The wither skeleton may not drop their own heads vanilla
-						if(le instanceof Skeleton) {
-							Skeleton skel = (Skeleton) le;
-							if(skel.getSkeletonType().equals(SkeletonType.WITHER)) {
-								List<ItemStack> remove = new ArrayList<ItemStack>();
-								for(ItemStack entry : event.getDrops()) {
-									if(entry.getType().equals(Material.SKULL_ITEM)) {
-										remove.add(entry);
-										break;
-									}
-								}
-								event.getDrops().removeAll(remove);
-							}
-						}
+						// Check if a random color should be applied, if not use the sheeps color
+						if(randColor)
+							woolStack.setData(new MaterialData(Material.WOOL, (byte) rand.nextInt(16)));
+						else
+							woolStack.setData(new MaterialData(Material.WOOL, s.getColor().getWoolData()));
 						
-						// Check the chance
-						double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.Skull.Chance", 1, true, l);
-						if(((int) dropChance * 10) > rand.nextInt(1000)) {
-							byte skullTypeData;
-							switch(et) {
-							case CREEPER:
-								skullTypeData = 4;
-								break;
-								
-							case SKELETON:
-								Skeleton skel = (Skeleton) le;
-								switch(skel.getSkeletonType()) {
-								case NORMAL:
-									skullTypeData = 0;
-									break;
-								
-								case WITHER:
-									skullTypeData = 1;
-									break;
-									
-								default:
-									skullTypeData = 0;
-								}
-								break;
-								
-							case ZOMBIE:
-								skullTypeData = 2;
-								break;
-							
-							case PLAYER:
-							default:
-								skullTypeData = 3;
-								break;
-							}
-							
-							// Get the drop amount
-							int dropAmount = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomDrops.Skull.Amount", 1, true, l);
-							if(dropAmount < 0)
-								dropAmount = Math.max(dropAmount, 0);
-							
-							// Create the skull stack and set the type of the skull
-							ItemStack skullStack = new ItemStack(397, dropAmount, (short) skullTypeData);
-							
-							// Drop the players head if the died entity was a player
-							if(et.equals(EntityType.PLAYER)) {
-								// Should player heads be dropped
-								boolean playerHead = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.PlayerHead", true, true, l);
-								if(playerHead) {
-									// Get the player to drop the skull from
-									Player p = (Player) e;
-									
-									// Set the skulls owner (to the died player)
-								    SkullMeta meta = (SkullMeta) skullStack.getItemMeta();
-								    meta.setOwner(p.getName());
-								    skullStack.setItemMeta(meta);
-								}
-							}
-
-							// Should the items be added to the inventory or should they be droppped
-							final boolean addToInv = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.AddToInventory", true, true, l);
-							
-							if(addToInv) {
-								// Add the skull to the dropped items list
-								event.getDrops().add(skullStack);
-							} else {
-								// Drop the skull on the place the player died
-								Location loc = e.getLocation();
-								loc.getWorld().dropItem(loc, skullStack);
-							}
-						}
-					}
-				}
-				
-				// Should Enderman drop the items from their hands
-				if(le instanceof Enderman) {
-					Enderman enderman = (Enderman) le;
-					
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.DropItemOnDeath", false, true, l)) {
-						if(!enderman.getCarriedMaterial().getItemType().equals(Material.AIR)) {
-							// First drop the item
-							ItemStack drop = new ItemStack(enderman.getCarriedMaterial().getItemTypeId(), 1, (short) 0);
-							drop.setData(enderman.getCarriedMaterial());
-							event.getDrops().add(drop);
-							
-							// Remove the item from the enderman (to make it more realistic)
-							enderman.setCarriedMaterial(new MaterialData(Material.AIR));
-						}
+						// Drop the wool
+						s.getLocation().getWorld().dropItemNaturally(s.getLocation(), woolStack);
 					}
 				}
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		// Get the control name
 		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
