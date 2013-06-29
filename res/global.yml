@@ -2155,6 +2155,7 @@ WaterControl:
     Enabled: false
     CanPlaceWater: true
     WaterSpread: true
+    InfiniteWater: false
     PlayerDrowinng: true
     MobDowning: true
     Effects:
@@ -2168,6 +2169,7 @@ LavaControl:
     LavaFire: true
     CanPlaceLava: true
     LavaSpread: true
+    InfiniteLava: false
     DamagePlayers: true
     DamageMobs: true
     Effects:
@@ -2321,4 +2323,4 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.5.1'
+version: '1.5.2'
