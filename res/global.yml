@@ -2161,6 +2161,7 @@ WaterControl:
     Enabled: false
     CanPlaceWater: true
     WaterSpread: true
+    SpreadUpwards: false
     InfiniteWater: false
     PlayerDrowinng: true
     MobDowning: true
@@ -2175,6 +2176,7 @@ LavaControl:
     LavaFire: true
     CanPlaceLava: true
     LavaSpread: true
+    SpreadUpwards: false
     InfiniteLava: false
     DamagePlayers: true
     DamageMobs: true
