@@ -26,6 +26,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -1598,6 +1599,31 @@ public class SCEntityListener implements Listener {
 		// Play control effects
 		if(!event.isCancelled())
 			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "BrokeDoor", l);
+	}
+	
+	@EventHandler
+	public void onPortalEvent(EntityPortalEvent event) {
+		Entity e = event.getEntity();
+		World w = e.getWorld();
+		Location l = event.getFrom();
+		
+		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
+		
+		if(!event.isCancelled()) {
+			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.Enabled", false, true, l)) {
+				// Check if the entity is allowed to teleport through portals
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.CanTeleportThroughNetherPortal", true, true, l))
+					event.setCancelled(true);
+				
+				// Check if the entity should remember it's velocity once it's being teleported
+				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.RememberVelocity", true, true, l))
+					e.setVelocity(new Vector(0, 0, 0));
+			}
+			
+			// Play control effects
+			if(!event.isCancelled())
+				SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "PortalEnter", l);
+		}
 	}
 	
 	@EventHandler

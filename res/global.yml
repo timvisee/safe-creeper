@@ -69,6 +69,10 @@ CreeperControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
@@ -128,6 +132,10 @@ BatControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -181,6 +189,10 @@ BlazeControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -237,6 +249,10 @@ CaveSpiderControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -304,6 +320,10 @@ ChickenControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -368,6 +388,10 @@ CowControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -472,6 +496,10 @@ EnderDragonControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: false
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -537,6 +565,10 @@ EndermanControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanTeleport: true
     CanPickupItems: false
@@ -593,6 +625,10 @@ GhastControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -649,6 +685,10 @@ GiantControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -706,6 +746,10 @@ IronGolemControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -766,6 +810,10 @@ MagmaCubeControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CustomExplosions:
         Enabled: false
         FlyingBlocks:
@@ -842,6 +890,10 @@ MushroomCowControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -906,6 +958,10 @@ OcelotControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: false
@@ -973,6 +1029,10 @@ PigControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1037,6 +1097,10 @@ PigZombieControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: true
     AlwaysAngry: false
@@ -1150,6 +1214,10 @@ SheepControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     RegrowWool: true
     CanEatGrass: true
@@ -1206,6 +1274,10 @@ SilverfishControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1270,6 +1342,10 @@ SkeletonControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1331,6 +1407,10 @@ SlimeControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanSplit: true
     SplitIntoCostumAmount:
@@ -1392,6 +1472,10 @@ SnowmanControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanLaunchProjectile: true
@@ -1447,6 +1531,10 @@ SpiderControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1502,6 +1590,10 @@ SquidControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
@@ -1554,6 +1646,10 @@ VillagerControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: false
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1608,6 +1704,10 @@ WitchControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -1675,6 +1775,10 @@ WitherControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: false
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -1737,6 +1841,10 @@ WitherSkeletonControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1813,6 +1921,10 @@ WolfControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: false
@@ -1885,6 +1997,10 @@ ZombieControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -1977,6 +2093,10 @@ OtherMobControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -2013,6 +2133,10 @@ FireballControl:
         Enabled: false
         RebuildDelay: 60
         RebuildBlockInterval: 1
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     Effects:
         Enabled: true
         Triggers: {}
@@ -2039,6 +2163,10 @@ WitherSkullControl:
             Enabled: false
             RebuildDelay: 60
             RebuildBlockInterval: 1
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     EnableExplosionSound: true
     EnableExplosionSmoke: true
     CanPickupItems: true
@@ -2080,6 +2208,10 @@ TNTControl:
         Radius: 32
         MaxPrimedInRadius: 48
         MaxPrimedInWorld: -1
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     CanPlaceTNT: true
     CanBreakTNT: true
     DamagePlayers: true
@@ -2114,6 +2246,10 @@ TNTMinecartControl:
         RebuildBlockInterval: 1
     TNTPriming:
         CanBePrimed: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
