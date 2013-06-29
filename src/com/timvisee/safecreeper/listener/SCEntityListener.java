@@ -759,7 +759,6 @@ public class SCEntityListener implements Listener {
 		// Custom drops
 		if(e instanceof Sheep) {
 			Sheep s = (Sheep) e;
-			EntityType et = EntityType.SHEEP;
 			
 			// Make sure the custom drops feature is enabled
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.Enabled", false, true, l)) {
@@ -769,23 +768,28 @@ public class SCEntityListener implements Listener {
 					
 					// Apply the drop chance
 					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "SheepControl", "CustomDrops.DropWoolOnHit.DropChance", 100, true, l);
-					if(((int) dropChance * 10) <= rand.nextInt(1000)) {
+					if(((int) dropChance * 10) >= rand.nextInt(1000)) {
 						// Get some preferences
 						int minWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MinWool", 1, true, l);
 						int maxWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MaxWool", 1, true, l);
 						boolean randColor = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.RandomColor", false, true, l);
 						
 						// Get the wool count to drop
-						int woolCount = Math.max(Math.min(minWool, maxWool) + rand.nextInt(Math.max(minWool, maxWool) - Math.min(minWool, maxWool)), 0);
+						int woolCount = 0;
+						if(Math.max(minWool, maxWool) - Math.min(minWool, maxWool) > 0)
+							 Math.max(Math.min(minWool, maxWool) + rand.nextInt(Math.max(minWool, maxWool) - Math.min(minWool, maxWool)), 0);
+						else
+							woolCount = Math.max(Math.min(minWool, maxWool), 0);
+						
+						// Get the wool data value
+						int itemData = 0;
+						if(randColor)
+							itemData = rand.nextInt(16);
+						else
+							itemData = (int) (s.getColor().getWoolData());
 						
 						// Create the wool stack to drop
-						ItemStack woolStack = new ItemStack(Material.WOOL, woolCount);
-						
-						// Check if a random color should be applied, if not use the sheeps color
-						if(randColor)
-							woolStack.setData(new MaterialData(Material.WOOL, (byte) rand.nextInt(16)));
-						else
-							woolStack.setData(new MaterialData(Material.WOOL, s.getColor().getWoolData()));
+						ItemStack woolStack = new ItemStack(Material.WOOL, woolCount, (short) itemData);
 						
 						// Drop the wool
 						s.getLocation().getWorld().dropItemNaturally(s.getLocation(), woolStack);

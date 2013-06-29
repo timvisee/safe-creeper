@@ -1129,6 +1129,12 @@ SheepControl:
             DropXP: true
             DropChance: 100
             Multiplier: 1
+        DropWoolOnHit:
+            Enabled: false
+            DropChance: 100
+            MinWool: 1
+            MaxWool: 1
+            RandomColor: false
     Reviving:
         Enabled: false
         Chance: 25
