@@ -192,6 +192,8 @@ public class SCBlockListener implements Listener {
 			// This is water, check if water can spread
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "WaterSpread", true, true, l))
 				event.setCancelled(true);
+			else if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "InfiniteWater", false, true, l))
+				toBlock.setData((byte) 0);
 			break;
 			
 		case LAVA:
@@ -199,6 +201,8 @@ public class SCBlockListener implements Listener {
 			// This is lava, check if lava can spread
 			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "LavaSpread", true, true, l))
 				event.setCancelled(true);
+			else if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "InfiniteLava", false, true, l))
+				toBlock.setData((byte) 0);
 			break;
 		
 		default:
