@@ -90,10 +90,10 @@ public class SCPlayerListener implements Listener {
 		
 		boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 		if(customHealthEnabled) {
-			int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", p.getMaxHealth(), true, l) - 1;
-			int customHealthMax = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MaxHealth", p.getMaxHealth(), true, l);
-			int customHealth =
-					rand.nextInt(Math.max(customHealthMax - customHealthMin, 1)) + customHealthMin;
+			double customHealthMin = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MinHealth", p.getMaxHealth(), true, l) - 1;
+			double customHealthMax = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", p.getMaxHealth(), true, l);
+			double customHealth =
+					rand.nextInt((int) (Math.max(customHealthMax - customHealthMin, 1))) + customHealthMin;
 			
 			// Set the max health and the health of the player
 			p.setMaxHealth(customHealthMax);

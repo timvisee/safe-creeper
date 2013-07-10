@@ -615,9 +615,9 @@ public class SCEntityListener implements Listener {
 			if(!SafeCreeper.instance.getCorruptionManager().isBoss(le)) {
 				boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 				if(customHealthEnabled) {
-					int customHealthMin = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
-					int customHealthMax = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
-					int customHealth = rand.nextInt(Math.max(customHealthMax - customHealthMin, 1)) + customHealthMin;
+					double customHealthMin = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
+					double customHealthMax = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
+					double customHealth = rand.nextInt((int) (Math.max(customHealthMax - customHealthMin, 1) + customHealthMin));
 					
 					// Set the max health and the health of the living entity
 					le.setMaxHealth(customHealthMax);

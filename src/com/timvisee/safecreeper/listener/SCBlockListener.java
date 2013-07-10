@@ -224,11 +224,11 @@ public class SCBlockListener implements Listener {
 				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "InfiniteLava", false, true, l))
 					toBlock.setData((byte) 0);
 				
+				BlockFace[] faces = new BlockFace[]{
+						BlockFace.NORTH, BlockFace.EAST,
+						BlockFace.SOUTH, BlockFace.WEST};
+				
 				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "SpreadUpwards", false, true, l)) {
-					BlockFace[] faces = new BlockFace[]{
-							BlockFace.NORTH, BlockFace.EAST,
-							BlockFace.SOUTH, BlockFace.WEST};
-					
 					for(BlockFace f : faces) {
 						Block relBlock = toBlock.getRelative(f);
 						Block aboveBlock = relBlock.getRelative(BlockFace.UP);
@@ -239,6 +239,14 @@ public class SCBlockListener implements Listener {
 						}
 					}
 				}
+				
+				/*for(BlockFace f : faces) {
+					Block relBlock = toBlock.getRelative(f);
+					
+					if(relBlock.getType().equals(Material.PORTAL)) {
+						Por
+					}
+				}*/
 			}
 			break;
 		

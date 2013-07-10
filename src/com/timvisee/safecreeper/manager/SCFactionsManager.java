@@ -82,14 +82,20 @@ public class SCFactionsManager extends SCPluginManager {
 	 * @return True if there's any faction at the location
 	 */
 	public boolean isFactionAt(Location loc) {
-    	Faction f = Board.getFactionAt(new FLocation(loc));
-    	
-    	// If returned null, there's no faction found on this area
-    	if(f == null)
+    	try {
+    		Faction f = Board.getFactionAt(new FLocation(loc));
+        	
+        	// If returned null, there's no faction found on this area
+        	if(f == null)
+        		return false;
+        	
+        	// The faction area has to be 'normal'
+        	return (f.isNormal());
+    	} catch(NoClassDefFoundError ex) {
     		return false;
-    	
-    	// The faction area has to be 'normal'
-    	return (f.isNormal());
+    	} catch(Exception ex) {
+    		return false;
+    	}
     }
     
 	/**
@@ -98,17 +104,21 @@ public class SCFactionsManager extends SCPluginManager {
 	 * @return Faction
 	 */
     public String getFactionAt(Location loc) {
-    	Faction f = Board.getFactionAt(new FLocation(loc));
-    	
-    	// If the faction area equals to null, theres not faction on this area
-    	if(f == null)
+    	try {
+    		Faction f = Board.getFactionAt(new FLocation(loc));
+        	
+        	// If the faction area equals to null, theres not faction on this area
+        	if(f == null)
+        		return "";
+        	
+        	// The faction area has to be 'normal'
+        	if(!f.isNormal())
+        		return "";
+        	
+        	// Return the faction name
+        	return f.getComparisonTag();
+    	} catch(Exception ex) {
     		return "";
-    	
-    	// The faction area has to be 'normal'
-    	if(!f.isNormal())
-    		return "";
-    	
-    	// Return the faction name
-    	return f.getComparisonTag();
+    	}
     }
 }

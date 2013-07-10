@@ -73,6 +73,7 @@ CreeperControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     AlwaysPowered: false
     ExplodeOnDeath: false
@@ -136,6 +137,7 @@ BatControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -193,6 +195,7 @@ BlazeControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -253,6 +256,7 @@ CaveSpiderControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -324,6 +328,7 @@ ChickenControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -392,6 +397,7 @@ CowControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -500,6 +506,7 @@ EnderDragonControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -569,6 +576,7 @@ EndermanControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanTeleport: true
     CanPickupItems: false
@@ -629,6 +637,7 @@ GhastControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -689,6 +698,7 @@ GiantControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -750,6 +760,7 @@ IronGolemControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -814,6 +825,7 @@ MagmaCubeControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CustomExplosions:
         Enabled: false
         FlyingBlocks:
@@ -894,6 +906,7 @@ MushroomCowControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -962,6 +975,7 @@ OcelotControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: false
@@ -1033,6 +1047,7 @@ PigControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1101,6 +1116,7 @@ PigZombieControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: true
     AlwaysAngry: false
@@ -1148,6 +1164,11 @@ PlayerControl:
             Chance: 20
             Amount: 1
             PlayerHead: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     Effects:
         Enabled: false
         Triggers: {}
@@ -1218,6 +1239,7 @@ SheepControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     RegrowWool: true
     CanEatGrass: true
@@ -1278,6 +1300,7 @@ SilverfishControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1346,6 +1369,7 @@ SkeletonControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1411,6 +1435,7 @@ SlimeControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanSplit: true
     SplitIntoCostumAmount:
@@ -1476,6 +1501,7 @@ SnowmanControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanLaunchProjectile: true
@@ -1535,6 +1561,7 @@ SpiderControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1594,6 +1621,7 @@ SquidControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
@@ -1650,6 +1678,7 @@ VillagerControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -1708,6 +1737,7 @@ WitchControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -1779,6 +1809,7 @@ WitherControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: false
@@ -1845,6 +1876,7 @@ WitherSkeletonControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanLaunchProjectile: true
     CanPickupItems: true
@@ -1925,6 +1957,7 @@ WolfControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanBeTamed: true
     CanPickupItems: false
@@ -2001,6 +2034,7 @@ ZombieControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: true
     CanTargetPlayer: true
@@ -2097,6 +2131,7 @@ OtherMobControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
@@ -2137,6 +2172,7 @@ FireballControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     Effects:
         Enabled: true
         Triggers: {}
@@ -2167,6 +2203,7 @@ WitherSkullControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     EnableExplosionSound: true
     EnableExplosionSmoke: true
     CanPickupItems: true
@@ -2212,6 +2249,7 @@ TNTControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     CanPlaceTNT: true
     CanBreakTNT: true
     DamagePlayers: true
@@ -2250,6 +2288,7 @@ TNTMinecartControl:
         Enabled: false
         CanTeleportThroughNetherPortal: true
         CanTeleportThroughEndPortal: true
+        RememberVelocity: true
     DamagePlayers: true
     DamageMobs: true
     Effects:
@@ -2298,6 +2337,7 @@ WaterControl:
     CanPlaceWater: true
     WaterSpread: true
     SpreadUpwards: false
+    SpreadThroughPortals: false
     InfiniteWater: false
     PlayerDrowinng: true
     MobDowning: true
@@ -2313,6 +2353,7 @@ LavaControl:
     CanPlaceLava: true
     LavaSpread: true
     SpreadUpwards: false
+    SpreadThroughPortals: false
     InfiniteLava: false
     DamagePlayers: true
     DamageMobs: true

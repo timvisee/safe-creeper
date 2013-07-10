@@ -18,10 +18,10 @@ public class SCLivingEntityState {
 	private String customName;
 	private EntityEquipment equip;
 	private int fireTicks;
-	private int health;
-	private int maxHealth;
+	private double health;
+	private double maxHealth;
 	private Player killer;
-	private int lastDmg;
+	private double lastDmg;
 	private EntityDamageEvent lastDmgCause;
 	private Location loc;
 	private int maxFireTicks;
@@ -149,7 +149,7 @@ public class SCLivingEntityState {
 		this.fireTicks = fireTicks;
 	}
 	
-	public int getHealht() {
+	public double getHealht() {
 		return this.health;
 	}
 	
@@ -157,7 +157,7 @@ public class SCLivingEntityState {
 		this.health = health;
 	}
 	
-	public int getMaxHealth() {
+	public double getMaxHealth() {
 		return this.maxHealth;
 	}
 	
@@ -173,7 +173,7 @@ public class SCLivingEntityState {
 		this.killer = killer;
 	}
 	
-	public int getLastDamage() {
+	public double getLastDamage() {
 		return this.lastDmg;
 	}
 	
