@@ -12,7 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.manager.SCConfigManager;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
 
 public class SCWorldListener implements Listener {
 	
@@ -20,7 +20,7 @@ public class SCWorldListener implements Listener {
 	public void onWorldLoad(WorldLoadEvent e) {
 		World w = e.getWorld();
 		Location l = w.getSpawnLocation();
-		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
+		SCConfigHandler cm = SafeCreeper.instance.getConfigManager();
 		Random rand = new Random();
 		
 		// Check if the world control is enabled

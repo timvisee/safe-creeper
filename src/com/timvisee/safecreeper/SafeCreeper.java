@@ -13,8 +13,17 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.timvisee.safecreeper.api.SCApiController;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
+import com.timvisee.safecreeper.handler.SCMetricsHandler;
+import com.timvisee.safecreeper.handler.plugin.SCCorruptionHandler;
+import com.timvisee.safecreeper.handler.plugin.SCFactionsHandler;
+import com.timvisee.safecreeper.handler.plugin.SCMobArenaHandler;
+import com.timvisee.safecreeper.handler.plugin.SCPVPArenaHandler;
+import com.timvisee.safecreeper.handler.plugin.SCTVNLibHandler;
+import com.timvisee.safecreeper.handler.plugin.SCWorldGuardHandler;
 import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
 import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
@@ -46,18 +55,18 @@ public class SafeCreeper extends JavaPlugin {
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
 	// Managers
-	private SCApiManager apiManager;
-	private SCTVNLibManager tvnlManager;
+	private SCApiController apiManager;
+	private SCTVNLibHandler tvnlManager;
 	private SCPermissionsManager pm;
-	private SCConfigManager cm = null;
+	private SCConfigHandler cm = null;
 	private SCDestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
-	private SCCorruptionManager corManager;
-	private SCMobArenaManager mam;
-	private SCPVPArenaManager pam;
-	private SCFactionsManager fm;
-	private SCWorldGuardManager wgm;
-	private SCMetricsManager mm;
+	private SCCorruptionHandler corManager;
+	private SCMobArenaHandler mam;
+	private SCPVPArenaHandler pam;
+	private SCFactionsHandler fm;
+	private SCWorldGuardHandler wgm;
+	private SCMetricsHandler mm;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -333,7 +342,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setUpApiManager() {
 		// Construct the API Manager
-		this.apiManager = new SCApiManager(false);
+		this.apiManager = new SCApiController(false);
 		
 		// Show a status message
 		getSCLogger().info("Safe Creeper API started!");
@@ -349,7 +358,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the API Manager instance
 	 * @return API Manager instance
 	 */
-	public SCApiManager getApiManager() {
+	public SCApiController getApiManager() {
 		return this.apiManager;
 	}
 	
@@ -358,7 +367,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setUpTVNLibManager() {
 		// Setup TVNLib Manager
-		this.tvnlManager = new SCTVNLibManager(getSCLogger());
+		this.tvnlManager = new SCTVNLibHandler(getSCLogger());
 		this.tvnlManager.setUp();
 	}
 	
@@ -366,7 +375,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the TVNLib manager instance
 	 * @return TVNLib manager instance
 	 */
-	public SCTVNLibManager getTVNLibManager() {
+	public SCTVNLibHandler getTVNLibManager() {
 		return this.tvnlManager;
 	}
 	
@@ -374,14 +383,14 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the config manager
 	 */
 	public void setUpConfigManager() {
-		this.cm = new SCConfigManager(globalConfigFile, worldConfigsFolder);
+		this.cm = new SCConfigHandler(globalConfigFile, worldConfigsFolder);
 	}
 	
 	/**
 	 * Get the config manager instance
 	 * @return
 	 */
-	public SCConfigManager getConfigManager() {
+	public SCConfigHandler getConfigManager() {
 		return this.cm;
 	}
 	
@@ -427,10 +436,10 @@ public class SafeCreeper extends JavaPlugin {
 	}
 
 	/**
-	 * Set up the World Guard manager
+	 * Set up the World Guard handler
 	 */
 	public void setUpWorldGuardManager() {
-		this.wgm = new SCWorldGuardManager(getSCLogger());
+		this.wgm = new SCWorldGuardHandler(getSCLogger());
 		this.wgm.setUp();
 	}
 	
@@ -438,7 +447,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the World Guard plugin instance
 	 * @return
 	 */
-    public SCWorldGuardManager getWorldGuardManager() {
+    public SCWorldGuardHandler getWorldGuardManager() {
         return this.wgm;
     }
     
@@ -447,7 +456,7 @@ public class SafeCreeper extends JavaPlugin {
      */
     public void setUpMobArenaManager() {
     	// Set up the mob arena manager
-    	this.mam = new SCMobArenaManager(getSCLogger());
+    	this.mam = new SCMobArenaHandler(getSCLogger());
     	this.mam.setUp();
     }
     
@@ -455,7 +464,7 @@ public class SafeCreeper extends JavaPlugin {
      * Get the MobArena manager
      * @return MobArena manager
      */
-    public SCMobArenaManager getMobArenaManager() {
+    public SCMobArenaHandler getMobArenaManager() {
     	return this.mam;
     }
    
@@ -464,7 +473,7 @@ public class SafeCreeper extends JavaPlugin {
      */
     public void setUpPVPArenaManager() {
     	// Set up the PVP Arena manager
-    	this.pam = new SCPVPArenaManager(getSCLogger());
+    	this.pam = new SCPVPArenaHandler(getSCLogger());
     	this.pam.setUp();
     }
     
@@ -472,7 +481,7 @@ public class SafeCreeper extends JavaPlugin {
      * Get the PVP Arena manager instance
      * @return PVP Arena manager instnace
      */
-    public SCPVPArenaManager getPVPArenaManager() {
+    public SCPVPArenaHandler getPVPArenaManager() {
     	return this.pam;
     }
    
@@ -480,7 +489,7 @@ public class SafeCreeper extends JavaPlugin {
      * Set up the Factions manager
      */
     public void setUpFactionsManager() {
-    	this.fm = new SCFactionsManager(getSCLogger());
+    	this.fm = new SCFactionsHandler(getSCLogger());
     	this.fm.setUp();
     }
     
@@ -488,7 +497,7 @@ public class SafeCreeper extends JavaPlugin {
      * Get the Factions manager
      * @return Factions manager instance
      */
-    public SCFactionsManager getFactionsManager() {
+    public SCFactionsHandler getFactionsManager() {
     	return this.fm;
     }
     
@@ -496,7 +505,7 @@ public class SafeCreeper extends JavaPlugin {
      * Set up the Corruption manager
      */
     public void setUpCorruptionManager() {
-    	this.corManager = new SCCorruptionManager(getSCLogger());
+    	this.corManager = new SCCorruptionHandler(getSCLogger());
     	this.corManager.setUp();
     }
     
@@ -504,7 +513,7 @@ public class SafeCreeper extends JavaPlugin {
      * Get the Corruption handler
      * @return Corruption manager
      */
-    public SCCorruptionManager getCorruptionManager() {
+    public SCCorruptionHandler getCorruptionManager() {
     	return this.corManager;
     }
     
@@ -573,7 +582,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Set up the metrics manager
 	 */
 	public void setUpMetricsManager() {
-		this.mm = new SCMetricsManager(getConfig(), getSCLogger());
+		this.mm = new SCMetricsHandler(getConfig(), getSCLogger());
 		this.mm.setup();
 	}
 	
@@ -581,7 +590,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the metrics manager
 	 * @return Metrics manager instance
 	 */
-	public SCMetricsManager getMetricsManager() {
+	public SCMetricsHandler getMetricsManager() {
 		return this.mm;
 	}
 

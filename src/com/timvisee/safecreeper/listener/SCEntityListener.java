@@ -81,8 +81,8 @@ import org.bukkit.util.Vector;
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
+import com.timvisee.safecreeper.handler.plugin.SCMobArenaHandler;
 import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
-import com.timvisee.safecreeper.manager.SCMobArenaManager;
 import com.timvisee.safecreeper.task.SCCreatureReviveTask;
 import com.timvisee.safecreeper.util.ExplosionSource;
 import com.timvisee.safecreeper.util.SCEntityEquipment;
@@ -847,7 +847,7 @@ public class SCEntityListener implements Listener {
 						if(rememberTarget)
 							task.setTarget(c.getTarget());
 						
-						final SCMobArenaManager mam = SafeCreeper.instance.getMobArenaManager();
+						final SCMobArenaHandler mam = SafeCreeper.instance.getMobArenaManager();
 						
 						// Check if the living entity (was) inside any mob arena
 						if(mam.isMonsterInArena(c)) {

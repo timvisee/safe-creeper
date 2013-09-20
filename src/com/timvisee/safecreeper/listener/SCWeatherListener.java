@@ -11,7 +11,7 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.manager.SCConfigManager;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
 
 public class SCWeatherListener implements Listener {
 	
@@ -19,7 +19,7 @@ public class SCWeatherListener implements Listener {
 	public void onLightningStrike(LightningStrikeEvent e) {
 		World w = e.getWorld();
 		Location l = w.getSpawnLocation();
-		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
+		SCConfigHandler cm = SafeCreeper.instance.getConfigManager();
 		
 		// Make sure it's thundering in this world
 		if(!w.isThundering())
@@ -34,7 +34,7 @@ public class SCWeatherListener implements Listener {
 	public void onWeatherChange(WeatherChangeEvent e) {
 		World w = e.getWorld();
 		Location l = w.getSpawnLocation();
-		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
+		SCConfigHandler cm = SafeCreeper.instance.getConfigManager();
 		Random rand = new Random();
 		
 		// Should it always rain
@@ -92,7 +92,7 @@ public class SCWeatherListener implements Listener {
 	public void onThunderChange(ThunderChangeEvent e) {
 		World w = e.getWorld();
 		Location l = w.getSpawnLocation();
-		SCConfigManager cm = SafeCreeper.instance.getConfigManager();
+		SCConfigHandler cm = SafeCreeper.instance.getConfigManager();
 		Random rand = new Random();
 		
 		// Should it always thunder

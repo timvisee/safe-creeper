@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.api.manager.SCAPermissionsManager;
 
 public class SafeCreeperApi {
 	
@@ -67,12 +68,13 @@ public class SafeCreeperApi {
 			return true;
 	        
     	} catch(NoClassDefFoundError ex) {
-    		// Unable to hook into MobArena, show warning/error message.
+    		// Unable to hook into Safe Creeper, show warning/error message.
 			if(this.p != null)
 				log.info("[" + this.p.getName() + "] Error while hooking into Safe Creeper!");
     		return false;
+    		
     	} catch(Exception ex) {
-    		// Unable to hook into MobArena, show warning/error message.
+    		// Unable to hook into Safe Creeper, show warning/error message.
 			if(this.p != null)
 				log.info("[" + this.p.getName() + "] Error while hooking into Safe Creeper!");
     		return false;
@@ -146,6 +148,18 @@ public class SafeCreeperApi {
 	 * @return Safe Creeper version number, empty string if not hooked into Safe Creeper
 	 */
 	public String getVersion() {
+		// Make sure the plugin is hooked into Safe Creeper
+		if(!isHooked())
+			return "";
+		
 		return this.sc.getVersion();
+	}
+	
+	/**
+	 * Get the Safe Creeper permissions manager
+	 * @return
+	 */
+	public SCAPermissionsManager getPermissionsManager() {
+		return new SCAPermissionsManager(this.sc.getPermissionsManager());
 	}
 }

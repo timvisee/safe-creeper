@@ -258,7 +258,7 @@ public class SCPermissionsManager {
     }
 	
 	/**
-	 * Break the hook with WorldGuard
+	 * Break the hook with the current hooked permissions system
 	 */
 	public void unhook() {
         // Break the WorldGuard hook
