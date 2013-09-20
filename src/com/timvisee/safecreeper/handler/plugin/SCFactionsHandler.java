@@ -84,7 +84,7 @@ public class SCFactionsHandler extends SCPluginHandler {
 	public boolean isFactionAt(Location loc) {
     	try {
     		Faction f = Board.getFactionAt(new FLocation(loc));
-        	
+    		
         	// If returned null, there's no faction found on this area
         	if(f == null)
         		return false;

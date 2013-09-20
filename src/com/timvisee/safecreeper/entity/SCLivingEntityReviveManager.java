@@ -61,6 +61,7 @@ public class SCLivingEntityReviveManager {
 			for(Entity e : nearbyEntities) {
 				if(e instanceof Player) {
 					Player p = (Player) e;
+					
 					p.sendMessage(ChatColor.GOLD + "A killed " + ChatColor.YELLOW + revive.getLivingEntity().getType().getName().toLowerCase() + ChatColor.GOLD + " got revived by a " + ChatColor.YELLOW + reviver.getType().getName().toLowerCase() + ChatColor.GOLD + "!");
 				}
 			}

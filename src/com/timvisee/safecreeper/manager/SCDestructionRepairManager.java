@@ -328,8 +328,16 @@ public class SCDestructionRepairManager {
 	 * Save the data
 	 */
 	public void save() {
+		save(true);
+	}
+	
+	/**
+	 * Save the data
+	 * @param showMsg boolean Show a message in the console
+	 */
+	public void save(boolean showMsg) {
 		File f = new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml");
-		save(f);
+		save(f, showMsg);
 	}
 	
 	/**
@@ -337,6 +345,15 @@ public class SCDestructionRepairManager {
 	 * @param f File to save the data to
 	 */
 	public void save(File f) {
+		save(f, true);
+	}
+	
+	/**
+	 * Save the data
+	 * @param f File to save the data to
+	 * @param showMsg boolean True to show a message in the console
+	 */
+	public void save(File f, boolean showMsg) {
 		// Check if the file exists
 		if(!f.exists())
 			System.out.println("[SafeCreeper] Destruction repair data file does not exist. Creating a new file...");
@@ -344,7 +361,8 @@ public class SCDestructionRepairManager {
 		long t = System.currentTimeMillis();
 		
 		// Show an message in the console
-		System.out.println("[SafeCreeper] Saving destruction repair data...");
+		if(showMsg)
+			System.out.println("[SafeCreeper] Saving destruction repair data...");
 		
 		// Define the new config file holder to put all the data in
 		YamlConfiguration config = new YamlConfiguration();
@@ -392,7 +410,8 @@ public class SCDestructionRepairManager {
 		long duration = System.currentTimeMillis() - t;
 		
 		// Show an message in the console
-		System.out.println("[SafeCreeper] Destruction repair data saved, took " + String.valueOf(duration) + "ms!");
+		if(showMsg)
+			System.out.println("[SafeCreeper] Destruction repair data saved, took " + String.valueOf(duration) + "ms!");
 	}
 	
 	/**

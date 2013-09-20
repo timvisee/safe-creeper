@@ -30,6 +30,7 @@ tasks:
     destructionRepairSave:
         enabled: true
         interval: 300
+        showSaveStatus: true
 
 # Safe Creeper API settings
 api:
