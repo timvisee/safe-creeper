@@ -42,10 +42,6 @@ updateChecker:
     notifyForUpdatesInGame: true
     autoInstallUpdates: true
 
-# Statistics
-statistics:
-    enabled: true
-
 # Settings for TVNLib
 autoDownloadTVNLib: false
 
@@ -53,4 +49,4 @@ autoDownloadTVNLib: false
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.5.2'
+version: '1.5.2.1'

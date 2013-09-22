@@ -17,7 +17,6 @@ import com.timvisee.safecreeper.api.SCApiController;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
 import com.timvisee.safecreeper.handler.SCConfigHandler;
-import com.timvisee.safecreeper.handler.SCMetricsHandler;
 import com.timvisee.safecreeper.handler.plugin.SCCorruptionHandler;
 import com.timvisee.safecreeper.handler.plugin.SCFactionsHandler;
 import com.timvisee.safecreeper.handler.plugin.SCMobArenaHandler;
@@ -66,7 +65,6 @@ public class SafeCreeper extends JavaPlugin {
 	private SCPVPArenaHandler pam;
 	private SCFactionsHandler fm;
 	private SCWorldGuardHandler wgm;
-	private SCMetricsHandler mm;
 	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
@@ -176,7 +174,6 @@ public class SafeCreeper extends JavaPlugin {
 	    setUpFactionsManager();
 	    setUpWorldGuardManager();
 	    setUpCorruptionManager();
-		setUpMetricsManager();
 		
 		// Load destruction repair data
 		getDestructionRepairManager().load();
@@ -577,22 +574,6 @@ public class SafeCreeper extends JavaPlugin {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	}
-	
-	/**
-	 * Set up the metrics manager
-	 */
-	public void setUpMetricsManager() {
-		this.mm = new SCMetricsHandler(getConfig(), getSCLogger());
-		this.mm.setup();
-	}
-	
-	/**
-	 * Get the metrics manager
-	 * @return Metrics manager instance
-	 */
-	public SCMetricsHandler getMetricsManager() {
-		return this.mm;
 	}
 
 	/**
