@@ -103,12 +103,8 @@ public class SafeCreeper extends JavaPlugin {
 		// Set up the API manager
 		setUpApiManager();
 		
-		// Check if all the config file exists
-		try {
-			checkConigFilesExist();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		// Verify all the Safe Creeper files
+		verifyExternalFiles(true);
 		
 		// Setup the config manager before all other managers, to make the file updater work
 	    setUpConfigManager();
@@ -159,9 +155,6 @@ public class SafeCreeper extends JavaPlugin {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
 		}
-		
-		// Update all existing config files if they aren't up-to-date
-		((SCFileUpdater) new SCFileUpdater()).updateFiles();
 		
 		// Set up remaining managers
 		setUpTVNLibManager();
@@ -521,6 +514,81 @@ public class SafeCreeper extends JavaPlugin {
     	return this.lerm;
     }
 	
+    /**
+     * Verify all the external Safe Creeper files, automatically fix invalid files if enabled
+     * @param autoFix True to automatically fix and update invalid files
+     * @return True when every file was fine, false if something was wrong
+     */
+    public boolean verifyExternalFiles(boolean autoFix) {
+    	// Get the Safe Creeper data folder
+    	File scDir = this.getDataFolder();
+    	
+    	// Keep track if everything was right
+    	boolean invalid = false;
+    	
+    	// Make sure the Safe Creeper directory exists
+    	if(!scDir.exists() || !scDir.isDirectory()) {
+    		invalid = true;
+    		
+    		// Automatically fix this issue if enabled
+    		if(autoFix) {
+    			getSCLogger().info("Creating Safe Creeper directory...");
+    			scDir.mkdirs();
+    		}
+    	}
+    	
+    	// Make sure the main config file exists
+		File cfgFile = new File(scDir, "config.yml");
+		if(!cfgFile.exists() || !cfgFile.isFile()) {
+			invalid = true;
+			
+			// Automatically fix the file
+			if(autoFix) {
+				getSCLogger().info("Creating new config file...");
+				copyFile(getResource("res/config.yml"), cfgFile);
+			}
+		}
+		
+		// Verify the config file version
+		if(SCFileUpdater.updateConfig())
+			invalid = true;
+		
+		// Make sure the global file exists
+		if(!globalConfigFile.exists() || !globalConfigFile.isFile()) {
+			invalid = true;
+			
+			// Automatically fix the file
+			if(autoFix) {
+				getSCLogger().info("Creating new global file...");
+				copyFile(getResource("res/global.yml"), globalConfigFile);
+			}
+		}
+		
+		// Verify the config file version
+		if(SCFileUpdater.updateGlobalConfig())
+			invalid = true;
+		
+		// Make sure the worlds folder exists
+		if(!worldConfigsFolder.exists() || !worldConfigsFolder.isDirectory()) {
+			invalid = true;
+			
+			// Automatically fix the directory
+			if(autoFix) {
+				getSCLogger().info("Generating new worlds directory...");
+				worldConfigsFolder.mkdirs();
+				copyFile(getResource("res/worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
+				copyFile(getResource("res/worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
+			}
+		}
+    	
+		// Verify all the world config files
+		if(SCFileUpdater.updateAllWorldsConfig())
+			invalid = true;
+    	
+		// Return the result
+		return (!invalid);
+    }
+    
     /**
      * Check if the config file exists
      * @throws Exception

@@ -23,7 +23,7 @@ public class SCFileUpdater {
 	/**
 	 * Update all Safe Creeper files if there's any need for that
 	 */
-	public void updateFiles() {
+	public static void updateFiles() {
 		// Update main config file
 		updateConfig();
 		
@@ -39,7 +39,7 @@ public class SCFileUpdater {
 	 * @param f the config file
 	 * @return true if it's up-to-date
 	 */
-	public boolean isConfigUpToDate(File f) {
+	public static boolean isConfigUpToDate(File f) {
 		// Check if the file exists
 		if(!f.exists())
 			return false;
@@ -67,24 +67,31 @@ public class SCFileUpdater {
 	 * @param c the config to check
 	 * @return true if it's up-to-date
 	 */
-	public boolean isConfigUpToDate(Configuration c) {
+	public static boolean isConfigUpToDate(Configuration c) {
 		String pluginVer = SafeCreeper.instance.getDescription().getVersion();
 		String configVer = c.getString("version", "0.1");
 		
 		// If the config files equals to the config version, return true
 		return (!isOlderVersion(pluginVer, configVer));
 	}
-	
+
+	/**
+	 * Update the main config file, if the file version is oudated
+	 * @return True if anything on the config file was updated
+	 */
 	@SuppressWarnings("unused")
-	public void updateConfig() {
+	public static boolean updateConfig() {
+		// Get the config file path
+		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
+		
 		// Get the global config file
-		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		FileConfiguration c = SafeCreeper.instance.getConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
 		if(isConfigUpToDate(c))
-			return;
+			return false;
 		
-		System.out.println("[SafeCreeper] Updating the Safe Creeper config file...");
+		System.out.println("[SafeCreeper] Updating the config file...");
 		
 		long t = System.currentTimeMillis();
 		
@@ -104,7 +111,7 @@ public class SCFileUpdater {
 		
 		// Make sure the default config file is loaded
 		if(defc == null)
-			return;
+			return false;
 		
 		// Backup the current file version, so it won't be lost if something goes wrong
 		backupConfig();
@@ -176,7 +183,6 @@ public class SCFileUpdater {
 		// TODO: Set the intended spaces to 4
 		
 		// Save the config file
-		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
 		try {
 			newc.save(configFile);
 		} catch (IOException e) {
@@ -187,21 +193,23 @@ public class SCFileUpdater {
 		long duration = System.currentTimeMillis() - t;
 		
 		// Show a status message
-		System.out.println("[SafeCreeper] Safe Creeper config file updated, took " + String.valueOf(duration) + " ms!");
+		System.out.println("[SafeCreeper] Config file updated, took " + String.valueOf(duration) + " ms!");
+		
+		return true;
 	}
 	
 	/**
-	 * Update a config
-	 * @param c the config to update
+	 * Update a global config file, if the file version is outdated
+	 * @return True if anything on the global config file was updated
 	 */
 	@SuppressWarnings("unused")
-	public void updateGlobalConfig() {
+	public static boolean updateGlobalConfig() {
 		// Get the global config file
 		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
 		if(isConfigUpToDate(c))
-			return;
+			return false;
 		
 		// Show a status message
 		System.out.println("[SafeCreeper] Updating the global config file...");
@@ -225,7 +233,7 @@ public class SCFileUpdater {
 		
 		// Make sure the default config file is loaded
 		if(defc == null)
-			return;
+			return false;
 		
 		// Backup the current file version, so it won't be lost if something goes wrong
 		backupGlobalConfig();
@@ -481,26 +489,42 @@ public class SCFileUpdater {
 		long duration = System.currentTimeMillis() - t;
 		
 		System.out.println("[SafeCreeper] Global config file updated, took " + String.valueOf(duration) + " ms!");
-	}
-	
-	public void updateAllWorldsConfig() {
-		List<String> configWorlds = SafeCreeper.instance.getConfigManager().listConfigWorlds();
-		for(String w : configWorlds)
-			updateWorldConfig(w);
+		
+		return true;
 	}
 	
 	/**
-	 * Update a config
-	 * @param c the config to update
+	 * Update all the world config files, if the file version is outdated
+	 * @return True if any file was updated
 	 */
-	public void updateWorldConfig(String w) {
+	public static boolean updateAllWorldsConfig() {
+		List<String> configWorlds = SafeCreeper.instance.getConfigManager().listConfigWorlds();
+		
+		// Store whether any file was updated
+		boolean anyUpdated = false;
+		
+		// Update each world file
+		for(String w : configWorlds)
+			if(updateWorldConfig(w))
+				anyUpdated = true;
+		
+		// Return the result
+		return anyUpdated;
+	}
+	
+	/**
+	 * Update a world config file
+	 * @param w The name of the world to update the file from
+	 * @return True if the file was updated
+	 */
+	public static boolean updateWorldConfig(String w) {
 		// Get the global config file
 		FileConfiguration c = SafeCreeper.instance.getConfigManager().getWorldConfig(w);
 		FileConfiguration globalc = SafeCreeper.instance.getConfigManager().getGlobalConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
 		if(isConfigUpToDate(c))
-			return;
+			return false;
 		
 		System.out.println("[SafeCreeper] Updating the world config '" + w + "' file...");
 		
@@ -663,10 +687,12 @@ public class SCFileUpdater {
 		long duration = System.currentTimeMillis() - t;
 		
 		System.out.println("[SafeCreeper] World config '" + w + "' file updated, took " + String.valueOf(duration) + " ms!");
+		
+		return true;
 	}
 	
-	public void backupConfig() {
-		System.out.println("[SafeCreeper] Creating backup of Safe Creeper config file...");
+	public static void backupConfig() {
+		System.out.println("[SafeCreeper] Creating backup of the config file...");
 		
 		long t = System.currentTimeMillis();
 		
@@ -688,10 +714,10 @@ public class SCFileUpdater {
 		
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
-		System.out.println("[SafeCreeper] Safe Creeper config backup created, took " + String.valueOf(duration) + " ms!");
+		System.out.println("[SafeCreeper] Config backup made, took " + String.valueOf(duration) + " ms!");
 	}
 	
-	public void backupGlobalConfig() {
+	public static void backupGlobalConfig() {
 		System.out.println("[SafeCreeper] Creating backup of global config file...");
 		
 		long t = System.currentTimeMillis();
@@ -717,7 +743,7 @@ public class SCFileUpdater {
 		System.out.println("[SafeCreeper] Global config backup created, took " + String.valueOf(duration) + " ms!");
 	}
 	
-	public void backupWorldConfig(String w) {
+	public static void backupWorldConfig(String w) {
 		System.out.println("[SafeCreeper] Creating backup of world config '" + w + "' file...");
 		
 		long t = System.currentTimeMillis();
@@ -749,7 +775,7 @@ public class SCFileUpdater {
 	 * @param checkVer the version to check
 	 * @return true if the version number is older
 	 */
-	private boolean isOlderVersion(String pluginVer, String checkVer) {
+	private static boolean isOlderVersion(String pluginVer, String checkVer) {
         String s1 = normalisedVersion(pluginVer);
         String s2 = normalisedVersion(checkVer);
         int cmp = s1.compareTo(s2);
@@ -763,7 +789,7 @@ public class SCFileUpdater {
 	 * @return true if the version number is newer
 	 */
 	@SuppressWarnings("unused")
-	private boolean isNewerVersion(String pluginVer, String checkVer) {
+	private static boolean isNewerVersion(String pluginVer, String checkVer) {
         String s1 = normalisedVersion(pluginVer);
         String s2 = normalisedVersion(checkVer);
         int cmp = s1.compareTo(s2);
@@ -777,7 +803,7 @@ public class SCFileUpdater {
 	 * @return true if the version number is the same
 	 */
 	@SuppressWarnings("unused")
-	private boolean isSameVersion(String pluginVer, String checkVer) {
+	private static boolean isSameVersion(String pluginVer, String checkVer) {
         String s1 = normalisedVersion(pluginVer);
         String s2 = normalisedVersion(checkVer);
         int cmp = s1.compareTo(s2);
@@ -789,7 +815,7 @@ public class SCFileUpdater {
 	 * @param ver version number
 	 * @return normalized version number
 	 */
-	private String normalisedVersion(String ver) {
+	private static String normalisedVersion(String ver) {
         return normalisedVersion(ver, ".", 4);
     }
 
@@ -800,7 +826,7 @@ public class SCFileUpdater {
 	 * @param maxWidth max width
 	 * @return normalized version number
 	 */
-	private String normalisedVersion(String ver, String sep, int maxWidth) {
+	private static String normalisedVersion(String ver, String sep, int maxWidth) {
         String[] split = Pattern.compile(sep, Pattern.LITERAL).split(ver);
         StringBuilder sb = new StringBuilder();
         
@@ -810,7 +836,7 @@ public class SCFileUpdater {
         return sb.toString();
     }
 
-	private void copy(File f1, File f2) {
+	private static void copy(File f1, File f2) {
 		InputStream in = null;
 		try {
 			in = new FileInputStream(f1);
@@ -820,7 +846,7 @@ public class SCFileUpdater {
 		copy(in, f2);
 	}
 
-	private void copy(InputStream in, File file) {
+	private static void copy(InputStream in, File file) {
 		// Make sure the input isn't null
 		if(in == null)
 			return;
