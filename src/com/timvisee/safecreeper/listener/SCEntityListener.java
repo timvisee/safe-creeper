@@ -99,79 +99,79 @@ public class SCEntityListener implements Listener {
 		Random rand = new Random();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
 		switch (sr) {
 		case BREEDING:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnByBreeding", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnByBreeding", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case BUILD_IRONGOLEM:
 		case BUILD_SNOWMAN:
 		case BUILD_WITHER:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnWhenBuild", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnWhenBuild", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case CHUNK_GEN:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnWithWorldGeneration", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnWithWorldGeneration", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case CUSTOM:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnCustom", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnCustom", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case EGG:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromEgg", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromEgg", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case JOCKEY:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnAsJockey", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnAsJockey", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case LIGHTNING:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromLightning", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromLightning", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case DEFAULT:
 		case NATURAL:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnNaturally", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnNaturally", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case SLIME_SPLIT:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSlimeSplit", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSlimeSplit", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case SPAWNER:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSpawner", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSpawner", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case SPAWNER_EGG:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSpawnerEgg", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromSpawnerEgg", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case VILLAGE_DEFENSE:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnForVillageDefence", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnForVillageDefence", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case VILLAGE_INVASION:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnForVillageInvasion", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnForVillageInvasion", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		default:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromOther", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromOther", true, true, l))
 				event.setCancelled(true);
 		}
 		
@@ -179,11 +179,11 @@ public class SCEntityListener implements Listener {
 		if(e instanceof Slime || e instanceof MagmaCube) {
 			Slime s = (Slime) e;
 			
-			boolean enabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.CustomSize.Enabled", false, true, l);
+			boolean enabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CustomSize.Enabled", false, true, l);
 			if(enabled) {
 				// Calculate the default value
-				int minSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "Spawning.CustomSize.MinSize", 1, true, l);
-				int maxSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "Spawning.CustomSize.MaxSize", 4, true, l);
+				int minSize = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "Spawning.CustomSize.MinSize", 1, true, l);
+				int maxSize = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "Spawning.CustomSize.MaxSize", 4, true, l);
 				
 				minSize = Math.max(minSize, 1);
 				maxSize = Math.max(maxSize, minSize);
@@ -206,13 +206,13 @@ public class SCEntityListener implements Listener {
 		if(e instanceof LivingEntity) {
 			LivingEntity le = (LivingEntity) e;
 			
-			boolean enabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Despawning.Enabled", false, true, l);
+			boolean enabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Despawning.Enabled", false, true, l);
 			if(enabled) {
 				// Calculate the default value
 				boolean despawnWhenFarAwayDef = le.getRemoveWhenFarAway();
 				
 				// Check if the LivingEntity should be removed when far away
-				boolean despawnWhenFarAway = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Despawning.DespawnWhenFarAway", despawnWhenFarAwayDef, true, l);
+				boolean despawnWhenFarAway = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Despawning.DespawnWhenFarAway", despawnWhenFarAwayDef, true, l);
 				
 				// Set if the LivingEntity should be removed when far away
 				le.setRemoveWhenFarAway(despawnWhenFarAway);
@@ -226,20 +226,20 @@ public class SCEntityListener implements Listener {
 				Chicken chicken = (Chicken) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						chicken.setAge(age);
 						chicken.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								chicken.setBaby();
@@ -253,20 +253,20 @@ public class SCEntityListener implements Listener {
 				Cow cow = (Cow) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						cow.setAge(age);
 						cow.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								cow.setBaby();
@@ -280,20 +280,20 @@ public class SCEntityListener implements Listener {
 				MushroomCow mc = (MushroomCow) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						mc.setAge(age);
 						mc.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								mc.setBaby();
@@ -307,20 +307,20 @@ public class SCEntityListener implements Listener {
 				Ocelot o = (Ocelot) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						o.setAge(age);
 						o.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								o.setBaby();
@@ -334,20 +334,20 @@ public class SCEntityListener implements Listener {
 				Pig p = (Pig) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						p.setAge(age);
 						p.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								p.setBaby();
@@ -361,20 +361,20 @@ public class SCEntityListener implements Listener {
 				Villager v = (Villager) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						v.setAge(age);
 						v.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								v.setBaby();
@@ -388,20 +388,20 @@ public class SCEntityListener implements Listener {
 				Wolf wolf = (Wolf) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the age thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
-						int minAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
-						int maxAge = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.Enabled", false, true, l)) {
+						int minAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MinAge", 1, true, l);
+						int maxAge = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomAge.Age.MaxAge", 1, true, l);
 						int age = rand.nextInt(Math.max(Math.max(minAge, maxAge) + 1, 0) - Math.max(minAge, 0));
-						boolean lockAge = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
+						boolean lockAge = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Age.AgeLock", false, true, l);
 						wolf.setAge(age);
 						wolf.setAgeLock(lockAge);
 					}
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							if(((int) spawnAsBabyChance * 10) > rand.nextInt(1000))
 								wolf.setBaby();
@@ -415,11 +415,11 @@ public class SCEntityListener implements Listener {
 				Zombie z = (Zombie) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							z.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
 					}
@@ -430,11 +430,11 @@ public class SCEntityListener implements Listener {
 				PigZombie pz = (PigZombie) e;
 				
 				// Check if the custom age control is enabled
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Enabled", false, true, l)) {
 					// Check if the baby thing is enabled
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
-						boolean spawnAsBaby = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
-						double spawnAsBabyChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.Enabled", true, true, l)) {
+						boolean spawnAsBaby = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomAge.Baby.SpawnAsBaby", false, true, l);
+						double spawnAsBabyChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomAge.Baby.SpawnAsBabyChance", 50, true, l);
 						if(spawnAsBaby)
 							pz.setBaby(((int) spawnAsBabyChance * 10) > rand.nextInt(1000));
 					}
@@ -450,8 +450,8 @@ public class SCEntityListener implements Listener {
 		if(e instanceof PigZombie) {
 			PigZombie pz = (PigZombie) e;
 			
-			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "AlwaysAngry", false, true, l))
+			if(SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "AlwaysAngry", false, true, l))
 					pz.setAnger(2147483647);
 		}
 		
@@ -460,9 +460,9 @@ public class SCEntityListener implements Listener {
 			Wolf wolf = (Wolf) e;
 			
 			// Make wolves spawn angry
-			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.SpawnAngry.Enabled", false, true, l)) {
-					double angryChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.SpawnAngry.AngryChance", 0, true, l);
+			if(SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.SpawnAngry.Enabled", false, true, l)) {
+					double angryChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.SpawnAngry.AngryChance", 0, true, l);
 					
 					// Should the zombie be a villager?
 					wolf.setAngry(((int) angryChance * 10) > rand.nextInt(1000));
@@ -470,9 +470,9 @@ public class SCEntityListener implements Listener {
 			}
 			
 			// Make wolves spawn sitting
-			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.SpawnSitting.Enabled", false, true, l)) {
-					double sittingChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.SpawnSitting.SittingChance", 0, true, l);
+			if(SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.SpawnSitting.Enabled", false, true, l)) {
+					double sittingChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.SpawnSitting.SittingChance", 0, true, l);
 					
 					// Should the zombie be a villager?
 					wolf.setSitting(((int) sittingChance * 10) > rand.nextInt(1000));
@@ -484,8 +484,8 @@ public class SCEntityListener implements Listener {
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
 			
-			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
-				boolean canPickupItems = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanPickupItems", true, true, l);
+			if(SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l)) {
+				boolean canPickupItems = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanPickupItems", true, true, l);
 				c.setCanPickupItems(canPickupItems);
 			}
 		}
@@ -495,8 +495,8 @@ public class SCEntityListener implements Listener {
 			Skeleton skel = (Skeleton) e;
 			
 			// Check if this feature is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.SkeletonType.Enabled", false, true, l)) {
-				double witherSkeletonChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.SkeletonType.WitherSkeletonChance", 20, true, l);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.SkeletonType.Enabled", false, true, l)) {
+				double witherSkeletonChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.SkeletonType.WitherSkeletonChance", 20, true, l);
 				
 	    		if(((int) witherSkeletonChance * 10) > rand.nextInt(1000))
 	    			skel.setSkeletonType(SkeletonType.WITHER);
@@ -510,9 +510,9 @@ public class SCEntityListener implements Listener {
 			Zombie zombie = (Zombie) e;
 			
 			// Check if this feature is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.ZombieType.Enabled", false, true, l)) {
-				double villagerZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.ZombieType.VillagerZombieChance", 10, true, l);
-				double giantZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.ZombieType.GiantZombieChance", 0, true, l);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.ZombieType.Enabled", false, true, l)) {
+				double villagerZombieChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.ZombieType.VillagerZombieChance", 10, true, l);
+				double giantZombieChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.ZombieType.GiantZombieChance", 0, true, l);
 				
 				// Should the zombie be a villager?
 				zombie.setVillager(((int) villagerZombieChance * 10) > rand.nextInt(1000));
@@ -535,8 +535,8 @@ public class SCEntityListener implements Listener {
 			PigZombie zombie = (PigZombie) e;
 			
 			// Check if this feature is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Spawning.PigZombieType.Enabled", false, true, l)) {
-				double villagerPigZombieChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Spawning.PigZombieType.VillagerPigZombieChance", 0, true, l);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.PigZombieType.Enabled", false, true, l)) {
+				double villagerPigZombieChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Spawning.PigZombieType.VillagerPigZombieChance", 0, true, l);
 				
 				// Should the PigZombie be a villager type?
 				zombie.setVillager(((int) villagerPigZombieChance * 10) > rand.nextInt(1000));
@@ -547,17 +547,17 @@ public class SCEntityListener implements Listener {
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
 			
-			boolean spawningPotionEffectsEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "SpawningPotionEffects.Enabled", false, true, l);
+			boolean spawningPotionEffectsEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "SpawningPotionEffects.Enabled", false, true, l);
 			if(spawningPotionEffectsEnabled) {
 		    	
-		    	List<String> effects = SafeCreeper.instance.getConfigManager().getOptionKeysList(l.getWorld(), controlName, "SpawningPotionEffects.Effects", new ArrayList<String>(), true, l);
+		    	List<String> effects = SafeCreeper.instance.getConfigHandler().getOptionKeysList(l.getWorld(), controlName, "SpawningPotionEffects.Effects", new ArrayList<String>(), true, l);
 	
 		    	for(String effect : effects) {
 		    		
-					String effectName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Effect", "", true, l).toUpperCase().replace(" ", "_");
-	    			int effectDuration = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Duration", 240, true, l);
-	    			double effectChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Chance", 100, true, l);
-		    		int effectAmplifier = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Level", 1, true, l);
+					String effectName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Effect", "", true, l).toUpperCase().replace(" ", "_");
+	    			int effectDuration = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Duration", 240, true, l);
+	    			double effectChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Chance", 100, true, l);
+		    		int effectAmplifier = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "SpawningPotionEffects.Effects." + effect + ".Level", 1, true, l);
 		    		
 		    		// The effect type has to be set
 		    		if(effectName.trim().equals("")) {
@@ -612,11 +612,11 @@ public class SCEntityListener implements Listener {
 			LivingEntity le = (LivingEntity) e;
 			
 			// Make sure the entity isn't a LAB boss!
-			if(!SafeCreeper.instance.getCorruptionManager().isBoss(le)) {
-				boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
+			if(!SafeCreeper.instance.getCorruptionHandler().isBoss(le)) {
+				boolean customHealthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 				if(customHealthEnabled) {
-					double customHealthMin = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
-					double customHealthMax = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
+					double customHealthMin = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomHealth.MinHealth", le.getMaxHealth(), true, l) - 1;
+					double customHealthMax = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", le.getMaxHealth(), true, l);
 					double customHealth = rand.nextInt((int) (Math.max(customHealthMax - customHealthMin, 1) + customHealthMin));
 					
 					// Set the max health and the health of the living entity
@@ -637,12 +637,12 @@ public class SCEntityListener implements Listener {
 		
 		// If the entity is powered, should it be a powered creeper?
 		if(et.equals(EntityType.CREEPER))
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "AlwaysPowered", false, true, l))
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "CreeperControl", "AlwaysPowered", false, true, l))
 				((Creeper) e).setPowered(true);
 		
 		// Handle the spawning effects, make sure the spawning isn't canceled yet!
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Spawned", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Spawned", l);
 	}
 
 	@EventHandler
@@ -661,16 +661,16 @@ public class SCEntityListener implements Listener {
 		switch(dc) {
 		case DROWNING:
 			if(e instanceof LivingEntity) {
-				String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
-				if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
+				String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e);
+				if(!SafeCreeper.instance.getConfigHandler().isValidControl(controlName))
 					controlName = "OtherMobControl";
 				
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanDrown", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanDrown", true, true, l))
 					event.setCancelled(true);
 				
 				// Handle the spawning effects, make sure the spawning isn't canceled yet!
 				if(!event.isCancelled())
-					SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Drowning", l);
+					SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Drowning", l);
 			}
 			break;
 		
@@ -680,25 +680,25 @@ public class SCEntityListener implements Listener {
 			Entity damager = eventEntity.getDamager();
 			
 			if(e instanceof LivingEntity) {
-				String controlName = SafeCreeper.instance.getConfigManager().getControlName(damager);
-				if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
+				String controlName = SafeCreeper.instance.getConfigHandler().getControlName(damager);
+				if(!SafeCreeper.instance.getConfigHandler().isValidControl(controlName))
 					controlName = "OtherMobControl";
 				
 				if(e instanceof HumanEntity) {
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "DamagePlayers", true, true, l))
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DamagePlayers", true, true, l))
 						event.setCancelled(true);
 
 					// Handle the spawning effects, make sure the spawning isn't canceled yet!
 					if(!event.isCancelled())
-						SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "DamagedPlayer", l);
+						SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "DamagedPlayer", l);
 					
 				} else if(e instanceof LivingEntity) {
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "DamageMobs", true, true, l))
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DamageMobs", true, true, l))
 						event.setCancelled(true);
 					
 					// Handle the spawning effects, make sure the spawning isn't canceled yet!
 					if(!event.isCancelled())
-						SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "DamagedMob", l);
+						SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "DamagedMob", l);
 				}
 			}
 			break;
@@ -711,11 +711,11 @@ public class SCEntityListener implements Listener {
 			case  DROWNING:
 				if(e instanceof HumanEntity) {
 					// Could players drown
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "PlayerDrowning", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "PlayerDrowning", true, true, l)) { event.setCancelled(true); }
 					
 				} else if(e instanceof LivingEntity) {
 					// Could mobs drown
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "MobDowning", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "MobDowning", true, true, l)) { event.setCancelled(true); }
 				}
 				break;
 				
@@ -723,33 +723,33 @@ public class SCEntityListener implements Listener {
 			case FIRE_TICK:
 				if(e instanceof HumanEntity) {
 					// Could fire hurt players
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
 					
 				} else if(e instanceof LivingEntity) {
 					// Could fire hurt mobs
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
 				}
 				break;
 				
 			case LAVA:
 				if(e instanceof HumanEntity) {
 					// Could lava hurt players
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
 					
 				} else if(e instanceof LivingEntity) {
 					// Could lava hurt mobs
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
 				}
 				break;
 				
 			case LIGHTNING:
 				if(e instanceof HumanEntity) {
 					// Could lightning hurt players
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LightningControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LightningControl", "DamagePlayers", true, true, l)) { event.setCancelled(true); }
 					
 				} else if(e instanceof LivingEntity) {
 					// Could lightning hurt mobs
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LightningControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LightningControl", "DamageMobs", true, true, l)) { event.setCancelled(true); }
 				}
 				break;
 				
@@ -762,18 +762,18 @@ public class SCEntityListener implements Listener {
 			Sheep s = (Sheep) e;
 			
 			// Make sure the custom drops feature is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.Enabled", false, true, l)) {
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CustomDrops.Enabled", false, true, l)) {
 				
 				// Check if DropWoolOnHit is enabled from the Custom Drops feature
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.Enabled", false, true, l)) {
 					
 					// Apply the drop chance
-					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "SheepControl", "CustomDrops.DropWoolOnHit.DropChance", 100, true, l);
+					double dropChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "SheepControl", "CustomDrops.DropWoolOnHit.DropChance", 100, true, l);
 					if(((int) dropChance * 10) >= rand.nextInt(1000)) {
 						// Get some preferences
-						int minWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MinWool", 1, true, l);
-						int maxWool = SafeCreeper.instance.getConfigManager().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MaxWool", 1, true, l);
-						boolean randColor = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.RandomColor", false, true, l);
+						int minWool = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MinWool", 1, true, l);
+						int maxWool = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "SheepControl", "CustomDrops.DropWoolOnHit.MaxWool", 1, true, l);
+						boolean randColor = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CustomDrops.DropWoolOnHit.RandomColor", false, true, l);
 						
 						// Get the wool count to drop
 						int woolCount = 0;
@@ -800,11 +800,11 @@ public class SCEntityListener implements Listener {
 		}
 		
 		// Get the control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
 		// Handle the spawning effects, make sure the spawning isn't canceled yet!
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Damaged", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Damaged", l);
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
@@ -819,19 +819,19 @@ public class SCEntityListener implements Listener {
 		Random rand = new Random();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
 		// Creature Reviving
 		if(e instanceof Creature) {
 			Creature c = (Creature) e;
 			
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l)) {
-				double chance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Chance", 25, true, l);
-				double radius = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Radius", 0, true, l);
-				double minDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MinDelay", 0, true, l);
-				double maxDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.MaxDelay", 1.5, true, l);
-				boolean rememberTarget = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.RememberTarget", true, true, l);
-				boolean reviverRevivingEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Reviving.Reviver.Enabled", false, true, l);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Reviving.Enabled", false, true, l)) {
+				double chance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Reviving.Chance", 25, true, l);
+				double radius = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Reviving.Radius", 0, true, l);
+				double minDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Reviving.MinDelay", 0, true, l);
+				double maxDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Reviving.MaxDelay", 1.5, true, l);
+				boolean rememberTarget = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Reviving.RememberTarget", true, true, l);
+				boolean reviverRevivingEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Reviving.Reviver.Enabled", false, true, l);
 				
 				if(((int) chance * 10) > rand.nextInt(1000)) {
 					
@@ -847,7 +847,7 @@ public class SCEntityListener implements Listener {
 						if(rememberTarget)
 							task.setTarget(c.getTarget());
 						
-						final SCMobArenaHandler mam = SafeCreeper.instance.getMobArenaManager();
+						final SCMobArenaHandler mam = SafeCreeper.instance.getMobArenaHandler();
 						
 						// Check if the living entity (was) inside any mob arena
 						if(mam.isMonsterInArena(c)) {
@@ -868,7 +868,7 @@ public class SCEntityListener implements Listener {
 						
 						if(SafeCreeper.instance.getTVNLibManager().isEnabled()) {
 							// Reviving with revivers
-							double reviverRevivingMaxDistance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "Reviving.Reviver.MaxDistance", 16, true, l);
+							double reviverRevivingMaxDistance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "Reviving.Reviver.MaxDistance", 16, true, l);
 							
 							List<Entity> ee = c.getNearbyEntities(reviverRevivingMaxDistance, reviverRevivingMaxDistance, reviverRevivingMaxDistance);
 							Creature nearest = null;
@@ -918,10 +918,10 @@ public class SCEntityListener implements Listener {
 		Random rand = new Random();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
 		// Play the effects for the control
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Died", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Died", l);
 		
 		// Put the block bellow in a try/catch block to prevent errors in the console caused by a null poniter from the event.getCause() function!
 		try {
@@ -933,10 +933,10 @@ public class SCEntityListener implements Listener {
 				
 				if(!lastDamageCause.equals(DamageCause.ENTITY_EXPLOSION)) {
 					if(e instanceof Creeper) {
-						if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "ExplodeOnDeath", false, true, l)) {
-							boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "CostumExplosionStrength.Enabled", false, true, l);
-							boolean destroyWorld = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "DestroyWorld", true, true, l);
-							int costumExplosionStrength = SafeCreeper.instance.getConfigManager().getOptionInt(w, "CreeperControl", "CostumExplosionStrength.ExplosionStrength", 3, true, l);
+						if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "CreeperControl", "ExplodeOnDeath", false, true, l)) {
+							boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "CreeperControl", "CostumExplosionStrength.Enabled", false, true, l);
+							boolean destroyWorld = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "CreeperControl", "DestroyWorld", true, true, l);
+							int costumExplosionStrength = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "CreeperControl", "CostumExplosionStrength.ExplosionStrength", 3, true, l);
 							
 							if(!destroyWorld)
 								w.createExplosion(l, 0);
@@ -957,27 +957,27 @@ public class SCEntityListener implements Listener {
 			EntityType et = le.getType();
 			
 			// Make sure the custom drops feature is enabled
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Enabled", false, true, l)) {
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.Enabled", false, true, l)) {
 				
 				// Should Safe Creeper overwrite the default drops
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.OverwriteDefaultDrops", false, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.OverwriteDefaultDrops", false, true, l))
 					event.getDrops().clear();
 				
 				// Check if XP is enabled from the Custom Drops feature
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.XP.Enabled", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.XP.Enabled", false, true, l)) {
 					
 					// Should XP be dropped
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.XP.DropXP", true, true, l))
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.XP.DropXP", true, true, l))
 						event.setDroppedExp(0);
 					else {
 						
 						// Apply the drop chance
-						double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.XP.DropChance", 100, true, l);
+						double dropChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomDrops.XP.DropChance", 100, true, l);
 						if(((int) dropChance * 10) <= rand.nextInt(1000))
 							event.setDroppedExp(0);
 						
 						// Apply the drop multiplier
-						double xpMultiplier = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.XP.Multiplier", 1, true, l);
+						double xpMultiplier = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomDrops.XP.Multiplier", 1, true, l);
 						if(xpMultiplier != 1 && xpMultiplier >= 0)
 							event.setDroppedExp((int) (event.getDroppedExp() * xpMultiplier));
 					}
@@ -990,7 +990,7 @@ public class SCEntityListener implements Listener {
 						et == EntityType.PLAYER) {
 					
 					// Check if skulls should be dropped
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.Enabled", false, true, l)) {
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.Skull.Enabled", false, true, l)) {
 						
 						// The wither skeleton may not drop their own heads vanilla
 						if(le instanceof Skeleton) {
@@ -1008,7 +1008,7 @@ public class SCEntityListener implements Listener {
 						}
 						
 						// Check the chance
-						double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomDrops.Skull.Chance", 1, true, l);
+						double dropChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomDrops.Skull.Chance", 1, true, l);
 						if(((int) dropChance * 10) > rand.nextInt(1000)) {
 							byte skullTypeData;
 							switch(et) {
@@ -1043,7 +1043,7 @@ public class SCEntityListener implements Listener {
 							}
 							
 							// Get the drop amount
-							int dropAmount = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomDrops.Skull.Amount", 1, true, l);
+							int dropAmount = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomDrops.Skull.Amount", 1, true, l);
 							if(dropAmount < 0)
 								dropAmount = Math.max(dropAmount, 0);
 							
@@ -1053,7 +1053,7 @@ public class SCEntityListener implements Listener {
 							// Drop the players head if the died entity was a player
 							if(et.equals(EntityType.PLAYER)) {
 								// Should player heads be dropped
-								boolean playerHead = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.PlayerHead", true, true, l);
+								boolean playerHead = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.Skull.PlayerHead", true, true, l);
 								if(playerHead) {
 									// Get the player to drop the skull from
 									Player p = (Player) e;
@@ -1066,7 +1066,7 @@ public class SCEntityListener implements Listener {
 							}
 
 							// Should the items be added to the inventory or should they be droppped
-							final boolean addToInv = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.Skull.AddToInventory", true, true, l);
+							final boolean addToInv = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.Skull.AddToInventory", true, true, l);
 							
 							if(addToInv) {
 								// Add the skull to the dropped items list
@@ -1084,7 +1084,7 @@ public class SCEntityListener implements Listener {
 				if(le instanceof Enderman) {
 					Enderman enderman = (Enderman) le;
 					
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomDrops.DropItemOnDeath", false, true, l)) {
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomDrops.DropItemOnDeath", false, true, l)) {
 						if(!enderman.getCarriedMaterial().getItemType().equals(Material.AIR)) {
 							// First drop the item
 							ItemStack drop = new ItemStack(enderman.getCarriedMaterial().getItemTypeId(), 1, (short) 0);
@@ -1107,22 +1107,22 @@ public class SCEntityListener implements Listener {
 		World w = l.getWorld();		
 
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherExplosions");
 		
 		switch(e.getType()) {
 		case MINECART_TNT:
 			// Check if the TNT could be primed
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimed", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimed", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case PRIMED_TNT:
 			// PrimedTNTLimit
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "PrimedTNTLimit.Enabled", false, true, l)) {
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "TNTControl", "PrimedTNTLimit.Enabled", false, true, l)) {
 				// The PrimedTNTLimit feature is enabled
-				int radius = SafeCreeper.instance.getConfigManager().getOptionInt(w, "TNTControl", "PrimedTNTLimit.Radius", 8, true, l);
-				int maxPrimedTNTInRadius = SafeCreeper.instance.getConfigManager().getOptionInt(w, "TNTControl", "PrimedTNTLimit.MaxPrimedInRadius", 48, true, l);
-				int maxPrimedInWorld = SafeCreeper.instance.getConfigManager().getOptionInt(w, "TNTControl", "PrimedTNTLimit.MaxPrimedInWorld", -1, true, l);
+				int radius = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "TNTControl", "PrimedTNTLimit.Radius", 8, true, l);
+				int maxPrimedTNTInRadius = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "TNTControl", "PrimedTNTLimit.MaxPrimedInRadius", 48, true, l);
+				int maxPrimedInWorld = SafeCreeper.instance.getConfigHandler().getOptionInt(w, "TNTControl", "PrimedTNTLimit.MaxPrimedInWorld", -1, true, l);
 				
 				int primedInRadius = 0;
 				int primedInWorld = 0;
@@ -1148,22 +1148,22 @@ public class SCEntityListener implements Listener {
 			
 			// Check if the TNT could be primed
 			if(event.getFire())
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
 					event.setCancelled(true);
 			
 			else
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
 					event.setCancelled(true);
 			break;
 			
 		default:
 			// Check if the explosive could be primed
 			if(event.getFire())
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByFire", true, true, l))
 					event.setCancelled(true);
 			
 			else
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "TNTPriming.CanBePrimedByOther", true, true, l))
 					event.setCancelled(true);
 		}
 		
@@ -1204,10 +1204,10 @@ public class SCEntityListener implements Listener {
 		World w = l.getWorld();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherExplosions");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherExplosions");
 		
 		// Make sure the current control is enabled, if not, Safe Creeper should not take over the explosion
-		if(!SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l))
+		if(!SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l))
 			return;
 		
 		// Set the default explosion size of the current explosion
@@ -1234,14 +1234,14 @@ public class SCEntityListener implements Listener {
 		explosionSize = defExplosionSize;
 		
 		// Could the entity destroy the world?
-		boolean b = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "DestroyWorld", true, true, l);
+		boolean b = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DestroyWorld", true, true, l);
 		
 		for(Block entry : event.blockList())
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "DestroyWorld", true, true, entry.getLocation()))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DestroyWorld", true, true, entry.getLocation()))
 				b = false;
 		
-		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CostumExplosionStrength.Enabled", false, true, l);
-		explosionSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, l);
+		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CostumExplosionStrength.Enabled", false, true, l);
+		explosionSize = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, l);
 		if(!costumExplosionStrengthEnabled) {
 			if(!b)
 				event.setCancelled(true);
@@ -1249,11 +1249,11 @@ public class SCEntityListener implements Listener {
 			event.setCancelled(true);
 		
 		if(!b) {
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "EnableExplosionSound", true, true, l))
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "EnableExplosionSound", true, true, l))
 				createExplosionSound(w, l);
 			
 			// TODO: Real explosion effects need to be added here!
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "EnableExplosionSmoke", true, true, l))
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "EnableExplosionSmoke", true, true, l))
 				w.playEffect(l, Effect.SMOKE, 3);
 			
 		} else {
@@ -1265,11 +1265,11 @@ public class SCEntityListener implements Listener {
 			} else {
 				
 				if(!event.isCancelled()) {
-					boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
+					boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
 					
 					if(rebuildBlocks) {
-						double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
-						double rebuildBlockInterval = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
+						double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
+						double rebuildBlockInterval = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
 						
 						List<Block> blocks = event.blockList();
 						SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
@@ -1283,16 +1283,16 @@ public class SCEntityListener implements Listener {
 		}
 		
 		// Custom Explosions - Flying Blocks
-		boolean customExplosionsEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.Enabled", false, true, l);
+		boolean customExplosionsEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.Enabled", false, true, l);
 		if(customExplosionsEnabled) {
-			boolean flyingBlocksEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.FlyingBlocks.Enabled", false, true, l);
+			boolean flyingBlocksEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.FlyingBlocks.Enabled", false, true, l);
 			if(flyingBlocksEnabled) {
-				boolean destroyWorld = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomExplosions.DestroyWorld", false, true, l);
+				boolean destroyWorld = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.DestroyWorld", false, true, l);
 				if(destroyWorld) {
 					Random rand = new Random();
 					for(Block entry : event.blockList()) {
 						Location entryLoc = entry.getLocation();
-						int flyingBlockChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
+						int flyingBlockChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
 						if(flyingBlockChance > rand.nextInt(100)) {
 							Vector blockVel = entryLoc.toVector().subtract(l.toVector()).normalize();
 							blockVel.add(new Vector(0, 0.6, 0));
@@ -1338,7 +1338,7 @@ public class SCEntityListener implements Listener {
 		
 		
 		// Play control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Explode", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Explode", l);
 	}
 	
 	@EventHandler
@@ -1348,16 +1348,16 @@ public class SCEntityListener implements Listener {
 		Location l = e.getLocation();
 		
 		if(e instanceof LivingEntity) {
-			String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
-			if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
+			String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e);
+			if(!SafeCreeper.instance.getConfigHandler().isValidControl(controlName))
 				controlName = "OtherMobControl";
 			
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanTeleport", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanTeleport", true, true, l))
 				event.setCancelled(true);
 			
 			// Play control effects
 			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Teleported", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Teleported", l);
 		}
 	}
 	
@@ -1373,9 +1373,9 @@ public class SCEntityListener implements Listener {
 			
 			if(from.getType().equals(Material.AIR) && !to.equals(Material.AIR)) {
 				
-				boolean canPlace = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "CanPlaceBlock", true, true, l);
+				boolean canPlace = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanPlaceBlock", true, true, l);
 				if(!canPlace) {
-					boolean clearHands = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "ClearHandsOnPlace", false, true, l);
+					boolean clearHands = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "ClearHandsOnPlace", false, true, l);
 					if(clearHands) {
 						Enderman enderman = (Enderman) e;
 						enderman.eject();
@@ -1385,14 +1385,14 @@ public class SCEntityListener implements Listener {
 				}
 				
 				// Play control effects
-				SafeCreeper.instance.getConfigManager().playControlEffects("EndermanControl", "PickedUpBlock", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects("EndermanControl", "PickedUpBlock", l);
 			}
 			
 			if(!from.getType().equals(Material.AIR) && to.equals(Material.AIR)) {
 				
-				boolean canPickup = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "CanPickupBlock", true, true, l);
+				boolean canPickup = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanPickupBlock", true, true, l);
 				if(!canPickup) {
-					boolean cloneBlock = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "CanCloneBlock", false, true, l);
+					boolean cloneBlock = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanCloneBlock", false, true, l);
 					if(cloneBlock) {
 						Enderman enderman = (Enderman) e;
 						enderman.setCarriedMaterial(new MaterialData(to));
@@ -1401,10 +1401,10 @@ public class SCEntityListener implements Listener {
 					event.setCancelled(true);
 					
 				} else {
-					boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "EndermanControl", "ExplosionRebuild.Enabled", false, true, l);
+					boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "ExplosionRebuild.Enabled", false, true, l);
 					
 					if(rebuildBlocks) {
-						double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+						double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
 						
 						SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 						
@@ -1414,23 +1414,23 @@ public class SCEntityListener implements Listener {
 				
 				// Play control effects
 				if(!event.isCancelled())
-					SafeCreeper.instance.getConfigManager().playControlEffects("EndermanControl", "PlacedDownBlock", l);
+					SafeCreeper.instance.getConfigHandler().playControlEffects("EndermanControl", "PlacedDownBlock", l);
 			}
 		}
 		
 		// Are sheeps able to eat grass
 		if(e instanceof Sheep) {
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CanEatGrass", true, true, l)) {
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CanEatGrass", true, true, l)) {
 				event.setCancelled(true);
 			}
 			
 			// Play effects for sheeps eating grass
-			SafeCreeper.instance.getConfigManager().playControlEffects("SheepControl", "EatGrass", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("SheepControl", "EatGrass", l);
 		}
 		
 		// Prevent withers from destroying blocks
 		if(e instanceof Wither) {
-			final boolean destroyBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WitherControl", "DestroyWorld", true, true, l);
+			final boolean destroyBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WitherControl", "DestroyWorld", true, true, l);
 			if(!destroyBlocks)
 				event.setCancelled(true);
 		}
@@ -1442,12 +1442,12 @@ public class SCEntityListener implements Listener {
 		World w = e.getWorld();
 		Location l = e.getLocation();
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PigControl", "TurnIntoPigZombieOnLightning", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PigControl", "TurnIntoPigZombieOnLightning", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("PigControl", "PigZap", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("PigControl", "PigZap", l);
 	}
 	
 	@EventHandler
@@ -1456,12 +1456,12 @@ public class SCEntityListener implements Listener {
 		World w = e.getWorld();
 		Location l = e.getLocation();
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "RegrowWool", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "RegrowWool", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("SheepControl", "Regrown", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("SheepControl", "Regrown", l);
 	}
 	
 	@EventHandler
@@ -1470,12 +1470,12 @@ public class SCEntityListener implements Listener {
 		World w = e.getWorld();
 		Location l = e.getLocation();
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "SheepControl", "CanBeDyed", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CanBeDyed", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("SheepControl", "Dyed", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("SheepControl", "Dyed", l);
 	}
 
 	@EventHandler
@@ -1484,14 +1484,14 @@ public class SCEntityListener implements Listener {
 		World w = e.getWorld();
 		Location l = e.getLocation();
 		
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanSplit", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanSplit", true, true, l))
 			event.setCancelled(true);
 		
-		if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "SplitIntoCostumAmount.Enabled", false, true, l)) {
-			int min = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "SplitIntoCostumAmount.SplitIntoMin", 2, true, l);
-			int max = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "SplitIntoCostumAmount.SplitIntoMax", 4, true, l);
+		if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "SplitIntoCostumAmount.Enabled", false, true, l)) {
+			int min = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "SplitIntoCostumAmount.SplitIntoMin", 2, true, l);
+			int max = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "SplitIntoCostumAmount.SplitIntoMax", 4, true, l);
 			Random rand = new Random();
 			int newAmount = rand.nextInt(max-min) + min;
 			event.setCount(newAmount);
@@ -1499,7 +1499,7 @@ public class SCEntityListener implements Listener {
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Splitted", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Splitted", l);
 	}
 	
 	@EventHandler
@@ -1509,21 +1509,21 @@ public class SCEntityListener implements Listener {
 		Location l = e.getLocation();
 		Random rand = new Random();
 		
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanBeTamed", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanBeTamed", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Tamed", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Tamed", l);
 		
 		// Handle the collar colors for wolves
 		if(e instanceof Wolf) {
 			Wolf wolf = (Wolf) e;
-			if(SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l)) {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CollarColors.Enabled", false, true, l)) {
-					boolean randomCollarColor = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CollarColors.RandomColor", false, true, l);
+			if(SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CollarColors.Enabled", false, true, l)) {
+					boolean randomCollarColor = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CollarColors.RandomColor", false, true, l);
 					
 					// Set the collar color of the wolf
 					if(randomCollarColor) {
@@ -1554,14 +1554,14 @@ public class SCEntityListener implements Listener {
 		
 		if(s != null) {
 			// Get the controll name for the projectile shooter
-			String controlName = SafeCreeper.instance.getConfigManager().getControlName(s, "OtherMobControl");
+			String controlName = SafeCreeper.instance.getConfigHandler().getControlName(s, "OtherMobControl");
 			
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
 				event.setCancelled(true);
 			
 			// Play control effects
 			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "LaunchedProjectile", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "LaunchedProjectile", l);
 		}
 	}
 	
@@ -1571,14 +1571,14 @@ public class SCEntityListener implements Listener {
 		World w = p.getWorld();
 		Location l = p.getLocation();
 		
-		if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "KeepXPOnDeath", false, true, l))
+		if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "KeepXPOnDeath", false, true, l))
 			event.setKeepLevel(true);
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "DropXPOnDeath", false, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "DropXPOnDeath", false, true, l))
 			event.setDroppedExp(0);
 		
 		// Play control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "Died", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "Died", l);
 	}
 	
 	@EventHandler
@@ -1588,14 +1588,14 @@ public class SCEntityListener implements Listener {
 		World w = b.getWorld();
 		Location l = b.getLocation();
 		
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e);
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanBreakDoor", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanBreakDoor", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "BrokeDoor", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "BrokeDoor", l);
 	}
 	
 	@EventHandler
@@ -1604,22 +1604,22 @@ public class SCEntityListener implements Listener {
 		World w = e.getWorld();
 		Location l = event.getFrom();
 		
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e);
 		
 		if(!event.isCancelled()) {
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.Enabled", false, true, l)) {
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Portals.Enabled", false, true, l)) {
 				// Check if the entity is allowed to teleport through portals
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.CanTeleportThroughNetherPortal", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Portals.CanTeleportThroughNetherPortal", true, true, l))
 					event.setCancelled(true);
 				
 				// Check if the entity should remember it's velocity once it's being teleported
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "Portals.RememberVelocity", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Portals.RememberVelocity", true, true, l))
 					e.setVelocity(new Vector(0, 0, 0));
 			}
 			
 			// Play control effects
 			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "PortalEnter", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "PortalEnter", l);
 		}
 	}
 	
@@ -1633,15 +1633,15 @@ public class SCEntityListener implements Listener {
 		if(e instanceof Player) {
 			switch(t) {
 			case CUSTOM:
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanCreateOtherPortal", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanCreateOtherPortal", true, true, l))
 					event.setCancelled(true);
 				break;
 			case ENDER:
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanCreateEndPortal", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanCreateEndPortal", true, true, l))
 					event.setCancelled(true);
 				break;
 			case NETHER:
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanCreateNetherPortal", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanCreateNetherPortal", true, true, l))
 					event.setCancelled(true);
 				break;
 			default:
@@ -1650,7 +1650,7 @@ public class SCEntityListener implements Listener {
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "CreatedPortal", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "CreatedPortal", l);
 	}
 	
 	@EventHandler
@@ -1670,22 +1670,22 @@ public class SCEntityListener implements Listener {
 		
 		// Is the food level decreased?
 		if(oldLevel > newLevel && oldLevel != -1) {
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "FoodMeter.CanDecrease", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "FoodMeter.CanDecrease", true, true, l))
 				event.setCancelled(true);
 
 			// Play control effects
 			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "FoodLevelIncreased", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "FoodLevelIncreased", l);
 		}
 		
 		// Is the food level increased?
 		if(oldLevel < newLevel && oldLevel != -1) {
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "FoodMeter.CanIncrease", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "FoodMeter.CanIncrease", true, true, l))
 				event.setCancelled(true);
 
 			// Play control effects
 			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "FoodLevelDecreased", l);
+				SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "FoodLevelDecreased", l);
 		}
 	}
 	
@@ -1697,22 +1697,22 @@ public class SCEntityListener implements Listener {
 		World w = event.getEntity().getWorld();
 		
 		if(e instanceof Creature) {
-			String controlName = SafeCreeper.instance.getConfigManager().getControlName(e);
+			String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e);
 			
 			if(t instanceof HumanEntity) {
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanTargetPlayer", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanTargetPlayer", true, true, l))
 					event.setCancelled(true);
 				
 				// Play control effects
 				if(!event.isCancelled())
-					SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "TargetedPlayer", l);
+					SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "TargetedPlayer", l);
 			} else if(t instanceof LivingEntity) {
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanTargetMob", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanTargetMob", true, true, l))
 					event.setCancelled(true);
 				
 				// Play control effects
 				if(!event.isCancelled())
-					SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "TargetedMob", l);
+					SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "TargetedMob", l);
 			}
 		}
 	}
@@ -1723,12 +1723,12 @@ public class SCEntityListener implements Listener {
 		Entity e = event.getEntity();
 		Location l = e.getLocation();
 		
-		if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "CreeperControl", "PoweredByLightning", true, true, l))
+		if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "CreeperControl", "PoweredByLightning", true, true, l))
 			event.setCancelled(true);
 		
 		// Play control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("CreeperControl", "Charged", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("CreeperControl", "Charged", l);
 	}
 	
 	

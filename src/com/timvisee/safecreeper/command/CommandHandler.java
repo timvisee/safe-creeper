@@ -44,19 +44,19 @@ public class CommandHandler {
 							sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
 							return true;
 						}
-						if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isBoolean(args[3].toString())) {
-							SafeCreeper.instance.getConfigManager().getGlobalConfig().set(args[3].toString(), Boolean.parseBoolean(args[4].toString()));
-							SafeCreeper.instance.getConfigManager().saveGlobalConfig();
+						if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isBoolean(args[3].toString())) {
+							SafeCreeper.instance.getConfigHandler().getGlobalConfig().set(args[3].toString(), Boolean.parseBoolean(args[4].toString()));
+							SafeCreeper.instance.getConfigHandler().saveGlobalConfig();
 							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + String.valueOf(Boolean.parseBoolean(args[4].toString())) + ChatColor.GOLD + " (boolean)");
 							return true;
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isInt(args[3].toString())) {
-							SafeCreeper.instance.getConfigManager().getGlobalConfig().set(args[3].toString(), Integer.parseInt(args[4].toString()));
-							SafeCreeper.instance.getConfigManager().saveGlobalConfig();
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isInt(args[3].toString())) {
+							SafeCreeper.instance.getConfigHandler().getGlobalConfig().set(args[3].toString(), Integer.parseInt(args[4].toString()));
+							SafeCreeper.instance.getConfigHandler().saveGlobalConfig();
 							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + String.valueOf(Integer.parseInt(args[4].toString())) + ChatColor.GOLD + " (integer)");
 							return true;
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isString(args[3].toString())) {
-							SafeCreeper.instance.getConfigManager().getGlobalConfig().set(args[3].toString(), args[4].toString());
-							SafeCreeper.instance.getConfigManager().saveGlobalConfig();
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isString(args[3].toString())) {
+							SafeCreeper.instance.getConfigHandler().getGlobalConfig().set(args[3].toString(), args[4].toString());
+							SafeCreeper.instance.getConfigHandler().saveGlobalConfig();
 							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " (string)");
 							return true;
 						} else {
@@ -71,41 +71,41 @@ public class CommandHandler {
 							return true;
 						}
 						String wname = args[3].toString();
-						if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isBoolean(args[4].toString())) {
-							if(!SafeCreeper.instance.getConfigManager().worldConfigExist(args[3].toString())) {
+						if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isBoolean(args[4].toString())) {
+							if(!SafeCreeper.instance.getConfigHandler().worldConfigExist(args[3].toString())) {
 								FileConfiguration c;
 							    c = new YamlConfiguration();
-							    SafeCreeper.instance.getConfigManager().addWorldConfig(args[3].toString(), c);
+							    SafeCreeper.instance.getConfigHandler().addWorldConfig(args[3].toString(), c);
 							    sender.sendMessage(ChatColor.GOLD + "The config file for the world " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " did not exists.");
 							    sender.sendMessage(ChatColor.GOLD + "A new file has been created.");
 							}
-							SafeCreeper.instance.getConfigManager().getWorldConfig(wname).set(args[4].toString(), Boolean.parseBoolean(args[5].toString()));
-							SafeCreeper.instance.getConfigManager().saveWorldConfig(wname);
+							SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).set(args[4].toString(), Boolean.parseBoolean(args[5].toString()));
+							SafeCreeper.instance.getConfigHandler().saveWorldConfig(wname);
 							sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + String.valueOf(Boolean.parseBoolean(args[5].toString())) + ChatColor.GOLD + " (boolean)");
 							return true;
 							
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isInt(args[3].toString())) {
-							if(!SafeCreeper.instance.getConfigManager().worldConfigExist(args[3].toString())) {
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isInt(args[3].toString())) {
+							if(!SafeCreeper.instance.getConfigHandler().worldConfigExist(args[3].toString())) {
 								FileConfiguration c;
 							    c = new YamlConfiguration();
-							    SafeCreeper.instance.getConfigManager().addWorldConfig(args[3].toString(), c);
+							    SafeCreeper.instance.getConfigHandler().addWorldConfig(args[3].toString(), c);
 							    sender.sendMessage(ChatColor.GOLD + "The config file for the world " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " did not exists.");
 							    sender.sendMessage(ChatColor.GOLD + "A new file has been created.");
 							}
-							SafeCreeper.instance.getConfigManager().getWorldConfig(wname).set(args[4].toString(), Integer.parseInt(args[5].toString()));
-							SafeCreeper.instance.getConfigManager().saveWorldConfig(wname);
+							SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).set(args[4].toString(), Integer.parseInt(args[5].toString()));
+							SafeCreeper.instance.getConfigHandler().saveWorldConfig(wname);
 							sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + String.valueOf(Integer.parseInt(args[5].toString())) + ChatColor.GOLD + " (integer)");
 							return true;
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isString(args[3].toString())) {
-							if(!SafeCreeper.instance.getConfigManager().worldConfigExist(args[3].toString())) {
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isString(args[3].toString())) {
+							if(!SafeCreeper.instance.getConfigHandler().worldConfigExist(args[3].toString())) {
 								FileConfiguration c;
 							    c = new YamlConfiguration();
-							    SafeCreeper.instance.getConfigManager().addWorldConfig(args[3].toString(), c);
+							    SafeCreeper.instance.getConfigHandler().addWorldConfig(args[3].toString(), c);
 							    sender.sendMessage(ChatColor.GOLD + "The config file for the world " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " did not exists.");
 							    sender.sendMessage(ChatColor.GOLD + "A new file has been created.");
 							}
-							SafeCreeper.instance.getConfigManager().getWorldConfig(wname).set(args[4].toString(), args[5].toString());
-							SafeCreeper.instance.getConfigManager().saveWorldConfig(wname);
+							SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).set(args[4].toString(), args[5].toString());
+							SafeCreeper.instance.getConfigHandler().saveWorldConfig(wname);
 							sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " changed to " + ChatColor.YELLOW + args[5].toString() + ChatColor.GOLD + " (string)");
 							return true;
 						} else {
@@ -130,13 +130,13 @@ public class CommandHandler {
 							sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
 							return true;
 						}
-						if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isBoolean(args[3].toString())) {
-							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigManager().getGlobalConfig().getBoolean(args[3].toString())) + ChatColor.GOLD + " (boolean)");
+						if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isBoolean(args[3].toString())) {
+							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigHandler().getGlobalConfig().getBoolean(args[3].toString())) + ChatColor.GOLD + " (boolean)");
 							return true;
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isInt(args[3].toString())) {
-							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigManager().getGlobalConfig().getInt(args[3].toString())) + ChatColor.GOLD + " (integer)");
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isInt(args[3].toString())) {
+							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigHandler().getGlobalConfig().getInt(args[3].toString())) + ChatColor.GOLD + " (integer)");
 							return true;
-						} else if(SafeCreeper.instance.getConfigManager().getGlobalConfig().isString(args[3].toString())) {
+						} else if(SafeCreeper.instance.getConfigHandler().getGlobalConfig().isString(args[3].toString())) {
 							sender.sendMessage(ChatColor.GOLD + "Global: " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + args[3].toString() + ChatColor.GOLD + " (string)");
 							return true;
 						} else {
@@ -150,16 +150,16 @@ public class CommandHandler {
 							sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
 							return true;
 						}
-						if(SafeCreeper.instance.getConfigManager().worldConfigExist(args[3].toString())) {
+						if(SafeCreeper.instance.getConfigHandler().worldConfigExist(args[3].toString())) {
 							String wname = args[3].toString();
 							
-							if(SafeCreeper.instance.getConfigManager().getWorldConfig(wname).isBoolean(args[4].toString())) {
-								sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigManager().getWorldConfig(wname).getBoolean(args[4].toString())) + ChatColor.GOLD + " (boolean)");
+							if(SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).isBoolean(args[4].toString())) {
+								sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).getBoolean(args[4].toString())) + ChatColor.GOLD + " (boolean)");
 								return true;
-							} else if(SafeCreeper.instance.getConfigManager().getWorldConfig(wname).isInt(args[4].toString())) {
-								sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigManager().getWorldConfig(wname).getInt(args[4].toString())) + ChatColor.GOLD + " (integer)");
+							} else if(SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).isInt(args[4].toString())) {
+								sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + String.valueOf(SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).getInt(args[4].toString())) + ChatColor.GOLD + " (integer)");
 								return true;
-							} else if(SafeCreeper.instance.getConfigManager().getWorldConfig(wname).isString(args[4].toString())) {
+							} else if(SafeCreeper.instance.getConfigHandler().getWorldConfig(wname).isString(args[4].toString())) {
 								sender.sendMessage(ChatColor.GOLD + wname + ": " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " equals to " + ChatColor.YELLOW + args[4].toString() + ChatColor.GOLD + " (string)");
 								return true;
 							} else {
@@ -201,7 +201,7 @@ public class CommandHandler {
 				sender.sendMessage(ChatColor.YELLOW + "Reloading SafeCreeper...");
 				
 				// Reload all the configs
-				SafeCreeper.instance.getConfigManager().reloadAllConfigs();
+				SafeCreeper.instance.getConfigHandler().reloadAllConfigs();
 				
 				// Update all config files if they're out-dated
 				((SCFileUpdater) new SCFileUpdater()).updateFiles();

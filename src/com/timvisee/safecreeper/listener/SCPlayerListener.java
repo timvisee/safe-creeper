@@ -39,39 +39,39 @@ public class SCPlayerListener implements Listener {
 		
 		// Handle the 'CustomDrops' feature
 		// Make sure the custom drops feature is enabled
-		if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.Enabled", false, true, l)) {
+		if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.Enabled", false, true, l)) {
 			
 			// Should Safe Creeper overwrite the default drops
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.OverwriteDefaultDrops", false, true, l))
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.OverwriteDefaultDrops", false, true, l))
 				event.getDrops().clear();
 			
 			// Check if XP is enabled from the Custom Drops feature
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.Enabled", false, true, l)) {
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.Enabled", false, true, l)) {
 
 				// Should XP be dropped
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.DropXP", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.DropXP", true, true, l))
 					event.setDroppedExp(0);
 				else {
 					
 					// Apply the drop chance
-					double dropChance = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.DropChance", 100, true, l);
+					double dropChance = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.DropChance", 100, true, l);
 					if(((int) dropChance * 10) <= rand.nextInt(1000))
 						event.setDroppedExp(0);
 					
 					// Apply the drop multiplier
-					double xpMultiplier = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.Multiplier", 1, true, l);
+					double xpMultiplier = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "PlayerControl", "CustomDrops.XP.Multiplier", 1, true, l);
 					if(xpMultiplier != 1 && xpMultiplier >= 0)
 						event.setDroppedExp((int) (event.getDroppedExp() * xpMultiplier));
 				}
 				
 				// Should XP be kept
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepXP", false, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepXP", false, true, l))
 					event.setNewTotalExp(0);
 				else
 					event.setNewTotalExp(p.getTotalExperience());
 				
 				// Should XP levels be kept
-				event.setKeepLevel(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepLevel", false, true, l));
+				event.setKeepLevel(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CustomDrops.XP.KeepLevel", false, true, l));
 			}
 		}
 	}
@@ -84,14 +84,14 @@ public class SCPlayerListener implements Listener {
 		Random rand = new Random();
 		
 		// Check if mobs are able to spawn
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(p);
-		if(!SafeCreeper.instance.getConfigManager().isValidControl(controlName))
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(p);
+		if(!SafeCreeper.instance.getConfigHandler().isValidControl(controlName))
 			controlName = "OtherMobControl";
 		
-		boolean customHealthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
+		boolean customHealthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomHealth.Enabled", false, true, l);
 		if(customHealthEnabled) {
-			double customHealthMin = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MinHealth", p.getMaxHealth(), true, l) - 1;
-			double customHealthMax = SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", p.getMaxHealth(), true, l);
+			double customHealthMin = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomHealth.MinHealth", p.getMaxHealth(), true, l) - 1;
+			double customHealthMax = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomHealth.MaxHealth", p.getMaxHealth(), true, l);
 			double customHealth =
 					rand.nextInt((int) (Math.max(customHealthMax - customHealthMin, 1))) + customHealthMin;
 			
@@ -112,12 +112,12 @@ public class SCPlayerListener implements Listener {
 		
 		switch (event.getBucket()) {
 		case WATER_BUCKET:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case LAVA_BUCKET:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
 				event.setCancelled(true);
 			break;
 		default:
@@ -132,12 +132,12 @@ public class SCPlayerListener implements Listener {
 		
 		// Check if the player is allowed to sleep, if not, cancel the event
 		if(!hasBypassPermission(event.getPlayer(), "BedControl", "PlayerCanSleep", false))
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "BedControl", "PlayerCanSleep", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "BedControl", "PlayerCanSleep", true, true, l))
 				event.setCancelled(true);
 		
 		// Play the control effects
 		if(!event.isCancelled())
-			SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "Sleeping", l);
+			SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "Sleeping", l);
 	}
 	
 	@EventHandler
@@ -161,7 +161,7 @@ public class SCPlayerListener implements Listener {
 				// Is the bed going to explode in this world environment
 				if(we.equals(Environment.NETHER) || we.equals(Environment.THE_END)) {
 					// Check if the bed's may explode
-					if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "BedControl", "CanExplode", true, true, l)) {
+					if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "BedControl", "CanExplode", true, true, l)) {
 						// Cancel the bed interaction which causes the bed to explode
 						event.setCancelled(true);
 						
@@ -191,7 +191,7 @@ public class SCPlayerListener implements Listener {
 		// Control villager trading
 		if(e instanceof Villager) {
 			if(!hasBypassPermission(event.getPlayer(), "VillagerControl", "CanTrade", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "VillagerControl", "CanTrade", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "VillagerControl", "CanTrade", true, true, l))
 					event.setCancelled(true);
 		}
 	}
@@ -241,7 +241,7 @@ public class SCPlayerListener implements Listener {
 		}
 		
 		// Play effects
-		SafeCreeper.instance.getConfigManager().playControlEffects("PlayerControl", "Join", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects("PlayerControl", "Join", l);
 	}
 	
 	@EventHandler
@@ -250,7 +250,7 @@ public class SCPlayerListener implements Listener {
 		Location l = p.getLocation();
 		World w = l.getWorld();
 		
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanPickupItems", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanPickupItems", true, true, l))
 			event.setCancelled(true);
 	}
 	
@@ -263,7 +263,7 @@ public class SCPlayerListener implements Listener {
 		
 		// Is the player allowed to sneak
 		if(!sneaking)
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanSneak", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanSneak", true, true, l))
 				event.setCancelled(true);
 	}
 	
@@ -276,7 +276,7 @@ public class SCPlayerListener implements Listener {
 		
 		// Is the player allowed to sneak
 		if(!sprinting)
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "PlayerControl", "CanSprint", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "PlayerControl", "CanSprint", true, true, l))
 				event.setCancelled(true);
 	}
 	

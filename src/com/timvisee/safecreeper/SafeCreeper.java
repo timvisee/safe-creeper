@@ -104,14 +104,14 @@ public class SafeCreeper extends JavaPlugin {
 		setUpApiManager();
 		
 		// Setup the config manager before all other managers, to make the file updater work
-	    setUpConfigManager();
+	    setUpConfigHandler();
 		
 		// Verify all the Safe Creeper files
 		boolean anyFileUpdated = verifyExternalFiles(true);
 		
 		// Refresh the config files if any external file was updated
 		if(anyFileUpdated)
-			getConfigManager().reloadAllConfigs();
+			getConfigHandler().reloadAllConfigs();
 		
 		// Initialize the update checker
 		setUpUpdateChecker();
@@ -165,11 +165,11 @@ public class SafeCreeper extends JavaPlugin {
 	    setUpPermissionsManager();
 	    setUpDestructionRepairManager();
 	    setUpLivingEntityReviveManager();
-	    setUpMobArenaManager();
-	    setUpPVPArenaManager();
+	    setUpMobArenaHandler();
+	    setUpPVPArenaHandler();
 	    setUpFactionsManager();
-	    setUpWorldGuardManager();
-	    setUpCorruptionManager();
+	    setUpWorldGuardHandler();
+	    setUpCorruptionHandler();
 		
 		// Load destruction repair data
 		getDestructionRepairManager().load();
@@ -376,7 +376,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the config manager
 	 */
-	public void setUpConfigManager() {
+	public void setUpConfigHandler() {
 		this.cm = new SCConfigHandler(globalConfigFile, worldConfigsFolder);
 	}
 	
@@ -384,7 +384,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the config manager instance
 	 * @return
 	 */
-	public SCConfigHandler getConfigManager() {
+	public SCConfigHandler getConfigHandler() {
 		return this.cm;
 	}
 	
@@ -424,7 +424,7 @@ public class SafeCreeper extends JavaPlugin {
 	/**
 	 * Set up the World Guard handler
 	 */
-	public void setUpWorldGuardManager() {
+	public void setUpWorldGuardHandler() {
 		this.wgm = new SCWorldGuardHandler(getSCLogger());
 		this.wgm.setUp();
 	}
@@ -433,41 +433,41 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the World Guard plugin instance
 	 * @return
 	 */
-    public SCWorldGuardHandler getWorldGuardManager() {
+    public SCWorldGuardHandler getWorldGuardHandler() {
         return this.wgm;
     }
     
     /**
-     * Set up the Mob Arena Manager
+     * Set up the Mob Arena handler
      */
-    public void setUpMobArenaManager() {
+    public void setUpMobArenaHandler() {
     	// Set up the mob arena manager
     	this.mam = new SCMobArenaHandler(getSCLogger());
     	this.mam.setUp();
     }
     
     /**
-     * Get the MobArena manager
-     * @return MobArena manager
+     * Get the MobArena handler
+     * @return MobArena handler
      */
-    public SCMobArenaHandler getMobArenaManager() {
+    public SCMobArenaHandler getMobArenaHandler() {
     	return this.mam;
     }
    
     /**
-     * Set up the PVP Arena manager
+     * Set up the PVP Arena handler
      */
-    public void setUpPVPArenaManager() {
+    public void setUpPVPArenaHandler() {
     	// Set up the PVP Arena manager
     	this.pam = new SCPVPArenaHandler(getSCLogger());
     	this.pam.setUp();
     }
     
     /**
-     * Get the PVP Arena manager instance
-     * @return PVP Arena manager instnace
+     * Get the PVP Arena handler instance
+     * @return PVP Arena handler instnace
      */
-    public SCPVPArenaHandler getPVPArenaManager() {
+    public SCPVPArenaHandler getPVPArenaHandler() {
     	return this.pam;
     }
    
@@ -480,26 +480,26 @@ public class SafeCreeper extends JavaPlugin {
     }
     
     /**
-     * Get the Factions manager
-     * @return Factions manager instance
+     * Get the Factions handler
+     * @return Factions handler instance
      */
-    public SCFactionsHandler getFactionsManager() {
+    public SCFactionsHandler getFactionsHandler() {
     	return this.fm;
     }
     
     /**
-     * Set up the Corruption manager
+     * Set up the Corruption handler
      */
-    public void setUpCorruptionManager() {
+    public void setUpCorruptionHandler() {
     	this.corManager = new SCCorruptionHandler(getSCLogger());
     	this.corManager.setUp();
     }
     
     /**
      * Get the Corruption handler
-     * @return Corruption manager
+     * @return Corruption handler
      */
-    public SCCorruptionHandler getCorruptionManager() {
+    public SCCorruptionHandler getCorruptionHandler() {
     	return this.corManager;
     }
     
@@ -592,32 +592,6 @@ public class SafeCreeper extends JavaPlugin {
 		// Return the result
 		return (!invalid);
     }
-    
-    /**
-     * Check if the config file exists
-     * @throws Exception
-     */
-	public void checkConigFilesExist() throws Exception {
-		if(!getDataFolder().exists()) {
-			getSCLogger().info("Creating new Safe Creeper folder");
-			getDataFolder().mkdirs();
-		}
-		File configFile = new File(getDataFolder(), "config.yml");
-		if(!configFile.exists()) {
-			getSCLogger().info("Generating new config file");
-			copyFile(getResource("res/config.yml"), configFile);
-		}
-		if(!globalConfigFile.exists()) {
-			getSCLogger().info("Generating new global file");
-			copyFile(getResource("res/global.yml"), globalConfigFile);
-		}
-		if(!worldConfigsFolder.exists()) {
-			getSCLogger().info("Generating new 'worlds' folder");
-			worldConfigsFolder.mkdirs();
-			copyFile(getResource("res/worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
-			copyFile(getResource("res/worlds/world_example2.yml"), new File(worldConfigsFolder, "world_example2.yml"));
-		}
-	}
 	
 	/**
 	 * Copy a file

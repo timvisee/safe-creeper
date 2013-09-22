@@ -34,7 +34,7 @@ public class SCCreatureReviveTask  extends SCTask {
 		World w = this.l.getWorld();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(this.c);
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(this.c);
 		
 		// Spawn the entity
 		Creature c = (Creature) w.spawnEntity(this.l, this.c.getType());
@@ -49,10 +49,10 @@ public class SCCreatureReviveTask  extends SCTask {
 		
 		// If the Living Entity was inside any Mob Arena add it to the arena again
 		if(isInMobArena())
-			SafeCreeper.instance.getMobArenaManager().addMonsterToArena(this.mobArena, c);
+			SafeCreeper.instance.getMobArenaHandler().addMonsterToArena(this.mobArena, c);
 		
 		// Play the control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Revived", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Revived", l);
 	}
 	
 	/**

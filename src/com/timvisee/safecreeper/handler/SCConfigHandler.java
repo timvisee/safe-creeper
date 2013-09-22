@@ -425,7 +425,7 @@ public class SCConfigHandler {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+						if(!SafeCreeper.instance.getMobArenaHandler().isInArena(loc))
 							continue;
 						
 						useEntry = true;
@@ -433,10 +433,10 @@ public class SCConfigHandler {
 					} else {
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+						if(!SafeCreeper.instance.getMobArenaHandler().isInArena(loc))
 							continue;
 						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
+						Arena a = SafeCreeper.instance.getMobArenaHandler().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useEntry = true;
@@ -463,16 +463,16 @@ public class SCConfigHandler {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaHandler().isPVPArenaAt(loc))
 							useEntry = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaHandler().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaHandler().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useEntry = true;
@@ -500,16 +500,16 @@ public class SCConfigHandler {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsHandler().isFactionAt(loc))
 							useEntry = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsHandler().isFactionAt(loc))
 							continue;
 						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsHandler().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useEntry = true;
@@ -756,11 +756,11 @@ public class SCConfigHandler {
 					if(entrySplitted.trim().equals("*")) {
 						
 						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaHandler() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+						if(!SafeCreeper.instance.getMobArenaHandler().isInArena(loc))
 							continue;
 						
 						useCur = true;
@@ -768,14 +768,14 @@ public class SCConfigHandler {
 					} else {
 						
 						// The mob arena handler may not be null
-						if(SafeCreeper.instance.getMobArenaManager() == null)
+						if(SafeCreeper.instance.getMobArenaHandler() == null)
 							continue;
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getMobArenaManager().isInArena(loc))
+						if(!SafeCreeper.instance.getMobArenaHandler().isInArena(loc))
 							continue;
 						
-						Arena a = SafeCreeper.instance.getMobArenaManager().getArenaAt(loc);
+						Arena a = SafeCreeper.instance.getMobArenaHandler().getArenaAt(loc);
 						
 						if(a.configName().equals(entrySplitted.trim()))
 							useCur = true;
@@ -802,16 +802,16 @@ public class SCConfigHandler {
 				for(String entrySplitted : keysSplitted) {
 					
 					if(entrySplitted.trim().equals("*")) {
-						if(SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+						if(SafeCreeper.instance.getPVPArenaHandler().isPVPArenaAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an arena
-						if(!SafeCreeper.instance.getPVPArenaManager().isPVPArenaAt(loc))
+						if(!SafeCreeper.instance.getPVPArenaHandler().isPVPArenaAt(loc))
 							continue;
 						
-						String arenaName = SafeCreeper.instance.getPVPArenaManager().getPVPArenaAt(loc);
+						String arenaName = SafeCreeper.instance.getPVPArenaHandler().getPVPArenaAt(loc);
 						
 						if(arenaName.equals(entrySplitted.trim()))
 							useCur = true;
@@ -839,16 +839,16 @@ public class SCConfigHandler {
 					
 					if(entrySplitted.trim().equals("*")) {
 						// There has to be a faction at the current location
-						if(SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+						if(SafeCreeper.instance.getFactionsHandler().isFactionAt(loc))
 							useCur = true;
 					
 					} else {
 						
 						// The location has to be in an faction
-						if(!SafeCreeper.instance.getFactionsManager().isFactionAt(loc))
+						if(!SafeCreeper.instance.getFactionsHandler().isFactionAt(loc))
 							continue;
 						
-						String fname = SafeCreeper.instance.getFactionsManager().getFactionAt(loc);
+						String fname = SafeCreeper.instance.getFactionsHandler().getFactionAt(loc);
 						
 						if(fname.equals(entrySplitted.trim()))
 							useCur = true;

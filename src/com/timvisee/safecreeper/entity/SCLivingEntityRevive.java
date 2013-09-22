@@ -65,7 +65,7 @@ public class SCLivingEntityRevive {
 		World w = this.l.getWorld();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(this.le);
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(this.le);
 		
 		// Spawn the entity
 		Entity e = w.spawnEntity(this.l, this.le.getType());
@@ -83,6 +83,6 @@ public class SCLivingEntityRevive {
 		}
 		
 		// Play the control effects
-		SafeCreeper.instance.getConfigManager().playControlEffects(controlName, "Revived", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Revived", l);
 	}
 }

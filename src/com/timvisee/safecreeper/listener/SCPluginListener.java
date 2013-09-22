@@ -32,7 +32,7 @@ public class SCPluginListener implements Listener {
 			pm.onPluginDisable(e);
 		
 		// Run the onPluginDisable method in other plugin manager classes
-		SafeCreeper.instance.getPVPArenaManager().onPluginDisable(e);
+		SafeCreeper.instance.getPVPArenaHandler().onPluginDisable(e);
 	}
 	
 	/**

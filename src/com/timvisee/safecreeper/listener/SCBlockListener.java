@@ -41,7 +41,7 @@ public class SCBlockListener implements Listener {
 		case STATIONARY_WATER:
 			// Could a player place water
 			if(!hasBypassPermission(event.getPlayer(), "WaterControl", "CanPlaceWater", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
 					event.setCancelled(true);
 			break;
 			
@@ -49,14 +49,14 @@ public class SCBlockListener implements Listener {
 		case STATIONARY_LAVA:
 			// Could a player place lava
 			if(!hasBypassPermission(event.getPlayer(), "LavaControl", "CanPlaceLava", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
 					event.setCancelled(true);
 			break;
 			
 		case TNT:
 			// Could a player place a TNT block
 			if(!hasBypassPermission(event.getPlayer(), "TNTControl", "CanPlaceTNT", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "CanPlaceTNT", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "TNTControl", "CanPlaceTNT", true, true, l))
 					event.setCancelled(true);
 			break;
 			
@@ -76,7 +76,7 @@ public class SCBlockListener implements Listener {
 		case TNT:
 			// Could a player break a TNT block
 			if(!hasBypassPermission(event.getPlayer(), "TNTControl", "CanBreakTNT", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "TNTControl", "CanBreakTNT", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "TNTControl", "CanBreakTNT", true, true, l))
 					event.setCancelled(true);
 			break;
 			
@@ -93,13 +93,13 @@ public class SCBlockListener implements Listener {
 		BlockState newState = event.getNewState();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(e, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherMobControl");
 		
 		// Is the entity a snowman that can spawn snow layers
 		if(e instanceof Snowman) {
 			// The snowman tries to spawn snow
 			if(newState.getType().equals(Material.SNOW)) {
-				final boolean canCreateSnow = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CanCreateSnow", true, true, l);
+				final boolean canCreateSnow = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanCreateSnow", true, true, l);
 				if(!canCreateSnow)
 					event.setCancelled(true);
 			}
@@ -113,14 +113,14 @@ public class SCBlockListener implements Listener {
 		World w = b.getWorld();
 		
 		// Could fire burn/break blocks
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "EnableBlockFire", true, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "EnableBlockFire", true, true, l))
 			event.setCancelled(true);
 		
 		else {
-			boolean rebuildBlocks = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "DestructionRebuild.Enabled", false, true, l);
+			boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "DestructionRebuild.Enabled", false, true, l);
 			
 			if(rebuildBlocks) {
-				double rebuildDelay = SafeCreeper.instance.getConfigManager().getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+				double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
 				
 				SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 				
@@ -142,7 +142,7 @@ public class SCBlockListener implements Listener {
 				break;
 			
 			if(!hasBypassPermission(event.getPlayer(), "FirechargeControl", "EnableFireCharge", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FirechargeControl", "EnableFireCharge", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FirechargeControl", "EnableFireCharge", true, true, l))
 					event.setCancelled(true);
 			break;
 			
@@ -152,25 +152,25 @@ public class SCBlockListener implements Listener {
 				break;
 			
 			if(!hasBypassPermission(event.getPlayer(), "FlintAndSteelControl", "EnableFlintAndSteel", false))
-				if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FlintAndSteelControl", "EnableFlintAndSteel", true, true, l))
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FlintAndSteelControl", "EnableFlintAndSteel", true, true, l))
 					event.setCancelled(true);
 			break;
 			
 		case LAVA:
 			// Could lava cause fire
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "LavaFire", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "LavaFire", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case LIGHTNING:
 			// Could lightning ignite blocks
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LightningControl", "IgniteBlocks", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LightningControl", "IgniteBlocks", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case SPREAD:
 			// Could fire spread out
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "FireControl", "FireSpread", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "FireSpread", true, true, l))
 				event.setCancelled(true);
 			break;
 		
@@ -191,13 +191,13 @@ public class SCBlockListener implements Listener {
 		case WATER:
 		case STATIONARY_WATER:
 			// This is water, check if water can spread
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "WaterSpread", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "WaterSpread", true, true, l))
 				event.setCancelled(true);
 			else {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "InfiniteWater", false, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "InfiniteWater", false, true, l))
 					toBlock.setData((byte) 0);
 				
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "SpreadUpwards", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "SpreadUpwards", false, true, l)) {
 					BlockFace[] faces = new BlockFace[]{
 							BlockFace.NORTH, BlockFace.EAST,
 							BlockFace.SOUTH, BlockFace.WEST};
@@ -218,17 +218,17 @@ public class SCBlockListener implements Listener {
 		case LAVA:
 		case STATIONARY_LAVA:
 			// This is lava, check if lava can spread
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "LavaSpread", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "LavaSpread", true, true, l))
 				event.setCancelled(true);
 			else {
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "InfiniteLava", false, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "InfiniteLava", false, true, l))
 					toBlock.setData((byte) 0);
 				
 				BlockFace[] faces = new BlockFace[]{
 						BlockFace.NORTH, BlockFace.EAST,
 						BlockFace.SOUTH, BlockFace.WEST};
 				
-				if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "SpreadUpwards", false, true, l)) {
+				if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "SpreadUpwards", false, true, l)) {
 					for(BlockFace f : faces) {
 						Block relBlock = toBlock.getRelative(f);
 						Block aboveBlock = relBlock.getRelative(BlockFace.UP);
@@ -268,13 +268,13 @@ public class SCBlockListener implements Listener {
 		
 		switch(item.getType()) {
 		case WATER_BUCKET:
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WaterControl", "CanPlaceWater", true, true, l))
 				event.setCancelled(true);
 			break;
 			
 		case LAVA_BUCKET:
 			// This is lava, check if lava can spread
-			if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "LavaControl", "CanPlaceLava", true, true, l))
 				event.setCancelled(true);
 			break;
 		

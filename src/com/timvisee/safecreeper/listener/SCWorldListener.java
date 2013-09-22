@@ -20,7 +20,7 @@ public class SCWorldListener implements Listener {
 	public void onWorldLoad(WorldLoadEvent e) {
 		World w = e.getWorld();
 		Location l = w.getSpawnLocation();
-		SCConfigHandler cm = SafeCreeper.instance.getConfigManager();
+		SCConfigHandler cm = SafeCreeper.instance.getConfigHandler();
 		Random rand = new Random();
 		
 		// Check if the world control is enabled

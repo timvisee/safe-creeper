@@ -205,7 +205,7 @@ public class SCFileUpdater {
 	@SuppressWarnings("unused")
 	public static boolean updateGlobalConfig() {
 		// Get the global config file
-		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		FileConfiguration c = SafeCreeper.instance.getConfigHandler().getGlobalConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
 		if(isConfigUpToDate(c))
@@ -482,8 +482,8 @@ public class SCFileUpdater {
 		newc.options().header("Global Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
 		
 		// Save the config file
-		SafeCreeper.instance.getConfigManager().setGlobalConfig(newc);
-		SafeCreeper.instance.getConfigManager().saveGlobalConfig();
+		SafeCreeper.instance.getConfigHandler().setGlobalConfig(newc);
+		SafeCreeper.instance.getConfigHandler().saveGlobalConfig();
 
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
@@ -498,7 +498,7 @@ public class SCFileUpdater {
 	 * @return True if any file was updated
 	 */
 	public static boolean updateAllWorldsConfig() {
-		List<String> configWorlds = SafeCreeper.instance.getConfigManager().listConfigWorlds();
+		List<String> configWorlds = SafeCreeper.instance.getConfigHandler().listConfigWorlds();
 		
 		// Store whether any file was updated
 		boolean anyUpdated = false;
@@ -519,8 +519,8 @@ public class SCFileUpdater {
 	 */
 	public static boolean updateWorldConfig(String w) {
 		// Get the global config file
-		FileConfiguration c = SafeCreeper.instance.getConfigManager().getWorldConfig(w);
-		FileConfiguration globalc = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		FileConfiguration c = SafeCreeper.instance.getConfigHandler().getWorldConfig(w);
+		FileConfiguration globalc = SafeCreeper.instance.getConfigHandler().getGlobalConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
 		if(isConfigUpToDate(c))
@@ -680,8 +680,8 @@ public class SCFileUpdater {
 		newc.options().header("World Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
 		
 		// Save the config file
-		SafeCreeper.instance.getConfigManager().setWorldConfig(w, newc);
-		SafeCreeper.instance.getConfigManager().saveWorldConfig(w);
+		SafeCreeper.instance.getConfigHandler().setWorldConfig(w, newc);
+		SafeCreeper.instance.getConfigHandler().saveWorldConfig(w);
 
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
@@ -723,13 +723,13 @@ public class SCFileUpdater {
 		long t = System.currentTimeMillis();
 		
 		// Get the global config file
-		FileConfiguration c = SafeCreeper.instance.getConfigManager().getGlobalConfig();
+		FileConfiguration c = SafeCreeper.instance.getConfigHandler().getGlobalConfig();
 		
 		// Get the current config version
 		String configVer = c.getString("version", "0.1");
 		
 		// Get the path to copy the file to
-		File globalConfigFile = SafeCreeper.instance.getConfigManager().getGlobalConfigFile();
+		File globalConfigFile = SafeCreeper.instance.getConfigHandler().getGlobalConfigFile();
 		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "global.yml");
 		
 		// Make sure the parent dirs exists
@@ -749,13 +749,13 @@ public class SCFileUpdater {
 		long t = System.currentTimeMillis();
 		
 		// Get the world config file
-		FileConfiguration c = SafeCreeper.instance.getConfigManager().getWorldConfig(w);
+		FileConfiguration c = SafeCreeper.instance.getConfigHandler().getWorldConfig(w);
 		
 		// Get the current config version
 		String configVer = c.getString("version", "0.1");
 		
 		// Get the path to copy the file to
-		File worldConfigFile = SafeCreeper.instance.getConfigManager().getWorldConfigFile(w);
+		File worldConfigFile = SafeCreeper.instance.getConfigHandler().getWorldConfigFile(w);
 		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "worlds" + File.separator + w + ".yml");
 		
 		// Make sure the parent dirs exists

@@ -51,10 +51,10 @@ public class SCLivingEntityReviveManager {
 		revive(reviver);
 
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(revive.getLivingEntity(), "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(revive.getLivingEntity(), "OtherMobControl");
 		
-		boolean broadcastRevive = SafeCreeper.instance.getConfigManager().getOptionBoolean(revive.getLivingEntity().getWorld(), controlName, "Reviving.Reviver.BroadcastRevive", true, true, revive.getLivingEntity().getLocation());
-		double broadcastRadius = SafeCreeper.instance.getConfigManager().getOptionDouble(revive.getLivingEntity().getWorld(), controlName, "Reviving.Reviver.BroadcastRadius", 25, true, revive.getLivingEntity().getLocation());
+		boolean broadcastRevive = SafeCreeper.instance.getConfigHandler().getOptionBoolean(revive.getLivingEntity().getWorld(), controlName, "Reviving.Reviver.BroadcastRevive", true, true, revive.getLivingEntity().getLocation());
+		double broadcastRadius = SafeCreeper.instance.getConfigHandler().getOptionDouble(revive.getLivingEntity().getWorld(), controlName, "Reviving.Reviver.BroadcastRadius", 25, true, revive.getLivingEntity().getLocation());
 		
 		if(broadcastRevive) {
 			List<Entity> nearbyEntities = reviver.getNearbyEntities(broadcastRadius, broadcastRadius, broadcastRadius);

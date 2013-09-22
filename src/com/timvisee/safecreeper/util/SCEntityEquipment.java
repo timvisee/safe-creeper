@@ -68,23 +68,23 @@ public class SCEntityEquipment {
 		Random rand = new Random();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigManager().getControlName(this.le, "OtherMobControl");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(this.le, "OtherMobControl");
 		
 		// Make sure the control is enabled
-		if(!SafeCreeper.instance.getConfigManager().isControlEnabled(w.getName(), controlName, false, l))
+		if(!SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l))
 			return false;
 		
 		// Make sure the CustomEquipment feature is enabled
-		if(!SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.Enabled", false, true, l))
+		if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.Enabled", false, true, l))
 			return false;
 		
 		// Get all equipment sets
-		List<String> allSets = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets", new ArrayList<String>(), true, l);
+		List<String> allSets = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets", new ArrayList<String>(), true, l);
 		List<String> sets = new ArrayList<String>();
 		for(String set : allSets) {
 			// Make sure this set is enabled and the set has a chance greater than zero
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l) > 0)
 					sets.add(set);
 		}
 		
@@ -95,7 +95,7 @@ public class SCEntityEquipment {
 		// Calculate the total sets chance
 		int totalSetsChance = 0;
 		for(String set : sets) {
-			totalSetsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l), 0);
+			totalSetsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l), 0);
 		}
 		
 		// Pick a random set
@@ -103,7 +103,7 @@ public class SCEntityEquipment {
 		int currentChanceIndex = 0;
 		String curSet = "";
 		for(String set : sets) {
-			currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l), 0);
+			currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + set + ".Chance", 1, true, l), 0);
 			
 			if(currentChanceIndex >= randomSetNumber) {
 				curSet = set;
@@ -117,12 +117,12 @@ public class SCEntityEquipment {
 		 * Apply the hand items
 		 */
 		// Get all the hand items
-		List<String> allItems = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands", new ArrayList<String>(), true, l);
+		List<String> allItems = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands", new ArrayList<String>(), true, l);
 		List<String> items = new ArrayList<String>();
 		for(String item : allItems) {
 			// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l) > 0)
 					items.add(item);
 		}
 		
@@ -131,7 +131,7 @@ public class SCEntityEquipment {
 			// Calculate the total items chance
 			int totalItemsChance = 0;
 			for(String item : items) {
-				totalItemsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l), 0);
+				totalItemsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l), 0);
 			}
 			
 			// Pick a random set
@@ -139,7 +139,7 @@ public class SCEntityEquipment {
 			currentChanceIndex = 0;
 			String curItem = "";
 			for(String item : items) {
-				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l), 0);
+				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + item + ".Chance", 1, true, l), 0);
 				
 				if(currentChanceIndex >= randomItemNumber) {
 					curItem = item;
@@ -148,19 +148,19 @@ public class SCEntityEquipment {
 			}
 			if(curItem.trim() != "" && curItem != null) {
 				// Get all item data
-				int itemId = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemId", 0, true, l);
-				byte itemData = (byte) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemData", -1, true, l);
-				short itemDurability = (short) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemDurability", -1, true, l);
-				String itemName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemName", "", true, l);
-				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
+				int itemId = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemId", 0, true, l);
+				byte itemData = (byte) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemData", -1, true, l);
+				short itemDurability = (short) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemDurability", -1, true, l);
+				String itemName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".ItemName", "", true, l);
+				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
 				
 				// Get all enchantments for the item
-				List<String> allEnchantments = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
+				List<String> allEnchantments = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
 				List<String> enchantments = new ArrayList<String>();
 				for(String enchantment : allEnchantments) {
 					// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
-						double enchantmentChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
+						double enchantmentChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
 						if(enchantmentChance > 0) {
 							if(((int) enchantmentChance * 10) > rand.nextInt(1000))
 								enchantments.add(enchantment);
@@ -183,8 +183,8 @@ public class SCEntityEquipment {
 					// Add enchantments to item
 					for(String entry : enchantments) {					
 						// Cast enchantment to enchantment name thingy!!!!!!!
-						String enchantmentName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
-						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
+						String enchantmentName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
+						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Hands." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
 						
 						if(enchantmentName == "") {
 							System.out.println("[SafeCreeper] [ERROR] Unknown enchantment: " + enchantmentName);
@@ -215,12 +215,12 @@ public class SCEntityEquipment {
 		 * Appy the head items
 		 */
 		// Get all the hand items
-		allItems = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head", new ArrayList<String>(), true, l);
+		allItems = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head", new ArrayList<String>(), true, l);
 		items = new ArrayList<String>();
 		for(String item : allItems) {
 			// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l) > 0)
 					items.add(item);
 		}
 		
@@ -229,7 +229,7 @@ public class SCEntityEquipment {
 			// Calculate the total items chance
 			int totalItemsChance = 0;
 			for(String item : items) {
-				totalItemsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l), 0);
+				totalItemsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l), 0);
 			}
 			
 			// Pick a random set
@@ -237,7 +237,7 @@ public class SCEntityEquipment {
 			currentChanceIndex = 0;
 			String curItem = "";
 			for(String item : items) {
-				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l), 0);
+				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + item + ".Chance", 1, true, l), 0);
 				
 				if(currentChanceIndex >= randomItemNumber) {
 					curItem = item;
@@ -246,19 +246,19 @@ public class SCEntityEquipment {
 			}
 			if(curItem.trim() != "" && curItem != null) {
 				// Get all item data
-				int itemId = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemId", 0, true, l);
-				byte itemData = (byte) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemData", -1, true, l);
-				short itemDurability = (short) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemDurability", -1, true, l);
-				String itemName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemName", "", true, l);
-				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
+				int itemId = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemId", 0, true, l);
+				byte itemData = (byte) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemData", -1, true, l);
+				short itemDurability = (short) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemDurability", -1, true, l);
+				String itemName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".ItemName", "", true, l);
+				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
 				
 				// Get all enchantments for the item
-				List<String> allEnchantments = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
+				List<String> allEnchantments = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
 				List<String> enchantments = new ArrayList<String>();
 				for(String enchantment : allEnchantments) {
 					// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
-						double enchantmentChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
+						double enchantmentChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
 						if(enchantmentChance > 0) {
 							if(((int) enchantmentChance * 10) > rand.nextInt(1000))
 								enchantments.add(enchantment);
@@ -281,8 +281,8 @@ public class SCEntityEquipment {
 					// Add enchantments to item
 					for(String entry : enchantments) {					
 						// Cast enchantment to enchantment name thingy!!!!!!!
-						String enchantmentName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
-						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
+						String enchantmentName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
+						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Head." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
 						
 						if(enchantmentName == "") {
 							System.out.println("[SafeCreeper] [ERROR] Unknown enchantment: " + enchantmentName);
@@ -313,12 +313,12 @@ public class SCEntityEquipment {
 		 * Appy the chest items
 		 */
 		// Get all the hand items
-		allItems = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest", new ArrayList<String>(), true, l);
+		allItems = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest", new ArrayList<String>(), true, l);
 		items = new ArrayList<String>();
 		for(String item : allItems) {
 			// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l) > 0)
 					items.add(item);
 		}
 		
@@ -327,7 +327,7 @@ public class SCEntityEquipment {
 			// Calculate the total items chance
 			int totalItemsChance = 0;
 			for(String item : items) {
-				totalItemsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l), 0);
+				totalItemsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l), 0);
 			}
 			
 			// Pick a random set
@@ -335,7 +335,7 @@ public class SCEntityEquipment {
 			currentChanceIndex = 0;
 			String curItem = "";
 			for(String item : items) {
-				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l), 0);
+				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + item + ".Chance", 1, true, l), 0);
 				
 				if(currentChanceIndex >= randomItemNumber) {
 					curItem = item;
@@ -344,19 +344,19 @@ public class SCEntityEquipment {
 			}
 			if(curItem.trim() != "" && curItem != null) {
 				// Get all item data
-				int itemId = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemId", 0, true, l);
-				byte itemData = (byte) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemData", -1, true, l);
-				short itemDurability = (short) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemDurability", -1, true, l);
-				String itemName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemName", "", true, l);
-				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
+				int itemId = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemId", 0, true, l);
+				byte itemData = (byte) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemData", -1, true, l);
+				short itemDurability = (short) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemDurability", -1, true, l);
+				String itemName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".ItemName", "", true, l);
+				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
 				
 				// Get all enchantments for the item
-				List<String> allEnchantments = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
+				List<String> allEnchantments = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
 				List<String> enchantments = new ArrayList<String>();
 				for(String enchantment : allEnchantments) {
 					// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
-						double enchantmentChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
+						double enchantmentChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
 						if(enchantmentChance > 0) {
 							if(((int) enchantmentChance * 10) > rand.nextInt(1000))
 								enchantments.add(enchantment);
@@ -379,8 +379,8 @@ public class SCEntityEquipment {
 					// Add enchantments to item
 					for(String entry : enchantments) {					
 						// Cast enchantment to enchantment name thingy!!!!!!!
-						String enchantmentName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
-						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
+						String enchantmentName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
+						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Chest." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
 						
 						if(enchantmentName == "") {
 							System.out.println("[SafeCreeper] [ERROR] Unknown enchantment: " + enchantmentName);
@@ -411,12 +411,12 @@ public class SCEntityEquipment {
 		 * Appy the leg items
 		 */
 		// Get all the hand items
-		allItems = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs", new ArrayList<String>(), true, l);
+		allItems = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs", new ArrayList<String>(), true, l);
 		items = new ArrayList<String>();
 		for(String item : allItems) {
 			// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l) > 0)
 					items.add(item);
 		}
 		
@@ -425,7 +425,7 @@ public class SCEntityEquipment {
 			// Calculate the total items chance
 			int totalItemsChance = 0;
 			for(String item : items) {
-				totalItemsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l), 0);
+				totalItemsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l), 0);
 			}
 			
 			// Pick a random set
@@ -433,7 +433,7 @@ public class SCEntityEquipment {
 			currentChanceIndex = 0;
 			String curItem = "";
 			for(String item : items) {
-				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l), 0);
+				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + item + ".Chance", 1, true, l), 0);
 				
 				if(currentChanceIndex >= randomItemNumber) {
 					curItem = item;
@@ -442,19 +442,19 @@ public class SCEntityEquipment {
 			}
 			if(curItem.trim() != "" && curItem != null) {
 				// Get all item data
-				int itemId = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemId", 0, true, l);
-				byte itemData = (byte) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemData", -1, true, l);
-				short itemDurability = (short) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemDurability", -1, true, l);
-				String itemName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemName", "", true, l);
-				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
+				int itemId = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemId", 0, true, l);
+				byte itemData = (byte) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemData", -1, true, l);
+				short itemDurability = (short) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemDurability", -1, true, l);
+				String itemName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".ItemName", "", true, l);
+				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
 				
 				// Get all enchantments for the item
-				List<String> allEnchantments = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
+				List<String> allEnchantments = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
 				List<String> enchantments = new ArrayList<String>();
 				for(String enchantment : allEnchantments) {
 					// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
-						double enchantmentChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
+						double enchantmentChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
 						if(enchantmentChance > 0) {
 							if(((int) enchantmentChance * 10) > rand.nextInt(1000))
 								enchantments.add(enchantment);
@@ -477,8 +477,8 @@ public class SCEntityEquipment {
 					// Add enchantments to item
 					for(String entry : enchantments) {					
 						// Cast enchantment to enchantment name thingy!!!!!!!
-						String enchantmentName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
-						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
+						String enchantmentName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
+						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Legs." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
 						
 						if(enchantmentName == "") {
 							System.out.println("[SafeCreeper] [ERROR] Unknown enchantment: " + enchantmentName);
@@ -509,12 +509,12 @@ public class SCEntityEquipment {
 		 * Appy the feet items
 		 */
 		// Get all the hand items
-		allItems = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet", new ArrayList<String>(), true, l);
+		allItems = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet", new ArrayList<String>(), true, l);
 		items = new ArrayList<String>();
 		for(String item : allItems) {
 			// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Enabled", true, true, l))
-				if(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l) > 0)
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Enabled", true, true, l))
+				if(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l) > 0)
 					items.add(item);
 		}
 		
@@ -523,7 +523,7 @@ public class SCEntityEquipment {
 			// Calculate the total items chance
 			int totalItemsChance = 0;
 			for(String item : items) {
-				totalItemsChance += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l), 0);
+				totalItemsChance += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l), 0);
 			}
 			
 			// Pick a random set
@@ -531,7 +531,7 @@ public class SCEntityEquipment {
 			currentChanceIndex = 0;
 			String curItem = "";
 			for(String item : items) {
-				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l), 0);
+				currentChanceIndex += Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + item + ".Chance", 1, true, l), 0);
 				
 				if(currentChanceIndex >= randomItemNumber) {
 					curItem = item;
@@ -540,19 +540,19 @@ public class SCEntityEquipment {
 			}
 			if(curItem.trim() != "" && curItem != null) {
 				// Get all item data
-				int itemId = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemId", 0, true, l);
-				byte itemData = (byte) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemData", -1, true, l);
-				short itemDurability = (short) SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemDurability", -1, true, l);
-				String itemName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemName", "", true, l);
-				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigManager().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
+				int itemId = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemId", 0, true, l);
+				byte itemData = (byte) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemData", -1, true, l);
+				short itemDurability = (short) SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemDurability", -1, true, l);
+				String itemName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".ItemName", "", true, l);
+				float dropChance = (float) ((Math.max(Math.min(SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".DropChance", -1, true, l), 100), -1) / 100));
 				
 				// Get all enchantments for the item
-				List<String> allEnchantments = SafeCreeper.instance.getConfigManager().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
+				List<String> allEnchantments = SafeCreeper.instance.getConfigHandler().getOptionKeysList(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments", new ArrayList<String>(), true, l);
 				List<String> enchantments = new ArrayList<String>();
 				for(String enchantment : allEnchantments) {
 					// Make sure there's anything inside the hands node, these must be enabled and must have a chance
-					if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
-						double enchantmentChance = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
+					if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + enchantment + ".Enabled", true, true, l)) {
+						double enchantmentChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + enchantment + ".Chance", 0, true, l);
 						if(enchantmentChance > 0) {
 							if(((int) enchantmentChance * 10) > rand.nextInt(1000))
 								enchantments.add(enchantment);
@@ -575,8 +575,8 @@ public class SCEntityEquipment {
 					// Add enchantments to item
 					for(String entry : enchantments) {					
 						// Cast enchantment to enchantment name thingy!!!!!!!
-						String enchantmentName = SafeCreeper.instance.getConfigManager().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
-						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
+						String enchantmentName = SafeCreeper.instance.getConfigHandler().getOptionString(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + entry + ".Enchantment", "", true, l).trim().toUpperCase().replace(" ", "_");
+						int enchantmentLevel = Math.max(SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomEquipment.EquipmentSets." + curSet + ".Feet." + curItem + ".Enchantments." + entry + ".Level", 1, true, l), 1);
 						
 						if(enchantmentName == "") {
 							System.out.println("[SafeCreeper] [ERROR] Unknown enchantment: " + enchantmentName);
