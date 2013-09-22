@@ -65,7 +65,6 @@ public class SafeCreeper extends JavaPlugin {
 	private SCPVPArenaHandler pam;
 	private SCFactionsHandler fm;
 	private SCWorldGuardHandler wgm;
-	private SCStaticsManager statics = new SCStaticsManager();
 	
 	// Update Checker
 	private SCUpdateChecker uc = null;
@@ -423,14 +422,6 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public SCDestructionRepairManager getDestructionRepairManager() {
 		return this.drm;
-	}
-	
-	/**
-	 * Get the statics manager instnace
-	 * @return
-	 */
-	public SCStaticsManager getStaticsManager() {
-		return this.statics;
 	}
 
 	/**

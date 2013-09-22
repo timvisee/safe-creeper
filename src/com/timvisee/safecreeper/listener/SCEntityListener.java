@@ -1243,14 +1243,11 @@ public class SCEntityListener implements Listener {
 		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "CostumExplosionStrength.Enabled", false, true, l);
 		explosionSize = SafeCreeper.instance.getConfigManager().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, l);
 		if(!costumExplosionStrengthEnabled) {
-			if(!b) {
+			if(!b)
 				event.setCancelled(true);
-				SafeCreeper.instance.getStaticsManager().addCreeperExplosionNerfed();
-			}
-		} else {
+		} else
 			event.setCancelled(true);
-			SafeCreeper.instance.getStaticsManager().addCreeperExplosionNerfed();
-		}
+		
 		if(!b) {
 			if(SafeCreeper.instance.getConfigManager().getOptionBoolean(w, controlName, "EnableExplosionSound", true, true, l))
 				createExplosionSound(w, l);

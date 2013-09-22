@@ -119,9 +119,6 @@ public class SCDestructionRepairManager {
 			
 			time += (blockDelay * 1000);
 		}
-		
-		// Pass the count of blocks to the statics manager
-		SafeCreeper.instance.getStaticsManager().addBlocksRebuild(blockStates.size());
 	}
 	
 	/**
