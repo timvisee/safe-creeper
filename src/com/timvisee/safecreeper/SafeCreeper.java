@@ -103,11 +103,15 @@ public class SafeCreeper extends JavaPlugin {
 		// Set up the API manager
 		setUpApiManager();
 		
-		// Verify all the Safe Creeper files
-		verifyExternalFiles(true);
-		
 		// Setup the config manager before all other managers, to make the file updater work
 	    setUpConfigManager();
+		
+		// Verify all the Safe Creeper files
+		boolean anyFileUpdated = verifyExternalFiles(true);
+		
+		// Refresh the config files if any external file was updated
+		if(anyFileUpdated)
+			getConfigManager().reloadAllConfigs();
 		
 		// Initialize the update checker
 		setUpUpdateChecker();
