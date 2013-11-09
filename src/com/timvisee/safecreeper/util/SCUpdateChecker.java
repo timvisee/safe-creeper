@@ -1,16 +1,19 @@
 package com.timvisee.safecreeper.util;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,6 +25,8 @@ import org.bukkit.Bukkit;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONObjectFromUrl;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONValue;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
@@ -30,9 +35,13 @@ public class SCUpdateChecker {
 	// Constants
 	private final String APP_NAME = "SafeCreeper";
 	private final String CHECKER_URL = "http://updates.timvisee.com/check.php?app=1";
-	private final List<String> ALLOWED_DOWNLOAD_HOSTS = Arrays.asList(new String[]{"dev.bukkit.org", "bukkit.org"});
+	private final List<String> ALLOWED_DOWNLOAD_HOSTS = Arrays.asList(new String[]{"dev.bukkit.org", "bukkit.org", "servermods.cursecdn.com"});
 	
 	private JSONObject updatesData = null;
+	
+	private String BUKKIT_FEED_HOST = "https://api.curseforge.com";
+	private String BUKKIT_FEED_QUERY = "/servermods/files?projectIds=";
+	private int BUKKIT_FEED_ID = 34718;
 	
 	/**
 	 * Constructor
@@ -41,6 +50,8 @@ public class SCUpdateChecker {
 		// Immediately refresh updates data if the Update Checker has been enabled
 		if(SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true))
 			refreshUpdatesData();
+		
+		// TODO: Instantly check for updates!
 	}
 	
 	/**
@@ -51,6 +62,50 @@ public class SCUpdateChecker {
 		// Immediately refresh updates data
 		if(refreshUpdatesData)
 			refreshUpdatesData();
+	}
+	
+	/**
+	 * Check whether the update file is approved.
+	 * @param fileUrl The URL to the update file
+	 * @return True if this file is approved, false otherwise
+	 */
+	public boolean isFileApproved(String fileUrl) {
+		try {
+			URL url = new URL(BUKKIT_FEED_HOST + BUKKIT_FEED_QUERY + BUKKIT_FEED_ID);
+            final URLConnection conn = url.openConnection();
+            conn.setConnectTimeout(5000);
+
+            conn.addRequestProperty("User-Agent", "SafeCreeper Update Checker (by Tim Visee)");
+
+            conn.setDoOutput(true);
+
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            final String response = reader.readLine();
+
+            final JSONArray array = (JSONArray) JSONValue.parse(response);
+
+            // Check whether any file was found in the feed
+            if (array.size() == 0)
+                return false;
+
+            for(int i = array.size() - 1; i >= 0; i--) {
+            	String versionLink = (String) ((org.json.simple.JSONObject) array.get(i)).get("downloadUrl");
+            	
+            	if(versionLink.trim().equalsIgnoreCase(fileUrl.trim()))
+            		return true;
+            }
+            
+            return false;
+        } catch (final IOException e) {
+            if (e.getMessage().contains("HTTP response code: 403")) {
+                // TODO: Show error: Bukkit rejected provided API key
+            } else {
+                // TODO: Show error: Failed to connect to dev.bukkit.org
+            }
+            e.printStackTrace();
+        }
+		
+		return false;
 	}
 	
 	/**
@@ -156,6 +211,9 @@ public class SCUpdateChecker {
 	public boolean isNewVersionAvailable() {
 		String newestVer = getNewestVersion();
 		String curVer = getCurrentVersion();
+		
+		String fileUrl = getDownloadUrl();
+		isFileApproved(fileUrl);
 		
 		if(newestVer.equals("") || curVer.equals(""))
 			return false;
@@ -421,8 +479,14 @@ public class SCUpdateChecker {
 		try {
 			
 			// Make sure the download is hosted on a allowed host (Required cause of Bukkit rules)
-			if(!ALLOWED_DOWNLOAD_HOSTS.contains(getDomainName(downloadUrl))) {
+			/*if(!ALLOWED_DOWNLOAD_HOSTS.contains(getDomainName(downloadUrl))) {
 				log.info("[" + APP_NAME + "] The host the update is hosted on is not allowed, can't download update!");
+				return;
+			}*/
+			
+			// Make sure the update is approved before downloading it!
+			if(!isFileApproved(downloadUrl)) {
+				log.info("[" + APP_NAME + "] Safe Creeper update has not been approved yet, waiting for Bukkit administrators to approve the file before updating!");
 				return;
 			}
 			
@@ -432,10 +496,10 @@ public class SCUpdateChecker {
 			log.info("[" + APP_NAME + "] An error occured while downloading update!");
 			e.printStackTrace();
 			
-		} catch (URISyntaxException e) {
+		}/* catch (URISyntaxException e) {
 			log.info("[" + APP_NAME + "] An error occured while downloading update!");
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	/**
