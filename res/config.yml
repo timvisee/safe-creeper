@@ -23,7 +23,7 @@ permissions:
 tasks:
     updateChecker:
         enabled: true
-        interval: 3600
+        interval: 600
     destructionRepairRepair:
         enabled: true
         interval: 1

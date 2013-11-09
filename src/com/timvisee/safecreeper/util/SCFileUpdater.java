@@ -84,7 +84,7 @@ public class SCFileUpdater {
 		// Get the config file path
 		File configFile = new File(SafeCreeper.instance.getDataFolder(), "config.yml");
 		
-		// Get the global config file
+		// Get the config file
 		FileConfiguration c = SafeCreeper.instance.getConfig();
 		
 		// Check if the file is up-to-date, if so, cancel the update progress
@@ -130,11 +130,23 @@ public class SCFileUpdater {
 			// Update some moved config values correctly
 			if(isOlderVersion("1.5", configVer)) {
 				
-				if(k.equalsIgnoreCase("usePermissions"))
+				if(k.equalsIgnoreCase("usePermissions")) {
 					newc.set("permissions.usePermissions", c.getBoolean(k, defc.getBoolean(k)));
+					continue;
+				}
 				
-				if(k.equalsIgnoreCase("useBypassPermissions"))
+				if(k.equalsIgnoreCase("useBypassPermissions")) {
 					newc.set("permissions.enableBypassPermissions", c.getBoolean(k, defc.getBoolean(k)));
+					continue;
+				}
+			}
+			
+			// Update some moved config values correctly
+			if(isOlderVersion("1.5.2.2", configVer)) {
+				if(k.equalsIgnoreCase("tasks.updateChecker.interval")) {
+					newc.set("tasks.updateChecker.interval", 600);
+					continue;
+				}
 			}
 			
 			if(newc.isSet(k)) // Make sure the value is not already set
