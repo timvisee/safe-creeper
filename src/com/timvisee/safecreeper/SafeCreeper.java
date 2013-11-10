@@ -29,6 +29,7 @@ import com.timvisee.safecreeper.listener.*;
 import com.timvisee.safecreeper.manager.*;
 import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
 import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
+import com.timvisee.safecreeper.task.SCStatisticsPostTask;
 import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
 import com.timvisee.safecreeper.util.SCFileUpdater;
 
@@ -55,7 +56,8 @@ public class SafeCreeper extends JavaPlugin {
 	private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
 	
 	// Controllers, Handlers and Managers
-	private SCUpdatesHandler uh = null;
+	private SCUpdatesHandler uh;
+	private SCStatisticsManager sm;
 	private SCApiController apic;
 	private SCTVNLibHandler tvnlh;
 	private SCPermissionsManager pm;
@@ -112,57 +114,13 @@ public class SafeCreeper extends JavaPlugin {
 		if(anyFileUpdated)
 			getConfigHandler().reloadAllConfigs();
 		
-		// Initialize the update checker
+		// Set up the updates handler
 		setUpUpdatesHandler();
 		
-		FileConfiguration config = getConfig();
+		// Set up the statistics manager
+		setUpStatisticsManager();
 		
-		// Remove all (old) update files
-		getUpdatesHandler().removeUpdateFiles();
-		
-		// Check for updates once
-		if(config.getBoolean("updateChecker.enabled", true)) {
-			System.out.println(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
-			uh.refreshBukkitUpdatesFeedData();
-			
-			// Check if any update exists
-			if(uh.isUpdateAvailable(true)) {
-				final String newVer = uh.getNewestVersion(true);
-				
-				if(uh.isUpdateDownloaded())
-					System.out.println(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
-				else {
-					if(config.getBoolean("updateChecker.autoInstallUpdates", true)) {
-						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
-						uh.downloadUpdate();
-						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
-					} else {
-						System.out.println(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper version available! v: " + String.valueOf(newVer));
-						System.out.println(ChatColor.YELLOW + "[SafeCreeper] use '/sc installupdates' to automaticly install this update");
-					}
-				}
-				
-			} else if(uh.isUpdateAvailable(false)) {
-				final String newVer = uh.getNewestVersion(false);
-				
-				System.out.println(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper version available: v" + String.valueOf(newVer));
-				System.out.println(ChatColor.YELLOW + "[SafeCreeper] Please update CraftBukkit to the latest available version!");
-		
-			} else {
-				System.out.println(ChatColor.YELLOW + "[SafeCreeper] No Safe Creeper update available!");
-			}
-		}
-		
-		// Schedule update checker task
-		if(config.getBoolean("tasks.updateChecker.enabled", true)) {
-			int taskInterval = (int) config.getDouble("tasks.updateChecker.interval", 600) * 20;
-			
-			// Schedule the update checker task
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdatesHandler()), taskInterval, taskInterval);
-		} else {
-			// Show an warning in the console
-			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
-		}
+		FileConfiguration c = getConfig();
 		
 		// Set up remaining managers
 		setUpTVNLibManager();
@@ -221,8 +179,8 @@ public class SafeCreeper extends JavaPlugin {
 			}, 20, 20);*/
 		
 		// Task to repair blocks from the destruction repair manager// Schedule update checker task
-		if(config.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
-			int taskInterval = (int) config.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
+		if(c.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
+			int taskInterval = (int) c.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
 			
 			// Schedule the task
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
@@ -232,11 +190,11 @@ public class SafeCreeper extends JavaPlugin {
 		}
 		
 		// Task to save the destruction repair data
-		if(config.getBoolean("tasks.destructionRepairSave.enabled", true)) {
-			int taskInterval = (int) config.getDouble("tasks.destructionRepairSave.interval", 300) * 20;
+		if(c.getBoolean("tasks.destructionRepairSave.enabled", true)) {
+			int taskInterval = (int) c.getDouble("tasks.destructionRepairSave.interval", 300) * 20;
 			
 			// Schedule the task
-			boolean showMsg = config.getBoolean("tasks.destructionRepairSave.showSaveStatus", true);
+			boolean showMsg = c.getBoolean("tasks.destructionRepairSave.showSaveStatus", true);
 			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairSaveDataTask(getDestructionRepairManager(), showMsg), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
@@ -267,6 +225,23 @@ public class SafeCreeper extends JavaPlugin {
 		if(getApiManager().getApiSessionsCount() > 0) {
 			getSCLogger().info("Unhooking all hooked plugins...");
 			getApiManager().unregisterAllApiSessions();
+		}
+		
+		// Send the Safe Creeper statistics
+		if(getConfig().getBoolean("statistics.enabled", true)) {
+			boolean showStatus = getConfig().getBoolean("statistics.showStatusInConsole");
+			
+			if(showStatus)
+				System.out.println("[SafeCreeper] Sending Safe Creeper statistics...");
+			
+			long t = System.currentTimeMillis();
+			
+			sm.postStatistics();
+			
+			long delay = System.currentTimeMillis() - t;
+			
+			if(showStatus)
+				System.out.println("[SafeCreeper] Safe Creeper statistics send, took " + delay + " ms!");
 		}
 		
 		// If any update was downloaded, install the update
@@ -302,6 +277,54 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setUpUpdatesHandler() {
 		this.uh = new SCUpdatesHandler(false);
+		
+		// Remove all (old) update files
+		getUpdatesHandler().removeUpdateFiles();
+		
+		// Check for updates once
+		FileConfiguration c = getConfig();
+		if(c.getBoolean("updateChecker.enabled", true)) {
+			System.out.println(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
+			uh.refreshBukkitUpdatesFeedData();
+			
+			// Check if any update exists
+			if(uh.isUpdateAvailable(true)) {
+				final String newVer = uh.getNewestVersion(true);
+				
+				if(uh.isUpdateDownloaded())
+					System.out.println(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
+				else {
+					if(c.getBoolean("updateChecker.autoInstallUpdates", true)) {
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
+						uh.downloadUpdate();
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
+					} else {
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper version available! v: " + String.valueOf(newVer));
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] use '/sc installupdates' to automaticly install this update");
+					}
+				}
+				
+			} else if(uh.isUpdateAvailable(false)) {
+				final String newVer = uh.getNewestVersion(false);
+				
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper version available: v" + String.valueOf(newVer));
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] Please update CraftBukkit to the latest available version!");
+		
+			} else {
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] No Safe Creeper update available!");
+			}
+		}
+		
+		// Schedule update checker task
+		if(c.getBoolean("tasks.updateChecker.enabled", true)) {
+			int taskInterval = (int) c.getDouble("tasks.updateChecker.interval", 600) * 20;
+			
+			// Schedule the update checker task
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdatesHandler()), taskInterval, taskInterval);
+		} else {
+			// Show an warning in the console
+			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
+		}
 	}
 	
 	/**
@@ -310,6 +333,50 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public SCUpdatesHandler getUpdatesHandler() {
 		return this.uh;
+	}
+	
+	/**
+	 * Set up the statistics manager
+	 */
+	public void setUpStatisticsManager() {
+		this.sm = new SCStatisticsManager(this);
+		
+		FileConfiguration c = getConfig();
+		
+		// Schedule statistics post task
+		if(c.getBoolean("tasks.statisticsPost.enabled", true)) {
+			int taskInterval = (int) c.getDouble("tasks.statisticsPost.interval", 300) * 20;
+			
+			// Schedule the update checker task
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCStatisticsPostTask(getConfig(), getStatisticsManager()), taskInterval, taskInterval);
+		} else {
+			// Show an warning in the console
+			getSCLogger().info("Scheduled task 'statisticsPost' disabled in the config file!");
+		}
+		
+		if(getConfig().getBoolean("statistics.enabled", true)) {
+			boolean showStatus = getConfig().getBoolean("statistics.showStatusInConsole");
+			
+			if(showStatus)
+				System.out.println("[SafeCreeper] Sending Safe Creeper statistics...");
+			
+			long t = System.currentTimeMillis();
+			
+			sm.postStatistics();
+			
+			long delay = System.currentTimeMillis() - t;
+			
+			if(showStatus)
+				System.out.println("[SafeCreeper] Safe Creeper statistics send, took " + delay + " ms!");
+		}
+	}
+	
+	/**
+	 * Get the statistics manager instance
+	 * @return Statistics manager instance
+	 */
+	public SCStatisticsManager getStatisticsManager() {
+		return this.sm;
 	}
 	
 	/**

@@ -24,9 +24,11 @@ tasks:
     updateChecker:
         enabled: true
         interval: 600
-    statisticsSend:
+        showStatusInConsole: false
+    statisticsPost:
         enabled: true
-        interval: 600
+        interval: 300
+        showStatusInConsole: false
     destructionRepairRepair:
         enabled: true
         interval: 1
@@ -49,6 +51,8 @@ updateChecker:
 # Statistics
 statistics:
     enabled: true
+    showStatusInConsole: true
+    postServerAddress: false
 
 # Settings for TVNLib
 autoDownloadTVNLib: false

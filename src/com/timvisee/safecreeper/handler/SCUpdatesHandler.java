@@ -28,10 +28,10 @@ import com.timvisee.safecreeper.SafeCreeper;
 
 public class SCUpdatesHandler {
 	
-	private static String APP_NAME = "SafeCreeper";
-	private static String BUKKIT_FEED_URL = "https://api.curseforge.com/servermods/files?projectIds=";
-	private static int BUKKIT_FEED_PROJECT_ID = 34718;
-	private static String MANUAL_DOWNLOAD_URL = "http://dev.bukkit.org/server-mods/safe-creeper/";
+	private static final String APP_NAME = "SafeCreeper";
+	private static final String BUKKIT_FEED_URL = "https://api.curseforge.com/servermods/files?projectIds=";
+	private static final int BUKKIT_FEED_PROJECT_ID = 34718;
+	private static final String MANUAL_DOWNLOAD_URL = "http://dev.bukkit.org/server-mods/safe-creeper/";
 	
 	private JSONArray feedData = null;
 	

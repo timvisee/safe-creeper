@@ -46,6 +46,7 @@ public class CommandHelp {
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> config " + ChatColor.WHITE + ": Config command help");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
+					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " poststatistics " + ChatColor.WHITE + ": Post the Safe Creeper statistics");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " installupdates " + ChatColor.WHITE + ": Install Safe Creeper updates");
 					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");

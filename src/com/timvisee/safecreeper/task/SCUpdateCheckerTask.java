@@ -57,7 +57,14 @@ public class SCUpdateCheckerTask extends SCTask {
 	@Override
 	public void run() {
 		if(getConfig().getBoolean("updateChecker.enabled", true)) {
+			
+			boolean showStatus = getConfig().getBoolean("task.updateChecker.showStatusInConsole", false);
+			
+			if(showStatus)
+				System.out.println("[SafeCreeper] Checking for updates...");
+			
 			getUpdateChecker().refreshBukkitUpdatesFeedData();
+			
 			if(uc.isUpdateAvailable(true)) {
 				String newVer = uc.getNewestVersion(true);
 				System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
@@ -81,6 +88,9 @@ public class SCUpdateCheckerTask extends SCTask {
 			} else if(uc.isUpdateAvailable(false)) {
 				String newVer = uc.getNewestVersion(false);
 				System.out.println("[SafeCreeper] New incompatible Safe Creeper version available: v" + newVer);
+				
+			} else if(showStatus) {
+				System.out.println("[SafeCreeper] No update available!");
 			}
 		}
 	}

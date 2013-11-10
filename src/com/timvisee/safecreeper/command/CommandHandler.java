@@ -244,6 +244,11 @@ public class CommandHandler {
 				// Run the tasks command trough the butcher command class
 				return CommandTasks.onCommand(sender, cmd, commandLabel, args);
 				
+			} else if(args[0].equalsIgnoreCase("poststatistics") || args[0].equalsIgnoreCase("sendstatistics") ||
+					args[0].equalsIgnoreCase("poststatus") || args[0].equalsIgnoreCase("sendstatus")) {
+				// Run the check command trough the check command class
+				return CommandPostStatistics.onCommand(sender, cmd, commandLabel, args);
+				
 			} else if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
 				// Run the check command trough the check command class
 				return CommandCheck.onCommand(sender, cmd, commandLabel, args);
