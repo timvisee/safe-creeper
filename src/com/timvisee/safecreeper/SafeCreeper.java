@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import java.io.OutputStream;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,6 +18,7 @@ import com.timvisee.safecreeper.api.SCApiController;
 import com.timvisee.safecreeper.command.CommandHandler;
 import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
 import com.timvisee.safecreeper.handler.SCConfigHandler;
+import com.timvisee.safecreeper.handler.SCUpdatesHandler;
 import com.timvisee.safecreeper.handler.plugin.SCCorruptionHandler;
 import com.timvisee.safecreeper.handler.plugin.SCFactionsHandler;
 import com.timvisee.safecreeper.handler.plugin.SCMobArenaHandler;
@@ -29,7 +31,6 @@ import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
 import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
 import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
 import com.timvisee.safecreeper.util.SCFileUpdater;
-import com.timvisee.safecreeper.util.SCUpdateChecker;
 
 public class SafeCreeper extends JavaPlugin {
 	
@@ -67,7 +68,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCWorldGuardHandler wgm;
 	
 	// Update Checker
-	private SCUpdateChecker uc = null;
+	private SCUpdatesHandler uh = null;
 	
 	// Debug Mode
 	boolean debug = false;
@@ -114,47 +115,52 @@ public class SafeCreeper extends JavaPlugin {
 			getConfigHandler().reloadAllConfigs();
 		
 		// Initialize the update checker
-		setUpUpdateChecker();
+		setUpUpdatesHandler();
+		
+		FileConfiguration config = getConfig();
 		
 		// Remove all (old) update files
-		getUpdateChecker().removeUpdateFiles();
+		getUpdatesHandler().removeUpdateFiles();
 		
-		// Check if any update exists
-		if(getConfig().getBoolean("updateChecker.enabled", true)) {
-			if(uc.isNewVersionAvailable()) {
-				final String newVer = uc.getNewestVersion();
-				System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
+		// Check for updates once
+		if(config.getBoolean("updateChecker.enabled", true)) {
+			System.out.println(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
+			uh.refreshBukkitUpdatesFeedData();
+			
+			// Check if any update exists
+			if(uh.isUpdateAvailable(true)) {
+				final String newVer = uh.getNewestVersion(true);
 				
-				// Auto install updates if enabled
-				if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						System.out.println("[SafeCreeper] The newest Safe Creeper version is not compatible with the current Bukkit version!");
-						System.out.println("[SafeCreeper] Please update to Bukkit " + uc.getRequiredBukkitVersion() + " or higher!");
+				if(uh.isUpdateDownloaded())
+					System.out.println(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
+				else {
+					if(config.getBoolean("updateChecker.autoInstallUpdates", true)) {
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
+						uh.downloadUpdate();
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
 					} else {
-						// Check if already update installed
-						if(getUpdateChecker().isUpdateDownloaded())
-							System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
-						else {
-							// Download the update and show some status messages
-							System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
-							getUpdateChecker().downloadUpdate();
-							System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
-						}
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper version available! v: " + String.valueOf(newVer));
+						System.out.println(ChatColor.YELLOW + "[SafeCreeper] use '/sc installupdates' to automaticly install this update");
 					}
-				} else {
-					// Auto installing updates not enabled, show a status message
-					System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
 				}
+				
+			} else if(uh.isUpdateAvailable(false)) {
+				final String newVer = uh.getNewestVersion(false);
+				
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper version available: v" + String.valueOf(newVer));
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] Please update CraftBukkit to the latest available version!");
+		
+			} else {
+				System.out.println(ChatColor.YELLOW + "[SafeCreeper] No Safe Creeper update available!");
 			}
 		}
 		
 		// Schedule update checker task
-		FileConfiguration config = getConfig();
 		if(config.getBoolean("tasks.updateChecker.enabled", true)) {
-			int taskInterval = (int) config.getDouble("tasks.updateChecker.interval", 3600) * 20;
+			int taskInterval = (int) config.getDouble("tasks.updateChecker.interval", 600) * 20;
 			
 			// Schedule the update checker task
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdateChecker()), taskInterval, taskInterval);
+			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdatesHandler()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
@@ -266,11 +272,11 @@ public class SafeCreeper extends JavaPlugin {
 		}
 		
 		// If any update was downloaded, install the update
-		if(getUpdateChecker().isUpdateDownloaded())
-			getUpdateChecker().installUpdate();
+		if(getUpdatesHandler().isUpdateDownloaded())
+			getUpdatesHandler().installUpdate();
 		
 		// Remove all update files
-		getUpdateChecker().removeUpdateFiles();
+		getUpdatesHandler().removeUpdateFiles();
 		
 		// Plugin disabled, show console message
 		getSCLogger().info("Safe Creeper Disabled");
@@ -294,18 +300,18 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Set up the update checker
+	 * Set up the updates handler
 	 */
-	public void setUpUpdateChecker() {
-		this.uc = new SCUpdateChecker();
+	public void setUpUpdatesHandler() {
+		this.uh = new SCUpdatesHandler(false);
 	}
 	
 	/**
-	 * Get the update checker instance
-	 * @return Update checker instance
+	 * Get the updates handler instance
+	 * @return Updates handler instance
 	 */
-	public SCUpdateChecker getUpdateChecker() {
-		return this.uc;
+	public SCUpdatesHandler getUpdatesHandler() {
+		return this.uh;
 	}
 	
 	/**

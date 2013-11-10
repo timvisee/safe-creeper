@@ -30,7 +30,7 @@ import org.json.simple.JSONValue;
 
 import com.timvisee.safecreeper.SafeCreeper;
 
-public class SCUpdateChecker {
+public class SCUpdateCheckerBackup {
 	
 	// Constants
 	private final String APP_NAME = "SafeCreeper";
@@ -46,7 +46,7 @@ public class SCUpdateChecker {
 	/**
 	 * Constructor
 	 */
-	public SCUpdateChecker() {
+	public SCUpdateCheckerBackup() {
 		// Immediately refresh updates data if the Update Checker has been enabled
 		if(SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true))
 			refreshUpdatesData();
@@ -58,7 +58,7 @@ public class SCUpdateChecker {
 	 * Constructor
 	 * @param refreshUpdatesData immediately refresh updates data
 	 */
-	public SCUpdateChecker(boolean refreshUpdatesData) {
+	public SCUpdateCheckerBackup(boolean refreshUpdatesData) {
 		// Immediately refresh updates data
 		if(refreshUpdatesData)
 			refreshUpdatesData();

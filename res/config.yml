@@ -24,6 +24,9 @@ tasks:
     updateChecker:
         enabled: true
         interval: 600
+    statisticsSend:
+        enabled: true
+        interval: 600
     destructionRepairRepair:
         enabled: true
         interval: 1
@@ -39,8 +42,13 @@ api:
 # Update checker
 updateChecker:
     enabled: true
+    notifyForUpdatesInConsole: true
     notifyForUpdatesInGame: true
     autoInstallUpdates: true
+
+# Statistics
+statistics:
+    enabled: true
 
 # Settings for TVNLib
 autoDownloadTVNLib: false
@@ -49,4 +57,4 @@ autoDownloadTVNLib: false
 GlobalConfigFilePath: 'plugins/SafeCreeper/global.yml'
 WorldConfigsFolderPath: 'plugins/SafeCreeper/worlds'
 
-version: '1.5.2.2'
+version: '1.5.2.3'

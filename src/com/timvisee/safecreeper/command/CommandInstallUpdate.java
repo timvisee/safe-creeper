@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.util.SCUpdateChecker;
+import com.timvisee.safecreeper.handler.SCUpdatesHandler;
 
 public class CommandInstallUpdate {
 	
@@ -38,30 +38,29 @@ public static boolean onCommand(CommandSender sender, Command cmd, String comman
 				sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
 				
 				// Get the update checker and refresh the updates data
-				SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
-				uc.refreshUpdatesData();
+				SCUpdatesHandler uc = SafeCreeper.instance.getUpdatesHandler();
+				uc.refreshBukkitUpdatesFeedData();
 				
-				if(!uc.isNewVersionAvailable()) {
-					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] No new version available!");
-				} else {
+				// Check if any update exists
+				if(uc.isUpdateAvailable(true)) {
+					final String newVer = uc.getNewestVersion(true);
 					
-					String newVer = uc.getNewestVersion();
-					
-					// Make sure the new version is compatible with the current bukkit version
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper version available: v" + String.valueOf(newVer));
-						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] The new version is not compatible with your Bukkit version!");
-						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
-					} else {
-						if(uc.isUpdateDownloaded())
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
-						else {
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
-							uc.downloadUpdate();
-							sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
-						}
+					if(uc.isUpdateDownloaded())
+						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
+					else {
+						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
+						uc.downloadUpdate();
+						sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
 					}
-					return true;
+					
+				} else if(uc.isUpdateAvailable(false)) {
+					final String newVer = uc.getNewestVersion(false);
+					
+					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper version available: v" + String.valueOf(newVer));
+					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Please update CraftBukkit to the latest available version!");
+				
+				} else {
+					sender.sendMessage(ChatColor.YELLOW + "[SafeCreeper] No Safe Creeper update available!");
 				}
 				
 				return true;

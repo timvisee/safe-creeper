@@ -2,19 +2,19 @@ package com.timvisee.safecreeper.task;
 
 import org.bukkit.configuration.Configuration;
 
-import com.timvisee.safecreeper.util.SCUpdateChecker;
+import com.timvisee.safecreeper.handler.SCUpdatesHandler;
 
 public class SCUpdateCheckerTask extends SCTask {
 
 	Configuration config;
-	SCUpdateChecker uc;
+	SCUpdatesHandler uc;
 	
 	/**
 	 * Constructor
 	 * @param config Config instance
 	 * @param uc Update checker instance
 	 */
-	public SCUpdateCheckerTask(Configuration config, SCUpdateChecker uc) {
+	public SCUpdateCheckerTask(Configuration config, SCUpdatesHandler uc) {
 		this.config = config;
 		this.uc = uc;
 	}
@@ -39,7 +39,7 @@ public class SCUpdateCheckerTask extends SCTask {
 	 * Get the update checker instance
 	 * @return Update checker instance
 	 */
-	public SCUpdateChecker getUpdateChecker() {
+	public SCUpdatesHandler getUpdateChecker() {
 		return this.uc;
 	}
 	
@@ -47,7 +47,7 @@ public class SCUpdateCheckerTask extends SCTask {
 	 * Set the update checker instance
 	 * @param uc Update checker instance
 	 */
-	public void setUpdateChecker(SCUpdateChecker uc) {
+	public void setUpdateChecker(SCUpdatesHandler uc) {
 		this.uc = uc;
 	}
 	
@@ -57,28 +57,30 @@ public class SCUpdateCheckerTask extends SCTask {
 	@Override
 	public void run() {
 		if(getConfig().getBoolean("updateChecker.enabled", true)) {
-			getUpdateChecker().refreshUpdatesData();
-			if(uc.isNewVersionAvailable()) {
-				final String newVer = uc.getNewestVersion();
+			getUpdateChecker().refreshBukkitUpdatesFeedData();
+			if(uc.isUpdateAvailable(true)) {
+				String newVer = uc.getNewestVersion(true);
 				System.out.println("[SafeCreeper] New Safe Creeper version available: v" + newVer);
 				
 				// Auto install updates if enabled
-				if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true) || getUpdateChecker().isImportantUpdateAvailable()) {
-					if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						// Check if already update installed
-						if(getUpdateChecker().isUpdateDownloaded())
-							System.out.println("[SafeCreeper] Safe Creeper update installed, server reload required!");
-						else {
-							// Download the update and show some status messages
-							System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
-							getUpdateChecker().downloadUpdate();
-							System.out.println("[SafeCreeper] Safe Creeper update installed, reload required!");
-						}
+				if(getConfig().getBoolean("updateChecker.autoInstallUpdates", true)) {
+					// Check if already update installed
+					if(getUpdateChecker().isUpdateDownloaded())
+						System.out.println("[SafeCreeper] Safe Creeper update download, server reload required!");
+					else {
+						// Download the update and show some status messages
+						System.out.println("[SafeCreeper] Automaticly installing SafeCreeper update...");
+						getUpdateChecker().downloadUpdate();
+						System.out.println("[SafeCreeper] Safe Creeper update download, reload required!");
 					}
 				} else {
 					// Auto installing updates not enabled, show a status message
 					System.out.println("[SafeCreeper] Use '/sc installupdate' to automaticly install the new update!");
 				}
+				
+			} else if(uc.isUpdateAvailable(false)) {
+				String newVer = uc.getNewestVersion(false);
+				System.out.println("[SafeCreeper] New incompatible Safe Creeper version available: v" + newVer);
 			}
 		}
 	}

@@ -26,7 +26,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
 
 import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.util.SCUpdateChecker;
+import com.timvisee.safecreeper.handler.SCUpdatesHandler;
 
 public class SCPlayerListener implements Listener {
 	
@@ -206,37 +206,24 @@ public class SCPlayerListener implements Listener {
 				SafeCreeper.instance.getConfig().getBoolean("updateChecker.enabled", true) &&
 				SafeCreeper.instance.getConfig().getBoolean("updateChecker.notifyForUpdatesInGame", true)) {
 			
-			SCUpdateChecker uc = SafeCreeper.instance.getUpdateChecker();
+			SCUpdatesHandler uc = SafeCreeper.instance.getUpdatesHandler();
 			
 			// Check if any update exists
-			if(uc.isNewVersionAvailable()) {
-				final String newVer = uc.getNewestVersion();
+			if(uc.isUpdateAvailable(true)) {
+				final String newVer = uc.getNewestVersion(true);
 				
-				// Is the update important
-				if(uc.isImportantUpdateAvailable()) {
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New important Safe Creeper update available! (v" + newVer + ")");
-						p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Version not compatible, please update to Bukkit " + uc.getRequiredBukkitVersion() + " or higher!");
-					} else {
-						if(uc.isUpdateDownloaded()) {
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New important Safe Creeper update installed! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Server reload required!");
-						} else {
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New important Safe Creeper update available! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Use " + ChatColor.GOLD + "/sc installupdate" + ChatColor.YELLOW + " to install the update!");
-						}
-					}
+				if(uc.isUpdateDownloaded()) {
+					p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper update downloaded! (v" + newVer + ")");
+					p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Server reload required!");
 				} else {
-					if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						if(uc.isUpdateDownloaded()) {
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper update installed! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Server reload required!");
-						} else {
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New important Safe Creeper update available! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Use " + ChatColor.GOLD + "/sc installupdate" + ChatColor.YELLOW + " to install the update!");
-						}
-					}
+					p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New Safe Creeper update available! (v" + newVer + ")");
+					p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Use " + ChatColor.GOLD + "/sc installupdate" + ChatColor.YELLOW + " to install the update!");
 				}
+			} else if(uc.isUpdateAvailable(false)) {
+				final String newVer = uc.getNewestVersion(false);
+				
+				p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper update available! (v" + newVer + ")");
+				p.sendMessage(ChatColor.YELLOW + "[SafeCreeper] Please update CraftBukkit to the latest available version!");
 			}
 		}
 		
