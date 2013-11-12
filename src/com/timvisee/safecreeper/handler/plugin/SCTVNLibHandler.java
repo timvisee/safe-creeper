@@ -169,7 +169,7 @@ public class SCTVNLibHandler extends SCPluginHandler {
 		}
 	}*/
 	
-	public static void download(Logger log, URL url, File f) throws IOException {
+	/*public static void download(Logger log, URL url, File f) throws IOException {
 		// Make sure the parent folder does exist
 		if (!f.getParentFile().exists())
 			f.getParentFile().mkdir();
@@ -211,7 +211,7 @@ public class SCTVNLibHandler extends SCPluginHandler {
 		
 		// Show a status message
 		log.info("" + f.getName() + " succesfully downloaded!");
-	}
+	}*/
 	
 	public boolean isEnabled() {
 		Plugin plugin = SafeCreeper.instance.getServer().getPluginManager().getPlugin(PLUGIN_NAME);
