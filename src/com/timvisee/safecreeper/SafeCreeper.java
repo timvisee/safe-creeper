@@ -183,7 +183,7 @@ public class SafeCreeper extends JavaPlugin {
 			int taskInterval = (int) c.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
 			
 			// Schedule the task
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
+			getServer().getScheduler().runTaskTimerAsynchronously(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'destructionRepairRepair' disabled in the config file!");
@@ -195,7 +195,7 @@ public class SafeCreeper extends JavaPlugin {
 			
 			// Schedule the task
 			boolean showMsg = c.getBoolean("tasks.destructionRepairSave.showSaveStatus", true);
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCDestructionRepairSaveDataTask(getDestructionRepairManager(), showMsg), taskInterval, taskInterval);
+			getServer().getScheduler().runTaskTimerAsynchronously(this, new SCDestructionRepairSaveDataTask(getDestructionRepairManager(), showMsg), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'destructionRepairSave' disabled in the config file!");
