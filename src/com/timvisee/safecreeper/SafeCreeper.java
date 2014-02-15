@@ -320,7 +320,7 @@ public class SafeCreeper extends JavaPlugin {
 			int taskInterval = (int) c.getDouble("tasks.updateChecker.interval", 600) * 20;
 			
 			// Schedule the update checker task
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCUpdateCheckerTask(getConfig(), getUpdatesHandler()), taskInterval, taskInterval);
+			getServer().getScheduler().runTaskTimerAsynchronously(this, new SCUpdateCheckerTask(getConfig(), getUpdatesHandler()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'updateChecker' disabled in the config file!");
@@ -348,7 +348,7 @@ public class SafeCreeper extends JavaPlugin {
 			int taskInterval = (int) c.getDouble("tasks.statisticsPost.interval", 300) * 20;
 			
 			// Schedule the update checker task
-			getServer().getScheduler().scheduleSyncRepeatingTask(this, new SCStatisticsPostTask(getConfig(), getStatisticsManager()), taskInterval, taskInterval);
+			getServer().getScheduler().runTaskTimerAsynchronously(this, new SCStatisticsPostTask(getConfig(), getStatisticsManager()), taskInterval, taskInterval);
 		} else {
 			// Show an warning in the console
 			getSCLogger().info("Scheduled task 'statisticsPost' disabled in the config file!");
