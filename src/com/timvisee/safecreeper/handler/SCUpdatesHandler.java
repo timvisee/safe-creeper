@@ -99,10 +99,10 @@ public class SCUpdatesHandler {
 	        
 		} catch (final IOException e) {
             if (e.getMessage().contains("HTTP response code: 403"))
-            	System.out.println("[" + APP_NAME + "] Invalid API key!");
+            	System.out.println("[" + APP_NAME + "] Invalid API key! (Code: 403)");
             else
-                System.out.println("[" + APP_NAME + "] Failed to connect to dev.bukkit.org!");
-            e.printStackTrace();
+                System.out.println("[" + APP_NAME + "] Failed to connect to dev.bukkit.org! (Code: " + String.valueOf(e.getMessage()) + ")");
+            //e.printStackTrace();
         }
 		
 		// Something went wrong, return false

@@ -133,6 +133,7 @@ public class SCStatisticsManager {
 	        
 		} catch (Exception e) {
 			System.out.println("[SafeCreeper] Failed to connect to the Safe Creeper statistics servers!");
+			// TODO: Clarify error using e.getMessage();
 			//e.printStackTrace();
 		}
         
