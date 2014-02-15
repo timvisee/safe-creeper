@@ -38,7 +38,6 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.entity.SheepDyeWoolEvent;
 import org.bukkit.event.entity.SheepRegrowWoolEvent;
 import org.bukkit.event.entity.SlimeSplitEvent;
-
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Creature;
@@ -1546,23 +1545,27 @@ public class SCEntityListener implements Listener {
 		if(event.getEntity() == null)
 			return;
 		
-		// Get the projectile instance and get it's location, shooter, etc..
-		Projectile p = event.getEntity();
-		Location l = p.getLocation();
-		LivingEntity s = p.getShooter();
-		World w = p.getWorld();
-		
-		if(s != null) {
-			// Get the controll name for the projectile shooter
-			String controlName = SafeCreeper.instance.getConfigHandler().getControlName(s, "OtherMobControl");
+		try {
+			// Get the projectile instance and get it's location, shooter, etc..
+			Projectile p = event.getEntity();
+			Location l = p.getLocation();
+			// TODO: Fix this line bellow, so the surrounding try/catch block can be removed!
+			LivingEntity s = (LivingEntity) p.getShooter();
+			World w = p.getWorld();
 			
-			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
-				event.setCancelled(true);
+			if(s != null) {
+				// Get the controll name for the projectile shooter
+				String controlName = SafeCreeper.instance.getConfigHandler().getControlName(s, "OtherMobControl");
+				
+				if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CanLaunchProjectile", true, true, l))
+					event.setCancelled(true);
+				
+				// Play control effects
+				if(!event.isCancelled())
+					SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "LaunchedProjectile", l);
+			}
 			
-			// Play control effects
-			if(!event.isCancelled())
-				SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "LaunchedProjectile", l);
-		}
+		} catch(ClassCastException ex) { }
 	}
 	
 	@EventHandler
