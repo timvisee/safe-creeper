@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.task.SCTask;
+import com.timvisee.safecreeper.util.SCChatUtils;
 
 public class CommandTasks {
 	
@@ -39,7 +40,7 @@ public class CommandTasks {
 				}
 				
 				// Print the header
-				sender.sendMessage(ChatColor.GREEN + "==========[ RUNNING SAFE CREEPER TASKS ]==========");
+				sender.sendMessage(ChatColor.GREEN + SCChatUtils.fillLine("[ RUNNING SAFE CREEPER TASKS ]", "="));
 				
 				// List running Safe Creeper tasks
 				List<BukkitTask> bt = Bukkit.getScheduler().getPendingTasks();

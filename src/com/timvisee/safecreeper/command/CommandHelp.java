@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import com.timvisee.safecreeper.util.SCChatUtils;
+
 public class CommandHelp {
 	
 	public static boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -20,15 +22,16 @@ public class CommandHelp {
 				if(args.length == 2) {
 					if(args[1].equals("config") || args[1].equals("c")) {
 						// View the help
-						sender.sendMessage(ChatColor.GREEN + "==========[ SAFE CREEPER HELP ]==========");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config get global <path> " + ChatColor.WHITE + ": Get global config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config get world <world> <path> " + ChatColor.WHITE + ": Get world config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config set global <path> <value> " + ChatColor.WHITE + ": Set global config value");
-						sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " config set world <world> <path> <value> " + ChatColor.WHITE + ": Set world config value");
-						sender.sendMessage(" ");
-						sender.sendMessage(ChatColor.GOLD + "path " + ChatColor.WHITE + ": The value path. Example: CreeperControl.Enabled");
-						sender.sendMessage(ChatColor.GOLD + "world " + ChatColor.WHITE + ": The world name");
-						sender.sendMessage(ChatColor.GOLD + "value " + ChatColor.WHITE + ": The new value. A boolean, integer or string.");
+						sender.sendMessage(ChatColor.GREEN + SCChatUtils.fillLine("[ SAFE CREEPER HELP: CONFIG ]", "="));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " config get global <path> " + ChatColor.WHITE + ": Get global config value"));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " config get world <world> <path> " + ChatColor.WHITE + ": Get world config value"));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " config set global <path> <value> " + ChatColor.WHITE + ": Set global config value"));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " config set world <world> <path> <value> " + ChatColor.WHITE + ": Set world config value"));
+						sender.sendMessage(SCChatUtils.getBlankLineString());
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "path " + ChatColor.WHITE + ": The value path. " + ChatColor.GRAY + "(Example: CreeperControl.Enabled)"));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "world " + ChatColor.WHITE + ": The world name"));
+						sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "value " + ChatColor.WHITE + ": The new value. A boolean, integer or string."));
+						sender.sendMessage(SCChatUtils.getBlankLineString());
 						return true;
 					}
 					
@@ -41,15 +44,16 @@ public class CommandHelp {
 					}
 					
 					// View the help
-					sender.sendMessage(ChatColor.GREEN + "==========[ SAFE CREEPER HELP ]==========");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> " + ChatColor.WHITE + ": View help");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> config " + ChatColor.WHITE + ": Config command help");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " poststatistics " + ChatColor.WHITE + ": Post the Safe Creeper statistics");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " installupdates " + ChatColor.WHITE + ": Install Safe Creeper updates");
-					sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");
+					sender.sendMessage(ChatColor.GREEN + SCChatUtils.fillLine("[ SAFE CREEPER HELP ]", "="));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> " + ChatColor.WHITE + ": View help"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> config " + ChatColor.WHITE + ": Config command help"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " poststatistics " + ChatColor.WHITE + ": Post the Safe Creeper statistics"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " installupdates " + ChatColor.WHITE + ": Install Safe Creeper updates"));
+					sender.sendMessage(SCChatUtils.fitString(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version"));
+					sender.sendMessage(SCChatUtils.getBlankLineString());
 					return true;
 				}
 				
