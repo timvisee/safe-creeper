@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.util.SCChatUtils;
 import com.timvisee.safecreeper.util.SCFileUpdater;
 
 public class CommandHandler {
@@ -271,8 +272,10 @@ public class CommandHandler {
 				}
 				
 				PluginDescriptionFile pdfFile = SafeCreeper.instance.getDescription();
+				sender.sendMessage(ChatColor.GREEN + SCChatUtils.fillLine("[ SAFE CREEPER ]", "="));
 				sender.sendMessage(ChatColor.YELLOW + "This server is running Safe Creeper v" + pdfFile.getVersion());
 				sender.sendMessage(ChatColor.YELLOW + "Safe Creeper is made by Tim Visee - timvisee.com");
+				sender.sendMessage(SCChatUtils.getBlankLineString());
 				return true;
 			}
 			
