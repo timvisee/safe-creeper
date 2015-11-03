@@ -271,7 +271,7 @@ public class SCUpdatesHandler {
 	 * @return current Safe Creeper version
 	 */
 	public String getCurrentVersion() {
-		return SafeCreeper.instance.getVersion();
+		return SafeCreeper.instance.getVersionName();
 	}
 	
 	/**

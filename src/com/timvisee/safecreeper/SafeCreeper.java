@@ -34,7 +34,14 @@ import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
 import com.timvisee.safecreeper.util.SCFileUpdater;
 
 public class SafeCreeper extends JavaPlugin {
-	
+
+	/** Plugin name. */
+	public static final String PLUGIN_NAME = "SafeCreeper";
+	/** Plugin version name. */
+	public static final String PLUGIN_VERSION_NAME = "1.5.3";
+	/** Plugin version code. */
+	public static final int PLUGIN_VERSION_CODE = 34;
+
 	// Safe Creeper static instance
 	public static SafeCreeper instance;
 	
@@ -208,7 +215,7 @@ public class SafeCreeper extends JavaPlugin {
 		long duration = System.currentTimeMillis() - t;
 		
 		// Show a status message
-		getSCLogger().info("Safe Creeper v" + pdfFile.getVersion() + " enabled, took " + String.valueOf(duration) + " ms!");
+		getSCLogger().info("Safe Creeper v" + SafeCreeper.PLUGIN_NAME + " enabled, took " + String.valueOf(duration) + " ms!");
 	}
 	
 	/**
@@ -265,13 +272,21 @@ public class SafeCreeper extends JavaPlugin {
 	}
     
 	/**
-	 * Fetch the Safe Creeper version from the plugin.yml file
-	 * @return Fetch the Safe Creeper version from the plugin.yml file
+	 * Get the plugin version name.
+	 * @return Version name.
 	 */
-	public String getVersion() {
-		return getDescription().getVersion();
+	public String getVersionName() {
+		return SafeCreeper.PLUGIN_VERSION_NAME;
 	}
-	
+
+	/**
+	 * Get plugin version code.
+	 * @return Version code.
+	 */
+	public int getVersionCode() {
+		return SafeCreeper.PLUGIN_VERSION_CODE;
+	}
+
 	/**
 	 * Set up the updates handler
 	 */

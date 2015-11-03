@@ -152,7 +152,7 @@ public class SafeCreeperApi {
 		if(!isHooked())
 			return "";
 		
-		return this.sc.getVersion();
+		return this.sc.getVersionName();
 	}
 	
 	/**

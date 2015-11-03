@@ -385,7 +385,7 @@ public class SCDestructionRepairManager {
 			i++;
 		}
 		
-		final String scVer = SafeCreeper.instance.getVersion();
+		final String scVer = SafeCreeper.instance.getVersionName();
 		
 		// Add the version code to the file
 		config.set("version", scVer);
