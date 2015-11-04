@@ -208,14 +208,11 @@ public class SafeCreeper extends JavaPlugin {
 			getSCLogger().info("Scheduled task 'destructionRepairSave' disabled in the config file!");
 		}
 		
-		// Plugin sucesfuly enabled, show console message
-		PluginDescriptionFile pdfFile = getDescription();
-		
 		// Calculate the load duration
 		long duration = System.currentTimeMillis() - t;
 		
 		// Show a status message
-		getSCLogger().info("Safe Creeper v" + SafeCreeper.PLUGIN_NAME + " enabled, took " + String.valueOf(duration) + " ms!");
+		getSCLogger().info(SafeCreeper.PLUGIN_NAME + " v" + SafeCreeper.PLUGIN_VERSION_NAME + " (" + SafeCreeper.PLUGIN_VERSION_CODE + ") enabled, took " + String.valueOf(duration) + " ms!");
 	}
 	
 	/**
