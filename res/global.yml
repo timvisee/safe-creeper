@@ -2508,4 +2508,5 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.5.2.5'
+version: '1.5.3'
+versionCode: 34
