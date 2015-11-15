@@ -97,34 +97,40 @@
 
     <repositories>
 
-        <!-- SpigotMC Repo (Bukkit and SpigotAPI) -->
+        <!-- SpigotMC repo (Bukkit and Spigot API) -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public</url>
         </repository>
 
-        <!-- Multiverse Repo -->
+        <!-- Multiverse repo -->
         <repository>
             <id>onarandombox</id>
             <url>http://repo.onarandombox.com/content/groups/public</url>
         </repository>
 
-        <!-- Vault Repo -->
+        <!-- Vault repo -->
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
         </repository>
 
-        <!-- Metrics Snapshots Repo -->
+        <!-- Metrics Snapshots repo -->
         <repository>
             <id>mcstats-snapshots</id>
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- PermissionsEx Repo -->
+        <!-- PermissionsEx repo -->
         <repository>
             <id>pex-repo</id>
             <url>http://pex-repo.aoeu.xyz/</url>
+        </repository>
+
+        <!-- WorldGuard repo -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
         </repository>
 
     </repositories>
@@ -147,8 +153,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project,
-            http://bukkit.org/ -->
+        <!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project, http://bukkit.org/ -->
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
@@ -269,6 +274,15 @@
             <version>3.1.6</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Permission-3.1.6.jar</systemPath>
+        </dependency>
+
+        <!-- WorldGuard plugin -->
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldguard</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
+            <type>jar</type>
         </dependency>
 
     </dependencies>
