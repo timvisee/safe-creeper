@@ -48,17 +48,11 @@ public class SCFileUpdater {
 		YamlConfiguration c = new YamlConfiguration();
 		try {
 			c.load(f);
-		} catch (FileNotFoundException e) {
-			System.out.println("[SafeCreeper] Error while loading config file!");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("[SafeCreeper] Error while loading config file!");
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
+		} catch (IOException | InvalidConfigurationException e) {
 			System.out.println("[SafeCreeper] Error while loading config file!");
 			e.printStackTrace();
 		}
-		
+
 		return isConfigUpToDate(c);
 	}
 	
@@ -76,8 +70,9 @@ public class SCFileUpdater {
 	}
 
 	/**
-	 * Update the main config file, if the file version is oudated
-	 * @return True if anything on the config file was updated
+	 * Update the main config file, if the file version is outdated.
+	 *
+	 * @return True if anything on the config file was updated.
 	 */
 	@SuppressWarnings("unused")
 	public static boolean updateConfig() {
@@ -100,27 +95,21 @@ public class SCFileUpdater {
 		String configVer = c.getString("version", "0.1");
 		
 		// Load the default global config file 
-		YamlConfiguration defc = new YamlConfiguration();
+		YamlConfiguration defaultConfig = new YamlConfiguration();
 		try {
-			defc.load(SafeCreeper.instance.getResource("res/config.yml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
+			defaultConfig.load(SafeCreeper.instance.getResource("res/config.yml"));
+		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
-		
-		// Make sure the default config file is loaded
-		if(defc == null)
-			return false;
-		
+
 		// Backup the current file version, so it won't be lost if something goes wrong
 		backupConfig();
 		
 		// Create a new config file
-		FileConfiguration newc = new YamlConfiguration();
+		FileConfiguration newConfig = new YamlConfiguration();
 		
 		// Loop through all the config file items to update the file
-		Set<String> keys = defc.getConfigurationSection("").getKeys(true);
+		Set<String> keys = defaultConfig.getConfigurationSection("").getKeys(true);
 		for(String k : keys) {
 			
 			// Make sure the current node is not the version node
@@ -131,12 +120,12 @@ public class SCFileUpdater {
 			if(isOlderVersion("1.5", configVer)) {
 				
 				if(k.equalsIgnoreCase("usePermissions")) {
-					newc.set("permissions.usePermissions", c.getBoolean(k, defc.getBoolean(k)));
+					newConfig.set("permissions.usePermissions", c.getBoolean(k, defaultConfig.getBoolean(k)));
 					continue;
 				}
 				
 				if(k.equalsIgnoreCase("useBypassPermissions")) {
-					newc.set("permissions.enableBypassPermissions", c.getBoolean(k, defc.getBoolean(k)));
+					newConfig.set("permissions.enableBypassPermissions", c.getBoolean(k, defaultConfig.getBoolean(k)));
 					continue;
 				}
 			}
@@ -144,59 +133,59 @@ public class SCFileUpdater {
 			// Update some moved config values correctly
 			if(isOlderVersion("1.5.2.2", configVer)) {
 				if(k.equalsIgnoreCase("tasks.updateChecker.interval")) {
-					newc.set("tasks.updateChecker.interval", 600);
+					newConfig.set("tasks.updateChecker.interval", 600);
 					continue;
 				}
 			}
 			
-			if(newc.isSet(k)) // Make sure the value is not already set
+			if(newConfig.isSet(k)) // Make sure the value is not already set
 				continue;
 				
-			else if(!defc.isSet(k))
-				newc.createSection(k);
+			else if(!defaultConfig.isSet(k))
+				newConfig.createSection(k);
 				
-			else if(defc.isBoolean(k))
-				newc.set(k, c.getBoolean(k, defc.getBoolean(k)));
+			else if(defaultConfig.isBoolean(k))
+				newConfig.set(k, c.getBoolean(k, defaultConfig.getBoolean(k)));
 				
-			else if(defc.isDouble(k))
-				newc.set(k, c.getDouble(k, defc.getDouble(k)));
+			else if(defaultConfig.isDouble(k))
+				newConfig.set(k, c.getDouble(k, defaultConfig.getDouble(k)));
 			
-			else if(defc.isInt(k))
-				newc.set(k, c.getInt(k, defc.getInt(k)));
+			else if(defaultConfig.isInt(k))
+				newConfig.set(k, c.getInt(k, defaultConfig.getInt(k)));
 				
-			else if(defc.isItemStack(k))
-				newc.set(k, c.getItemStack(k, defc.getItemStack(k)));
+			else if(defaultConfig.isItemStack(k))
+				newConfig.set(k, c.getItemStack(k, defaultConfig.getItemStack(k)));
 				
-			else if(defc.isList(k))
-				newc.set(k, c.getList(k, defc.getList(k)));
+			else if(defaultConfig.isList(k))
+				newConfig.set(k, c.getList(k, defaultConfig.getList(k)));
 				
-			else if(defc.isLong(k))
-				newc.set(k, c.getLong(k, defc.getLong(k)));
+			else if(defaultConfig.isLong(k))
+				newConfig.set(k, c.getLong(k, defaultConfig.getLong(k)));
 				
-			else if(defc.isOfflinePlayer(k))
-				newc.set(k, c.getOfflinePlayer(k, defc.getOfflinePlayer(k)));
+			else if(defaultConfig.isOfflinePlayer(k))
+				newConfig.set(k, c.getOfflinePlayer(k, defaultConfig.getOfflinePlayer(k)));
 				
-			else if(defc.isString(k))
-				newc.set(k, c.getString(k, defc.getString(k)));
+			else if(defaultConfig.isString(k))
+				newConfig.set(k, c.getString(k, defaultConfig.getString(k)));
 				
-			else if(defc.isVector(k))
-				newc.set(k, c.getVector(k, defc.getVector(k)));
+			else if(defaultConfig.isVector(k))
+				newConfig.set(k, c.getVector(k, defaultConfig.getVector(k)));
 				
-			else if(defc.isConfigurationSection(k))
-				newc.createSection(k);
+			else if(defaultConfig.isConfigurationSection(k))
+				newConfig.createSection(k);
 		}
 		
 		// Update the version number in the config file
-		newc.set("version", pluginVer);
+		newConfig.set("version", pluginVer);
 		
 		// Add some description to the config file
-		newc.options().header("Safe Creeper Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
+		newConfig.options().header("Safe Creeper Config - Automaticly updated from v" + configVer + " to v" + pluginVer + " by Safe Creeper. Old file backuped in 'plugins/SafeCreeper/old_files' folder.");
 		
 		// TODO: Set the intended spaces to 4
 		
 		// Save the config file
 		try {
-			newc.save(configFile);
+			newConfig.save(configFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -237,16 +226,10 @@ public class SCFileUpdater {
 		YamlConfiguration defc = new YamlConfiguration();
 		try {
 			defc.load(SafeCreeper.instance.getResource("res/global.yml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
+		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
 		}
-		
-		// Make sure the default config file is loaded
-		if(defc == null)
-			return false;
-		
+
 		// Backup the current file version, so it won't be lost if something goes wrong
 		backupGlobalConfig();
 		
@@ -299,24 +282,26 @@ public class SCFileUpdater {
 			if(isOlderVersion("1.3.6.9", configVer)) {
 
 				// Update the old 'KeepXPOnDeath' and 'DropXPOnDeath' from the PlayerControl
-				if(k.equals("PlayerControl.CustomDrops.XP.Enabled")) {
-					if(c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)) ||
-							c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k))) {
-						newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+				switch(k) {
+					case "PlayerControl.CustomDrops.XP.Enabled":
+						if(c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)) ||
+								c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k))) {
+							newc.set("PlayerControl.CustomDrops.XP.Enabled", true);
+							continue;
+						}
+
+						break;
+					case "PlayerControl.CustomDrops.XP.KeepLevel":
+						newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
 						continue;
-					}
-					
-				} else if(k.equals("PlayerControl.CustomDrops.XP.KeepLevel")) {
-					newc.set("PlayerControl.CustomDrops.XP.KeepLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
-					continue;
-					
-				} else if(k.equals("PlayerControl.CustomDrops.XP.KeepXPLevel")) {
-					newc.set("PlayerControl.CustomDrops.XP.KeepXPLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
-					continue;
-					
-				} else if(k.equals("PlayerControl.CustomDrops.XP.DropXP")) {
-					newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k)));
-					continue;
+
+					case "PlayerControl.CustomDrops.XP.KeepXPLevel":
+						newc.set("PlayerControl.CustomDrops.XP.KeepXPLevel", c.getBoolean("PlayerControl.KeepXPOnDeath", defc.getBoolean(k)));
+						continue;
+
+					case "PlayerControl.CustomDrops.XP.DropXP":
+						newc.set("PlayerControl.CustomDrops.XP.DropXP", c.getBoolean("PlayerControl.DropXPOnDeath", defc.getBoolean(k)));
+						continue;
 				}
 				
 				// Update the old FoodLock'er in the PlayerControl
@@ -719,7 +704,7 @@ public class SCFileUpdater {
 		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "config.yml");
 		
 		// Make sure the parent dirs exists
-		((File) new File(backupFile.getParent())).mkdirs();
+		new File(backupFile.getParent()).mkdirs();
 		
 		// Copy the config file to it's backup location
 		copy(configFile, backupFile);
@@ -742,10 +727,10 @@ public class SCFileUpdater {
 		
 		// Get the path to copy the file to
 		File globalConfigFile = SafeCreeper.instance.getConfigHandler().getGlobalConfigFile();
-		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "global.yml");
+		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "res/global.yml");
 		
 		// Make sure the parent dirs exists
-		((File) new File(backupFile.getParent())).mkdirs();
+		new File(backupFile.getParent()).mkdirs();
 		
 		// Copy the config file to it's backup location
 		copy(globalConfigFile, backupFile);
@@ -771,7 +756,7 @@ public class SCFileUpdater {
 		File backupFile = new File(SafeCreeper.instance.getDataFolder(), "old_files" + File.separator + "v" + configVer + File.separator + "worlds" + File.separator + w + ".yml");
 		
 		// Make sure the parent dirs exists
-		((File) new File(backupFile.getParent())).mkdirs();
+		new File(backupFile.getParent()).mkdirs();
 		
 		// Copy the config file to it's backup location
 		copy(worldConfigFile, backupFile);
