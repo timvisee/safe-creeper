@@ -294,5 +294,14 @@
             <systemPath>${basedir}/lib/Corruption/2.3.3/Corruption.jar</systemPath>
         </dependency>
 
+        <!-- Factions plugin -->
+        <dependency>
+            <groupId>com.massivecraft.factions</groupId>
+            <artifactId>factions</artifactId>
+            <version>1.6.9.2</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Factions/v1.6.9.2/Factions.jar</systemPath>
+        </dependency>
+
     </dependencies>
 </project>
