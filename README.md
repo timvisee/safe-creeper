@@ -20,7 +20,7 @@ Safe Creeper is a plugin for Craft Bukkit servers to manage and protect the thin
 
 #####How to compile the project:
 >- Clone the project with Git/GitHub
->- Execute command "mvn clean install -B"
+>- Execute command `mvn clean install -B`
 
 #####License: 
 GNU GPL v3.0
