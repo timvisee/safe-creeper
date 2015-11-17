@@ -89,7 +89,7 @@ public class SCStatisticsManager {
 	        encodeDataPair(data, "pluginName", REPORT_APP_NAME);
 	        encodeDataPair(data, "pluginVersion", description.getVersion());
 	        encodeDataPair(data, "serverVersion", Bukkit.getVersion());
-	        encodeDataPair(data, "onlinePlayers", Integer.toString(Bukkit.getServer().getOnlinePlayers().length));
+	        encodeDataPair(data, "onlinePlayers", Integer.toString(Bukkit.getServer().getOnlinePlayers().size()));
 	        
 	        // Send the server address with the post request if set in the configuration file
 	        if(this.p.getConfig().getBoolean("statistics.postServerAddress", false)) {
