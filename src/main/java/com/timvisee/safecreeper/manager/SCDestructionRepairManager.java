@@ -44,14 +44,15 @@ public class SCDestructionRepairManager {
 	public SCDestructionRepairManager() { }
 
 	/**
-	 * Add a list of blocks that should be repaired
-	 * @param blockStates List of block states to repair
-	 * @param listDelay Time in seconds to start repairing the first block of the list
-	 * @param blockDelay Delay between reparing blocks in seconds
+	 * Add a list of blocks that should be repaired.
+	 *
+	 * @param blocks List of block states to repair.
+	 * @param listDelay Time in seconds to start repairing the first block of the list.
+	 * @param blockDelay Delay between repairing blocks in seconds.
 	 */
 	public void addBlocks(List<Block> blocks, double listDelay, double blockDelay) {
-		List<SCBlockState> states = new ArrayList<SCBlockState>();
-		
+		List<SCBlockState> states = new ArrayList<>();
+
 		for(Block b : blocks) {
 			if(b.getType().equals(Material.TNT))
 				continue;
@@ -62,7 +63,7 @@ public class SCDestructionRepairManager {
 				states.add(new SCContainerBlockState(b));
 			else if(b.getType().equals(Material.MOB_SPAWNER))
 				states.add(new SCSpawnerState(b));
-			// TODO: Fix beacon stuff!
+			// TODO: Fix beacon block!
 			/*else if(b.getType().equals(Material.BEACON))
 				states.add(new SCBeaconState(b));*/
 			else if(b.getType().equals(Material.JUKEBOX))
@@ -496,7 +497,7 @@ public class SCDestructionRepairManager {
 	
 	/**
 	 * Comparator to sort a list of blocks based on it's y coord
-	 * @author Tim Visée
+	 * @author Tim Visï¿½e
 	 */
 	public class CustomComparator implements Comparator<SCBlockState> {
 		@Override
