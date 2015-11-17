@@ -62,10 +62,9 @@
             <resource>
                 <targetPath>./res</targetPath>
                 <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources/</directory>
+                <directory>${basedir}/src/main/resources/res/</directory>
                 <includes>
-                    <include>*.yml</include>
-                    <include>**/*.yml</include>
+                    <include>res/*.yml</include>
                 </includes>
             </resource>
         </resources>
