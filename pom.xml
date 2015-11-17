@@ -10,12 +10,12 @@
     <name>SafeCreeper</name>
     <description>Control creepers, Withers, EnderDragons, Enderman, TNT, Fireballs and a lot more!</description>
     <inceptionYear>2011</inceptionYear>
-    <url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
+    <url>http://dev.bukkit.org/bukkit-plugins/safe-creeper/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/timvisee/DungeonMaze.git</connection>
-        <developerConnection>scm:git:git@github.com:timvisee/DungeonMaze.git</developerConnection>
-        <url>https://github.com/timvisee/DungeonMaze</url>
+        <connection>scm:git:https://github.com/timvisee/SafeCreeper.git</connection>
+        <developerConnection>scm:git:git@github.com:timvisee/SafeCreeper.git</developerConnection>
+        <url>https://github.com/timvisee/SafeCreeper</url>
     </scm>
 
     <!--<ciManagement>-->
