@@ -8,7 +8,7 @@ Safe Creeper is a plugin for Craft Bukkit servers to manage and protect the thin
 
 #####Running Requirements:
 >- Java 1.8 or higher
->- CraftBukkit or Spigot (for Minecraft 1.8.1 or higher)
+>- CraftBukkit or Spigot (for Minecraft 1.8.8 or higher)
 
 #####Contributing
 1. Fork it.
@@ -19,7 +19,7 @@ Safe Creeper is a plugin for Craft Bukkit servers to manage and protect the thin
 6. Enjoy a refreshing Diet Coke and wait
 
 #####How to compile the project:
->- Clone the project with Git/Github
+>- Clone the project with Git/GitHub
 >- Execute command "mvn clean install -B"
 
 #####License: 
