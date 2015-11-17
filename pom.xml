@@ -235,9 +235,9 @@
         <dependency>
             <groupId>org.anjocaido</groupId>
             <artifactId>groupmanager</artifactId>
-            <version>2.1.31</version>
+            <version>2.13.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/EssentialsGroupManager-2.1.31.jar</systemPath>
+            <systemPath>${basedir}/lib/EssentialsGroupManager-2.13.1.jar</systemPath>
         </dependency>
 
         <!-- bPermissions plugin -->
