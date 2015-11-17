@@ -321,5 +321,14 @@
             <systemPath>${basedir}/lib/PVP Arena/v1.1.0.351/pvparena.jar</systemPath>
         </dependency>
 
+        <!-- TVNLib plugin -->
+        <dependency>
+            <groupId>com.timvisee.tvnlib</groupId>
+            <artifactId>tvnlib</artifactId>
+            <version>0.1.1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/TVNLib/v0.1.1/TVNLib.jar</systemPath>
+        </dependency>
+
     </dependencies>
 </project>
