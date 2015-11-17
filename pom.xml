@@ -237,7 +237,7 @@
             <artifactId>groupmanager</artifactId>
             <version>2.1.31</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/EssentialsGroupManager.jar</systemPath>
+            <systemPath>${basedir}/lib/EssentialsGroupManager-2.1.31.jar</systemPath>
         </dependency>
 
         <!-- bPermissions plugin -->
@@ -291,7 +291,7 @@
             <artifactId>corruption</artifactId>
             <version>2.3.3</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Corruption/2.3.3/Corruption.jar</systemPath>
+            <systemPath>${basedir}/lib/Corruption-2.3.3.jar</systemPath>
         </dependency>
 
         <!-- Factions plugin -->
@@ -300,7 +300,7 @@
             <artifactId>factions</artifactId>
             <version>1.6.9.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Factions/v1.6.9.2/Factions.jar</systemPath>
+            <systemPath>${basedir}/lib/Factions-1.6.9.2.jar</systemPath>
         </dependency>
 
         <!-- Mob Arena plugin -->
@@ -309,7 +309,7 @@
             <artifactId>mobarena</artifactId>
             <version>0.96.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Mob Arena/v0.96.2/MobArena.jar</systemPath>
+            <systemPath>${basedir}/lib/MobArena-0.96.2.jar</systemPath>
         </dependency>
 
         <!-- PVP Arena plugin -->
@@ -318,7 +318,7 @@
             <artifactId>pvparena</artifactId>
             <version>1.1.0.351</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/PVP Arena/v1.1.0.351/pvparena.jar</systemPath>
+            <systemPath>${basedir}/lib/pvparena-1.1.0.351.jar</systemPath>
         </dependency>
 
         <!-- TVNLib plugin -->
@@ -327,7 +327,7 @@
             <artifactId>tvnlib</artifactId>
             <version>0.1.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/TVNLib/v0.1.1/TVNLib.jar</systemPath>
+            <systemPath>${basedir}/lib/TVNLib-0.1.1.jar</systemPath>
         </dependency>
 
     </dependencies>
