@@ -1,11 +1,11 @@
 name: SafeCreeper
 description: 'Get full control of creatures, players and almost everything!'
 main: com.timvisee.safecreeper.SafeCreeper
-version: 1.5.3
+version: ${project.version}
 load: startup
 author: timvisee
 website: http://timvisee.com/
-softdepend: [Vault, TVNLib, WorldGuard, Corruption, MobArena, PVPArena, Factions] #hack to fix trove errors
+softdepend: [Vault, TVNLib, WorldGuard, Corruption, MobArena, PVPArena, Factions] # hack to fix trove errors
 commands:
   safecreeper:
     description: Safe Creeper command
