@@ -303,13 +303,22 @@
             <systemPath>${basedir}/lib/Factions/v1.6.9.2/Factions.jar</systemPath>
         </dependency>
 
-        <!-- MobArena plugin -->
+        <!-- Mob Arena plugin -->
         <dependency>
             <groupId>com.garbagemule</groupId>
             <artifactId>mobarena</artifactId>
             <version>0.96.2</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/Mob Arena/v0.96.2/MobArena.jar</systemPath>
+        </dependency>
+
+        <!-- PVP Arena plugin -->
+        <dependency>
+            <groupId>net.slipcor.pvparena</groupId>
+            <artifactId>pvparena</artifactId>
+            <version>1.1.0.351</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/PVP Arena/v1.1.0.351/pvparena.jar</systemPath>
         </dependency>
 
     </dependencies>
