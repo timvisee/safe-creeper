@@ -77,9 +77,6 @@ public class SafeCreeper extends JavaPlugin {
 	private SCFactionsHandler fh;
 	private SCWorldGuardHandler wgh;
 	
-	// Debug Mode
-	boolean debug = false;
-	
 	// Variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
 	public boolean disableOtherExplosions = false;
 	
