@@ -267,7 +267,7 @@
             <systemPath>${basedir}/lib/zPermissions-1.3beta1.jar</systemPath>
         </dependency>
 
-        <!-- Permissions plugin (VERY OBSOLETE) -->
+        <!-- Permissions plugin (obsolete) -->
         <dependency>
             <groupId>com.nijiko</groupId>
             <artifactId>permissions</artifactId>
@@ -283,6 +283,15 @@
             <version>LATEST</version>
             <scope>provided</scope>
             <type>jar</type>
+        </dependency>
+
+        <!-- Corruption plugin -->
+        <dependency>
+            <groupId>com.mcdr.corruption</groupId>
+            <artifactId>corruption</artifactId>
+            <version>2.3.3</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Corruption/2.3.3/Corruption.jar</systemPath>
         </dependency>
 
     </dependencies>
