@@ -18,10 +18,10 @@
         <url>https://github.com/timvisee/SafeCreeper</url>
     </scm>
 
-    <!--<ciManagement>-->
-        <!--<system>jenkins</system>-->
-        <!--<url>http://ci.xephi.fr/job/DungeonMaze/</url>-->
-    <!--</ciManagement>-->
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://ci.xephi.fr/job/SafeCreeper/</url>
+    </ciManagement>
 
     <issueManagement>
         <system>GitHub</system>
