@@ -1,26 +1,26 @@
 package com.timvisee.safecreeper.api.manager;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 
-import com.timvisee.safecreeper.SCLogger;
 import com.timvisee.safecreeper.permission.PermissionsManager;
 import com.timvisee.safecreeper.permission.PermissionsManager.PermissionsSystemType;
 
 public class SCAPermissionsManager {
 	
-	/** @var pm SCPermissionsManager instance */
-	private PermissionsManager pm;
+	/** Permissions manager instance */
+	private PermissionsManager permsMan;
 	
 	/**
 	 * Constructor
-	 * @param pm SCPermissionsManager instance
+	 * @param permsMan SCPermissionsManager instance
 	 */
-	public SCAPermissionsManager(PermissionsManager pm) {
-		this.pm = pm;
+	public SCAPermissionsManager(PermissionsManager permsMan) {
+		this.permsMan = permsMan;
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class SCAPermissionsManager {
 	 * @return SCPermissionsManager instance
 	 */
 	public PermissionsManager getSCPermissionsManager() {
-		return this.pm;
+		return this.permsMan;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class SCAPermissionsManager {
 	 * @param pm SCPermissionsManager instance
 	 */
 	public void setSCPermissionsManager(PermissionsManager pm) {
-		this.pm = pm;
+		this.permsMan = pm;
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class SCAPermissionsManager {
 	 * @return permissions system type
 	 */
 	public PermissionsSystemType getUsedPermissionsSystemType() {
-		return this.pm.getUsedPermissionsSystemType();
+		return this.permsMan.getUsedPermissionsSystemType();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class SCAPermissionsManager {
 	 * @return false if there isn't any permissions system used
 	 */
 	public boolean isEnabled() {
-		return this.pm.isEnabled();
+		return this.permsMan.isEnabled();
 	}
 	
 	/**
@@ -60,14 +60,14 @@ public class SCAPermissionsManager {
 	 * @return the detected permissions system
 	 */
 	public PermissionsSystemType setup() {
-		return this.pm.setup();
+		return this.permsMan.setup();
 	}
 	
 	/**
 	 * Break the hook with the current hooked permissions system
 	 */
 	public void unhook() {
-		this.pm.unhook();
+		this.permsMan.unhook();
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class SCAPermissionsManager {
 	 * @param e Event instance
 	 */
 	public void onPluginEnable(PluginEnableEvent e) {
-		this.pm.onPluginEnable(e);
+		this.permsMan.onPluginEnable(e);
 	}
 	
 	/**
@@ -83,23 +83,25 @@ public class SCAPermissionsManager {
 	 * @param e Event instance
 	 */
 	public void onPluginDisable(PluginDisableEvent e) {
-		this.pm.onPluginDisable(e);
+		this.permsMan.onPluginDisable(e);
 	}
 	
 	/**
-	 * Get the logger instance
-	 * @return SCLogger instance
+	 * Get the logger instance.
+	 *
+	 * @return Logger instance.
 	 */
-	public SCLogger getSCLogger() {
-		return this.pm.getSCLogger();
+	public Logger getLogger() {
+		return this.permsMan.getLogger();
 	}
 	
 	/**
-	 * Set the logger instance
-	 * @param log SCLogger instance
+	 * Set the logger instance.
+     *
+	 * @param log Logger instance.
 	 */
-	public void setSCLogger(SCLogger log) {
-		this.pm.setSCLogger(log);
+	public void setLogger(Logger log) {
+		this.permsMan.setLogger(log);
 	}
 	
 	/**
@@ -109,18 +111,18 @@ public class SCAPermissionsManager {
 	 * @return true if the player is permitted
 	 */
 	public boolean hasPermission(Player p, String permsNode) {
-		return this.pm.hasPermission(p, permsNode);
+		return this.permsMan.hasPermission(p, permsNode);
 	}
 	
 	/**
 	 * Check if a player has permission
-	 * @param player player
-	 * @param permissionNode permission node
+	 * @param p player
+	 * @param permsNode permission node
 	 * @param def default if no permissions system is used
 	 * @return true if the player is permitted
 	 */
 	public boolean hasPermission(Player p, String permsNode, boolean def) {
-		return this.pm.hasPermission(p, permsNode, def);
+		return this.permsMan.hasPermission(p, permsNode, def);
 	}
 	
 	/**
@@ -129,6 +131,6 @@ public class SCAPermissionsManager {
 	 * @return Permissions groups the player is in
 	 */
 	public List<String> getGroups(Player p) {
-		return this.pm.getGroups(p);
+		return this.permsMan.getGroups(p);
 	}
 }
