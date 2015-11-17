@@ -307,9 +307,9 @@
         <dependency>
             <groupId>com.garbagemule</groupId>
             <artifactId>mobarena</artifactId>
-            <version>0.96.2</version>
+            <version>0.97.1</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/MobArena-0.96.2.jar</systemPath>
+            <systemPath>${basedir}/lib/MobArena-0.97.1.jar</systemPath>
         </dependency>
 
         <!-- PVP Arena plugin -->
