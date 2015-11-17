@@ -93,7 +93,7 @@
                     <relocations>
                         <relocation>
                             <pattern>org.mcstats</pattern>
-                            <shadedPattern>com.timvisee.dungeonmaze</shadedPattern>
+                            <shadedPattern>com.timvisee.safecreeper</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
