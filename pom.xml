@@ -289,9 +289,9 @@
         <dependency>
             <groupId>com.mcdr.corruption</groupId>
             <artifactId>corruption</artifactId>
-            <version>2.3.3</version>
+            <version>2.4</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/Corruption-2.3.3.jar</systemPath>
+            <systemPath>${basedir}/lib/Corruption-2.4.jar</systemPath>
         </dependency>
 
         <!-- Factions plugin -->
