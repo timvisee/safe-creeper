@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import com.timvisee.safecreeper.permission.PermissionsManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -469,11 +470,11 @@ public class SafeCreeper extends JavaPlugin {
 	}
 	
 	/**
-	 * Setup the permissions manager
+	 * Setup the permissions manager.
 	 */
 	public void setUpPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new PermissionsManager(this.getServer(), this, getSCLogger());
+		this.pm = new PermissionsManager(Bukkit.getServer(), this, getSCLogger().getLogger());
 		this.pm.setup();
 	}
 	
