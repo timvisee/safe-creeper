@@ -1,12 +1,12 @@
 package com.timvisee.safecreeper.handler.plugin;
 
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.massivecore.ps.PS;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.Faction;
 import com.timvisee.safecreeper.SCLogger;
 
 public class SCFactionsHandler extends SCPluginHandler {
@@ -37,7 +37,7 @@ public class SCFactionsHandler extends SCPluginHandler {
     	
     	try {
     		// Get the Factions plugin
-    		Plugin plugin = (Plugin) Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
+    		Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 	        
     		// The factions plugin may not ben ull
 	        if (plugin == null) {
@@ -50,16 +50,11 @@ public class SCFactionsHandler extends SCPluginHandler {
 	        // Hooked into Factions, show status message
 	        this.log.info("Hooked into Factions!");
 	        
-    	} catch(NoClassDefFoundError ex) {
+    	} catch(NoClassDefFoundError | Exception ex) {
     		// Unable to hook into Factions, show warning/error message.
     		this.log.info("Error while hooking into Factions!");
-    		return;
-    	} catch(Exception ex) {
-    		// Unable to hook into Factions, show warning/error message.
-    		this.log.info("Error while hooking into Factions!");
-    		return;
-    	}
-	}
+        }
+    }
 	
 	/**
 	 * Check if Safe Creeper is hooked into Factions
@@ -83,8 +78,9 @@ public class SCFactionsHandler extends SCPluginHandler {
 	 */
 	public boolean isFactionAt(Location loc) {
     	try {
-    		Faction f = Board.getFactionAt(new FLocation(loc));
-    		
+            // Get the faction
+    		Faction f = BoardColl.get().getFactionAt(PS.valueOf(loc));
+
         	// If returned null, there's no faction found on this area
         	if(f == null)
         		return false;
@@ -105,9 +101,10 @@ public class SCFactionsHandler extends SCPluginHandler {
 	 */
     public String getFactionAt(Location loc) {
     	try {
-    		Faction f = Board.getFactionAt(new FLocation(loc));
+            // Get the faction
+    		Faction f = BoardColl.get().getFactionAt(PS.valueOf(loc));
         	
-        	// If the faction area equals to null, theres not faction on this area
+        	// If the faction area equals to null, there's not faction on this area
         	if(f == null)
         		return "";
         	
@@ -116,7 +113,8 @@ public class SCFactionsHandler extends SCPluginHandler {
         		return "";
         	
         	// Return the faction name
-        	return f.getComparisonTag();
+        	return f.getComparisonName();
+
     	} catch(Exception ex) {
     		return "";
     	}
