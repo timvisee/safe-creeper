@@ -9,8 +9,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import com.timvisee.safecreeper.block.state.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Jukebox;
@@ -25,13 +27,6 @@ import org.bukkit.inventory.InventoryHolder;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.block.SCRepairableBlock;
-import com.timvisee.safecreeper.block.state.SCBlockState;
-import com.timvisee.safecreeper.block.state.SCCommandBlockState;
-import com.timvisee.safecreeper.block.state.SCContainerBlockState;
-import com.timvisee.safecreeper.block.state.SCJukeboxState;
-import com.timvisee.safecreeper.block.state.SCSignState;
-import com.timvisee.safecreeper.block.state.SCSkullState;
-import com.timvisee.safecreeper.block.state.SCSpawnerState;
 import com.timvisee.safecreeper.util.SCAttachedBlock;
 
 public class SCDestructionRepairManager {
@@ -63,9 +58,8 @@ public class SCDestructionRepairManager {
 				states.add(new SCContainerBlockState(b));
 			else if(b.getType().equals(Material.MOB_SPAWNER))
 				states.add(new SCSpawnerState(b));
-			// TODO: Fix beacon block!
-			/*else if(b.getType().equals(Material.BEACON))
-				states.add(new SCBeaconState(b));*/
+			else if(b.getState() instanceof Beacon)
+				states.add(new SCBeaconState(b));
 			else if(b.getType().equals(Material.JUKEBOX))
 				states.add(new SCJukeboxState(b));
 			else if(b.getType().equals(Material.COMMAND))
