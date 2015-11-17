@@ -31,7 +31,7 @@ public class SCConfigHandler {
 	private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
 	private File worldConfigsDir = new File("plugins/SafeCreeper/worlds");
 	private FileConfiguration globalConfig;
-	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<String, FileConfiguration>();
+	private HashMap<String, FileConfiguration> worldConfigs = new HashMap<>();
 
 	/**
 	 * Constructor

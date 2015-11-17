@@ -6,11 +6,11 @@ import java.io.InputStream;
 
 import java.io.OutputStream;
 
+import com.timvisee.safecreeper.permission.PermissionsManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -67,7 +67,7 @@ public class SafeCreeper extends JavaPlugin {
 	private SCStatisticsManager sm;
 	private SCApiController apic;
 	private SCTVNLibHandler tvnlh;
-	private SCPermissionsManager pm;
+	private PermissionsManager pm;
 	private SCConfigHandler ch = null;
 	private SCDestructionRepairManager drm;
 	private SCLivingEntityReviveManager lerm;
@@ -473,7 +473,7 @@ public class SafeCreeper extends JavaPlugin {
 	 */
 	public void setUpPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new SCPermissionsManager(this.getServer(), this, getSCLogger());
+		this.pm = new PermissionsManager(this.getServer(), this, getSCLogger());
 		this.pm.setup();
 	}
 	
@@ -481,7 +481,7 @@ public class SafeCreeper extends JavaPlugin {
 	 * Get the permissions manager
 	 * @return permissions manager
 	 */
-	public SCPermissionsManager getPermissionsManager() {
+	public PermissionsManager getPermissionsManager() {
 		return this.pm;
 	}
 	

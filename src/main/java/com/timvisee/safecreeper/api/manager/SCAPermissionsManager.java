@@ -7,19 +7,19 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 
 import com.timvisee.safecreeper.SCLogger;
-import com.timvisee.safecreeper.manager.SCPermissionsManager;
-import com.timvisee.safecreeper.manager.SCPermissionsManager.PermissionsSystemType;
+import com.timvisee.safecreeper.permission.PermissionsManager;
+import com.timvisee.safecreeper.permission.PermissionsManager.PermissionsSystemType;
 
 public class SCAPermissionsManager {
 	
 	/** @var pm SCPermissionsManager instance */
-	private SCPermissionsManager pm;
+	private PermissionsManager pm;
 	
 	/**
 	 * Constructor
 	 * @param pm SCPermissionsManager instance
 	 */
-	public SCAPermissionsManager(SCPermissionsManager pm) {
+	public SCAPermissionsManager(PermissionsManager pm) {
 		this.pm = pm;
 	}
 	
@@ -27,7 +27,7 @@ public class SCAPermissionsManager {
 	 * Get the SCPermissionsManager instance
 	 * @return SCPermissionsManager instance
 	 */
-	public SCPermissionsManager getSCPermissionsManager() {
+	public PermissionsManager getSCPermissionsManager() {
 		return this.pm;
 	}
 	
@@ -35,7 +35,7 @@ public class SCAPermissionsManager {
 	 * Set the SCPermissionsManager instance
 	 * @param pm SCPermissionsManager instance
 	 */
-	public void setSCPermissionsManager(SCPermissionsManager pm) {
+	public void setSCPermissionsManager(PermissionsManager pm) {
 		this.pm = pm;
 	}
 	
