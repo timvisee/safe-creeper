@@ -64,7 +64,8 @@
                 <filtering>true</filtering>
                 <directory>${basedir}/src/main/resources/res/</directory>
                 <includes>
-                    <include>res/*.yml</include>
+                    <include>*.yml</include>
+                    <include>**/*.yml</include>
                 </includes>
             </resource>
         </resources>
