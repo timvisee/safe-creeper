@@ -168,7 +168,7 @@ public class SCEntityListener implements Listener {
 			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnForVillageInvasion", true, true, l))
 				event.setCancelled(true);
 			break;
-			
+
 		default:
 			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "Spawning.CanSpawnFromOther", true, true, l))
 				event.setCancelled(true);
