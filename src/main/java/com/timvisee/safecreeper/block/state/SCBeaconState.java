@@ -3,6 +3,8 @@ package com.timvisee.safecreeper.block.state;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.timvisee.safecreeper.SafeCreeper;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
@@ -21,10 +23,10 @@ public class SCBeaconState extends SCBlockState {
 		// Construct the parent class
 		super(b.getBlock());
 		
-		// Get the inventory
-		Inventory inv = b.getInventory();
-		
-		// Store the beacon contents
+		// Get the beacon state
+        //BeaconState bs = new BeaconState(b.getBlock());
+
+		/* // Store the beacon contents
 		this.contents.clear();
 		for(ItemStack entry : inv.getContents())
 			if(entry != null)
@@ -33,8 +35,8 @@ public class SCBeaconState extends SCBlockState {
 				this.contents.add(null);
 			
 		// Store the beacon inventory size
-		this.beaconInvSize = inv.getSize();
-	}
+		this.beaconInvSize = inv.getSize();*/
+    }
 	
 	/**
 	 * Constructor
