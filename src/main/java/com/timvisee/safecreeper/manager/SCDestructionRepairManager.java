@@ -49,17 +49,18 @@ public class SCDestructionRepairManager {
 		List<SCBlockState> states = new ArrayList<>();
 
 		for(Block b : blocks) {
+            // Don't rebuild TNT blocks
 			if(b.getType().equals(Material.TNT))
 				continue;
 			
 			if(b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))
 				states.add(new SCSignState(b));
+            else if(b.getType().equals(Material.BEACON))
+                states.add(new SCBeaconState(b));
 			else if(b.getState() instanceof InventoryHolder)
 				states.add(new SCContainerBlockState(b));
 			else if(b.getType().equals(Material.MOB_SPAWNER))
 				states.add(new SCSpawnerState(b));
-			else if(b.getState() instanceof Beacon)
-				states.add(new SCBeaconState(b));
 			else if(b.getType().equals(Material.JUKEBOX))
 				states.add(new SCJukeboxState(b));
 			else if(b.getType().equals(Material.COMMAND))
