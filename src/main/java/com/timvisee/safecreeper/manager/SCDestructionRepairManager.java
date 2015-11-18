@@ -86,7 +86,7 @@ public class SCDestructionRepairManager {
 	
 	/**
 	 * Add a blocks to repair
-	 * @param blockStates List of block states to repair
+	 * @param b List of block states to repair
 	 * @param delay Time in seconds to start repairing the first block
 	 * @param delay Delay between reparing blocks in seconds
 	 */
