@@ -617,6 +617,9 @@ GuardianControl:
         Enabled: false
         MinHealth: 30
         MaxHealth: 30
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
     CustomDrops:
         Enabled: false
         OverwriteDefaultDrops: false
