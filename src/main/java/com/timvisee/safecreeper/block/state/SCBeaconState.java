@@ -2,7 +2,6 @@ package com.timvisee.safecreeper.block.state;
 
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.Inventory;
 
 public class SCBeaconState extends SCBlockState {
 	

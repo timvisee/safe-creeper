@@ -147,6 +147,18 @@
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
 
+        <!-- PowerNBT repositories -->
+        <repository>
+            <id>varscript.ru-releases</id>
+            <name>varscript.ru-releases</name>
+            <url>http://varscript.ru/artifactory/release</url>
+        </repository>
+        <repository>
+            <id>varscript.ru-snapshots</id>
+            <name>varscript.ru-snapshots</name>
+            <url>http://varscript.ru/artifactory/snapshots</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -349,6 +361,15 @@
             <version>0.1.1</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/TVNLib-0.1.1.jar</systemPath>
+        </dependency>
+
+        <!-- TESTING DEPENDENCIES: -->
+
+        <!-- PowerNBT plugin -->
+        <dependency>
+            <groupId>me.dpohvar.powernbt</groupId>
+            <artifactId>PowerNBT</artifactId>
+            <version>0.8.4.1</version>
         </dependency>
 
     </dependencies>
