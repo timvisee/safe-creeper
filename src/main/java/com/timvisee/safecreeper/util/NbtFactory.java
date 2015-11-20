@@ -40,6 +40,7 @@ import com.google.common.io.OutputSupplier;
 import com.google.common.primitives.Primitives;
 
 public class NbtFactory {
+
     // Convert between NBT id and the equivalent class in java
     private static final BiMap<Integer, Class<?>> NBT_CLASS = HashBiMap.create();
     private static final BiMap<Integer, NbtType> NBT_ENUM = HashBiMap.create();
@@ -682,7 +683,7 @@ public class NbtFactory {
      * @param bannedMod - modifiers that are banned.
      * @param clazz - a class to start with.
      * @param methodName - the method name, or NULL to skip.
-     * @param paramCount - the expected parameter count.
+     * //@param paramCount - the expected parameter count.
      * @return The first method by this name.
      * @throws IllegalStateException If we cannot find this method.
      */
