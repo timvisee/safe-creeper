@@ -12,7 +12,6 @@ import java.util.Set;
 import com.timvisee.safecreeper.block.state.*;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Jukebox;
