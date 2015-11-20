@@ -250,7 +250,7 @@
             <systemPath>${basedir}/lib/PermissionsBukkit-2.4.jar</systemPath>
         </dependency>
 
-        <!-- PermissionsBukkit plugin -->
+        <!-- zPermissions plugin -->
         <dependency>
             <groupId>org.tyrannyofheaven.bukkit</groupId>
             <artifactId>zPermissions</artifactId>
