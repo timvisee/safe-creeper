@@ -452,11 +452,19 @@ public class NbtFactory {
             );
 
             invokeMethod(get().SAVE_COMPOUND, null, source.getHandle(), data);
+
         } finally {
-            if (data != null)
+            // TODO: Fix this, original code not working!
+            /*if (data != null)
                 Closeables.closeQuietly(data);
             if (output != null)
-                Closeables.closeQuietly(output);
+                Closeables.closeQuietly(output);*/
+
+            // Alternative
+            if(data != null)
+                data.close();
+            if(output != null)
+                output.close();
         }
     }
 
