@@ -1,7 +1,14 @@
 package com.timvisee.safecreeper.util;
 
 public class SCStringUtils {
-	
+
+	/**
+	 * Trim whitespaces on the left of a string.
+	 *
+	 * @param s String to trim.
+	 *
+	 * @return Result string.
+     */
 	public static String ltrim(String s) {
 	    int i = 0;
 	    
@@ -11,6 +18,13 @@ public class SCStringUtils {
 	    return s.substring(i);
 	}
 
+	/**
+	 * Trim whitespaces on the left of a string.
+	 *
+	 * @param s String to trim.
+	 *
+	 * @return Result string.
+	 */
 	public static String rtrim(String s) {
 	    int i = s.length()-1;
 	    
