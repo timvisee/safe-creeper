@@ -10,11 +10,14 @@ public class SCStringUtils {
 	 * @return Result string.
      */
 	public static String ltrim(String s) {
+		// The base index, from the beginning
 	    int i = 0;
-	    
-	    while (i < s.length() && Character.isWhitespace(s.charAt(i)))
+
+		// Increase the index until a non-whitespace character is reached
+	    while(i < s.length() && Character.isWhitespace(s.charAt(i)))
 	        i++;
-	    
+
+		// Get the substring from the non-whitespace character
 	    return s.substring(i);
 	}
 
@@ -26,11 +29,14 @@ public class SCStringUtils {
 	 * @return Result string.
 	 */
 	public static String rtrim(String s) {
-	    int i = s.length()-1;
-	    
-	    while (i >= 0 && Character.isWhitespace(s.charAt(i)))
+		// The base index, from the end
+	    int i = s.length() - 1;
+
+		// Decrease the index until a non-whitespace character is reached
+	    while(i >= 0 && Character.isWhitespace(s.charAt(i)))
 	        i--;
-	    
-	    return s.substring(0,i+1);
+
+		// Get the substring until the non-whitespace character
+	    return s.substring(0, i + 1);
 	}
 }
