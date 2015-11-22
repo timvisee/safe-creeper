@@ -1,5 +1,8 @@
 package com.timvisee.safecreeper.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class SCStringUtils {
 
 	/**
@@ -38,5 +41,24 @@ public class SCStringUtils {
 
 		// Get the substring until the non-whitespace character
 	    return s.substring(0, i + 1);
+	}
+
+	/**
+	 * Get a full stack trace of an exception as a string.
+	 *
+	 * @param exception The exception.
+	 *
+	 * @return Stack trace as a string.
+	 */
+	public static String getStackTrace(Exception exception) {
+		// Create a string and print writer to print the stack trace into
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+
+		// Print the stack trace into the print writer
+		exception.printStackTrace(printWriter);
+
+		// Return the result as a string
+		return stringWriter.toString();
 	}
 }
