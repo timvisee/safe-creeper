@@ -5,7 +5,15 @@ version: ${project.version}
 load: startup
 author: timvisee
 website: http://timvisee.com/
-softdepend: [Vault, TVNLib, WorldGuard, Corruption, MobArena, PVPArena, Factions, PowerNBT] # hack to fix trove errors
+softdepend:
+    - Vault
+    - TVNLib
+    - WorldGuard
+    - Corruption
+    - MobArena
+    - PVPArena
+    - Factions
+    - PowerNBT
 commands:
   safecreeper:
     description: Safe Creeper command
