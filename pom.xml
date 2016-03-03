@@ -135,12 +135,6 @@
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- PermissionsEx repository -->
-        <repository>
-            <id>pex-repo</id>
-            <url>http://pex-repo.aoeu.xyz/</url>
-        </repository>
-
         <!-- WorldGuard repository -->
         <repository>
             <id>sk89q-repo</id>
