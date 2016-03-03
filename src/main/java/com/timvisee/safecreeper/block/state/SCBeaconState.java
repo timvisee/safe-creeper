@@ -8,8 +8,15 @@ import org.bukkit.block.Block;
 
 public class SCBeaconState extends SCBlockState {
 
-	public int primaryEffectId = 0;
-	public int secondaryEffectId = 0;
+    /**
+     * The ID of the primary beacon effect.
+     */
+	private int primaryEffectId = 0;
+
+    /**
+     * The ID of the secondary beacon effect.
+     */
+    private int secondaryEffectId = 0;
 
 	/**
 	 * Constructor
@@ -55,8 +62,26 @@ public class SCBeaconState extends SCBlockState {
 	public SCBlockStateType getStateType() {
 		return SCBlockStateType.BEACON;
 	}
-	
-	/**
+
+    /**
+     * Get the ID of primary the beacon effect.
+     *
+     * @return Effect ID.
+     */
+    public int getPrimaryEffectId() {
+        return primaryEffectId;
+    }
+
+    /**
+     * Get the ID of the secondary beacon effect.
+     *
+     * @return Effect ID.
+     */
+    public int getSecondaryEffectId() {
+        return secondaryEffectId;
+    }
+
+    /**
 	 * Apply the block state to the block
 	 *
 	 * @return True if succeed.
