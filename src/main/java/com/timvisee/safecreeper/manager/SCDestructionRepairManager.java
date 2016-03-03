@@ -29,8 +29,11 @@ import com.timvisee.safecreeper.block.SCRepairableBlock;
 import com.timvisee.safecreeper.util.SCAttachedBlock;
 
 public class SCDestructionRepairManager {
-	
-	private List<SCRepairableBlock> blocks = new ArrayList<SCRepairableBlock>();
+
+	/**
+	 * The list of blocks that should be repaired.
+	 */
+	private List<SCRepairableBlock> blocks = new ArrayList<>();
 	
 	/**
 	 * Constructor
