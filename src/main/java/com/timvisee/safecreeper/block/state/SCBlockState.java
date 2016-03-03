@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.block.state;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -48,7 +49,7 @@ public class SCBlockState {
 		this.type = b.getTypeId();
 		this.data = b.getData().getData();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param loc Block location
@@ -57,9 +58,28 @@ public class SCBlockState {
 	 */
 	public SCBlockState(SCBlockLocation loc, int type, byte data) {
 		this.loc = loc;
-		
+
 		this.type = type;
 		this.data = data;
+	}
+
+	/**
+	 * Constructor
+	 * @param loc Block location
+	 * @param material Block material
+	 * @param data Block data value
+	 */
+	public SCBlockState(SCBlockLocation loc, Material material, byte data) {
+		this(loc, material.getId(), data);
+	}
+
+	/**
+	 * Constructor
+	 * @param loc Block location
+	 * @param material Block material
+	 */
+	public SCBlockState(SCBlockLocation loc, Material material) {
+		this(loc, material, (byte) 0);
 	}
 	
 	/**
