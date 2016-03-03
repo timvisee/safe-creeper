@@ -9,6 +9,16 @@ import org.bukkit.block.Block;
 public class SCBeaconState extends SCBlockState {
 
     /**
+     * The NBT tag name for the primary effect ID.
+     */
+    public static final String NBT_PRIMARY_EFFECT_TAG = "Primary";
+
+    /**
+     * The NBT tag name for the secondary effect ID.
+     */
+    public static final String NBT_SECONDARY_EFFECT_TAG = "Secondary";
+
+    /**
      * The ID of the primary beacon effect.
      */
 	private int primaryEffectId = 0;
@@ -31,8 +41,8 @@ public class SCBeaconState extends SCBlockState {
         NBTCompound c = api.read(b.getBlock());
 
         // Store the beacon effects
-        primaryEffectId = c.getInt("Primary");
-        secondaryEffectId = c.getInt("Secondary");
+        primaryEffectId = c.getInt(NBT_PRIMARY_EFFECT_TAG);
+        secondaryEffectId = c.getInt(NBT_SECONDARY_EFFECT_TAG);
 
         Bukkit.broadcastMessage("Primary: " + primaryEffectId);
         Bukkit.broadcastMessage("Secondary: " + secondaryEffectId);
@@ -92,16 +102,12 @@ public class SCBeaconState extends SCBlockState {
 		
 		// Get the beacon
 		Beacon b = getBeacon();
-		
-		/* // Put the item back in the chest
-		for(int i = 0; i < inv.getSize(); i++)
-			inv.setItem(i, this.contents.get(i));*/
 
         NBTManager api = NBTManager.getInstance();
 
         NBTCompound c = api.read(b.getBlock());
-        c.put("Primary", primaryEffectId);
-        c.put("Secondary", secondaryEffectId);
+        c.put(NBT_PRIMARY_EFFECT_TAG, primaryEffectId);
+        c.put(NBT_SECONDARY_EFFECT_TAG, secondaryEffectId);
 
         api.write(b.getBlock(), c);
 
