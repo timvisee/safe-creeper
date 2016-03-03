@@ -1,10 +1,13 @@
 package com.timvisee.safecreeper.block.state;
 
+import com.timvisee.safecreeper.block.SCBlockLocation;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class SCBeaconState extends SCBlockState {
 
@@ -17,6 +20,16 @@ public class SCBeaconState extends SCBlockState {
      * The NBT tag name for the secondary effect ID.
      */
     public static final String NBT_SECONDARY_EFFECT_TAG = "Secondary";
+
+    /**
+     * The configuration key used to store the primary beacon effect.
+     */
+    public static final String CONFIG_PRIMARY_EFFECT_KEY = "effects.primary";
+
+    /**
+     * The configuration key used to store the seocndary beacon effect.
+     */
+    public static final String CONFIG_SECONDARY_EFFECT_KEY = "effects.secondary";
 
     /**
      * The ID of the primary beacon effect.
@@ -59,6 +72,22 @@ public class SCBeaconState extends SCBlockState {
 	public SCBeaconState(Block b) {
 		this((Beacon) b.getState());
 	}
+
+    /**
+     * Constructor.
+     *
+     * @param loc The location of the beacon block.
+     * @param primaryEffectId The ID of the primary beacon effect.
+     * @param secondaryEffectId The ID of the secondary beacon effect.
+     */
+    public SCBeaconState(SCBlockLocation loc, int primaryEffectId, int secondaryEffectId) {
+        // Construct the parent class
+        super(loc, Material.BEACON);
+
+        // Store the effects
+        this.primaryEffectId = primaryEffectId;
+        this.secondaryEffectId = secondaryEffectId;
+    }
 
 	/**
 	 * Get the beacon block instance.
@@ -123,4 +152,44 @@ public class SCBeaconState extends SCBlockState {
 		// Return true
 		return true;
 	}
+
+    /**
+     * Save the data in a configuration section.
+     *
+     * @param configSection Configuration section to store the data in.
+     */
+    public void save(ConfigurationSection configSection) {
+        // Make sure the param is not null
+        if(configSection == null)
+            return;
+
+        // Save the main data from the parent class
+        super.save(configSection);
+
+        // Store the container contents
+        configSection.set(CONFIG_PRIMARY_EFFECT_KEY, this.primaryEffectId);
+        configSection.set(CONFIG_SECONDARY_EFFECT_KEY, this.secondaryEffectId);
+    }
+
+    /**
+     * Load the data in a configuration section.
+     *
+     * @param configSection Configuration section to store the data in.
+     */
+    public static SCBeaconState load(ConfigurationSection configSection) {
+        // Make sure the param is not null
+        if(configSection == null)
+            return null;
+
+        // Get the block location
+        ConfigurationSection locSection = configSection.getConfigurationSection("loc");
+        SCBlockLocation loc = SCBlockLocation.load(locSection);
+
+        // Load the beacon effects from the configuration
+        int primaryEffectId = configSection.getInt(CONFIG_PRIMARY_EFFECT_KEY);
+        int secondaryEffectId = configSection.getInt(CONFIG_SECONDARY_EFFECT_KEY);
+
+        // Construct the container state and return the instance
+        return new SCBeaconState(loc, primaryEffectId, secondaryEffectId);
+    }
 }
