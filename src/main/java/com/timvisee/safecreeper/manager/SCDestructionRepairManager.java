@@ -17,7 +17,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Jukebox;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -87,13 +86,13 @@ public class SCDestructionRepairManager {
 	}
 	
 	/**
-	 * Add a blocks to repair
+	 * Add a blocks to repair.
+     *
 	 * @param b List of block states to repair
 	 * @param delay Time in seconds to start repairing the first block
-	 * @param delay Delay between reparing blocks in seconds
 	 */
 	public void addBlock(Block b, double delay) {
-		List<Block> blocks = new ArrayList<Block>();
+		List<Block> blocks = new ArrayList<>();
 		blocks.add(b);
 		
 		addBlocks(blocks, delay, 1);
@@ -103,7 +102,7 @@ public class SCDestructionRepairManager {
 	 * Add a list of blocks that should be repaired
 	 * @param blockStates List of block states to repair
 	 * @param listDelay Time in seconds to start repairing the first block
-	 * @param blockDelay Delay between reparing blocks in seconds
+	 * @param blockDelay Delay between repairing blocks in seconds
 	 */
 	public void addBlockStates(List<SCBlockState> blockStates, double listDelay, double blockDelay) {
 		Collections.shuffle(blockStates);
@@ -179,7 +178,8 @@ public class SCDestructionRepairManager {
 				
 				// Remove the block form the list
 				this.blocks.remove(i);
-				i--;
+                //noinspection UnusedAssignment
+                i--;
 				
 				// Get the material of the block
 				Material type = Material.getMaterial(entry.getBlockState().getTypeId());
@@ -271,12 +271,12 @@ public class SCDestructionRepairManager {
 		
 		Block b2 = b.getRelative(BlockFace.UP);
 		
-		// Loop through the list of enties and check if the entity is in the way
+		// Loop through the list of entries and check if the entity is in the way
 		for(Entity e : entities) {
-			if(e instanceof LivingEntity) { } else
-				continue;
-			
-			// Get the living entity
+            if(!(e instanceof LivingEntity))
+                continue;
+
+            // Get the living entity
 			LivingEntity le = (LivingEntity) e;
 			
 			// Get the block location
@@ -392,9 +392,8 @@ public class SCDestructionRepairManager {
 		config.options().header("Safe Creeper Destruction Repair Data - Automaticly saved by Safe Creeper v" + scVer + ". Do not modify this file!");
 		
 		// Convert the file to a FileConfiguration and safe the file
-		FileConfiguration fileConfig = config;
-		try {
-			fileConfig.save(f);
+        try {
+			config.save(f);
 		} catch (IOException e) {
 			System.out.println("[SafeCreeper] Error while saving destruction repair data!");
 			e.printStackTrace();
@@ -437,18 +436,12 @@ public class SCDestructionRepairManager {
 		YamlConfiguration c = new YamlConfiguration();
 		try {
 			c.load(f);
-		} catch (FileNotFoundException e) {
-			System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
+		} catch (IOException | InvalidConfigurationException e) {
 			System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
 			e.printStackTrace();
 		}
-		
-		// Initialize the new list to store the loaded data in
+
+        // Initialize the new list to store the loaded data in
 		List<SCRepairableBlock> newBlocks = new ArrayList<SCRepairableBlock>();
 		
 		// Get all the items
@@ -499,7 +492,7 @@ public class SCDestructionRepairManager {
 	public class CustomComparator implements Comparator<SCBlockState> {
 		@Override
 	    public int compare(SCBlockState b1, SCBlockState b2) {
-	        return Integer.valueOf(b1.getY()).compareTo(Integer.valueOf(b2.getY()));
+	        return Integer.valueOf(b1.getY()).compareTo(b2.getY());
 	    }
 	}
 }
