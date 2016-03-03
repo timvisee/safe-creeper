@@ -36,19 +36,22 @@ public class SCBeaconState extends SCBlockState {
 		// Construct the parent class
 		super(b.getBlock());
 
+        // Get the NBT API manager
         NBTManager api = NBTManager.getInstance();
 
+        // Get the NBT compound for the beacon block to allow NBT tag management
         NBTCompound c = api.read(b.getBlock());
 
-        // Store the beacon effects
+        // Get and store the beacon effects
         primaryEffectId = c.getInt(NBT_PRIMARY_EFFECT_TAG);
         secondaryEffectId = c.getInt(NBT_SECONDARY_EFFECT_TAG);
 
+        // TODO: Remove this, some debug messages
         Bukkit.broadcastMessage("Primary: " + primaryEffectId);
         Bukkit.broadcastMessage("Secondary: " + secondaryEffectId);
         Bukkit.broadcastMessage("");
     }
-	
+
 	/**
 	 * Constructor
 	 * @param b Beacon block
@@ -56,7 +59,7 @@ public class SCBeaconState extends SCBlockState {
 	public SCBeaconState(Block b) {
 		this((Beacon) b.getState());
 	}
-	
+
 	/**
 	 * Get the beacon block instance.
 	 *
@@ -65,7 +68,7 @@ public class SCBeaconState extends SCBlockState {
 	public Beacon getBeacon() {
 		return (Beacon) getBlock().getState();
 	}
-	
+
 	/**
 	 * Get the block state type
 	 */
@@ -99,19 +102,22 @@ public class SCBeaconState extends SCBlockState {
 	public boolean apply() {
 		if(!super.apply())
 			return false;
-		
+
 		// Get the beacon
 		Beacon b = getBeacon();
 
+        // Get the NBT API manager
         NBTManager api = NBTManager.getInstance();
 
+        // Get the NBT compound for the beacon block to allow NBT tag management
         NBTCompound c = api.read(b.getBlock());
+
+        // Set the beacon effects using NBT
         c.put(NBT_PRIMARY_EFFECT_TAG, primaryEffectId);
         c.put(NBT_SECONDARY_EFFECT_TAG, secondaryEffectId);
 
+        // Write the NBT to the block, and update the block afterwards
         api.write(b.getBlock(), c);
-
-		// Update the beacon
 		b.update();
 		
 		// Return true
