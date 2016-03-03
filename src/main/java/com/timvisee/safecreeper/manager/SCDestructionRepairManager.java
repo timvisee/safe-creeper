@@ -1,7 +1,6 @@
 package com.timvisee.safecreeper.manager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,8 +36,7 @@ public class SCDestructionRepairManager {
     /**
      * Constructor
      */
-    public SCDestructionRepairManager() {
-    }
+    public SCDestructionRepairManager() { }
 
     /**
      * Add a list of blocks that should be repaired.
@@ -375,11 +373,8 @@ public class SCDestructionRepairManager {
         // Generate blank shops section first, to prevent bugs while loading if no shops where added
         config.createSection("blocks");
 
-        // Store the current index
-        int i = 0;
-
         // Put each block in the file
-        for (SCRepairableBlock b : this.blocks) {
+        for(int i = 0; i < this.blocks.size(); i++) {
             // Get the index to use
             String indexStr = String.valueOf(i);
 
@@ -387,10 +382,7 @@ public class SCDestructionRepairManager {
             ConfigurationSection blockSection = config.createSection("blocks." + indexStr);
 
             // Store the reparable block
-            b.save(blockSection);
-
-            // Increase the index
-            i++;
+            this.blocks.get(i).save(blockSection);
         }
 
         final String scVer = SafeCreeper.instance.getVersionName();
@@ -499,7 +491,7 @@ public class SCDestructionRepairManager {
     /**
      * Comparator to sort a list of blocks based on it's y coord
      *
-     * @author Tim Vis�e
+     * @author Tim Visee
      */
     public class CustomComparator implements Comparator<SCBlockState> {
         @Override
