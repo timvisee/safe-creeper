@@ -1,10 +1,13 @@
 package com.timvisee.safecreeper.block.state;
 
+import me.dpohvar.powernbt.api.NBTCompound;
+import me.dpohvar.powernbt.api.NBTManager;
+import org.bukkit.Bukkit;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 
 public class SCBeaconState extends SCBlockState {
-	
+
 	public int primaryEffectId = 0;
 	public int secondaryEffectId = 0;
 
@@ -15,6 +18,18 @@ public class SCBeaconState extends SCBlockState {
 	public SCBeaconState(Beacon b) {
 		// Construct the parent class
 		super(b.getBlock());
+
+        NBTManager api = NBTManager.getInstance();
+
+        NBTCompound c = api.read(b.getBlock());
+
+        // Store the beacon effects
+        primaryEffectId = c.getInt("Primary");
+        secondaryEffectId = c.getInt("Secondary");
+
+        Bukkit.broadcastMessage("Primary: " + primaryEffectId);
+        Bukkit.broadcastMessage("Secondary: " + secondaryEffectId);
+        Bukkit.broadcastMessage("");
     }
 	
 	/**
@@ -26,8 +41,9 @@ public class SCBeaconState extends SCBlockState {
 	}
 	
 	/**
-	 * Get the beacon block
-	 * @return
+	 * Get the beacon block instance.
+	 *
+	 * @return Beacon block.
 	 */
 	public Beacon getBeacon() {
 		return (Beacon) getBlock().getState();
@@ -42,7 +58,8 @@ public class SCBeaconState extends SCBlockState {
 	
 	/**
 	 * Apply the block state to the block
-	 * @return True if succeed
+	 *
+	 * @return True if succeed.
 	 */
 	public boolean apply() {
 		if(!super.apply())
@@ -54,7 +71,15 @@ public class SCBeaconState extends SCBlockState {
 		/* // Put the item back in the chest
 		for(int i = 0; i < inv.getSize(); i++)
 			inv.setItem(i, this.contents.get(i));*/
-		
+
+        NBTManager api = NBTManager.getInstance();
+
+        NBTCompound c = api.read(b.getBlock());
+        c.put("Primary", primaryEffectId);
+        c.put("Secondary", secondaryEffectId);
+
+        api.write(b.getBlock(), c);
+
 		// Update the beacon
 		b.update();
 		
