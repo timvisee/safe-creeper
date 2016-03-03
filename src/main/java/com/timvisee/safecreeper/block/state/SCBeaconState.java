@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.potion.PotionEffectType;
 
 public class SCBeaconState extends SCBlockState {
 
@@ -27,7 +28,7 @@ public class SCBeaconState extends SCBlockState {
     public static final String CONFIG_PRIMARY_EFFECT_KEY = "effects.primary";
 
     /**
-     * The configuration key used to store the seocndary beacon effect.
+     * The configuration key used to store the secondary beacon effect.
      */
     public static final String CONFIG_SECONDARY_EFFECT_KEY = "effects.secondary";
 
@@ -45,9 +46,12 @@ public class SCBeaconState extends SCBlockState {
 	 * Constructor
 	 * @param b Beacon block
 	 */
+    // TODO: Make a method for the data reading?
 	public SCBeaconState(Beacon b) {
 		// Construct the parent class
 		super(b.getBlock());
+
+        // TODO: Make sure the NBT stuff is available! (make a wrapper)
 
         // Get the NBT API manager
         NBTManager api = NBTManager.getInstance();
@@ -106,7 +110,7 @@ public class SCBeaconState extends SCBlockState {
 	}
 
     /**
-     * Get the ID of primary the beacon effect.
+     * Get the ID of the primary the beacon effect.
      *
      * @return Effect ID.
      */
@@ -124,6 +128,42 @@ public class SCBeaconState extends SCBlockState {
     }
 
     /**
+     * Set the ID of the primary beacon effect.
+     *
+     * @param primaryEffectId Effect ID.
+     */
+    public void setPrimaryEffectId(int primaryEffectId) {
+        this.primaryEffectId = primaryEffectId;
+    }
+
+    /**
+     * Set the primary beacon effect.
+     *
+     * @param potionEffect Effect ID.
+     */
+    public void setPrimaryEffect(PotionEffectType potionEffect) {
+        this.primaryEffectId = potionEffect.getId();
+    }
+
+    /**
+     * Set the ID of the secondary beacon effect.
+     *
+     * @param secondaryEffectId Effect ID.
+     */
+    public void setSecondaryEffectId(int secondaryEffectId) {
+        this.secondaryEffectId = secondaryEffectId;
+    }
+
+    /**
+     * Set the secondary beacon effect.
+     *
+     * @param potionEffect Effect ID.
+     */
+    public void setSecondaryEffect(PotionEffectType potionEffect) {
+        this.secondaryEffectId = potionEffect.getId();
+    }
+
+    /**
 	 * Apply the block state to the block
 	 *
 	 * @return True if succeed.
@@ -131,6 +171,8 @@ public class SCBeaconState extends SCBlockState {
 	public boolean apply() {
 		if(!super.apply())
 			return false;
+
+        // TODO: Make sure the NBT stuff is available! (make a wrapper)
 
 		// Get the beacon
 		Beacon b = getBeacon();

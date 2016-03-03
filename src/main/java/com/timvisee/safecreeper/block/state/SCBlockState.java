@@ -281,6 +281,7 @@ public class SCBlockState {
             return new SCBlockState(loc, typeId, data);
 
         } else if (stateType.equals(SCBlockStateType.BEACON.getName())) {
+            // Get the beacon state and return the instance
             return SCBeaconState.load(cfg);
 
         } else if (stateType.equals(SCBlockStateType.COMMAND_BLOCK.getName())) {
