@@ -1,5 +1,6 @@
 package com.timvisee.safecreeper.block.state;
 
+import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.block.SCBlockLocation;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
@@ -51,10 +52,14 @@ public class SCBeaconState extends SCBlockState {
 		// Construct the parent class
 		super(b.getBlock());
 
-        // TODO: Make sure the NBT stuff is available! (make a wrapper)
+        // Make sure the NBT API plugin is hooked
+        if(!SafeCreeper.instance.getPowerNBTHandler().isHooked()) {
+            SafeCreeper.instance.getSCLogger().debug("Unable to store Beacon block state, no supported NBT plugin available!");
+            return;
+        }
 
         // Get the NBT API manager
-        NBTManager api = NBTManager.getInstance();
+        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
 
         // Get the NBT compound for the beacon block to allow NBT tag management
         NBTCompound c = api.read(b.getBlock());
@@ -172,13 +177,17 @@ public class SCBeaconState extends SCBlockState {
 		if(!super.apply())
 			return false;
 
-        // TODO: Make sure the NBT stuff is available! (make a wrapper)
+        // Make sure the NBT API plugin is hooked
+        if(!SafeCreeper.instance.getPowerNBTHandler().isHooked()) {
+            SafeCreeper.instance.getSCLogger().debug("Unable to restore Beacon block state, no supported NBT plugin available!");
+            return true;
+        }
 
 		// Get the beacon
 		Beacon b = getBeacon();
 
         // Get the NBT API manager
-        NBTManager api = NBTManager.getInstance();
+        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
 
         // Get the NBT compound for the beacon block to allow NBT tag management
         NBTCompound c = api.read(b.getBlock());
