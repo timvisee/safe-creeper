@@ -11,6 +11,7 @@ CreeperControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -489,6 +490,7 @@ EnderCrystalControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -520,6 +522,7 @@ EnderDragonControl:
         ExplosionStrength: 2
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -968,6 +971,7 @@ MagmaCubeControl:
         RememberVelocity: true
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         FlyingBlocks:
             Enabled: false
             Chance: 80
@@ -2364,6 +2368,7 @@ OtherMobControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -2504,6 +2509,7 @@ TNTControl:
         ExplosionStrength: 4
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -2549,6 +2555,7 @@ TNTMinecartControl:
         ExplosionStrength: 4
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -2720,6 +2727,7 @@ OtherExplosions:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
@@ -2761,6 +2769,7 @@ OtherControl:
         ExplosionStrength: 3
     CustomExplosions:
         Enabled: false
+        DestroyWorld: true
         Throw:
             Enabled: false
             ThrowPlayers: true
