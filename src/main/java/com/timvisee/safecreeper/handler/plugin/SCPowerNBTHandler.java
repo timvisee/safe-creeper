@@ -20,7 +20,7 @@ public class SCPowerNBTHandler extends SCPluginHandler {
     /**
      * Constructor.
      *
-     * @param log        SCLogger
+     * @param log SCLogger
      */
     public SCPowerNBTHandler(SCLogger log) {
         super(PLUGIN_NAME, log);

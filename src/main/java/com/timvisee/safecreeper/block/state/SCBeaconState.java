@@ -67,11 +67,6 @@ public class SCBeaconState extends SCBlockState {
         // Get and store the beacon effects
         primaryEffectId = c.getInt(NBT_PRIMARY_EFFECT_TAG);
         secondaryEffectId = c.getInt(NBT_SECONDARY_EFFECT_TAG);
-
-        // TODO: Remove this, some debug messages
-        Bukkit.broadcastMessage("Primary: " + primaryEffectId);
-        Bukkit.broadcastMessage("Secondary: " + secondaryEffectId);
-        Bukkit.broadcastMessage("");
     }
 
 	/**
