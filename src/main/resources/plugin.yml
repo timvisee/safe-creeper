@@ -6,6 +6,7 @@ load: startup
 author: timvisee
 website: http://timvisee.com/
 softdepend:
+    - PowerNBT
     - Vault
     - TVNLib
     - WorldGuard
@@ -13,7 +14,6 @@ softdepend:
     - MobArena
     - PVPArena
     - Factions
-    - PowerNBT
 commands:
   safecreeper:
     description: Safe Creeper command
