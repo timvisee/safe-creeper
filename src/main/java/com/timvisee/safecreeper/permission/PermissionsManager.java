@@ -1,4 +1,4 @@
-package com.timvisee.glowstonelanterns.permission;
+package com.timvisee.safecreeper.permission;
 
 import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
