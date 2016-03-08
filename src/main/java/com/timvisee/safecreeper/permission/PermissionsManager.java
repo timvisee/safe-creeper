@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * PermissionsManager.
@@ -36,7 +37,7 @@ import java.util.logging.Logger;
  * Written by Tim Visée.
  *
  * @author Tim Visée, http://timvisee.com
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class PermissionsManager {
 
@@ -44,10 +45,12 @@ public class PermissionsManager {
 	 * Server instance.
 	 */
 	private Server server;
+
 	/**
 	 * Plugin instance.
 	 */
 	private Plugin plugin;
+
 	/**
 	 * Logger instance.
 	 */
@@ -477,8 +480,7 @@ public class PermissionsManager {
 				List<String> groups = new ArrayList<>();
 
 				// Get the groups and add each to the list
-				for(Group group : this.defaultPerms.getGroups(player.getName()))
-					groups.add(group.getName());
+				groups.addAll(this.defaultPerms.getGroups(player.getName()).stream().map(Group::getName).collect(Collectors.toList()));
 
 				// Return the groups
 				return groups;
@@ -903,33 +905,84 @@ public class PermissionsManager {
 	}
 
 	public enum PermissionsSystemType {
-		NONE("None"),
-		PERMISSIONS_EX("PermissionsEx"),
-		PERMISSIONS_BUKKIT("Permissions Bukkit"),
-		B_PERMISSIONS("bPermissions"),
-		ESSENTIALS_GROUP_MANAGER("Essentials Group Manager"),
-		Z_PERMISSIONS("zPermissions"),
-		VAULT("Vault"),
-		PERMISSIONS("Permissions");
 
+		/**
+		 * None.
+		 */
+		NONE("None", null),
+
+		/**
+		 * Permissions Ex.
+		 */
+		PERMISSIONS_EX("PermissionsEx", "PermissionsEx"),
+
+		/**
+		 * Permissions Bukkit.
+		 */
+		PERMISSIONS_BUKKIT("Permissions Bukkit", "PermissionsBukkit"),
+
+		/**
+		 * bPermissions.
+		 */
+		B_PERMISSIONS("bPermissions", "bPermissions"),
+
+		/**
+		 * Essentials Group Manager.
+		 */
+		ESSENTIALS_GROUP_MANAGER("Essentials Group Manager", "GroupManager"),
+
+		/**
+		 * zPermissions.
+		 */
+		Z_PERMISSIONS("zPermissions", "zPermissions"),
+
+		/**
+		 * Vault.
+		 */
+		VAULT("Vault", "Vault"),
+
+		/**
+		 * Permissions.
+		 */
+		PERMISSIONS("Permissions", "Permissions");
+
+		/**
+		 * The display name of the permissions system.
+		 */
 		public String name;
+
+		/**
+		 * The name of the permissions system plugin.
+		 */
+		public String pluginName;
 
 		/**
 		 * Constructor for PermissionsSystemType.
 		 *
-		 * @param name String
+		 * @param name Display name of the permissions system.
+		 * @param pluginName Name of the plugin.
 		 */
-		PermissionsSystemType(String name) {
+		PermissionsSystemType(String name, String pluginName) {
 			this.name = name;
+			this.pluginName = pluginName;
 		}
 
 		/**
-		 * Method getName.
+		 * Get the display name of the permissions system.
 		 *
-		 * @return String
+		 * @return Display name.
 		 */
 		public String getName() {
 			return this.name;
+		}
+
+		/**
+		 * Return the plugin name.
+		 *
+		 * @return Plugin name.
+		 */
+		public String getPluginName() {
+			return this.pluginName;
 		}
 	}
 }
