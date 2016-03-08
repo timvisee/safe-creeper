@@ -20,9 +20,6 @@ public class SCPluginListener implements Listener {
 		// Call methods in registered plugin managers
 		for(SCPluginHandler pm : this.pluginManagers)
 			pm.onPluginEnable(e);
-		
-		// Run the onPluginEnable method in other plugin manager classes
-		SafeCreeper.instance.getPermissionsManager().onPluginEnable(e);
 	}
 	
 	@EventHandler
