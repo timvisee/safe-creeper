@@ -1198,49 +1198,50 @@ public class SCEntityListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onEntityExplode(EntityExplodeEvent event) {
-		Entity e = event.getEntity();
-		Location l = event.getLocation();
-		World w = l.getWorld();
+		// Get the entity, location and world of the event
+		Entity entity = event.getEntity();
+		Location location = event.getLocation();
+		World world = location.getWorld();
 		
 		// Get the current control name
-		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(e, "OtherExplosions");
+		String controlName = SafeCreeper.instance.getConfigHandler().getControlName(entity, "OtherExplosions");
 		
 		// Make sure the current control is enabled, if not, Safe Creeper should not take over the explosion
-		if(!SafeCreeper.instance.getConfigHandler().isControlEnabled(w.getName(), controlName, false, l))
+		if(!SafeCreeper.instance.getConfigHandler().isControlEnabled(world.getName(), controlName, false, location))
 			return;
 		
 		// Set the default explosion size of the current explosion
 		int defExplosionSize = 3;
 		int explosionSize;
-		if(e instanceof SmallFireball)
+		if(entity instanceof SmallFireball)
 			defExplosionSize = 0;
 			
-		else if(e instanceof WitherSkull || e instanceof Fireball)
+		else if(entity instanceof WitherSkull || entity instanceof Fireball)
 			defExplosionSize = 1;
 			
-		else if(e instanceof EnderDragon)
+		else if(entity instanceof EnderDragon)
 			defExplosionSize = 2;
 			
-		else if(e instanceof Creeper)
+		else if(entity instanceof Creeper)
 			defExplosionSize = 3;
 			
-		else if(e instanceof TNTPrimed)
+		else if(entity instanceof TNTPrimed)
 			defExplosionSize = 4;
 			
-		else if(e instanceof Wither)
+		else if(entity instanceof Wither)
 			defExplosionSize = 6;
 		
 		explosionSize = defExplosionSize;
 		
 		// Could the entity destroy the world?
-		boolean b = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DestroyWorld", true, true, l);
+		boolean b = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "DestroyWorld", true, true, location);
 		
 		for(Block entry : event.blockList())
-			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "DestroyWorld", true, true, entry.getLocation()))
+			if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "DestroyWorld", true, true, entry.getLocation()))
 				b = false;
 		
-		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CostumExplosionStrength.Enabled", false, true, l);
-		explosionSize = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, l);
+		boolean costumExplosionStrengthEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "CostumExplosionStrength.Enabled", false, true, location);
+		explosionSize = SafeCreeper.instance.getConfigHandler().getOptionInt(world, controlName, "CostumExplosionStrength.ExplosionStrength", explosionSize, true, location);
 		if(!costumExplosionStrengthEnabled) {
 			if(!b)
 				event.setCancelled(true);
@@ -1248,27 +1249,27 @@ public class SCEntityListener implements Listener {
 			event.setCancelled(true);
 		
 		if(!b) {
-			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "EnableExplosionSound", true, true, l))
-				createExplosionSound(w, l);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "EnableExplosionSound", true, true, location))
+				createExplosionSound(location);
 			
 			// TODO: Real explosion effects need to be added here!
-			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "EnableExplosionSmoke", true, true, l))
-				w.playEffect(l, Effect.SMOKE, 3);
+			if(SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "EnableExplosionSmoke", true, true, location))
+				world.playEffect(location, Effect.SMOKE, 3);
 			
 		} else {
 			if(costumExplosionStrengthEnabled) {
 				if(explosionSize > 0) {
 					SafeCreeper.instance.disableOtherExplosions = true;
-					w.createExplosion(l, explosionSize);
+					world.createExplosion(location, explosionSize);
 				}
 			} else {
 				
 				if(!event.isCancelled()) {
-					boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "ExplosionRebuild.Enabled", false, true, l);
+					boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "ExplosionRebuild.Enabled", false, true, location);
 					
 					if(rebuildBlocks) {
-						double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildDelay", 60, true, l);
-						double rebuildBlockInterval = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, l);
+						double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(world, controlName, "ExplosionRebuild.RebuildDelay", 60, true, location);
+						double rebuildBlockInterval = SafeCreeper.instance.getConfigHandler().getOptionDouble(world, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, location);
 						
 						List<Block> blocks = event.blockList();
 						SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
@@ -1282,18 +1283,18 @@ public class SCEntityListener implements Listener {
 		}
 		
 		// Custom Explosions - Flying Blocks
-		boolean customExplosionsEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.Enabled", false, true, l);
+		boolean customExplosionsEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "CustomExplosions.Enabled", false, true, location);
 		if(customExplosionsEnabled) {
-			boolean flyingBlocksEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.FlyingBlocks.Enabled", false, true, l);
+			boolean flyingBlocksEnabled = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "CustomExplosions.FlyingBlocks.Enabled", false, true, location);
 			if(flyingBlocksEnabled) {
-				boolean destroyWorld = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, controlName, "CustomExplosions.DestroyWorld", false, true, l);
+				boolean destroyWorld = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "CustomExplosions.DestroyWorld", false, true, location);
 				if(destroyWorld) {
 					Random rand = new Random();
 					for(Block entry : event.blockList()) {
 						Location entryLoc = entry.getLocation();
-						int flyingBlockChance = SafeCreeper.instance.getConfigHandler().getOptionInt(w, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
+						int flyingBlockChance = SafeCreeper.instance.getConfigHandler().getOptionInt(world, controlName, "CustomExplosions.FlyingBlocks.Chance", 80, true, entryLoc);
 						if(flyingBlockChance > rand.nextInt(100)) {
-							Vector blockVel = entryLoc.toVector().subtract(l.toVector()).normalize();
+							Vector blockVel = entryLoc.toVector().subtract(location.toVector()).normalize();
 							blockVel.add(new Vector(0, 0.6, 0));
 							
 							FallingBlock fb = entry.getWorld().spawnFallingBlock(entryLoc.add(0, 0.6, 0), entry.getTypeId(), entry.getData());
@@ -1337,7 +1338,7 @@ public class SCEntityListener implements Listener {
 		
 		
 		// Play control effects
-		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Explode", l);
+		SafeCreeper.instance.getConfigHandler().playControlEffects(controlName, "Explode", location);
 	}
 	
 	@EventHandler
@@ -1733,31 +1734,64 @@ public class SCEntityListener implements Listener {
 		if(!event.isCancelled())
 			SafeCreeper.instance.getConfigHandler().playControlEffects("CreeperControl", "Charged", l);
 	}
-	
-	
-	
-	
-	public void createExplosionSound(World w, Location loc) {
+
+	/**
+	 * Make an explosion sound at the given location.
+	 *
+     * @param location Location.
+     */
+	public void createExplosionSound(Location location) {
 		// Make sure the parameters are not null
-		if(loc == null || w == null)
+		if(location == null)
 			return;
 		
 		// Play the explosion sound
-		w.playSound(loc, Sound.EXPLODE, 1, 1);
+		try {
+			location.getWorld().playSound(location, Sound.EXPLODE, 1, 1);
+
+		} catch(Exception e) {
+			// Show an error message
+			System.out.println("Failed to mimic explosion sound.");
+		}
 	}
-	
+
+	/**
+	 * Create an explosion.
+	 *
+	 * @param location Explosion location.
+	 * @param source Explosion source.
+	 * @param destroyWorld True to destroy the world, false if not.
+	 * @param explosionStrength Explosion strength value.
+	 * @param throwPlayers True to throw players, false if not.
+	 * @param throwMobs True to throw mobs, false if not.
+	 * @param throwSpeedMultiplier Throw speed multiplier.
+	 * @param flyingBlocks True to make blocks fly.
+	 * @param flyingBlocksChance Flying blocks chance.
+	 * @param damagePlayers True to damage players, false if not.
+	 * @param damageMobs True to damage mobs, false if not.
+	 * @param showSmoke True to show explosion smoke, false if not.
+     * @param explosionSound True to make an explosion sound.
+     * @param createFire True to create explosion file.
+     */
 	public void createExplosion(
-			Location loc, ExplosionSource source,
+			Location location, ExplosionSource source,
 			boolean destroyWorld, double explosionStrength,
 			boolean throwPlayers, boolean throwMobs,
 			double throwSpeedMultiplier, boolean flyingBlocks,
 			double flyingBlocksChance, boolean damagePlayers,
-			boolean damageMobs, boolean explosionSmoke,
-			boolean explosionSound, boolean explosionCreateFire) {
-		
-		World w = loc.getWorld();
+			boolean damageMobs, boolean showSmoke,
+			boolean explosionSound, boolean createFire) {
+
+        // Get the world the explosion is in
+		World world = location.getWorld();
 		
 		// Create the explosion
-		w.createExplosion(loc.getX(), loc.getY(), loc.getZ(), (float) explosionStrength, explosionCreateFire, false);
+		try {
+			world.createExplosion(location.getX(), location.getY(), location.getZ(), (float) explosionStrength, createFire, false);
+
+		} catch(Exception e) {
+			// Show an error message
+			System.out.println("Failed to create explosion.");
+		}
 	}
 }
