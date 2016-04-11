@@ -20,5 +20,5 @@ OtherExplosions:
     EnableExplosionSound: true
     EnableExplosionSmoke: true
 
-version: '1.5.3'
+version: '1.5.3.1'
 versionCode: 34
