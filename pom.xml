@@ -39,7 +39,7 @@
 
     <properties>
         <!-- Plugin version code (corresponds to version tag above) -->
-        <versionCode>36</versionCode>
+        <project.versionCode>36</project.versionCode>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -48,12 +48,11 @@
 
         <!-- Output properties -->
         <project.outputName>SafeCreeper</project.outputName>
-        <project.versionCode>${project.version}</project.versionCode>
         <project.finalName>${project.outputName}-${project.version}</project.finalName>
 
         <!-- Bukkit plugin properties -->
         <bukkitplugin.name>${project.outputName}</bukkitplugin.name>
-        <bukkitplugin.version>${project.versionCode}</bukkitplugin.version>
+        <bukkitplugin.version>${project.version}</bukkitplugin.version>
         <bukkitplugin.main>${project.groupId}.${project.artifactId}.${bukkitplugin.name}</bukkitplugin.main>
         <bukkitplugin.authors>timvisee</bukkitplugin.authors>
 
