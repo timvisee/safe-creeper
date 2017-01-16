@@ -381,13 +381,16 @@ public class SCDestructionRepairManager {
             this.blocks.get(i).save(blockSection);
         }
 
-        final String scVer = SafeCreeper.instance.getVersionName();
+        // Get the plugin's version name and code
+        final String versionName = SafeCreeper.instance.getVersionName();
+        final int versionCode = SafeCreeper.instance.getVersionCode();
 
         // Add the version code to the file
-        config.set("version", scVer);
+        config.set("version", versionName);
+        config.set("versionCode", versionCode);
 
         // Add an information line to the top of the data file
-        config.options().header("Safe Creeper Destruction Repair Data - Automaticly saved by Safe Creeper v" + scVer + ". Do not modify this file!");
+        config.options().header("Safe Creeper Destruction Repair Data - Automatically saved by Safe Creeper v" + versionName + ". Do not modify this file!");
 
         // Convert the file to a FileConfiguration and safe the file
         try {
