@@ -517,13 +517,22 @@
             </exclusions>
         </dependency>
 
-        <!-- GroupManager plugin -->
+        <!-- Essentials Group Manager plugin -->
         <dependency>
-            <groupId>org.anjocaido</groupId>
-            <artifactId>groupmanager</artifactId>
+            <groupId>net.ess3</groupId>
+            <artifactId>EssentialsGroupManager</artifactId>
             <version>2.13.1</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/EssentialsGroupManager-2.13.1.jar</systemPath>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Permissions plugin (obsolete) -->
