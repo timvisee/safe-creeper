@@ -6,9 +6,9 @@ Safe Creeper is a plugin for Craft Bukkit servers to manage and protect the thin
 ### Builds
 The project is currently being built automatically using the CI services in the table below.
 
-|Service|Branch|Build Status| |
-|---:|:---|:---:|:---|
-|Travis CI|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/SafeCreeper.svg?branch=master)](https://travis-ci.org/timvisee/SafeCreeper)|[View Status](https://travis-ci.org/timvisee/SafeCreeper)|
+|Service|Branch|Build Status| |Automatic interval|
+|---:|:---|:---:|:---|---|
+|Travis CI|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/SafeCreeper.svg?branch=master)](https://travis-ci.org/timvisee/SafeCreeper)|[View Status](https://travis-ci.org/timvisee/SafeCreeper)|Each 24 hours|
 |Travis CI|last commit|[![Build status on Travis CI for last commit](https://travis-ci.org/timvisee/SafeCreeper.svg)](https://travis-ci.org/timvisee/SafeCreeper)|[View Status](https://travis-ci.org/timvisee/SafeCreeper)|
 |Circle CI|master|[![Build status on Circle CI](https://img.shields.io/circleci/project/github/timvisee/SafeCreeper/master.svg)](https://circleci.com/gh/timvisee/SafeCreeper/tree/master)|[View Status](https://circleci.com/gh/timvisee/SafeCreeper/tree/master)|
 |Circle CI|last commit|[![Build status on Circle CI](https://img.shields.io/circleci/project/github/timvisee/SafeCreeper.svg)](https://circleci.com/gh/timvisee/SafeCreeper)|[View Status](https://circleci.com/gh/timvisee/SafeCreeper)|
