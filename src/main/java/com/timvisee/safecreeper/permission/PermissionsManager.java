@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
 
 /**
  * PermissionsManager.
- *
+ * <p>
  * A permissions manager, to manage and use various permissions systems.
  * This manager supports dynamic plugin hooking and various other features.
- *
+ * <p>
  * Written by Tim Visée.
  *
  * @author Tim Visée, http://timvisee.com
@@ -43,55 +43,46 @@ import java.util.stream.Collectors;
 public class PermissionsManager {
 
     /**
+     * Vault instance.
+     */
+    public Permission vaultPerms = null;
+    /**
      * Server instance.
      */
     private Server server;
-
     /**
      * Plugin instance.
      */
     private Plugin plugin;
-
     /**
      * Logger instance.
      */
     private Logger log;
-
     /**
      * The permissions manager Bukkit listener instance.
      */
     private PermissionsManagerBukkitListener bukkitListener;
-
     /**
      * A flag whether the permissions manager is started or not.
      */
     private boolean started = false;
-
     /**
      * Type of permissions system that is currently used.
      * Null if no permissions system is used.
      */
     private PermissionsSystemType permsType = null;
-
     /**
      * Essentials group manager instance.
      */
     private GroupManager groupManagerPerms;
-
     /**
      * Permissions manager instance for the legacy permissions system.
      */
     private PermissionHandler defaultPerms;
-
     /**
      * zPermissions service instance.
      */
     private ZPermissionsService zPermissionsService;
-
-    /**
-     * Vault instance.
-     */
-    public Permission vaultPerms = null;
 
     /**
      * Constructor.
@@ -99,7 +90,7 @@ public class PermissionsManager {
      * @param server Server instance
      * @param plugin Plugin instance
      * @param log    Logger
-     * @param start True to start the permissions manager immediately.
+     * @param start  True to start the permissions manager immediately.
      */
     public PermissionsManager(Server server, Plugin plugin, Logger log, boolean start) {
         this.server = server;
@@ -198,7 +189,6 @@ public class PermissionsManager {
      * Check if the permissions manager is currently hooked into any of the supported permissions systems.
      *
      * @return False if there isn't any permissions system used.
-     *
      * @deprecated Replaced with isStarted() and isHooked()
      */
     public boolean isEnabled() {
@@ -286,7 +276,7 @@ public class PermissionsManager {
                     case VAULT:
                         // Get the permissions provider service
                         RegisteredServiceProvider<Permission> permissionProvider = this.server.getServicesManager().getRegistration(Permission.class);
-                        if (permissionProvider == null) {
+                        if(permissionProvider == null) {
                             this.log.info("Failed to hook into " + type.getName() + "!");
                             continue;
                         }
@@ -325,7 +315,7 @@ public class PermissionsManager {
                 // Return the used permissions system type
                 return type;
 
-            } catch (Exception ex) {
+            } catch(Exception ex) {
                 // An error occurred, show a warning message
                 this.log.info("Error while hooking into " + type.getName() + "!");
             }
@@ -348,7 +338,7 @@ public class PermissionsManager {
         this.permsType = null;
 
         // Print a status message to the console
-        if (hookedSystem != null)
+        if(hookedSystem != null)
             this.log.info("Unhooked from " + hookedSystem.getName() + "!");
 
         // Reset the stored permissions API instances
@@ -381,7 +371,7 @@ public class PermissionsManager {
      */
     public boolean isSupportedPlugin(Plugin plugin) {
         // Make sure the plugin isn't null
-        if (plugin == null)
+        if(plugin == null)
             return false;
 
         // Check whether this plugin is supported by it's name
@@ -397,12 +387,12 @@ public class PermissionsManager {
      */
     public boolean isSupportedPlugin(String pluginName) {
         // Make sure the name isn't empty
-        if (pluginName.trim().length() == 0)
+        if(pluginName.trim().length() == 0)
             return false;
 
         // Loop through the list with permissions systems, and compare it's plugin name to the given name
-        for (PermissionsSystemType type : PermissionsSystemType.values())
-            if (type.getPluginName().equals(pluginName))
+        for(PermissionsSystemType type : PermissionsSystemType.values())
+            if(type.getPluginName().equals(pluginName))
                 return true;
 
         // This doesn't seem to be a supported permissions system plugin, return false
@@ -420,7 +410,7 @@ public class PermissionsManager {
         String pluginName = plugin.getName();
 
         // Check if any known permissions system is enabling
-        if (isSupportedPlugin(plugin)) {
+        if(isSupportedPlugin(plugin)) {
             this.log.info(pluginName + " plugin enabled, dynamically updating permissions hooks!");
             setup();
         }
@@ -437,7 +427,7 @@ public class PermissionsManager {
         String pluginName = plugin.getName();
 
         // Is the WorldGuard plugin disabled
-        if (isSupportedPlugin(plugin)) {
+        if(isSupportedPlugin(plugin)) {
             this.log.info(pluginName + " plugin disabled, updating hooks!");
             setup();
         }
@@ -486,7 +476,7 @@ public class PermissionsManager {
             return def;
 
         // Use the proper API
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -536,7 +526,7 @@ public class PermissionsManager {
             return false;
 
         // Use the proper API
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
             case PERMISSIONS_BUKKIT:
             case B_PERMISSIONS:
@@ -571,7 +561,7 @@ public class PermissionsManager {
             return new ArrayList<>();
 
         // Use the proper API
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -589,7 +579,7 @@ public class PermissionsManager {
             case ESSENTIALS_GROUP_MANAGER:
                 // Essentials Group Manager
                 final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                if (handler == null)
+                if(handler == null)
                     return new ArrayList<>();
                 return Arrays.asList(handler.getGroups(player.getName()));
 
@@ -630,7 +620,7 @@ public class PermissionsManager {
             return null;
 
         // Use the proper API
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
             case PERMISSIONS_BUKKIT:
             case B_PERMISSIONS:
@@ -639,7 +629,7 @@ public class PermissionsManager {
                 List<String> groups = getGroups(player);
 
                 // Make sure there is any group available, or return null
-                if (groups.size() == 0)
+                if(groups.size() == 0)
                     return null;
 
                 // Return the first group
@@ -648,7 +638,7 @@ public class PermissionsManager {
             case ESSENTIALS_GROUP_MANAGER:
                 // Essentials Group Manager
                 final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                if (handler == null)
+                if(handler == null)
                     return null;
                 return handler.getGroup(player.getName());
 
@@ -679,7 +669,7 @@ public class PermissionsManager {
             return false;
 
         // Use the proper API
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -691,8 +681,8 @@ public class PermissionsManager {
                 List<String> groupNames = getGroups(player);
 
                 // Check whether the list contains the group name, return the result
-                for (String entry : groupNames)
-                    if (entry.equals(groupName))
+                for(String entry : groupNames)
+                    if(entry.equals(groupName))
                         return true;
                 return false;
 
@@ -732,7 +722,7 @@ public class PermissionsManager {
             return false;
 
         // Set the group the proper way
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -790,8 +780,8 @@ public class PermissionsManager {
 
         // Add each group to the user
         boolean result = true;
-        for (String groupName : groupNames)
-            if (!addGroup(player, groupName))
+        for(String groupName : groupNames)
+            if(!addGroup(player, groupName))
                 result = false;
 
         // Return the result
@@ -812,7 +802,7 @@ public class PermissionsManager {
             return false;
 
         // Set the group the proper way
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -897,7 +887,7 @@ public class PermissionsManager {
         groupNames.add(groupName);
 
         // Set the group the proper way
-        switch (this.permsType) {
+        switch(this.permsType) {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
@@ -958,17 +948,17 @@ public class PermissionsManager {
             return false;
 
         // Set the main group
-        if (!setGroup(player, groupNames.get(0)))
+        if(!setGroup(player, groupNames.get(0)))
             return false;
 
         // Add the rest of the groups
         boolean result = true;
-        for (int i = 1; i < groupNames.size(); i++) {
+        for(int i = 1; i < groupNames.size(); i++) {
             // Get the group name
             String groupName = groupNames.get(0);
 
             // Add this group
-            if (!addGroup(player, groupName))
+            if(!addGroup(player, groupName))
                 result = false;
         }
 

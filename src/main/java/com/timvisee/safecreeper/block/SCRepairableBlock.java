@@ -1,9 +1,8 @@
 package com.timvisee.safecreeper.block;
 
+import com.timvisee.safecreeper.block.state.SCBlockState;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-
-import com.timvisee.safecreeper.block.state.SCBlockState;
 
 public class SCRepairableBlock {
 
@@ -19,6 +18,33 @@ public class SCRepairableBlock {
     public SCRepairableBlock(SCBlockState state, long repairAt) {
         this.state = state;
         this.repairAt = repairAt;
+    }
+
+    /**
+     * Load the data in a configuration section
+     *
+     * @param configSection Configuration section to store the data in
+     */
+    public static SCRepairableBlock load(ConfigurationSection configSection) {
+        // Make sure the param is not null
+        if(configSection == null)
+            return null;
+
+        // Get the repair at time
+        long repairAt = (long) (System.currentTimeMillis() + (configSection.getDouble("repairDelay", 0) * 1000));
+
+        // Get the block section
+        ConfigurationSection blockSection = configSection.getConfigurationSection("blockState");
+
+        // Get the block state
+        SCBlockState blockState = SCBlockState.load(blockSection);
+
+        // Make sure the block state is not null
+        if(blockState == null)
+            return null;
+
+        // Construct the reparable block instance and return it
+        return new SCRepairableBlock(blockState, repairAt);
     }
 
     /**
@@ -48,7 +74,7 @@ public class SCRepairableBlock {
         Block b = getBlock();
 
         // Make sure the block is not null
-        if (b == null)
+        if(b == null)
             return false;
 
         // Check if the chunk is loaded
@@ -87,7 +113,7 @@ public class SCRepairableBlock {
      */
     public void save(ConfigurationSection configSection) {
         // Make sure the param is not null
-        if (configSection == null)
+        if(configSection == null)
             return;
 
         // Store the repair time / delay
@@ -96,32 +122,5 @@ public class SCRepairableBlock {
         // Store the block state
         ConfigurationSection blockSection = configSection.createSection("blockState");
         this.state.save(blockSection);
-    }
-
-    /**
-     * Load the data in a configuration section
-     *
-     * @param configSection Configuration section to store the data in
-     */
-    public static SCRepairableBlock load(ConfigurationSection configSection) {
-        // Make sure the param is not null
-        if (configSection == null)
-            return null;
-
-        // Get the repair at time
-        long repairAt = (long) (System.currentTimeMillis() + (configSection.getDouble("repairDelay", 0) * 1000));
-
-        // Get the block section
-        ConfigurationSection blockSection = configSection.getConfigurationSection("blockState");
-
-        // Get the block state
-        SCBlockState blockState = SCBlockState.load(blockSection);
-
-        // Make sure the block state is not null
-        if (blockState == null)
-            return null;
-
-        // Construct the reparable block instance and return it
-        return new SCRepairableBlock(blockState, repairAt);
     }
 }

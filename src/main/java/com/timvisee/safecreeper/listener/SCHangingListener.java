@@ -5,9 +5,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
 public class SCHangingListener implements Listener {
-	
-	@EventHandler
-	public void onHaningBreakEvent(HangingBreakEvent event) {
-		
-	}
+
+    @EventHandler
+    public void onHaningBreakEvent(HangingBreakEvent event) {
+
+    }
 }

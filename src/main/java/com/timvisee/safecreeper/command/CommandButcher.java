@@ -6,20 +6,20 @@ import org.bukkit.command.CommandSender;
 
 public class CommandButcher {
 
-public static boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		
-		if(commandLabel.equalsIgnoreCase("safecreeper") || commandLabel.equalsIgnoreCase("sc")) {
-			if(args.length == 0) {
-				sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
-				sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-				return true;
-			}
-		
-			if(args[0].equalsIgnoreCase("butcher") || args[0].equalsIgnoreCase("b")) {
-				
-				sender.sendMessage(ChatColor.DARK_RED + "This command is a work in progress and will be available soon!");
-				return true;
-				
+    public static boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+
+        if(commandLabel.equalsIgnoreCase("safecreeper") || commandLabel.equalsIgnoreCase("sc")) {
+            if(args.length == 0) {
+                sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
+                sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
+                return true;
+            }
+
+            if(args[0].equalsIgnoreCase("butcher") || args[0].equalsIgnoreCase("b")) {
+
+                sender.sendMessage(ChatColor.DARK_RED + "This command is a work in progress and will be available soon!");
+                return true;
+
 				/*int radius = -1;
 				
 				if(isFlagSet(args, "pli")) {
@@ -73,35 +73,35 @@ public static boolean onCommand(CommandSender sender, Command cmd, String comman
 				
 				
 				return true;*/
-			}
-		}
-		
-		return false;
-	}
+            }
+        }
 
-	public static boolean isFlagSet(String args[], String flag) {
-		for(int i = 0; i < args.length; i++) {
-			if(args[i].equalsIgnoreCase("-" + flag) || args[i].equalsIgnoreCase("/" + flag)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static String getFlagArgument(String args[], String flag, String def) {
-		for(int i = 0; i < args.length; i++) {
-			if(args[i].equalsIgnoreCase("-" + flag) || args[i].equalsIgnoreCase("/" + flag)) {
-				if(i+1 < args.length) {
-					return args[i+1].toString();
-				} else {
-					return def;
-				}
-			}
-		}
-		return def;
-	}
-	
-	public static String getFlagArgument(String args[], String flag) {
-		return getFlagArgument(args, flag, "");
-	}
+        return false;
+    }
+
+    public static boolean isFlagSet(String args[], String flag) {
+        for(int i = 0; i < args.length; i++) {
+            if(args[i].equalsIgnoreCase("-" + flag) || args[i].equalsIgnoreCase("/" + flag)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String getFlagArgument(String args[], String flag, String def) {
+        for(int i = 0; i < args.length; i++) {
+            if(args[i].equalsIgnoreCase("-" + flag) || args[i].equalsIgnoreCase("/" + flag)) {
+                if(i + 1 < args.length) {
+                    return args[i + 1].toString();
+                } else {
+                    return def;
+                }
+            }
+        }
+        return def;
+    }
+
+    public static String getFlagArgument(String args[], String flag) {
+        return getFlagArgument(args, flag, "");
+    }
 }

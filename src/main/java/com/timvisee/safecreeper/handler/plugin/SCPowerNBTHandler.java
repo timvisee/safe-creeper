@@ -42,7 +42,7 @@ public class SCPowerNBTHandler extends SCPluginHandler {
             Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 
             // The factions plugin may not be null
-            if (plugin == null) {
+            if(plugin == null) {
                 this.log.info("Unable to hook into Factions, plugin not found!");
                 return;
             }

@@ -52,7 +52,7 @@ public class ExplosionSource {
      * @return Source as block
      */
     public Block getSourceBlock() {
-        if (this.source instanceof Block)
+        if(this.source instanceof Block)
             return (Block) this.source;
 
         return null;
@@ -64,7 +64,7 @@ public class ExplosionSource {
      * @return Source as entity
      */
     public Entity getSourceEntity() {
-        if (this.source instanceof Entity)
+        if(this.source instanceof Entity)
             return (Entity) this.source;
 
         return null;
@@ -76,7 +76,7 @@ public class ExplosionSource {
      * @return Source as location
      */
     public Location getSourceLocation() {
-        if (this.source instanceof Location)
+        if(this.source instanceof Location)
             return (Location) this.source;
 
         return null;
@@ -88,13 +88,13 @@ public class ExplosionSource {
      * @return Explosion source type
      */
     public ExplosionSourceType getSourceType() {
-        if (this.source instanceof Block)
+        if(this.source instanceof Block)
             return ExplosionSourceType.BLOCK;
 
-        if (this.source instanceof Entity)
+        if(this.source instanceof Entity)
             return ExplosionSourceType.ENTITY;
 
-        if (this.source instanceof Location)
+        if(this.source instanceof Location)
             return ExplosionSourceType.LOCATION;
 
         return ExplosionSourceType.CUSTOM;
