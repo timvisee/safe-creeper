@@ -288,12 +288,12 @@
         <repository>
             <id>varscript.ru-releases</id>
             <name>varscript.ru-releases</name>
-            <url>http://varscript.ru/artifactory/release</url>
+            <url>https://repo.varscript.ru/release</url>
         </repository>
         <repository>
             <id>varscript.ru-snapshots</id>
             <name>varscript.ru-snapshots</name>
-            <url>http://varscript.ru/artifactory/snapshots</url>
+            <url>https://repo.varscript.ru/snapshots</url>
         </repository>
 
         <!-- Xephi's repository (many libraries) -->
@@ -611,7 +611,7 @@
         <dependency>
             <groupId>me.dpohvar.powernbt</groupId>
             <artifactId>PowerNBT</artifactId>
-            <version>0.8.4.1</version>
+            <version>0.8.1</version>
         </dependency>
 
     </dependencies>
