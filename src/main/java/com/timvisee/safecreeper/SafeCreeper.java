@@ -39,12 +39,12 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Plugin version name.
      */
-    public static final String PLUGIN_VERSION_NAME = "1.5.3.1";
+    public static final String PLUGIN_VERSION_NAME = "1.5.4";
 
     /**
      * Plugin version code.
      */
-    public static final int PLUGIN_VERSION_CODE = 35;
+    public static final int PLUGIN_VERSION_CODE = 36;
 
     // Safe Creeper static instance
     public static SafeCreeper instance;

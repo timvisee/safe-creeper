@@ -1747,7 +1747,7 @@ public class SCEntityListener implements Listener {
 		
 		// Play the explosion sound
 		try {
-			location.getWorld().playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
+			location.getWorld().playSound(location, Sound.EXPLODE, 1, 1);
 
 		} catch(Exception e) {
 			// Show an error message
