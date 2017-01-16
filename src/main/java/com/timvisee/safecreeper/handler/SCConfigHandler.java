@@ -1200,8 +1200,6 @@ public class SCConfigHandler {
     }
 
     public String getControlName(Entity e, String def) {
-
-
         // Try to find out the control name according to the entity type
         try {
             // Make sure the entity param is not null
@@ -1264,8 +1262,11 @@ public class SCConfigHandler {
                     if(e.getType().getName() == null)
                         return def;
 
-                    //return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
-                    return e.getType().getName().trim().replace(" ", "") + "Control";
+                    // Get the entity name
+                    String entityName = e.getType().getName().trim().replace(" ", "");
+
+                    // Determine and return the entity control name
+                    return entityName.substring(0, 1).toUpperCase() + entityName.substring(1) + "Control";
             }
 
         } catch(Exception ex) {
