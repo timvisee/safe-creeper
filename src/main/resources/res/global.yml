@@ -2796,5 +2796,5 @@ OtherControl:
         Triggers: {}
     Locations: {}
 
-version: '1.5.3.1'
-versionCode: 35
+version: '${project.version}'
+versionCode: ${project.versionCode}

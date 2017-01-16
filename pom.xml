@@ -6,7 +6,7 @@
     <groupId>com.timvisee</groupId>
     <artifactId>safecreeper</artifactId>
 
-    <!-- Plugin version name -->
+    <!-- Plugin version name (corresponds to version code in the properties section) -->
     <version>1.5.3.1</version>
 
     <name>SafeCreeper</name>
@@ -38,6 +38,9 @@
     </licenses>
 
     <properties>
+        <!-- Plugin version code (corresponds to version tag above) -->
+        <versionCode>35</versionCode>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Java compiler version (JDK) -->
