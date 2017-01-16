@@ -40,7 +40,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Compiler Version (JDK) -->
+        <!-- Java compiler version (JDK) -->
         <javaVersion>1.8</javaVersion>
 
         <!-- Output properties -->
@@ -137,16 +137,6 @@
             </dependencies>
         </profile>
     </profiles>
-
-
-
-
-
-
-
-
-
-
 
     <build>
         <finalName>${project.finalName}-noshade</finalName>
@@ -247,7 +237,6 @@
     </build>
 
     <repositories>
-
         <!-- SpigotAPI repository -->
         <repository>
             <id>spigotmc-repo</id>
@@ -301,11 +290,9 @@
             <id>xephi-repo</id>
             <url>http://ci.xephi.fr/plugin/repository/everything/</url>
         </repository>
-
     </repositories>
 
     <dependencies>
-
         <!-- String comparison library. Used for dynamic help system. -->
         <dependency>
             <groupId>net.ricecode</groupId>
@@ -613,6 +600,5 @@
             <artifactId>PowerNBT</artifactId>
             <version>0.8.1</version>
         </dependency>
-
     </dependencies>
 </project>
