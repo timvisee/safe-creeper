@@ -279,12 +279,7 @@
         <repository>
             <id>varscript.ru-releases</id>
             <name>varscript.ru-releases</name>
-            <url>https://repo.varscript.ru/release</url>
-        </repository>
-        <repository>
-            <id>varscript.ru-snapshots</id>
-            <name>varscript.ru-snapshots</name>
-            <url>https://repo.varscript.ru/snapshots</url>
+            <url>http://repo.varscript.ru/release</url>
         </repository>
 
         <!-- Xephi's repository (many libraries) -->
@@ -600,7 +595,7 @@
         <dependency>
             <groupId>me.dpohvar.powernbt</groupId>
             <artifactId>PowerNBT</artifactId>
-            <version>0.8.4.1</version>
+            <version>0.8.6.1</version>
         </dependency>
 
         <!-- JUnit unit testing -->
