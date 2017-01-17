@@ -1,14 +1,9 @@
 package com.timvisee.safecreeper.manager;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
+import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.block.SCRepairableBlock;
 import com.timvisee.safecreeper.block.state.*;
+import com.timvisee.safecreeper.util.SCAttachedBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -22,9 +17,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import com.timvisee.safecreeper.SafeCreeper;
-import com.timvisee.safecreeper.block.SCRepairableBlock;
-import com.timvisee.safecreeper.util.SCAttachedBlock;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public class SCDestructionRepairManager {
 
@@ -36,7 +31,7 @@ public class SCDestructionRepairManager {
     /**
      * Constructor
      */
-    public SCDestructionRepairManager() { }
+    public SCDestructionRepairManager() {}
 
     /**
      * Add a list of blocks that should be repaired.
@@ -48,33 +43,33 @@ public class SCDestructionRepairManager {
     public void addBlocks(List<Block> blocks, double listDelay, double blockDelay) {
         List<SCBlockState> states = new ArrayList<>();
 
-        for (Block b : blocks) {
+        for(Block b : blocks) {
             // Don't rebuild TNT blocks
-            if (b.getType().equals(Material.TNT))
+            if(b.getType().equals(Material.TNT))
                 continue;
 
-            if (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))
+            if(b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN))
                 states.add(new SCSignState(b));
-            else if (b.getType().equals(Material.BEACON))
+            else if(b.getType().equals(Material.BEACON))
                 states.add(new SCBeaconState(b));
-            else if (b.getState() instanceof InventoryHolder)
+            else if(b.getState() instanceof InventoryHolder)
                 states.add(new SCContainerBlockState(b));
-            else if (b.getType().equals(Material.MOB_SPAWNER))
+            else if(b.getType().equals(Material.MOB_SPAWNER))
                 states.add(new SCSpawnerState(b));
-            else if (b.getType().equals(Material.JUKEBOX))
+            else if(b.getType().equals(Material.JUKEBOX))
                 states.add(new SCJukeboxState(b));
-            else if (b.getType().equals(Material.COMMAND))
+            else if(b.getType().equals(Material.COMMAND))
                 states.add(new SCCommandBlockState(b));
-            else if (b.getType().equals(Material.SKULL))
+            else if(b.getType().equals(Material.SKULL))
                 states.add(new SCSkullState(b));
             else
                 states.add(new SCBlockState(b));
 
             // Clear the inventory of the containers and the jukebox, so the content won't drop
-            if (b.getState() instanceof InventoryHolder) {
+            if(b.getState() instanceof InventoryHolder) {
                 Inventory inv = ((InventoryHolder) b.getState()).getInventory();
                 inv.clear();
-            } else if (b.getType().equals(Material.JUKEBOX)) {
+            } else if(b.getType().equals(Material.JUKEBOX)) {
                 Jukebox j = ((Jukebox) b.getState());
                 j.setPlaying(null);
             }
@@ -111,7 +106,7 @@ public class SCDestructionRepairManager {
         long timestamp = System.currentTimeMillis();
         long time = timestamp + (int) (listDelay * 1000);
 
-        for (SCBlockState bs : blockStates) {
+        for(SCBlockState bs : blockStates) {
             this.blocks.add(new SCRepairableBlock(bs, time));
 
             time += (blockDelay * 1000);
@@ -131,33 +126,39 @@ public class SCDestructionRepairManager {
      * Repair all blocks that should be repaired, based on their repair time
      */
     public void repair() {
+        // Get the current timestamp
         long timestamp = System.currentTimeMillis();
 
-        for (int i = 0; i < this.blocks.size(); i++) {
-            SCRepairableBlock b = this.blocks.get(i);
+        // Loop through all blocks to check whether it should be repaired
+        for(int i = 0; i < this.blocks.size(); i++) {
+            // Loop through the repairable blocks
+            SCRepairableBlock block = this.blocks.get(i);
 
             // The chunk the block is in has to be loaded
-            if (!b.isChunkLoaded())
+            if(!block.isChunkLoaded())
                 continue;
 
-            Material type = Material.getMaterial(b.getBlockState().getTypeId());
-
-            if (b.getRepairAt() <= timestamp) {
-
+            // Check whether the block should be repaired
+            if(block.getRepairAt() <= timestamp) {
+                // Remove the block if it should be repaired
                 this.blocks.remove(i);
                 i--;
 
-                if (SCAttachedBlock.isAttached(type))
-                    repairBlocks(SCAttachedBlock.getBlockBase(b.getBlock(), type, b.getBlockState().getData()));
+                // Fetch the material type
+                final Material type = block.getBlockState().getType();
+
+                // Repair attached blocks such as torches
+                if(SCAttachedBlock.isAttached(type))
+                    repairBlocks(SCAttachedBlock.getBlockBase(block.getBlock(), type, block.getBlockState().getData()));
 
                 // Drop the old block on that location
-                b.getBlock().breakNaturally();
+                block.getBlock().breakNaturally();
 
                 // Repair/replace the block
-                b.repair();
+                block.repair();
 
                 // Unstuck all living entities
-                unstuckLivingEntities(b.getBlock());
+                unstuckLivingEntities(block.getBlock());
             }
         }
     }
@@ -169,14 +170,14 @@ public class SCDestructionRepairManager {
      */
     public void repairBlock(Block b) {
         // Make sure the block is not null
-        if (b == null)
+        if(b == null)
             return;
 
-        for (int i = 0; i < this.blocks.size(); i++) {
+        for(int i = 0; i < this.blocks.size(); i++) {
             SCRepairableBlock entry = this.blocks.get(i);
 
             // Check if this is the block it's all about
-            if (entry.getBlock().equals(b)) {
+            if(entry.getBlock().equals(b)) {
 
                 // Remove the block form the list
                 this.blocks.remove(i);
@@ -184,10 +185,10 @@ public class SCDestructionRepairManager {
                 i--;
 
                 // Get the material of the block
-                Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+                final Material type = entry.getBlockState().getType();
 
                 // Check if this block was attached to another block, if so repair the base block first
-                if (SCAttachedBlock.isAttached(type))
+                if(SCAttachedBlock.isAttached(type))
                     repairBlocks(SCAttachedBlock.getBlockBase(entry.getBlock(), type, entry.getBlockState().getData()));
 
                 // Drop the old block on that location
@@ -212,11 +213,11 @@ public class SCDestructionRepairManager {
      */
     public void repairBlocks(List<Block> b) {
         // Make sure the list is not null
-        if (b == null)
+        if(b == null)
             return;
 
         // Repair each block from the list
-        for (Block entry : b)
+        for(Block entry : b)
             repairBlock(entry);
     }
 
@@ -225,7 +226,7 @@ public class SCDestructionRepairManager {
      */
     public void repairAll() {
         // Repair all blocks
-        for (int i = 0; i < this.blocks.size(); i++) {
+        for(int i = 0; i < this.blocks.size(); i++) {
             SCRepairableBlock entry = this.blocks.get(i);
 
             // Remove the block form the list
@@ -233,10 +234,10 @@ public class SCDestructionRepairManager {
             i--;
 
             // Get the material of the block
-            Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+            final Material type = entry.getBlockState().getType();
 
             // Check if this block was attached to another block, if so repair the base block first
-            if (SCAttachedBlock.isAttached(type))
+            if(SCAttachedBlock.isAttached(type))
                 repairBlocks(SCAttachedBlock.getBlockBase(entry.getBlock(), type, entry.getBlockState().getData()));
 
             // Drop the old block on that location
@@ -257,11 +258,11 @@ public class SCDestructionRepairManager {
      * @return True if this block was destroyed and is going to be repared
      */
     public boolean isDestroyed(Block b) {
-        if (b == null)
+        if(b == null)
             return false;
 
-        for (SCRepairableBlock entry : this.blocks)
-            if (entry.getBlock().equals(b))
+        for(SCRepairableBlock entry : this.blocks)
+            if(entry.getBlock().equals(b))
                 return true;
         return false;
     }
@@ -277,8 +278,8 @@ public class SCDestructionRepairManager {
         Block b2 = b.getRelative(BlockFace.UP);
 
         // Loop through the list of entries and check if the entity is in the way
-        for (Entity e : entities) {
-            if (!(e instanceof LivingEntity))
+        for(Entity e : entities) {
+            if(!(e instanceof LivingEntity))
                 continue;
 
             // Get the living entity
@@ -288,23 +289,23 @@ public class SCDestructionRepairManager {
             Block leb = le.getLocation().getBlock();
 
             // Is the living entity inside the block
-            if (!leb.equals(b) && !leb.equals(b2))
+            if(!leb.equals(b) && !leb.equals(b2))
                 continue;
 
             final int x = b.getX();
             final int z = b.getZ();
 
             // The living entity is stuck, move the entity
-            for (int y = b.getY(); y < 256; y++) {
+            for(int y = b.getY(); y < 256; y++) {
                 Block newb = b.getWorld().getBlockAt(x, y, z);
 
-                if (!newb.getType().equals(Material.AIR))
+                if(!newb.getType().equals(Material.AIR))
                     continue;
 
-                if (y < 256) {
+                if(y < 256) {
                     Block newb2 = b.getWorld().getBlockAt(x, y + 1, z);
 
-                    if (!newb2.getType().equals(Material.AIR))
+                    if(!newb2.getType().equals(Material.AIR))
                         continue;
                 }
 
@@ -358,13 +359,13 @@ public class SCDestructionRepairManager {
      */
     public void save(File f, boolean showMsg) {
         // Check if the file exists
-        if (!f.exists())
+        if(!f.exists())
             System.out.println("[SafeCreeper] Destruction repair data file does not exist. Creating a new file...");
 
         long t = System.currentTimeMillis();
 
         // Show an message in the console
-        if (showMsg)
+        if(showMsg)
             System.out.println("[SafeCreeper] Saving destruction repair data...");
 
         // Define the new config file holder to put all the data in
@@ -385,18 +386,21 @@ public class SCDestructionRepairManager {
             this.blocks.get(i).save(blockSection);
         }
 
-        final String scVer = SafeCreeper.instance.getVersionName();
+        // Get the plugin's version name and code
+        final String versionName = SafeCreeper.instance.getVersionName();
+        final int versionCode = SafeCreeper.instance.getVersionCode();
 
         // Add the version code to the file
-        config.set("version", scVer);
+        config.set("version", versionName);
+        config.set("versionCode", versionCode);
 
         // Add an information line to the top of the data file
-        config.options().header("Safe Creeper Destruction Repair Data - Automaticly saved by Safe Creeper v" + scVer + ". Do not modify this file!");
+        config.options().header("Safe Creeper Destruction Repair Data - Automatically saved by Safe Creeper v" + versionName + ". Do not modify this file!");
 
         // Convert the file to a FileConfiguration and safe the file
         try {
             config.save(f);
-        } catch (IOException e) {
+        } catch(IOException e) {
             System.out.println("[SafeCreeper] Error while saving destruction repair data!");
             e.printStackTrace();
             return;
@@ -406,7 +410,7 @@ public class SCDestructionRepairManager {
         long duration = System.currentTimeMillis() - t;
 
         // Show an message in the console
-        if (showMsg)
+        if(showMsg)
             System.out.println("[SafeCreeper] Destruction repair data saved, took " + String.valueOf(duration) + "ms!");
     }
 
@@ -414,8 +418,7 @@ public class SCDestructionRepairManager {
      * Load the old data list from an external file
      */
     public void load() {
-        File f = new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml");
-        load(f);
+        load(new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml"));
     }
 
     /**
@@ -424,8 +427,8 @@ public class SCDestructionRepairManager {
      * @param f external file to load the data from
      */
     public void load(File f) {
-        // Check if the fiel exists
-        if (!f.exists()) {
+        // Check if the file exists
+        if(!f.exists()) {
             System.out.println("[SafeCreeper] Destruction repair data file doesn't exist!");
             return;
         }
@@ -439,23 +442,31 @@ public class SCDestructionRepairManager {
         YamlConfiguration c = new YamlConfiguration();
         try {
             c.load(f);
-        } catch (IOException | InvalidConfigurationException e) {
+        } catch(IOException | InvalidConfigurationException e) {
             System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
             e.printStackTrace();
         }
+
+        // Get the version number
+        final String versionName = c.getString("version");
+        final int versionCode = c.getInt("versionCode", 0);
+
+        // Show a message when a file's version is being converted
+        if(versionCode < SafeCreeper.instance.getVersionCode())
+            System.out.println("[SafeCreeper] Converting destruction repair file from version " + versionName + " to " + SafeCreeper.instance.getVersionName() + "...");
 
         // Initialize the new list to store the loaded data in
         List<SCRepairableBlock> newBlocks = new ArrayList<SCRepairableBlock>();
 
         // Get all the items
         Set<String> keys = c.getConfigurationSection("blocks").getKeys(false);
-        for (String bIndex : keys) {
+        for(String bIndex : keys) {
 
             // Get the configuration section of the block
             ConfigurationSection blockSection = c.getConfigurationSection("blocks." + bIndex);
 
             // Make sure the section not null
-            if (blockSection == null) {
+            if(blockSection == null) {
                 // Show an error message in the console
                 SafeCreeper.instance.getLogger().info("Unable to load block from destruction repair data!");
                 continue;
@@ -465,7 +476,7 @@ public class SCDestructionRepairManager {
             SCRepairableBlock rb = SCRepairableBlock.load(blockSection);
 
             // Make sure the repairable block is not null
-            if (rb == null) {
+            if(rb == null) {
                 // Show an error message in the console
                 SafeCreeper.instance.getLogger().info("Unable to load block from destruction repair data!");
                 continue;

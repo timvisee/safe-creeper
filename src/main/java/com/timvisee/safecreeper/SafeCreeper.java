@@ -1,13 +1,20 @@
 package com.timvisee.safecreeper;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import java.io.OutputStream;
-
+import com.timvisee.safecreeper.api.SCApiController;
+import com.timvisee.safecreeper.command.CommandHandler;
+import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
+import com.timvisee.safecreeper.handler.SCUpdatesHandler;
 import com.timvisee.safecreeper.handler.plugin.*;
+import com.timvisee.safecreeper.listener.*;
+import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
+import com.timvisee.safecreeper.manager.SCStatisticsManager;
 import com.timvisee.safecreeper.permission.PermissionsManager;
+import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
+import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
+import com.timvisee.safecreeper.task.SCStatisticsPostTask;
+import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
+import com.timvisee.safecreeper.util.SCFileUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,18 +23,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.safecreeper.api.SCApiController;
-import com.timvisee.safecreeper.command.CommandHandler;
-import com.timvisee.safecreeper.entity.SCLivingEntityReviveManager;
-import com.timvisee.safecreeper.handler.SCConfigHandler;
-import com.timvisee.safecreeper.handler.SCUpdatesHandler;
-import com.timvisee.safecreeper.listener.*;
-import com.timvisee.safecreeper.manager.*;
-import com.timvisee.safecreeper.task.SCDestructionRepairRepairTask;
-import com.timvisee.safecreeper.task.SCDestructionRepairSaveDataTask;
-import com.timvisee.safecreeper.task.SCStatisticsPostTask;
-import com.timvisee.safecreeper.task.SCUpdateCheckerTask;
-import com.timvisee.safecreeper.util.SCFileUpdater;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class SafeCreeper extends JavaPlugin {
 
@@ -48,10 +47,6 @@ public class SafeCreeper extends JavaPlugin {
 
     // Safe Creeper static instance
     public static SafeCreeper instance;
-
-    // Logger
-    private SCLogger log;
-
     // Listeners
     private final SCBlockListener blockListener = new SCBlockListener();
     private final SCEntityListener entityListener = new SCEntityListener();
@@ -61,11 +56,13 @@ public class SafeCreeper extends JavaPlugin {
     private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
     private final SCWeatherListener weatherListener = new SCWeatherListener();
     private final SCWorldListener worldListener = new SCWorldListener();
-
+    // Variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
+    public boolean disableOtherExplosions = false;
+    // Logger
+    private SCLogger log;
     // Config file and folder paths
     private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
     private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
-
     // Controllers, Handlers and Managers
     private SCUpdatesHandler uh;
     private SCStatisticsManager sm;
@@ -81,9 +78,6 @@ public class SafeCreeper extends JavaPlugin {
     private SCFactionsHandler fh;
     private SCWorldGuardHandler wgh;
     private SCPowerNBTHandler nbth;
-
-    // Variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
-    public boolean disableOtherExplosions = false;
 
     /**
      * Constructor
@@ -120,7 +114,7 @@ public class SafeCreeper extends JavaPlugin {
         boolean anyFileUpdated = verifyExternalFiles(true);
 
         // Refresh the config files if any external file was updated
-        if (anyFileUpdated)
+        if(anyFileUpdated)
             getConfigHandler().reloadAllConfigs();
 
         // Set up the updates handler
@@ -156,11 +150,11 @@ public class SafeCreeper extends JavaPlugin {
         pm.registerEvents(this.worldListener, this);
 
         // Register the TVNLibListener if the TVNLib listener plugin is installed
-        if (getTVNLibManager().isEnabled())
+        if(getTVNLibManager().isEnabled())
             pm.registerEvents(this.tvnlListener, this);
 
 		/* // Test - Beginning of custom mob abilities!
-		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {
 					List<Player> onlinePlayers = Arrays.asList(getServer().getOnlinePlayers());
 					if(onlinePlayers.size() > 0) {
@@ -189,18 +183,18 @@ public class SafeCreeper extends JavaPlugin {
 			}, 20, 20);*/
 
         // Task to repair blocks from the destruction repair manager// Schedule update checker task
-        if (c.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
+        if(c.getBoolean("tasks.destructionRepairRepair.enabled", true)) {
             int taskInterval = (int) c.getDouble("tasks.destructionRepairRepair.interval", 1) * 20;
 
-            // Schedule the task
-            getServer().getScheduler().runTaskTimerAsynchronously(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
+            // Schedule the block repair task
+            getServer().getScheduler().runTaskTimer(this, new SCDestructionRepairRepairTask(getDestructionRepairManager()), taskInterval, taskInterval);
         } else {
             // Show an warning in the console
             getSCLogger().info("Scheduled task 'destructionRepairRepair' disabled in the config file!");
         }
 
         // Task to save the destruction repair data
-        if (c.getBoolean("tasks.destructionRepairSave.enabled", true)) {
+        if(c.getBoolean("tasks.destructionRepairSave.enabled", true)) {
             int taskInterval = (int) c.getDouble("tasks.destructionRepairSave.interval", 300) * 20;
 
             // Schedule the task
@@ -229,16 +223,16 @@ public class SafeCreeper extends JavaPlugin {
         stopTasks();
 
         // Unhook all plugins hooked into Safe Creeper and remove/unregister their sessions
-        if (getApiManager().getApiSessionsCount() > 0) {
+        if(getApiManager().getApiSessionsCount() > 0) {
             getSCLogger().info("Unhooking all hooked plugins...");
             getApiManager().unregisterAllApiSessions();
         }
 
         // Send the Safe Creeper statistics
-        if (getConfig().getBoolean("statistics.enabled", true)) {
+        if(getConfig().getBoolean("statistics.enabled", true)) {
             boolean showStatus = getConfig().getBoolean("statistics.showStatusInConsole");
 
-            if (showStatus)
+            if(showStatus)
                 System.out.println("[SafeCreeper] Sending Safe Creeper statistics...");
 
             long t = System.currentTimeMillis();
@@ -247,12 +241,12 @@ public class SafeCreeper extends JavaPlugin {
 
             long delay = System.currentTimeMillis() - t;
 
-            if (showStatus)
+            if(showStatus)
                 System.out.println("[SafeCreeper] Safe Creeper statistics send, took " + delay + " ms!");
         }
 
         // If any update was downloaded, install the update
-        if (getUpdatesHandler().isUpdateDownloaded())
+        if(getUpdatesHandler().isUpdateDownloaded())
             getUpdatesHandler().installUpdate();
 
         // Remove all update files
@@ -300,18 +294,18 @@ public class SafeCreeper extends JavaPlugin {
 
         // Check for updates once
         FileConfiguration c = getConfig();
-        if (c.getBoolean("updateChecker.enabled", true)) {
+        if(c.getBoolean("updateChecker.enabled", true)) {
             System.out.println(ChatColor.YELLOW + "[SafeCreeper] Checking for updates...");
             uh.refreshBukkitUpdatesFeedData();
 
             // Check if any update exists
-            if (uh.isUpdateAvailable(true)) {
+            if(uh.isUpdateAvailable(true)) {
                 final String newVer = uh.getNewestVersion(true);
 
-                if (uh.isUpdateDownloaded())
+                if(uh.isUpdateDownloaded())
                     System.out.println(ChatColor.YELLOW + "[SafeCreeper] New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
                 else {
-                    if (c.getBoolean("updateChecker.autoInstallUpdates", true)) {
+                    if(c.getBoolean("updateChecker.autoInstallUpdates", true)) {
                         System.out.println(ChatColor.YELLOW + "[SafeCreeper] Downloading new version (v" + String.valueOf(newVer) + ")");
                         uh.downloadUpdate();
                         System.out.println(ChatColor.YELLOW + "[SafeCreeper] Update downloaded, server reload required!");
@@ -321,7 +315,7 @@ public class SafeCreeper extends JavaPlugin {
                     }
                 }
 
-            } else if (uh.isUpdateAvailable(false)) {
+            } else if(uh.isUpdateAvailable(false)) {
                 final String newVer = uh.getNewestVersion(false);
 
                 System.out.println(ChatColor.YELLOW + "[SafeCreeper] New incompatible Safe Creeper version available: v" + String.valueOf(newVer));
@@ -333,7 +327,7 @@ public class SafeCreeper extends JavaPlugin {
         }
 
         // Schedule update checker task
-        if (c.getBoolean("tasks.updateChecker.enabled", true)) {
+        if(c.getBoolean("tasks.updateChecker.enabled", true)) {
             int taskInterval = (int) c.getDouble("tasks.updateChecker.interval", 600) * 20;
 
             // Schedule the update checker task
@@ -362,7 +356,7 @@ public class SafeCreeper extends JavaPlugin {
         FileConfiguration c = getConfig();
 
         // Schedule statistics post task
-        if (c.getBoolean("tasks.statisticsPost.enabled", true)) {
+        if(c.getBoolean("tasks.statisticsPost.enabled", true)) {
             int taskInterval = (int) c.getDouble("tasks.statisticsPost.interval", 300) * 20;
 
             // Schedule the update checker task
@@ -372,10 +366,10 @@ public class SafeCreeper extends JavaPlugin {
             getSCLogger().info("Scheduled task 'statisticsPost' disabled in the config file!");
         }
 
-        if (getConfig().getBoolean("statistics.enabled", true)) {
+        if(getConfig().getBoolean("statistics.enabled", true)) {
             boolean showStatus = getConfig().getBoolean("statistics.showStatusInConsole");
 
-            if (showStatus)
+            if(showStatus)
                 System.out.println("[SafeCreeper] Sending Safe Creeper statistics...");
 
             long t = System.currentTimeMillis();
@@ -384,7 +378,7 @@ public class SafeCreeper extends JavaPlugin {
 
             long delay = System.currentTimeMillis() - t;
 
-            if (showStatus)
+            if(showStatus)
                 System.out.println("[SafeCreeper] Safe Creeper statistics send, took " + delay + " ms!");
         }
     }
@@ -434,7 +428,7 @@ public class SafeCreeper extends JavaPlugin {
         getSCLogger().info("Safe Creeper API started!");
 
         // Enable the API if it should be enabled
-        if (getConfig().getBoolean("api.enabled", true))
+        if(getConfig().getBoolean("api.enabled", true))
             this.apic.setEnabled(true);
         else
             getSCLogger().info("Not enabling Safe Creeper API, disabled in config file!");
@@ -652,11 +646,11 @@ public class SafeCreeper extends JavaPlugin {
         boolean invalid = false;
 
         // Make sure the Safe Creeper directory exists
-        if (!scDir.exists() || !scDir.isDirectory()) {
+        if(!scDir.exists() || !scDir.isDirectory()) {
             invalid = true;
 
             // Automatically fix this issue if enabled
-            if (autoFix) {
+            if(autoFix) {
                 getSCLogger().info("Creating Safe Creeper directory...");
                 scDir.mkdirs();
             }
@@ -664,41 +658,41 @@ public class SafeCreeper extends JavaPlugin {
 
         // Make sure the main config file exists
         File cfgFile = new File(scDir, "config.yml");
-        if (!cfgFile.exists() || !cfgFile.isFile()) {
+        if(!cfgFile.exists() || !cfgFile.isFile()) {
             invalid = true;
 
             // Automatically fix the file
-            if (autoFix) {
+            if(autoFix) {
                 getSCLogger().info("Creating new config file...");
                 copyFile(getResource("res/config.yml"), cfgFile);
             }
         }
 
         // Verify the config file version
-        if (SCFileUpdater.updateConfig())
+        if(SCFileUpdater.updateConfig())
             invalid = true;
 
         // Make sure the global file exists
-        if (!globalConfigFile.exists() || !globalConfigFile.isFile()) {
+        if(!globalConfigFile.exists() || !globalConfigFile.isFile()) {
             invalid = true;
 
             // Automatically fix the file
-            if (autoFix) {
+            if(autoFix) {
                 getSCLogger().info("Creating new global file...");
                 copyFile(getResource("res/global.yml"), globalConfigFile);
             }
         }
 
         // Verify the config file version
-        if (SCFileUpdater.updateGlobalConfig())
+        if(SCFileUpdater.updateGlobalConfig())
             invalid = true;
 
         // Make sure the worlds folder exists
-        if (!worldConfigsFolder.exists() || !worldConfigsFolder.isDirectory()) {
+        if(!worldConfigsFolder.exists() || !worldConfigsFolder.isDirectory()) {
             invalid = true;
 
             // Automatically fix the directory
-            if (autoFix) {
+            if(autoFix) {
                 getSCLogger().info("Generating new worlds directory...");
                 worldConfigsFolder.mkdirs();
                 copyFile(getResource("res/worlds/world_example.yml"), new File(worldConfigsFolder, "world_example.yml"));
@@ -707,7 +701,7 @@ public class SafeCreeper extends JavaPlugin {
         }
 
         // Verify all the world config files
-        if (SCFileUpdater.updateAllWorldsConfig())
+        if(SCFileUpdater.updateAllWorldsConfig())
             invalid = true;
 
         // Return the result
@@ -725,12 +719,12 @@ public class SafeCreeper extends JavaPlugin {
             OutputStream out = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int len;
-            while ((len = in.read(buf)) > 0) {
+            while((len = in.read(buf)) > 0) {
                 out.write(buf, 0, len);
             }
             out.close();
             in.close();
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
