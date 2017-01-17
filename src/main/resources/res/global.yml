@@ -492,17 +492,6 @@ ElderGuardianControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 80
@@ -743,17 +732,6 @@ EndermiteControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 8
@@ -811,17 +789,6 @@ EvokerControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 24
@@ -942,17 +909,6 @@ GuardianControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 30
@@ -1818,17 +1774,6 @@ ShulkerControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 30
@@ -2205,17 +2150,6 @@ VexControl:
     SpawningPotionEffects:
         Enabled: false
         Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
         MinHealth: 20
