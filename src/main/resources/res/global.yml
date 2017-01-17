@@ -2255,6 +2255,64 @@ VillagerControl:
         Triggers: {}
     Locations: {}
 
+# Vindicator (mob)
+VindicatorControl:
+    Enabled: false
+    Spawning:
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 24
+        MaxHealth: 24
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
 # Witch (mob)
 WitchControl:
     Enabled: false
