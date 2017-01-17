@@ -505,8 +505,8 @@ ElderGuardianControl:
             SpawnAsBabyChance: 50
     CustomHealth:
         Enabled: false
-        MinHealth: 30
-        MaxHealth: 30
+        MinHealth: 80
+        MaxHealth: 80
     CustomEquipment:
         Enabled: false
         EquipmentSets: {}
