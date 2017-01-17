@@ -245,6 +245,18 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
 
+        <!-- Xephi's repository (many libraries) -->
+        <repository>
+            <id>xephi-repo</id>
+            <url>http://ci.xephi.fr/plugin/repository/everything/</url>
+        </repository>
+
+        <!-- WorldGuard repository -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+
         <!-- Essentials repository -->
         <repository>
             <id>ess-repo</id>
@@ -269,12 +281,6 @@
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- WorldGuard repository -->
-        <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-
         <!-- PowerNBT repositories -->
         <repository>
             <id>varscript.ru-releases</id>
@@ -282,11 +288,6 @@
             <url>http://repo.varscript.ru/release</url>
         </repository>
 
-        <!-- Xephi's repository (many libraries) -->
-        <repository>
-            <id>xephi-repo</id>
-            <url>http://ci.xephi.fr/plugin/repository/everything/</url>
-        </repository>
     </repositories>
 
     <dependencies>
