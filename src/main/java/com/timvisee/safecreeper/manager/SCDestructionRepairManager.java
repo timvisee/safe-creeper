@@ -126,33 +126,39 @@ public class SCDestructionRepairManager {
      * Repair all blocks that should be repaired, based on their repair time
      */
     public void repair() {
+        // Get the current timestamp
         long timestamp = System.currentTimeMillis();
 
+        // Loop through all blocks to check whether it should be repaired
         for(int i = 0; i < this.blocks.size(); i++) {
-            SCRepairableBlock b = this.blocks.get(i);
+            // Loop through the repairable blocks
+            SCRepairableBlock block = this.blocks.get(i);
 
             // The chunk the block is in has to be loaded
-            if(!b.isChunkLoaded())
+            if(!block.isChunkLoaded())
                 continue;
 
-            final Material type = b.getBlockState().getType();
-
-            if(b.getRepairAt() <= timestamp) {
-
+            // Check whether the block should be repaired
+            if(block.getRepairAt() <= timestamp) {
+                // Remove the block if it should be repaired
                 this.blocks.remove(i);
                 i--;
 
+                // Fetch the material type
+                final Material type = block.getBlockState().getType();
+
+                // Repair attached blocks such as torches
                 if(SCAttachedBlock.isAttached(type))
-                    repairBlocks(SCAttachedBlock.getBlockBase(b.getBlock(), type, b.getBlockState().getData()));
+                    repairBlocks(SCAttachedBlock.getBlockBase(block.getBlock(), type, block.getBlockState().getData()));
 
                 // Drop the old block on that location
-                b.getBlock().breakNaturally();
+                block.getBlock().breakNaturally();
 
                 // Repair/replace the block
-                b.repair();
+                block.repair();
 
                 // Unstuck all living entities
-                unstuckLivingEntities(b.getBlock());
+                unstuckLivingEntities(block.getBlock());
             }
         }
     }
