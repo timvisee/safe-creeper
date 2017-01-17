@@ -245,6 +245,18 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
 
+        <!-- Xephi's repository (many libraries) -->
+        <repository>
+            <id>xephi-repo</id>
+            <url>http://ci.xephi.fr/plugin/repository/everything/</url>
+        </repository>
+
+        <!-- WorldGuard repository -->
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+
         <!-- Essentials repository -->
         <repository>
             <id>ess-repo</id>
@@ -269,29 +281,13 @@
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- WorldGuard repository -->
-        <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-
         <!-- PowerNBT repositories -->
         <repository>
             <id>varscript.ru-releases</id>
             <name>varscript.ru-releases</name>
-            <url>https://repo.varscript.ru/release</url>
-        </repository>
-        <repository>
-            <id>varscript.ru-snapshots</id>
-            <name>varscript.ru-snapshots</name>
-            <url>https://repo.varscript.ru/snapshots</url>
+            <url>http://repo.varscript.ru/release</url>
         </repository>
 
-        <!-- Xephi's repository (many libraries) -->
-        <repository>
-            <id>xephi-repo</id>
-            <url>http://ci.xephi.fr/plugin/repository/everything/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -600,7 +596,15 @@
         <dependency>
             <groupId>me.dpohvar.powernbt</groupId>
             <artifactId>PowerNBT</artifactId>
-            <version>0.8.1</version>
+            <version>0.8.6.1</version>
+        </dependency>
+
+        <!-- JUnit unit testing -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.12</version>
         </dependency>
     </dependencies>
 </project>
