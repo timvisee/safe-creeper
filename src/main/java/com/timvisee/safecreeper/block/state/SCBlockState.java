@@ -13,7 +13,7 @@ public class SCBlockState {
 
     private SCBlockLocation loc;
 
-    private int type;
+    private Material type;
     private byte data;
 
     /**
@@ -24,42 +24,42 @@ public class SCBlockState {
     public SCBlockState(Block b) {
         this.loc = new SCBlockLocation(b);
 
-        this.type = b.getTypeId();
+        this.type = b.getType();
         this.data = b.getData();
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param block SCBlock
+     */
+    public SCBlockState(SCBlock block) {
+        this.loc = new SCBlockLocation(block);
+
+        this.type = block.getType();
+        this.data = block.getData();
     }
 
     /**
      * Constructor
      *
-     * @param b SCBlock
+     * @param block Block state
      */
-    public SCBlockState(SCBlock b) {
-        this.loc = new SCBlockLocation(b);
+    public SCBlockState(BlockState block) {
+        this.loc = new SCBlockLocation(block.getBlock());
 
-        this.type = b.getTypeId();
-        this.data = b.getData();
-    }
-
-    /**
-     * Constructor
-     *
-     * @param b Block state
-     */
-    public SCBlockState(BlockState b) {
-        this.loc = new SCBlockLocation(b.getBlock());
-
-        this.type = b.getTypeId();
-        this.data = b.getData().getData();
+        this.type = block.getType();
+        this.data = block.getData().getData();
     }
 
     /**
      * Constructor
      *
      * @param loc  Block location
-     * @param type Block type ID
+     * @param type Block material
      * @param data Block data value
      */
-    public SCBlockState(SCBlockLocation loc, int type, byte data) {
+    public SCBlockState(SCBlockLocation loc, Material type, byte data) {
         this.loc = loc;
 
         this.type = type;
@@ -70,88 +70,81 @@ public class SCBlockState {
      * Constructor
      *
      * @param loc      Block location
-     * @param material Block material
-     * @param data     Block data value
+     * @param type Block material
      */
-    public SCBlockState(SCBlockLocation loc, Material material, byte data) {
-        this(loc, material.getId(), data);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param loc      Block location
-     * @param material Block material
-     */
-    public SCBlockState(SCBlockLocation loc, Material material) {
-        this(loc, material, (byte) 0);
+    public SCBlockState(SCBlockLocation loc, Material type) {
+        this(loc, type, (byte) 0);
     }
 
     /**
      * Load the data in a configuration section
      *
-     * @param cfg Configuration section to store the data in
+     * @param config Configuration section to load the block data from.
      */
-    public static SCBlockState load(ConfigurationSection cfg) {
+    public static SCBlockState load(ConfigurationSection config) {
         // Make sure the param is not null
-        if(cfg == null)
+        if(config == null)
             return null;
 
         // Get the state type of the block
-        String stateType = cfg.getString("stateType", "NORMAL");
+        final String stateType = config.getString("stateType", "NORMAL");
 
         // Load the state
-        if(stateType.equals(SCBlockStateType.NORMAL.getName())) {
-            // Get the block location
-            ConfigurationSection locSect = cfg.getConfigurationSection("loc");
-            SCBlockLocation loc = SCBlockLocation.load(locSect);
-
-            // Get the block type ID and data
-            int typeId = cfg.getInt("typeId", 0);
-            byte data = (byte) cfg.getInt("data", 0);
-
-            return new SCBlockState(loc, typeId, data);
-
-        } else if(stateType.equals(SCBlockStateType.BEACON.getName())) {
+        if(stateType.equals(SCBlockStateType.BEACON.getName())) {
             // Get the beacon state and return the instance
-            return SCBeaconState.load(cfg);
+            return SCBeaconState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.COMMAND_BLOCK.getName())) {
             // Get the command block state and return the instance
-            return SCCommandBlockState.load(cfg);
+            return SCCommandBlockState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.CONTAINER_BLOCK.getName())) {
             // Get the container block state and return the instance
-            return SCContainerBlockState.load(cfg);
+            return SCContainerBlockState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.JUKEBOX.getName())) {
             // Get the jukebox state and return the instance
-            return SCJukeboxState.load(cfg);
+            return SCJukeboxState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.SIGN.getName())) {
             // Get the sign state and return the instance
-            return SCSignState.load(cfg);
+            return SCSignState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.SKULL.getName())) {
             // Get the skull state and return the instance
-            return SCSkullState.load(cfg);
+            return SCSkullState.load(config);
 
         } else if(stateType.equals(SCBlockStateType.SPAWNER.getName())) {
             // Get the skull state and return the instance
-            return SCSpawnerState.load(cfg);
+            return SCSpawnerState.load(config);
         }
 
-        // Unable to construct any state, try to construct the normal state
         // Get the block location
-        ConfigurationSection locSect = cfg.getConfigurationSection("loc");
-        SCBlockLocation loc = SCBlockLocation.load(locSect);
+        final ConfigurationSection locSect = config.getConfigurationSection("loc");
+        final SCBlockLocation loc = SCBlockLocation.load(locSect);
 
-        // Get the block type ID and data
-        int typeId = cfg.getInt("typeId", 0);
-        byte data = (byte) cfg.getInt("data", 0);
+        // Create a variable for the block material
+        Material type;
 
-        // Return the new block state
-        return new SCBlockState(loc, typeId, data);
+        // Load the material if the proper key is available
+        if(config.isString("type"))
+            type = Material.getMaterial(config.getString("type"));
+
+        else if(config.isInt("typeId"))
+            //noinspection deprecation
+            type = Material.getMaterial(config.getInt("typeId"));
+
+        else {
+            // Show an error message, and return null
+            System.out.println("Failed to load stored block state, type is missing.");
+            return null;
+        }
+
+        // Get the block data
+        final byte data = (byte) config.getInt("data", 0);
+
+        // Create a block instance and return it
+        return new SCBlockState(loc, type, data);
     }
 
     /**
@@ -173,36 +166,36 @@ public class SCBlockState {
     }
 
     /**
-     * Get the location of the block
+     * Get the location of the block.
      *
-     * @return Location of the block
+     * @return Location of the block.
      */
     public Location getLocation() {
         return this.loc.getLocation();
     }
 
     /**
-     * Get the x coord of the block
+     * Get the x coordinate of the block.
      *
-     * @return x coord
+     * @return x coordinate.
      */
     public int getX() {
         return this.loc.getX();
     }
 
     /**
-     * Get the y coord of the block
+     * Get the y coordinate of the block.
      *
-     * @return y coord
+     * @return y coordinate.
      */
     public int getY() {
         return this.loc.getY();
     }
 
     /**
-     * Get the z coord of the block
+     * Get the z coordinate of the block.
      *
-     * @return z coord
+     * @return z coordinate.
      */
     public int getZ() {
         return this.loc.getZ();
@@ -218,21 +211,21 @@ public class SCBlockState {
     }
 
     /**
-     * Get the type ID of the block state
+     * Get the type material of the block state.
      *
-     * @return Block state type ID
+     * @return Block state type material.
      */
-    public int getTypeId() {
+    public Material getType() {
         return this.type;
     }
 
     /**
-     * Set the type ID of the block state
+     * Set the type material of the block state.
      *
-     * @param typeId Block type ID
+     * @param type Block type material.
      */
-    public void setTypeId(int typeId) {
-        this.type = typeId;
+    public void setType(Material type) {
+        this.type = type;
     }
 
     /**
@@ -254,70 +247,72 @@ public class SCBlockState {
     }
 
     /**
-     * Check if the block state equals to air
+     * Check if the block state equals to air.
      *
-     * @return
+     * @return True if this block is air, false if not.
      */
     public boolean isAir() {
-        return (type == 0);
+        return this.type.equals(Material.AIR);
     }
 
     /**
-     * Is the block a liquid
+     * Is the block a liquid. Water or lava.
      *
-     * @return True if the block is a liquid
+     *
+     * @return True if the block is a liquid.
      */
     public boolean isLiquid() {
-        return (type == 8 || type == 9 ||
-                type == 10 || type == 11);
+        return (this.type.equals(Material.WATER) || this.type.equals(Material.STATIONARY_WATER) ||
+                this.type.equals(Material.LAVA) || this.type.equals(Material.STATIONARY_LAVA));
     }
 
     /**
-     * Get the block state type
+     * Get the block state type.
      */
     public SCBlockStateType getStateType() {
         return SCBlockStateType.NORMAL;
     }
 
     /**
-     * Apply the current state to the block
+     * Apply the current state to the block.
      *
-     * @return True if succeed
+     * @return True if succeed.
      */
     public boolean apply() {
-        Block b = getBlock();
+        // Get the block
+        final Block block = getBlock();
 
         // Make sure the block is not null
-        if(b == null)
+        if(block == null)
             return false;
 
         // Apply the block state to the block
-        b.setTypeId(this.type);
-        b.setData(this.data);
+        block.setType(this.type);
+        block.setData(this.data);
 
         // Return true
         return true;
     }
 
     /**
-     * Store the block state
+     * Store the block state.
      *
-     * @param cfg Configuration section to store the block state in
+     * @param config Configuration section to store the block state in.
      */
-    public void save(ConfigurationSection cfg) {
+    public void save(ConfigurationSection config) {
         // Make sure the config section is not null
-        if(cfg == null)
+        if(config == null)
             return;
 
         // Store the type
-        cfg.set("stateType", getStateType().getName());
+        config.set("stateType", getStateType().getName());
 
         // Store the block location
-        ConfigurationSection locSect = cfg.createSection("loc");
+        ConfigurationSection locSect = config.createSection("loc");
         this.loc.save(locSect);
 
         // Store the block state
-        cfg.set("typeId", this.type);
-        cfg.set("data", (int) this.data);
+        config.set("type", this.type);
+        config.set("data", (int) this.data);
     }
 }

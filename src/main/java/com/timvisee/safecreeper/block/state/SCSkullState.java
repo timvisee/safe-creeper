@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.block.state;
 
 import com.timvisee.safecreeper.block.SCBlockLocation;
+import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -41,14 +42,14 @@ public class SCSkullState extends SCBlockState {
      * Constructor
      *
      * @param loc    Block location
-     * @param typeId Block type Id
+     * @param type   Block type material
      * @param data   Block data
      * @param owner  Skull owner
      * @param rot    Skull rotation
      */
-    public SCSkullState(SCBlockLocation loc, int typeId, byte data, SkullType skullType, String owner, BlockFace rot) {
+    public SCSkullState(SCBlockLocation loc, Material type, byte data, SkullType skullType, String owner, BlockFace rot) {
         // Construct the parent class
-        super(loc, typeId, data);
+        super(loc, type, data);
 
         // Store the skull owner and the skull rotation
         this.skullType = skullType;
@@ -70,8 +71,24 @@ public class SCSkullState extends SCBlockState {
         ConfigurationSection locSection = configSection.getConfigurationSection("loc");
         SCBlockLocation loc = SCBlockLocation.load(locSection);
 
+        // Create a variable for the block material
+        Material type;
+
+        // Load the material if the proper key is available
+        if(configSection.isString("type"))
+            type = Material.getMaterial(configSection.getString("type"));
+
+        else if(configSection.isInt("typeId"))
+            //noinspection deprecation
+            type = Material.getMaterial(configSection.getInt("typeId"));
+
+        else {
+            // Show an error message, and return null
+            System.out.println("Failed to load stored block state, type is missing.");
+            return null;
+        }
+
         // Get the block type ID and data
-        int typeId = configSection.getInt("typeId", 0);
         byte data = (byte) configSection.getInt("data", 0);
 
         // Get the owner and the rotation of the skull
@@ -80,7 +97,7 @@ public class SCSkullState extends SCBlockState {
         BlockFace skullRot = BlockFace.valueOf(configSection.getString("skullRot", "SELF"));
 
         // Construct the sign state and return the instance
-        return new SCSkullState(loc, typeId, data, skullType, skullOwner, skullRot);
+        return new SCSkullState(loc, type, data, skullType, skullOwner, skullRot);
     }
 
     /**

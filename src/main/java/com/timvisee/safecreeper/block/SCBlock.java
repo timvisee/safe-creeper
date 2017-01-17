@@ -21,7 +21,7 @@ public class SCBlock {
     /**
      * Constructor
      *
-     * @param b The location of the block
+     * @param loc The location of the block
      */
     public SCBlock(Location loc) {
         this.b = loc.getBlock();

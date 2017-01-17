@@ -31,8 +31,7 @@ public class SCDestructionRepairManager {
     /**
      * Constructor
      */
-    public SCDestructionRepairManager() {
-    }
+    public SCDestructionRepairManager() {}
 
     /**
      * Add a list of blocks that should be repaired.
@@ -127,33 +126,39 @@ public class SCDestructionRepairManager {
      * Repair all blocks that should be repaired, based on their repair time
      */
     public void repair() {
+        // Get the current timestamp
         long timestamp = System.currentTimeMillis();
 
+        // Loop through all blocks to check whether it should be repaired
         for(int i = 0; i < this.blocks.size(); i++) {
-            SCRepairableBlock b = this.blocks.get(i);
+            // Loop through the repairable blocks
+            SCRepairableBlock block = this.blocks.get(i);
 
             // The chunk the block is in has to be loaded
-            if(!b.isChunkLoaded())
+            if(!block.isChunkLoaded())
                 continue;
 
-            Material type = Material.getMaterial(b.getBlockState().getTypeId());
-
-            if(b.getRepairAt() <= timestamp) {
-
+            // Check whether the block should be repaired
+            if(block.getRepairAt() <= timestamp) {
+                // Remove the block if it should be repaired
                 this.blocks.remove(i);
                 i--;
 
+                // Fetch the material type
+                final Material type = block.getBlockState().getType();
+
+                // Repair attached blocks such as torches
                 if(SCAttachedBlock.isAttached(type))
-                    repairBlocks(SCAttachedBlock.getBlockBase(b.getBlock(), type, b.getBlockState().getData()));
+                    repairBlocks(SCAttachedBlock.getBlockBase(block.getBlock(), type, block.getBlockState().getData()));
 
                 // Drop the old block on that location
-                b.getBlock().breakNaturally();
+                block.getBlock().breakNaturally();
 
                 // Repair/replace the block
-                b.repair();
+                block.repair();
 
                 // Unstuck all living entities
-                unstuckLivingEntities(b.getBlock());
+                unstuckLivingEntities(block.getBlock());
             }
         }
     }
@@ -180,7 +185,7 @@ public class SCDestructionRepairManager {
                 i--;
 
                 // Get the material of the block
-                Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+                final Material type = entry.getBlockState().getType();
 
                 // Check if this block was attached to another block, if so repair the base block first
                 if(SCAttachedBlock.isAttached(type))
@@ -229,7 +234,7 @@ public class SCDestructionRepairManager {
             i--;
 
             // Get the material of the block
-            Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+            final Material type = entry.getBlockState().getType();
 
             // Check if this block was attached to another block, if so repair the base block first
             if(SCAttachedBlock.isAttached(type))
@@ -413,8 +418,7 @@ public class SCDestructionRepairManager {
      * Load the old data list from an external file
      */
     public void load() {
-        File f = new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml");
-        load(f);
+        load(new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml"));
     }
 
     /**
@@ -423,7 +427,7 @@ public class SCDestructionRepairManager {
      * @param f external file to load the data from
      */
     public void load(File f) {
-        // Check if the fiel exists
+        // Check if the file exists
         if(!f.exists()) {
             System.out.println("[SafeCreeper] Destruction repair data file doesn't exist!");
             return;
@@ -442,6 +446,14 @@ public class SCDestructionRepairManager {
             System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
             e.printStackTrace();
         }
+
+        // Get the version number
+        final String versionName = c.getString("version");
+        final int versionCode = c.getInt("versionCode", 0);
+
+        // Show a message when a file's version is being converted
+        if(versionCode < SafeCreeper.instance.getVersionCode())
+            System.out.println("[SafeCreeper] Converting destruction repair file from version " + versionName + " to " + SafeCreeper.instance.getVersionName() + "...");
 
         // Initialize the new list to store the loaded data in
         List<SCRepairableBlock> newBlocks = new ArrayList<SCRepairableBlock>();

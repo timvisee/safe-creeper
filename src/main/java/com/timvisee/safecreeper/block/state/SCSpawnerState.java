@@ -13,18 +13,18 @@ public class SCSpawnerState extends SCBlockState {
     private int delay;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param s Creature spawner
+     * @param spawner Creature spawner block.
      */
-    public SCSpawnerState(Block b) {
-        this((CreatureSpawner) b.getState());
+    public SCSpawnerState(Block spawner) {
+        this((CreatureSpawner) spawner.getState());
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param s Creature spawner
+     * @param s Creature spawner.
      */
     public SCSpawnerState(CreatureSpawner s) {
         super(s.getBlock());
@@ -42,7 +42,7 @@ public class SCSpawnerState extends SCBlockState {
      */
     public SCSpawnerState(SCBlockLocation loc, EntityType spawnedType, int delay) {
         // Construct the parent class
-        super(loc, Material.MOB_SPAWNER.getId(), (byte) 0);
+        super(loc, Material.MOB_SPAWNER, (byte) 0);
 
         // Store the spawned entity type and the spawner delay
         this.spawnedType = spawnedType;

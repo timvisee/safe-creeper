@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.block.state;
 
 import com.timvisee.safecreeper.block.SCBlockLocation;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
@@ -52,14 +53,14 @@ public class SCContainerBlockState extends SCBlockState {
      * Consturctor
      *
      * @param loc           Container location
-     * @param typeId        Container block type ID
+     * @param type          Container block material
      * @param data          Container block data value
      * @param contents      Container contents
      * @param containerSize Container contents size (inventory size)
      */
-    public SCContainerBlockState(SCBlockLocation loc, int typeId, byte data, List<ItemStack> contents, int containerSize) {
+    public SCContainerBlockState(SCBlockLocation loc, Material type, byte data, List<ItemStack> contents, int containerSize) {
         // Construct the parent class
-        super(loc, typeId, data);
+        super(loc, type, data);
 
         // Store the contents and the container size
         this.contents = contents;
@@ -80,8 +81,24 @@ public class SCContainerBlockState extends SCBlockState {
         ConfigurationSection locSection = configSection.getConfigurationSection("loc");
         SCBlockLocation loc = SCBlockLocation.load(locSection);
 
+        // Create a variable for the block material
+        Material type;
+
+        // Load the material if the proper key is available
+        if(configSection.isString("type"))
+            type = Material.getMaterial(configSection.getString("type"));
+
+        else if(configSection.isInt("typeId"))
+            //noinspection deprecation
+            type = Material.getMaterial(configSection.getInt("typeId"));
+
+        else {
+            // Show an error message, and return null
+            System.out.println("Failed to load stored block state, type is missing.");
+            return null;
+        }
+
         // Get the block type ID and data
-        int typeId = configSection.getInt("typeId", 0);
         byte data = (byte) configSection.getInt("data", 0);
 
         // Get the contents and the contents size of the container
@@ -94,7 +111,7 @@ public class SCContainerBlockState extends SCBlockState {
             return null;
 
         // Construct the container state and return the instance
-        return new SCContainerBlockState(loc, typeId, data, contents, containerSize);
+        return new SCContainerBlockState(loc, type, data, contents, containerSize);
     }
 
     /**
@@ -172,11 +189,11 @@ public class SCContainerBlockState extends SCBlockState {
             return false;
 
         // Get the inventory holder and the inventory
-        InventoryHolder ih = getInventoryHolder();
-        Inventory inv = ih.getInventory();
+        final InventoryHolder ih = getInventoryHolder();
+        final Inventory inv = ih.getInventory();
 
         // Make sure the inventory holder and the inventory instance are not null
-        if(ih == null || inv == null)
+        if(inv == null)
             return false;
 
         // Put the item back in the chest
