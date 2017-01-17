@@ -453,7 +453,7 @@ public class SCDestructionRepairManager {
 
         // Show a message when a file's version is being converted
         if(versionCode < SafeCreeper.instance.getVersionCode())
-            System.out.println("[SafeCreeper] The file will be converted from version " + versionName + " to " + SafeCreeper.instance.getVersionName() + "...");
+            System.out.println("[SafeCreeper] Converting destruction repair file from version " + versionName + " to " + SafeCreeper.instance.getVersionName() + "...");
 
         // Initialize the new list to store the loaded data in
         List<SCRepairableBlock> newBlocks = new ArrayList<SCRepairableBlock>();
