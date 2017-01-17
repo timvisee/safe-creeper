@@ -33,14 +33,14 @@ public class SCJukeboxState extends SCBlockState {
     }
 
     /**
-     * Constuctor
+     * Constructor.
      *
      * @param loc  Block location
      * @param disk Disk
      */
     public SCJukeboxState(SCBlockLocation loc, Material disk) {
         // Construct the parent class
-        super(loc, Material.JUKEBOX.getId(), (byte) 0);
+        super(loc, Material.JUKEBOX, (byte) 0);
 
         // Store the disk
         this.disk = disk;

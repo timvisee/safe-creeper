@@ -136,7 +136,7 @@ public class SCDestructionRepairManager {
             if(!b.isChunkLoaded())
                 continue;
 
-            Material type = Material.getMaterial(b.getBlockState().getTypeId());
+            final Material type = b.getBlockState().getType();
 
             if(b.getRepairAt() <= timestamp) {
 
@@ -180,7 +180,7 @@ public class SCDestructionRepairManager {
                 i--;
 
                 // Get the material of the block
-                Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+                final Material type = entry.getBlockState().getType();
 
                 // Check if this block was attached to another block, if so repair the base block first
                 if(SCAttachedBlock.isAttached(type))
@@ -229,7 +229,7 @@ public class SCDestructionRepairManager {
             i--;
 
             // Get the material of the block
-            Material type = Material.getMaterial(entry.getBlockState().getTypeId());
+            final Material type = entry.getBlockState().getType();
 
             // Check if this block was attached to another block, if so repair the base block first
             if(SCAttachedBlock.isAttached(type))

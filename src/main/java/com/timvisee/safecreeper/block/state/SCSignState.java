@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.block.state;
 
 import com.timvisee.safecreeper.block.SCBlockLocation;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,43 +11,48 @@ import java.util.List;
 
 public class SCSignState extends SCBlockState {
 
+    /**
+     * Sign contents.
+     */
     private String[] lines;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param b Sign
+     * @param block Sign.
      */
-    public SCSignState(Block b) {
-        super(b);
+    public SCSignState(Block block) {
+        // Construct the super
+        super(block);
 
-        Sign sign = (Sign) b.getState();
-
-        this.lines = sign.getLines();
+        // Remember the text lines
+        this.lines = ((Sign) block.getState()).getLines();
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param sign Sign
+     * @param sign Sign.
      */
     public SCSignState(Sign sign) {
+        // Construct the super
         super(sign.getBlock());
 
+        // Remember the text lines
         this.lines = sign.getLines();
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param loc    Block location
-     * @param typeId Block type ID
-     * @param data   Block data
-     * @param lines  Sign lines
+     * @param loc    Block location.
+     * @param type   Block material.
+     * @param data   Block data.
+     * @param lines  Sign lines.
      */
-    public SCSignState(SCBlockLocation loc, int typeId, byte data, String[] lines) {
+    public SCSignState(SCBlockLocation loc, Material type, byte data, String[] lines) {
         // Construct the parent class
-        super(loc, typeId, data);
+        super(loc, type, data);
 
         // Store the sign lines
         this.lines = lines.clone();
@@ -63,11 +69,27 @@ public class SCSignState extends SCBlockState {
             return null;
 
         // Get the block location
-        ConfigurationSection locSection = configSection.getConfigurationSection("loc");
-        SCBlockLocation loc = SCBlockLocation.load(locSection);
+        final ConfigurationSection locSection = configSection.getConfigurationSection("loc");
+        final SCBlockLocation loc = SCBlockLocation.load(locSection);
+
+        // Create a variable for the block material
+        Material type;
+
+        // Load the material if the proper key is available
+        if(configSection.isString("type"))
+            type = Material.getMaterial(configSection.getString("type"));
+
+        else if(configSection.isInt("typeId"))
+            //noinspection deprecation
+            type = Material.getMaterial(configSection.getInt("typeId"));
+
+        else {
+            // Show an error message, and return null
+            System.out.println("Failed to load stored block state, type is missing.");
+            return null;
+        }
 
         // Get the block type ID and data
-        int typeId = configSection.getInt("typeId", 0);
         byte data = (byte) configSection.getInt("data", 0);
 
         // Get the block name and the selected command
@@ -77,7 +99,7 @@ public class SCSignState extends SCBlockState {
         String[] lines = linesList.toArray(new String[]{});
 
         // Construct the sign state and return the instance
-        return new SCSignState(loc, typeId, data, lines);
+        return new SCSignState(loc, type, data, lines);
     }
 
     /**
@@ -166,6 +188,7 @@ public class SCSignState extends SCBlockState {
         for(int i = 0; i < 4; i++)
             s.setLine(i, getLine(i));
 
+        // Update the sign to the client
         s.update();
 
         // Return true

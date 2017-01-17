@@ -9,20 +9,20 @@ import org.bukkit.configuration.ConfigurationSection;
 public class SCCommandBlockState extends SCBlockState {
 
     private String blockName;
-    private String cmd;
+    private String command;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param cb Command block
+     * @param commandBlock Command block.
      */
-    public SCCommandBlockState(CommandBlock cb) {
+    public SCCommandBlockState(CommandBlock commandBlock) {
         // Construct the parent class
-        super(cb.getBlock());
+        super(commandBlock.getBlock());
 
         // Store the state of the command block
-        this.blockName = cb.getName();
-        this.cmd = cb.getCommand();
+        this.blockName = commandBlock.getName();
+        this.command = commandBlock.getCommand();
     }
 
     /**
@@ -35,19 +35,19 @@ public class SCCommandBlockState extends SCBlockState {
     }
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param loc       Block location
-     * @param blockName Block name
-     * @param cmd       Command
+     * @param loc       Block location.
+     * @param blockName Block name.
+     * @param command   Command.
      */
-    public SCCommandBlockState(SCBlockLocation loc, String blockName, String cmd) {
+    public SCCommandBlockState(SCBlockLocation loc, String blockName, String command) {
         // Construct the parent class
-        super(loc, Material.COMMAND.getId(), (byte) 0);
+        super(loc, Material.COMMAND, (byte) 0);
 
         // Store the block name and the command
         this.blockName = blockName;
-        this.cmd = cmd;
+        this.command = command;
     }
 
     /**
@@ -105,7 +105,7 @@ public class SCCommandBlockState extends SCBlockState {
      * @return
      */
     public String getCommand() {
-        return this.cmd;
+        return this.command;
     }
 
     /**
@@ -114,7 +114,7 @@ public class SCCommandBlockState extends SCBlockState {
      * @param cmd Command
      */
     public void setCommand(String cmd) {
-        this.cmd = cmd;
+        this.command = cmd;
     }
 
     /**
@@ -142,7 +142,7 @@ public class SCCommandBlockState extends SCBlockState {
 
         // Set the name and the command of the command block
         cb.setName(this.blockName);
-        cb.setCommand(this.cmd);
+        cb.setCommand(this.command);
 
         // Update the command block
         cb.update();
@@ -166,6 +166,6 @@ public class SCCommandBlockState extends SCBlockState {
 
         // Store the sign lines
         configSection.set("blockName", this.blockName);
-        configSection.set("blockCmd", this.cmd);
+        configSection.set("blockCmd", this.command);
     }
 }
