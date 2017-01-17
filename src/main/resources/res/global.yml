@@ -1082,6 +1082,79 @@ HorseControl:
         Triggers: {}
     Locations: {}
 
+# Husk (mob)
+HuskControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnForVillageInvasion: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 20
+        MaxHealth: 20
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+        Skull:
+            Enabled: false
+            AddToInventory: true
+            Chance: 1
+            Amount: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
+    CanDrown: true
+    CanPickupItems: true
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    CanBreakDoor: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
 # Iron Golems (mob)
 IronGolemControl:
     Enabled: false
