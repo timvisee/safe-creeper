@@ -117,24 +117,6 @@ public class SCBlock {
     }
 
     /**
-     * Get the blocks type ID
-     *
-     * @return Type ID
-     */
-    public int getTypeId() {
-        return this.b.getTypeId();
-    }
-
-    /**
-     * Set the type ID of the block
-     *
-     * @param typeId Block type ID
-     */
-    public void setTypeId(int typeId) {
-        this.b.setTypeId(typeId);
-    }
-
-    /**
      * Get the block data
      *
      * @return Block data
