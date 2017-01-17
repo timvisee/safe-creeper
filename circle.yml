@@ -6,6 +6,6 @@ general:
     - "target/SafeCreeper-*.jar"
 test:
   post:
-    - cp ./target/SafeCreeper-*-SNAPSHOT-spigot.jar $CIRCLE_ARTIFACTS
-    - cp ./target/SafeCreeper-*-SNAPSHOT-legacy.jar $CIRCLE_ARTIFACTS
-    - cp ./target/SafeCreeper-*-SNAPSHOT-spigot.jar $CIRCLE_ARTIFACTS/SafeCreeper.jar
+    - cp ./target/SafeCreeper-*-spigot.jar $CIRCLE_ARTIFACTS
+    - cp ./target/SafeCreeper-*-legacy.jar $CIRCLE_ARTIFACTS
+    - cp ./target/SafeCreeper-*-spigot.jar $CIRCLE_ARTIFACTS/SafeCreeper.jar
