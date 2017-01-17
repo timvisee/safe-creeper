@@ -31,8 +31,7 @@ public class SCDestructionRepairManager {
     /**
      * Constructor
      */
-    public SCDestructionRepairManager() {
-    }
+    public SCDestructionRepairManager() {}
 
     /**
      * Add a list of blocks that should be repaired.
@@ -413,8 +412,7 @@ public class SCDestructionRepairManager {
      * Load the old data list from an external file
      */
     public void load() {
-        File f = new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml");
-        load(f);
+        load(new File(SafeCreeper.instance.getDataFolder(), "data/destruction_repair/blocks.yml"));
     }
 
     /**
@@ -423,7 +421,7 @@ public class SCDestructionRepairManager {
      * @param f external file to load the data from
      */
     public void load(File f) {
-        // Check if the fiel exists
+        // Check if the file exists
         if(!f.exists()) {
             System.out.println("[SafeCreeper] Destruction repair data file doesn't exist!");
             return;
@@ -442,6 +440,14 @@ public class SCDestructionRepairManager {
             System.out.println("[SafeCreeper] Error while loading destruction repair data file!");
             e.printStackTrace();
         }
+
+        // Get the version number
+        final String versionName = c.getString("version");
+        final int versionCode = c.getInt("versionCode", 0);
+
+        // Show a message when a file's version is being converted
+        if(versionCode < SafeCreeper.instance.getVersionCode())
+            System.out.println("[SafeCreeper] The file will be converted from version " + versionName + " to " + SafeCreeper.instance.getVersionName() + "...");
 
         // Initialize the new list to store the loaded data in
         List<SCRepairableBlock> newBlocks = new ArrayList<SCRepairableBlock>();
