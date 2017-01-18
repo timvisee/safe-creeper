@@ -1015,7 +1015,10 @@ GiantControl:
 HorseControl:
     Enabled: false
     Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
         CanSpawnCustom: true
+        CanSpawnNaturally: true
         CanSpawnFromSpawner: true
         CanSpawnFromSpawnerEgg: true
         CanSpawnFromOther: true
@@ -1711,6 +1714,83 @@ PigZombieControl:
         Triggers: {}
     Locations: {}
 
+# Polar bears (mob)
+PolarBearControl:
+    Enabled: false
+    Spawning:
+        SpawnAngry:
+            Enabled: false
+            AngryChance: 0
+        SpawnSitting:
+            Enabled: false
+            SittingChance: 0
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 5
+    CustomHealth:
+        Enabled: false
+        MinHealth: 30
+        MaxHealth: 30
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
 # Player (player)
 PlayerControl:
     Enabled: false
@@ -1755,6 +1835,76 @@ PlayerControl:
         Enabled: false
         Triggers: {}
     Locations: {}
+
+# Rabbit (mob)
+RabbitControl:
+    Enabled: false
+    Spawning:
+        CanSpawnByBreeding: true
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnNaturally: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomAge:
+        Enabled: false
+        Age:
+            Enabled: false
+            MinAge: 1
+            MaxAge: 1
+            AgeLock: false
+        Baby:
+            Enabled: true
+            SpawnAsBaby: true
+            SpawnAsBabyChance: 50
+    CustomHealth:
+        Enabled: false
+        MinHealth: 10
+        MaxHealth: 10
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: true
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
 
 # Sheeps (mob)
 SheepControl:
@@ -1834,6 +1984,64 @@ SheepControl:
         Triggers: {}
     Locations: {}
 
+# Shulker (mob)
+ShulkerControl:
+    Enabled: false
+    Spawning:
+        CanSpawnWithWorldGeneration: true
+        CanSpawnCustom: true
+        CanSpawnFromSpawner: true
+        CanSpawnFromSpawnerEgg: true
+        CanSpawnFromOther: true
+    SpawningPotionEffects:
+        Enabled: false
+        Effects: {}
+    CustomHealth:
+        Enabled: false
+        MinHealth: 30
+        MaxHealth: 30
+    CustomEquipment:
+        Enabled: false
+        EquipmentSets: {}
+    CustomDrops:
+        Enabled: false
+        OverwriteDefaultDrops: false
+        XP:
+            Enabled: false
+            DropXP: true
+            DropChance: 100
+            Multiplier: 1
+    Reviving:
+        Enabled: false
+        Chance: 25
+        Radius: 0
+        MinDelay: 0
+        MaxDelay: 1.5
+        RememberTarget: true
+        Reviver:
+            Enabled: false
+            MaxDistance: 16
+            BroadcastRevive: true
+            BroadcastRadius: 25
+    Despawning:
+        Enabled: false
+        DespawnWhenFarAway: false
+    Portals:
+        Enabled: false
+        CanTeleportThroughNetherPortal: true
+        CanTeleportThroughEndPortal: true
+        RememberVelocity: true
+    CanDrown: true
+    CanPickupItems: false
+    CanTargetPlayer: true
+    CanTargetMob: true
+    DamagePlayers: true
+    DamageMobs: true
+    Effects:
+        Enabled: false
+        Triggers: {}
+    Locations: {}
+
 # Silverfishes (mob)
 SilverfishControl:
     Enabled: false
@@ -1878,212 +2086,6 @@ SilverfishControl:
     Despawning:
         Enabled: false
         DespawnWhenFarAway: true
-    Portals:
-        Enabled: false
-        CanTeleportThroughNetherPortal: true
-        CanTeleportThroughEndPortal: true
-        RememberVelocity: true
-    CanDrown: true
-    CanPickupItems: false
-    CanTargetPlayer: true
-    CanTargetMob: true
-    DamagePlayers: true
-    DamageMobs: true
-    Effects:
-        Enabled: false
-        Triggers: {}
-    Locations: {}
-
-# Polar bears (mob)
-PolarBearControl:
-    Enabled: false
-    Spawning:
-        SpawnAngry:
-            Enabled: false
-            AngryChance: 0
-        SpawnSitting:
-            Enabled: false
-            SittingChance: 0
-        CanSpawnByBreeding: true
-        CanSpawnWithWorldGeneration: true
-        CanSpawnCustom: true
-        CanSpawnNaturally: true
-        CanSpawnFromSpawner: true
-        CanSpawnFromSpawnerEgg: true
-        CanSpawnFromOther: true
-    SpawningPotionEffects:
-        Enabled: false
-        Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 5
-    CustomHealth:
-        Enabled: false
-        MinHealth: 30
-        MaxHealth: 30
-    CustomEquipment:
-        Enabled: false
-        EquipmentSets: {}
-    CustomDrops:
-        Enabled: false
-        OverwriteDefaultDrops: false
-        XP:
-            Enabled: false
-            DropXP: true
-            DropChance: 100
-            Multiplier: 1
-    Reviving:
-        Enabled: false
-        Chance: 25
-        Radius: 0
-        MinDelay: 0
-        MaxDelay: 1.5
-        RememberTarget: true
-        Reviver:
-            Enabled: false
-            MaxDistance: 16
-            BroadcastRevive: true
-            BroadcastRadius: 25
-    Despawning:
-        Enabled: false
-        DespawnWhenFarAway: true
-    Portals:
-        Enabled: false
-        CanTeleportThroughNetherPortal: true
-        CanTeleportThroughEndPortal: true
-        RememberVelocity: true
-    CanDrown: true
-    CanPickupItems: false
-    CanTargetPlayer: true
-    CanTargetMob: true
-    DamagePlayers: true
-    DamageMobs: true
-    Effects:
-        Enabled: false
-        Triggers: {}
-    Locations: {}
-
-# Rabbit (mob)
-RabbitControl:
-    Enabled: false
-    Spawning:
-        CanSpawnByBreeding: true
-        CanSpawnWithWorldGeneration: true
-        CanSpawnCustom: true
-        CanSpawnNaturally: true
-        CanSpawnFromSpawner: true
-        CanSpawnFromSpawnerEgg: true
-        CanSpawnFromOther: true
-    SpawningPotionEffects:
-        Enabled: false
-        Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
-    CustomHealth:
-        Enabled: false
-        MinHealth: 10
-        MaxHealth: 10
-    CustomEquipment:
-        Enabled: false
-        EquipmentSets: {}
-    CustomDrops:
-        Enabled: false
-        OverwriteDefaultDrops: false
-        XP:
-            Enabled: false
-            DropXP: true
-            DropChance: 100
-            Multiplier: 1
-    Reviving:
-        Enabled: false
-        Chance: 25
-        Radius: 0
-        MinDelay: 0
-        MaxDelay: 1.5
-        RememberTarget: true
-        Reviver:
-            Enabled: false
-            MaxDistance: 16
-            BroadcastRevive: true
-            BroadcastRadius: 25
-    Despawning:
-        Enabled: false
-        DespawnWhenFarAway: true
-    Portals:
-        Enabled: false
-        CanTeleportThroughNetherPortal: true
-        CanTeleportThroughEndPortal: true
-        RememberVelocity: true
-    CanDrown: true
-    CanPickupItems: false
-    CanTargetPlayer: true
-    CanTargetMob: true
-    DamagePlayers: true
-    DamageMobs: true
-    Effects:
-        Enabled: false
-        Triggers: {}
-    Locations: {}
-
-# Shulker (mob)
-ShulkerControl:
-    Enabled: false
-    Spawning:
-        CanSpawnWithWorldGeneration: true
-        CanSpawnCustom: true
-        CanSpawnFromSpawner: true
-        CanSpawnFromSpawnerEgg: true
-        CanSpawnFromOther: true
-    SpawningPotionEffects:
-        Enabled: false
-        Effects: {}
-    CustomHealth:
-        Enabled: false
-        MinHealth: 30
-        MaxHealth: 30
-    CustomEquipment:
-        Enabled: false
-        EquipmentSets: {}
-    CustomDrops:
-        Enabled: false
-        OverwriteDefaultDrops: false
-        XP:
-            Enabled: false
-            DropXP: true
-            DropChance: 100
-            Multiplier: 1
-    Reviving:
-        Enabled: false
-        Chance: 25
-        Radius: 0
-        MinDelay: 0
-        MaxDelay: 1.5
-        RememberTarget: true
-        Reviver:
-            Enabled: false
-            MaxDistance: 16
-            BroadcastRevive: true
-            BroadcastRadius: 25
-    Despawning:
-        Enabled: false
-        DespawnWhenFarAway: false
     Portals:
         Enabled: false
         CanTeleportThroughNetherPortal: true
@@ -2998,77 +3000,6 @@ WolfControl:
         RememberVelocity: true
     CanDrown: true
     CanBeTamed: true
-    CanPickupItems: false
-    CanTargetPlayer: true
-    CanTargetMob: true
-    DamagePlayers: true
-    DamageMobs: true
-    Effects:
-        Enabled: false
-        Triggers: {}
-    Locations: {}
-
-# Horse (mob)
-HorseControl:
-    Enabled: false
-    Spawning:
-        CanSpawnByBreeding: true
-        CanSpawnWithWorldGeneration: true
-        CanSpawnCustom: true
-        CanSpawnNaturally: true
-        CanSpawnFromSpawner: true
-        CanSpawnFromSpawnerEgg: true
-        CanSpawnFromOther: true
-    SpawningPotionEffects:
-        Enabled: false
-        Effects: {}
-    CustomAge:
-        Enabled: false
-        Age:
-            Enabled: false
-            MinAge: 1
-            MaxAge: 1
-            AgeLock: false
-        Baby:
-            Enabled: true
-            SpawnAsBaby: true
-            SpawnAsBabyChance: 50
-    CustomHealth:
-        Enabled: false
-        MinHealth: 15
-        MaxHealth: 30
-    CustomEquipment:
-        Enabled: false
-        EquipmentSets: {}
-    CustomDrops:
-        Enabled: false
-        OverwriteDefaultDrops: false
-        XP:
-            Enabled: false
-            DropXP: true
-            DropChance: 100
-            Multiplier: 1
-    Reviving:
-        Enabled: false
-        Chance: 25
-        Radius: 0
-        MinDelay: 0
-        MaxDelay: 1.5
-        RememberTarget: true
-        Reviver:
-            Enabled: false
-            MaxDistance: 16
-            BroadcastRevive: true
-            BroadcastRadius: 25
-    Despawning:
-        Enabled: false
-        DespawnWhenFarAway: true
-    Portals:
-        Enabled: false
-        CanTeleportThroughNetherPortal: true
-        CanTeleportThroughEndPortal: true
-        RememberVelocity: true
-    CanDrown: true
     CanPickupItems: false
     CanTargetPlayer: true
     CanTargetMob: true
