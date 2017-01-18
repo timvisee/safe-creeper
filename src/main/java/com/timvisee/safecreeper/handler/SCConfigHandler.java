@@ -6,6 +6,7 @@ import com.timvisee.safecreeper.event.config.SCGlobalConfigLoadEvent;
 import com.timvisee.safecreeper.event.config.SCWorldConfigLoadEvent;
 import com.timvisee.safecreeper.event.config.SCWorldConfigsLoadEvent;
 import com.timvisee.safecreeper.util.SCUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -1262,11 +1263,8 @@ public class SCConfigHandler {
                     if(e.getType().getName() == null)
                         return def;
 
-                    // Get the entity name
-                    String entityName = e.getType().getName().trim().replace(" ", "");
-
                     // Determine and return the entity control name
-                    return entityName.substring(0, 1).toUpperCase() + entityName.substring(1) + "Control";
+                    return WordUtils.capitalize(e.getType().toString().trim().replace("_", " ").toLowerCase()).replace(" ", "") + "Control";
             }
 
         } catch(Exception ex) {
