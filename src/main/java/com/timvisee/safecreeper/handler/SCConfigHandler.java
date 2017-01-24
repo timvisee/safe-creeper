@@ -699,6 +699,30 @@ public class SCConfigHandler {
     }
 
     /**
+     * Get a chance option from a config file.
+     * True or false will be returned after the chance is processed.
+     *
+     * @param w              The world.
+     * @param controlName    The control name.
+     * @param keyName        The key name.
+     * @param def            Default chance value.
+     * @param checkIfEnabled Should be checked if the control is enabled>
+     * @param loc            The current location.
+     *
+     * @return True or false.
+     */
+    public boolean getOptionChance(World w, String controlName, String keyName, double def, boolean checkIfEnabled, Location loc) {
+        // Get the chance value from the configuration
+        double chance = getOptionDouble(w, controlName, keyName, def, checkIfEnabled, loc);
+
+        // Get the random object
+        Random rand = SafeCreeper.instance.getRandom();
+
+        // Process the chance and return it
+        return chance > rand.nextDouble();
+    }
+
+    /**
      * Get an option from a config file
      *
      * @param w              the world
