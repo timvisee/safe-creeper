@@ -3,6 +3,7 @@ package com.timvisee.safecreeper.listener;
 import com.garbagemule.MobArena.framework.Arena;
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.entity.SCLivingEntityRevive;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
 import com.timvisee.safecreeper.handler.plugin.SCMobArenaHandler;
 import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
 import com.timvisee.safecreeper.task.SCCreatureReviveTask;
@@ -1224,17 +1225,35 @@ public class SCEntityListener implements Listener {
             } else {
 
                 if(!event.isCancelled()) {
+                    // Determine whether to rebuild blocks
                     boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(world, controlName, "ExplosionRebuild.Enabled", false, true, location);
-
                     if(rebuildBlocks) {
+                        // Get the rebuild delay and block interval
                         double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(world, controlName, "ExplosionRebuild.RebuildDelay", 60, true, location);
                         double rebuildBlockInterval = SafeCreeper.instance.getConfigHandler().getOptionDouble(world, controlName, "ExplosionRebuild.RebuildBlockInterval", 1, true, location);
 
+                        // Get the list of blocks
                         List<Block> blocks = event.blockList();
-                        SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
 
-                        drm.addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
+                        for(int i = blocks.size() - 1; i >= 0; i++) {
+                            // Get the current block
+                            final Block currentBlock = blocks.get(i);
 
+                            // Get the chance of the block to rebuild
+                            boolean blockChance = SafeCreeper.instance.getConfigHandler().getOptionChance(world, controlName, "ExplosionRebuild.RebuildChance", 1, true, currentBlock.getLocation());
+
+                            // Continue if the chance is true
+                            if(blockChance)
+                                continue;
+
+                            // Remove the block from the list
+                            blocks.remove(i);
+                        }
+
+                        // Add the blocks left in the list
+                        SafeCreeper.instance.getDestructionRepairManager().addBlocks(blocks, rebuildDelay, rebuildBlockInterval);
+
+                        // Set the yield value
                         event.setYield(0f);
                     }
                 }
@@ -1327,13 +1346,15 @@ public class SCEntityListener implements Listener {
         World w = e.getWorld();
         Location l = from.getLocation();
 
+        // Get the configuration handler
+        final SCConfigHandler configHandler = SafeCreeper.instance.getConfigHandler();
+
         if(e instanceof Enderman) {
-
             if(from.getType().equals(Material.AIR) && !to.equals(Material.AIR)) {
+                boolean canPlace = configHandler.getOptionBoolean(w, "EndermanControl", "CanPlaceBlock", true, true, l);
 
-                boolean canPlace = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanPlaceBlock", true, true, l);
                 if(!canPlace) {
-                    boolean clearHands = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "ClearHandsOnPlace", false, true, l);
+                    boolean clearHands = configHandler.getOptionBoolean(w, "EndermanControl", "ClearHandsOnPlace", false, true, l);
                     if(clearHands) {
                         Enderman enderman = (Enderman) e;
                         enderman.eject();
@@ -1343,14 +1364,14 @@ public class SCEntityListener implements Listener {
                 }
 
                 // Play control effects
-                SafeCreeper.instance.getConfigHandler().playControlEffects("EndermanControl", "PickedUpBlock", l);
+                configHandler.playControlEffects("EndermanControl", "PickedUpBlock", l);
             }
 
             if(!from.getType().equals(Material.AIR) && to.equals(Material.AIR)) {
 
-                boolean canPickup = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanPickupBlock", true, true, l);
+                boolean canPickup = configHandler.getOptionBoolean(w, "EndermanControl", "CanPickupBlock", true, true, l);
                 if(!canPickup) {
-                    boolean cloneBlock = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "CanCloneBlock", false, true, l);
+                    boolean cloneBlock = configHandler.getOptionBoolean(w, "EndermanControl", "CanCloneBlock", false, true, l);
                     if(cloneBlock) {
                         Enderman enderman = (Enderman) e;
                         enderman.setCarriedMaterial(new MaterialData(to));
@@ -1359,36 +1380,42 @@ public class SCEntityListener implements Listener {
                     event.setCancelled(true);
 
                 } else {
-                    boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "EndermanControl", "ExplosionRebuild.Enabled", false, true, l);
+                    // Determine whether to rebuild block
+                    final boolean rebuildBlocks = configHandler.getOptionBoolean(w, "EndermanControl", "ExplosionRebuild.Enabled", false, true, l);
 
+                    // Rebuild the block
                     if(rebuildBlocks) {
-                        double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+                        // Get the rebuild delay
+                        final double rebuildDelay = configHandler.getOptionDouble(w, "EndermanControl", "DestructionRebuild.RebuildDelay", 60, true, l);
 
-                        SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+                        // Process the block chance
+                        final boolean chance = configHandler.getOptionChance(w, "EndermanControl", "DestructionRebuild.RebuildChance", 1, true, l);
 
-                        drm.addBlock(from, rebuildDelay);
+                        // Add the block
+                        if(chance)
+                            SafeCreeper.instance.getDestructionRepairManager().addBlock(from, rebuildDelay);
                     }
                 }
 
                 // Play control effects
                 if(!event.isCancelled())
-                    SafeCreeper.instance.getConfigHandler().playControlEffects("EndermanControl", "PlacedDownBlock", l);
+                    configHandler.playControlEffects("EndermanControl", "PlacedDownBlock", l);
             }
         }
 
-        // Are sheeps able to eat grass
+        // Are sheep able to eat grass
         if(e instanceof Sheep) {
-            if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "SheepControl", "CanEatGrass", true, true, l)) {
+            if(!configHandler.getOptionBoolean(w, "SheepControl", "CanEatGrass", true, true, l)) {
                 event.setCancelled(true);
             }
 
             // Play effects for sheeps eating grass
-            SafeCreeper.instance.getConfigHandler().playControlEffects("SheepControl", "EatGrass", l);
+            configHandler.playControlEffects("SheepControl", "EatGrass", l);
         }
 
         // Prevent withers from destroying blocks
         if(e instanceof Wither) {
-            final boolean destroyBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "WitherControl", "DestroyWorld", true, true, l);
+            final boolean destroyBlocks = configHandler.getOptionBoolean(w, "WitherControl", "DestroyWorld", true, true, l);
             if(!destroyBlocks)
                 event.setCancelled(true);
         }

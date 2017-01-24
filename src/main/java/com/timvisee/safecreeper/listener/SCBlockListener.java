@@ -1,6 +1,7 @@
 package com.timvisee.safecreeper.listener;
 
 import com.timvisee.safecreeper.SafeCreeper;
+import com.timvisee.safecreeper.handler.SCConfigHandler;
 import com.timvisee.safecreeper.manager.SCDestructionRepairManager;
 import com.timvisee.safecreeper.util.SCAttachedBlock;
 import org.bukkit.Location;
@@ -100,24 +101,36 @@ public class SCBlockListener implements Listener {
 
     @EventHandler
     public void onBlockBurn(BlockBurnEvent event) {
-        Block b = event.getBlock();
-        Location l = b.getLocation();
-        World w = b.getWorld();
+        // Get some constants
+        final Block b = event.getBlock();
+        final Location l = b.getLocation();
+        final World w = b.getWorld();
+
+        // Get the configuration handler
+        final SCConfigHandler configHandler = SafeCreeper.instance.getConfigHandler();
 
         // Could fire burn/break blocks
-        if(!SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "EnableBlockFire", true, true, l))
+        if(!configHandler.getOptionBoolean(w, "FireControl", "EnableBlockFire", true, true, l))
             event.setCancelled(true);
 
         else {
-            boolean rebuildBlocks = SafeCreeper.instance.getConfigHandler().getOptionBoolean(w, "FireControl", "DestructionRebuild.Enabled", false, true, l);
+            // Check whether to rebuild blocks
+            final boolean rebuildBlocks = configHandler.getOptionBoolean(w, "FireControl", "DestructionRebuild.Enabled", false, true, l);
 
-            if(rebuildBlocks) {
-                double rebuildDelay = SafeCreeper.instance.getConfigHandler().getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+            // Return if we shouldn't rebuild
+            if(!rebuildBlocks)
+                return;
 
-                SCDestructionRepairManager drm = SafeCreeper.instance.getDestructionRepairManager();
+            // Get the chance, return if the chance is false
+            final boolean chance = configHandler.getOptionChance(w, "FireControl", "DestructionRebuild.RebuildChance", 1, true, l);
+            if(!chance)
+                return;
 
-                drm.addBlock(b, rebuildDelay);
-            }
+            // Get the rebuild delay
+            double rebuildDelay = configHandler.getOptionDouble(w, "FireControl", "DestructionRebuild.RebuildDelay", 60, true, l);
+
+            // Add the block to rebuild
+            SafeCreeper.instance.getDestructionRepairManager().addBlock(b, rebuildDelay);
         }
     }
 
