@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Random;
 
 public class SafeCreeper extends JavaPlugin {
 
@@ -83,6 +84,11 @@ public class SafeCreeper extends JavaPlugin {
     private SCFactionsHandler fh;
     private SCWorldGuardHandler wgh;
     private SCPowerNBTHandler nbth;
+
+    /**
+     * Random instance.
+     */
+    private final Random rand = new Random();
 
     /**
      * Constructor
@@ -741,5 +747,14 @@ public class SafeCreeper extends JavaPlugin {
         // Run the command trough the command handler
         CommandHandler ch = new CommandHandler();
         return ch.onCommand(sender, cmd, commandLabel, args);
+    }
+
+    /**
+     * Get the random object instance.
+     *
+     * @return Random object instance.
+     */
+    public final Random getRandom() {
+        return this.rand;
     }
 }
