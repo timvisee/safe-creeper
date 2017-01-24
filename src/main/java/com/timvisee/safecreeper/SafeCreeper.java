@@ -38,15 +38,16 @@ public class SafeCreeper extends JavaPlugin {
     /**
      * Plugin version name.
      */
-    public static final String PLUGIN_VERSION_NAME = "1.5.4";
+    public static final String PLUGIN_VERSION_NAME = "1.5.4.1";
 
     /**
      * Plugin version code.
      */
-    public static final int PLUGIN_VERSION_CODE = 36;
+    public static final int PLUGIN_VERSION_CODE = 37;
 
     // Safe Creeper static instance
     public static SafeCreeper instance;
+
     // Listeners
     private final SCBlockListener blockListener = new SCBlockListener();
     private final SCEntityListener entityListener = new SCEntityListener();
@@ -56,13 +57,17 @@ public class SafeCreeper extends JavaPlugin {
     private final SCTVNLibListener tvnlListener = new SCTVNLibListener();
     private final SCWeatherListener weatherListener = new SCWeatherListener();
     private final SCWorldListener worldListener = new SCWorldListener();
+
     // Variable to disable the other explosions for a little, little while (otherwise some explosions are going to be looped)
     public boolean disableOtherExplosions = false;
+
     // Logger
     private SCLogger log;
+
     // Config file and folder paths
     private File globalConfigFile = new File("plugins/SafeCreeper/global.yml");
     private File worldConfigsFolder = new File("plugins/SafeCreeper/worlds");
+
     // Controllers, Handlers and Managers
     private SCUpdatesHandler uh;
     private SCStatisticsManager sm;

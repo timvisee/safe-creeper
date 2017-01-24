@@ -7,7 +7,7 @@
     <artifactId>safecreeper</artifactId>
 
     <!-- Plugin version name (corresponds to version code in the properties section) -->
-    <version>1.5.4</version>
+    <version>1.5.4.1</version>
 
     <name>SafeCreeper</name>
     <description>Control creepers, Withers, EnderDragons, Enderman, TNT, Fireballs and a lot more!</description>
@@ -39,7 +39,7 @@
 
     <properties>
         <!-- Plugin version code (corresponds to version tag above) -->
-        <project.versionCode>36</project.versionCode>
+        <project.versionCode>37</project.versionCode>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
