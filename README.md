@@ -35,6 +35,4 @@ The project is currently being built automatically using the CI services in the 
 >- Execute command `mvn clean install -B`
 
 ### License
-GNU GPL v3.0
-
-More Information? See: http://dev.bukkit.org/server-mods/safe-creeper/
+This project is released under the GNU GPL-3.0 license. Check out the [LICENSE](LICENSE) file for more information.
