@@ -8,7 +8,7 @@ The project is currently being built automatically using the CI services in the 
 
 |Service|Branch|Build Status| |Automatic interval|
 |---:|:---|:---:|:---|---|
-|Travis CI|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/save-creeper.svg?branch=master)](https://travis-ci.org/timvisee/safe-creeper)|[View Status](https://travis-ci.org/timvisee/safe-creeper)|Each 24 hours|
+|Travis CI|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/safe-creeper.svg?branch=master)](https://travis-ci.org/timvisee/safe-creeper)|[View Status](https://travis-ci.org/timvisee/safe-creeper)|Each 24 hours|
 |Travis CI|last commit|[![Build status on Travis CI for last commit](https://travis-ci.org/timvisee/safe-creeper.svg)](https://travis-ci.org/timvisee/safe-creeper)|[View Status](https://travis-ci.org/timvisee/safe-creeper)|
 |Circle CI|master|[![Build status on Circle CI](https://img.shields.io/circleci/project/github/timvisee/SafeCreeper/master.svg)](https://circleci.com/gh/timvisee/SafeCreeper/tree/master)|[View Status](https://circleci.com/gh/timvisee/SafeCreeper/tree/master)|
 |Circle CI|last commit|[![Build status on Circle CI](https://img.shields.io/circleci/project/github/timvisee/SafeCreeper.svg)](https://circleci.com/gh/timvisee/SafeCreeper)|[View Status](https://circleci.com/gh/timvisee/SafeCreeper)|
