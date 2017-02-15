@@ -596,7 +596,7 @@
         <dependency>
             <groupId>me.dpohvar.powernbt</groupId>
             <artifactId>PowerNBT</artifactId>
-            <version>0.8.6.1</version>
+            <version>LATEST</version>
         </dependency>
 
         <!-- JUnit unit testing -->
