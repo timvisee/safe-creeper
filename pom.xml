@@ -15,9 +15,9 @@
     <url>http://dev.bukkit.org/bukkit-plugins/safe-creeper/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/timvisee/SafeCreeper.git</connection>
-        <developerConnection>scm:git:git@github.com:timvisee/SafeCreeper.git</developerConnection>
-        <url>https://github.com/timvisee/SafeCreeper</url>
+        <connection>scm:git:https://github.com/timvisee/safe-creeper.git</connection>
+        <developerConnection>scm:git:git@github.com:timvisee/safe-creeper.git</developerConnection>
+        <url>https://github.com/timvisee/safe-creeper</url>
     </scm>
 
     <ciManagement>
@@ -27,7 +27,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/timvisee/SafeCreeper/issues</url>
+        <url>https://github.com/timvisee/safe-creeper/issues</url>
     </issueManagement>
 
     <licenses>
@@ -285,7 +285,12 @@
         <repository>
             <id>varscript.ru-releases</id>
             <name>varscript.ru-releases</name>
-            <url>http://repo.varscript.ru/release</url>
+            <url>https://repo.varscript.ru/release</url>
+        </repository>
+        <repository>
+            <id>varscript.ru-snapshots</id>
+            <name>varscript.ru-snapshots</name>
+            <url>https://repo.varscript.ru/snapshots</url>
         </repository>
 
     </repositories>
@@ -596,7 +601,7 @@
         <dependency>
             <groupId>me.dpohvar.powernbt</groupId>
             <artifactId>PowerNBT</artifactId>
-            <version>LATEST</version>
+            <version>0.8.1</version>
         </dependency>
 
         <!-- JUnit unit testing -->
