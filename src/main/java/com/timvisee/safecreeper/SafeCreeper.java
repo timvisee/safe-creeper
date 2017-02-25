@@ -77,7 +77,6 @@ public class SafeCreeper extends JavaPlugin {
     private SCPVPArenaHandler pah;
     private SCFactionsHandler fh;
     private SCWorldGuardHandler wgh;
-    private SCPowerNBTHandler nbth;
 
     /**
      * Constructor
@@ -134,7 +133,6 @@ public class SafeCreeper extends JavaPlugin {
         setUpPVPArenaHandler();
         setUpFactionsManager();
         setUpWorldGuardHandler();
-        setUpPowerNBTHandler();
         setUpCorruptionHandler();
 
         // Load destruction repair data
@@ -527,23 +525,6 @@ public class SafeCreeper extends JavaPlugin {
      */
     public SCWorldGuardHandler getWorldGuardHandler() {
         return this.wgh;
-    }
-
-    /**
-     * Set up the PowerNBT handler.
-     */
-    public void setUpPowerNBTHandler() {
-        this.nbth = new SCPowerNBTHandler(getSCLogger());
-        this.nbth.setUp();
-    }
-
-    /**
-     * Get the PowerNBT handler instance.
-     *
-     * @return PowerNBT handler instance.
-     */
-    public SCPowerNBTHandler getPowerNBTHandler() {
-        return this.nbth;
     }
 
     /**

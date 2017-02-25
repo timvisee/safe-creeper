@@ -2,8 +2,6 @@ package com.timvisee.safecreeper.block.state;
 
 import com.timvisee.safecreeper.SafeCreeper;
 import com.timvisee.safecreeper.block.SCBlockLocation;
-import me.dpohvar.powernbt.api.NBTCompound;
-import me.dpohvar.powernbt.api.NBTManager;
 import org.bukkit.Material;
 import org.bukkit.block.Beacon;
 import org.bukkit.block.Block;
@@ -52,21 +50,19 @@ public class SCBeaconState extends SCBlockState {
         // Construct the parent class
         super(b.getBlock());
 
-        // Make sure the NBT API plugin is hooked
-        if(!SafeCreeper.instance.getPowerNBTHandler().isHooked()) {
-            SafeCreeper.instance.getSCLogger().debug("Unable to store Beacon block state, no supported NBT plugin available!");
-            return;
-        }
+        // Unable to store the beacon effect state, show a warning
+        SafeCreeper.instance.getSCLogger().debug("Unable to store Beacon block state, no supported NBT plugin available!");
 
-        // Get the NBT API manager
-        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
-
-        // Get the NBT compound for the beacon block to allow NBT tag management
-        NBTCompound c = api.read(b.getBlock());
-
-        // Get and store the beacon effects
-        primaryEffectId = c.getInt(NBT_PRIMARY_EFFECT_TAG);
-        secondaryEffectId = c.getInt(NBT_SECONDARY_EFFECT_TAG);
+        // TODO: Fix the code implementation below!
+//        // Get the NBT API manager
+//        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
+//
+//        // Get the NBT compound for the beacon block to allow NBT tag management
+//        NBTCompound c = api.read(b.getBlock());
+//
+//        // Get and store the beacon effects
+//        primaryEffectId = c.getInt(NBT_PRIMARY_EFFECT_TAG);
+//        secondaryEffectId = c.getInt(NBT_SECONDARY_EFFECT_TAG);
     }
 
     /**
@@ -192,34 +188,34 @@ public class SCBeaconState extends SCBlockState {
      * @return True if succeed.
      */
     public boolean apply() {
+        // Apply the super
         if(!super.apply())
             return false;
 
-        // Make sure the NBT API plugin is hooked
-        if(!SafeCreeper.instance.getPowerNBTHandler().isHooked()) {
-            SafeCreeper.instance.getSCLogger().debug("Unable to restore Beacon block state, no supported NBT plugin available!");
-            return true;
-        }
-
-        // Get the beacon
-        Beacon b = getBeacon();
-
-        // Get the NBT API manager
-        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
-
-        // Get the NBT compound for the beacon block to allow NBT tag management
-        NBTCompound c = api.read(b.getBlock());
-
-        // Set the beacon effects using NBT
-        c.put(NBT_PRIMARY_EFFECT_TAG, primaryEffectId);
-        c.put(NBT_SECONDARY_EFFECT_TAG, secondaryEffectId);
-
-        // Write the NBT to the block, and update the block afterwards
-        api.write(b.getBlock(), c);
-        b.update();
-
-        // Return true
+        // Unable to restore the beacon state, show a warning
+        SafeCreeper.instance.getSCLogger().debug("Unable to restore Beacon block state, no supported NBT plugin available!");
         return true;
+
+        // TODO: Fix the code implementation below!
+//        // Get the beacon
+//        Beacon b = getBeacon();
+//
+//        // Get the NBT API manager
+//        NBTManager api = SafeCreeper.instance.getPowerNBTHandler().getNBTManager();
+//
+//        // Get the NBT compound for the beacon block to allow NBT tag management
+//        NBTCompound c = api.read(b.getBlock());
+//
+//        // Set the beacon effects using NBT
+//        c.put(NBT_PRIMARY_EFFECT_TAG, primaryEffectId);
+//        c.put(NBT_SECONDARY_EFFECT_TAG, secondaryEffectId);
+//
+//        // Write the NBT to the block, and update the block afterwards
+//        api.write(b.getBlock(), c);
+//        b.update();
+//
+//        // Return true
+//        return true;
     }
 
     /**

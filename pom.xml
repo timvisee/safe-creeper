@@ -281,18 +281,6 @@
             <url>http://repo.mcstats.org/content/repositories/snapshots/</url>
         </repository>
 
-        <!-- PowerNBT repositories -->
-        <repository>
-            <id>varscript.ru-releases</id>
-            <name>varscript.ru-releases</name>
-            <url>https://repo.varscript.ru/release</url>
-        </repository>
-        <repository>
-            <id>varscript.ru-snapshots</id>
-            <name>varscript.ru-snapshots</name>
-            <url>https://repo.varscript.ru/snapshots</url>
-        </repository>
-
     </repositories>
 
     <dependencies>
@@ -595,13 +583,6 @@
             <version>0.1.1</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/TVNLib-0.1.1.jar</systemPath>
-        </dependency>
-
-        <!-- PowerNBT plugin -->
-        <dependency>
-            <groupId>me.dpohvar.powernbt</groupId>
-            <artifactId>PowerNBT</artifactId>
-            <version>0.8.1</version>
         </dependency>
 
         <!-- JUnit unit testing -->
